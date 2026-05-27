@@ -246,12 +246,11 @@ export const fmtWonK = (n: number) => {
 export const fmtTril = (n: number) => n.toFixed(1) + '조';
 
 export const NAV_ITEMS = [
-  { id: 'overview',     ko: '대시보드 홈',     en: 'Overview',     icon: 'home' },
-  { id: 'compliance',   ko: '컴플라이언스 비용', en: 'Compliance',   icon: 'bars' },
-  { id: 'distribution', ko: '산업 내 분포',    en: 'Distribution', icon: 'spread' },
-  { id: 'revenue',      ko: '경매수입',       en: 'Auction',      icon: 'coin' },
-  { id: 'allocation',   ko: '무상할당 경로',   en: 'Allocation',   icon: 'gauge' },
-  { id: 'gap',          ko: 'EUA−KAU 가격차',  en: 'CBAM gap',     icon: 'gap' },
+  { id: 'overview',   ko: '대시보드 홈',     en: 'Overview',     icon: 'home' },
+  { id: 'mechanism',  ko: '가격 결정 메커니즘', en: 'Mechanism',    icon: 'gauge' },
+  { id: 'simulator',  ko: '시나리오 시뮬레이터', en: 'Simulator',    icon: 'bars' },
+  { id: 'revenue',    ko: '재정 분석',       en: 'Fiscal analysis', icon: 'coin' },
+  { id: 'gap',        ko: 'CBAM 분석',      en: 'CBAM gap',     icon: 'gap' },
 ];
 
 // 모형 메타데이터

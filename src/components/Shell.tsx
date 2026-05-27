@@ -28,7 +28,7 @@ export function PlanitMark() {
   );
 }
 
-export function Sidebar({ active = 'overview' }: { active?: string }) {
+export function Sidebar({ active = 'overview', onNavigate }: { active?: string; onNavigate?: (id: string) => void }) {
   return (
     <aside className="w-[220px] flex-shrink-0 bg-white border-r border-[#E5E7EB] flex flex-col" style={{ padding: '20px 14px' }}>
       <div className="px-2 pb-[22px]"><PlanitMark /></div>
@@ -37,13 +37,14 @@ export function Sidebar({ active = 'overview' }: { active?: string }) {
         {NAV_ITEMS.map((n) => {
           const on = n.id === active;
           return (
-            <div key={n.id} className={`flex items-center gap-[10px] py-[9px] px-[10px] rounded-[7px] cursor-default ${on ? 'bg-[#F3F4F6] text-[#111827]' : 'text-[#4B5563]'}`}>
+            <button key={n.id} onClick={() => onNavigate?.(n.id)}
+              className={`flex items-center gap-[10px] py-[9px] px-[10px] rounded-[7px] cursor-pointer border-0 bg-transparent text-left w-full transition-colors hover:bg-[#F9FAFB] ${on ? 'bg-[#F3F4F6] text-[#111827]' : 'text-[#4B5563]'}`}>
               <NavIcon name={n.icon} size={15} />
               <div className="flex flex-col leading-[1.15]">
                 <span className={`text-[12.5px] ${on ? 'font-semibold' : 'font-medium'}`}>{n.ko}</span>
                 <span className="text-[9.5px] text-[#9CA3AF] tracking-[.02em]" style={{ fontFamily: 'Inter' }}>{n.en}</span>
               </div>
-            </div>
+            </button>
           );
         })}
       </nav>
