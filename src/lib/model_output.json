@@ -1,0 +1,2965 @@
+{
+  "model_version": "0.6",
+  "generated": "2026-05-27",
+  "model_description": "Staircase MACC + Hotelling banking (constrained). v0.6: Coase 정리 — 균형가격은 BAU-Cap으로 결정, 무상할당은 재정분석에만 반영. 국제감축 smoothed step. Banking stock ≥ 0 제약.",
+  "analysis_period": {
+    "start": 2026,
+    "end": 2040
+  },
+  "scenarios": {
+    "base": {
+      "p0": 45249,
+      "r": 0.05500000000000001,
+      "price_path": [
+        {
+          "year": 2026,
+          "kau_price_krw": 45249,
+          "eua_price_krw": 123000,
+          "gap_krw": 77751,
+          "abatement_steel_Mt": 25.3,
+          "abatement_petrochem_Mt": 2.25,
+          "fundamental_shortfall_Mt": 45.5,
+          "banking_stock_Mt": 15.7,
+          "auction_ratio": 0.099,
+          "auction_ratio_power": 0.15,
+          "auction_ratio_non_power": 0.15,
+          "auction_ratio_leakage": 0.0,
+          "annual_revenue_trillion": 2.271,
+          "cumulative_revenue_trillion": 2.27,
+          "cbam_steel_trillion": 0.628,
+          "cbam_petrochem_trillion": 0.56,
+          "active_techs": {
+            "steel": {
+              "active": 3,
+              "total": 4,
+              "abatement_Mt": 25.3
+            },
+            "petrochem": {
+              "active": 1,
+              "total": 5,
+              "abatement_Mt": 2.25
+            },
+            "power": {
+              "active": 1,
+              "total": 5,
+              "abatement_Mt": 5.88
+            },
+            "cement": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 9.9
+            },
+            "refinery": {
+              "active": 2,
+              "total": 4,
+              "abatement_Mt": 5.2
+            },
+            "other": {
+              "active": 2,
+              "total": 3,
+              "abatement_Mt": 12.6
+            }
+          },
+          "effective_shortfall_Mt": 45.5
+        },
+        {
+          "year": 2027,
+          "kau_price_krw": 47807,
+          "eua_price_krw": 132000,
+          "gap_krw": 84193,
+          "abatement_steel_Mt": 25.3,
+          "abatement_petrochem_Mt": 2.25,
+          "fundamental_shortfall_Mt": 54.9,
+          "banking_stock_Mt": 21.9,
+          "auction_ratio": 0.134,
+          "auction_ratio_power": 0.2375,
+          "auction_ratio_non_power": 0.15,
+          "auction_ratio_leakage": 0.0,
+          "annual_revenue_trillion": 3.133,
+          "cumulative_revenue_trillion": 5.4,
+          "cbam_steel_trillion": 0.68,
+          "cbam_petrochem_trillion": 0.606,
+          "active_techs": {
+            "steel": {
+              "active": 3,
+              "total": 4,
+              "abatement_Mt": 25.3
+            },
+            "petrochem": {
+              "active": 1,
+              "total": 5,
+              "abatement_Mt": 2.25
+            },
+            "power": {
+              "active": 1,
+              "total": 5,
+              "abatement_Mt": 5.88
+            },
+            "cement": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 9.9
+            },
+            "refinery": {
+              "active": 2,
+              "total": 4,
+              "abatement_Mt": 5.2
+            },
+            "other": {
+              "active": 2,
+              "total": 3,
+              "abatement_Mt": 12.6
+            }
+          },
+          "effective_shortfall_Mt": 54.9
+        },
+        {
+          "year": 2028,
+          "kau_price_krw": 50510,
+          "eua_price_krw": 142500,
+          "gap_krw": 91990,
+          "abatement_steel_Mt": 25.3,
+          "abatement_petrochem_Mt": 2.25,
+          "fundamental_shortfall_Mt": 64.3,
+          "banking_stock_Mt": 22.5,
+          "auction_ratio": 0.169,
+          "auction_ratio_power": 0.325,
+          "auction_ratio_non_power": 0.15,
+          "auction_ratio_leakage": 0.0,
+          "annual_revenue_trillion": 4.021,
+          "cumulative_revenue_trillion": 9.42,
+          "cbam_steel_trillion": 0.744,
+          "cbam_petrochem_trillion": 0.662,
+          "active_techs": {
+            "steel": {
+              "active": 3,
+              "total": 4,
+              "abatement_Mt": 25.3
+            },
+            "petrochem": {
+              "active": 1,
+              "total": 5,
+              "abatement_Mt": 2.25
+            },
+            "power": {
+              "active": 1,
+              "total": 5,
+              "abatement_Mt": 5.88
+            },
+            "cement": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 9.9
+            },
+            "refinery": {
+              "active": 2,
+              "total": 4,
+              "abatement_Mt": 5.2
+            },
+            "other": {
+              "active": 3,
+              "total": 3,
+              "abatement_Mt": 16.38
+            }
+          },
+          "effective_shortfall_Mt": 64.3
+        },
+        {
+          "year": 2029,
+          "kau_price_krw": 53366,
+          "eua_price_krw": 159000,
+          "gap_krw": 105634,
+          "abatement_steel_Mt": 25.3,
+          "abatement_petrochem_Mt": 2.25,
+          "fundamental_shortfall_Mt": 73.7,
+          "banking_stock_Mt": 15.7,
+          "auction_ratio": 0.204,
+          "auction_ratio_power": 0.4125,
+          "auction_ratio_non_power": 0.15,
+          "auction_ratio_leakage": 0.0,
+          "annual_revenue_trillion": 4.932,
+          "cumulative_revenue_trillion": 14.36,
+          "cbam_steel_trillion": 0.854,
+          "cbam_petrochem_trillion": 0.761,
+          "active_techs": {
+            "steel": {
+              "active": 3,
+              "total": 4,
+              "abatement_Mt": 25.3
+            },
+            "petrochem": {
+              "active": 1,
+              "total": 5,
+              "abatement_Mt": 2.25
+            },
+            "power": {
+              "active": 1,
+              "total": 5,
+              "abatement_Mt": 5.88
+            },
+            "cement": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 9.9
+            },
+            "refinery": {
+              "active": 3,
+              "total": 4,
+              "abatement_Mt": 7.2
+            },
+            "other": {
+              "active": 3,
+              "total": 3,
+              "abatement_Mt": 16.38
+            }
+          },
+          "effective_shortfall_Mt": 73.7
+        },
+        {
+          "year": 2030,
+          "kau_price_krw": 56383,
+          "eua_price_krw": 178500,
+          "gap_krw": 122117,
+          "abatement_steel_Mt": 25.3,
+          "abatement_petrochem_Mt": 2.25,
+          "fundamental_shortfall_Mt": 83.1,
+          "banking_stock_Mt": 23.0,
+          "auction_ratio": 0.239,
+          "auction_ratio_power": 0.5,
+          "auction_ratio_non_power": 0.15,
+          "auction_ratio_leakage": 0.0,
+          "annual_revenue_trillion": 5.862,
+          "cumulative_revenue_trillion": 20.22,
+          "cbam_steel_trillion": 0.987,
+          "cbam_petrochem_trillion": 0.879,
+          "active_techs": {
+            "steel": {
+              "active": 3,
+              "total": 4,
+              "abatement_Mt": 25.3
+            },
+            "petrochem": {
+              "active": 1,
+              "total": 5,
+              "abatement_Mt": 2.25
+            },
+            "power": {
+              "active": 2,
+              "total": 5,
+              "abatement_Mt": 29.4
+            },
+            "cement": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 9.9
+            },
+            "refinery": {
+              "active": 3,
+              "total": 4,
+              "abatement_Mt": 7.2
+            },
+            "other": {
+              "active": 3,
+              "total": 3,
+              "abatement_Mt": 16.38
+            }
+          },
+          "effective_shortfall_Mt": 83.1
+        },
+        {
+          "year": 2031,
+          "kau_price_krw": 59571,
+          "eua_price_krw": 202500,
+          "gap_krw": 142929,
+          "abatement_steel_Mt": 25.3,
+          "abatement_petrochem_Mt": 2.25,
+          "fundamental_shortfall_Mt": 87.0,
+          "banking_stock_Mt": 26.5,
+          "auction_ratio": 0.239,
+          "auction_ratio_power": 0.5,
+          "auction_ratio_non_power": 0.15,
+          "auction_ratio_leakage": 0.0,
+          "annual_revenue_trillion": 6.069,
+          "cumulative_revenue_trillion": 26.29,
+          "cbam_steel_trillion": 1.155,
+          "cbam_petrochem_trillion": 1.029,
+          "active_techs": {
+            "steel": {
+              "active": 3,
+              "total": 4,
+              "abatement_Mt": 25.3
+            },
+            "petrochem": {
+              "active": 1,
+              "total": 5,
+              "abatement_Mt": 2.25
+            },
+            "power": {
+              "active": 2,
+              "total": 5,
+              "abatement_Mt": 29.4
+            },
+            "cement": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 9.9
+            },
+            "refinery": {
+              "active": 3,
+              "total": 4,
+              "abatement_Mt": 7.2
+            },
+            "other": {
+              "active": 3,
+              "total": 3,
+              "abatement_Mt": 16.38
+            }
+          },
+          "effective_shortfall_Mt": 87.0
+        },
+        {
+          "year": 2032,
+          "kau_price_krw": 62940,
+          "eua_price_krw": 226500,
+          "gap_krw": 163560,
+          "abatement_steel_Mt": 25.3,
+          "abatement_petrochem_Mt": 4.5,
+          "fundamental_shortfall_Mt": 90.7,
+          "banking_stock_Mt": 28.4,
+          "auction_ratio": 0.239,
+          "auction_ratio_power": 0.5,
+          "auction_ratio_non_power": 0.15,
+          "auction_ratio_leakage": 0.0,
+          "annual_revenue_trillion": 6.284,
+          "cumulative_revenue_trillion": 32.57,
+          "cbam_steel_trillion": 1.322,
+          "cbam_petrochem_trillion": 1.178,
+          "active_techs": {
+            "steel": {
+              "active": 3,
+              "total": 4,
+              "abatement_Mt": 25.3
+            },
+            "petrochem": {
+              "active": 2,
+              "total": 5,
+              "abatement_Mt": 4.5
+            },
+            "power": {
+              "active": 2,
+              "total": 5,
+              "abatement_Mt": 29.4
+            },
+            "cement": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 9.9
+            },
+            "refinery": {
+              "active": 3,
+              "total": 4,
+              "abatement_Mt": 7.2
+            },
+            "other": {
+              "active": 3,
+              "total": 3,
+              "abatement_Mt": 16.38
+            }
+          },
+          "effective_shortfall_Mt": 90.7
+        },
+        {
+          "year": 2033,
+          "kau_price_krw": 66498,
+          "eua_price_krw": 250500,
+          "gap_krw": 184002,
+          "abatement_steel_Mt": 25.3,
+          "abatement_petrochem_Mt": 4.5,
+          "fundamental_shortfall_Mt": 94.4,
+          "banking_stock_Mt": 26.8,
+          "auction_ratio": 0.239,
+          "auction_ratio_power": 0.5,
+          "auction_ratio_non_power": 0.15,
+          "auction_ratio_leakage": 0.0,
+          "annual_revenue_trillion": 6.507,
+          "cumulative_revenue_trillion": 39.08,
+          "cbam_steel_trillion": 1.487,
+          "cbam_petrochem_trillion": 1.325,
+          "active_techs": {
+            "steel": {
+              "active": 3,
+              "total": 4,
+              "abatement_Mt": 25.3
+            },
+            "petrochem": {
+              "active": 2,
+              "total": 5,
+              "abatement_Mt": 4.5
+            },
+            "power": {
+              "active": 2,
+              "total": 5,
+              "abatement_Mt": 29.4
+            },
+            "cement": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 9.9
+            },
+            "refinery": {
+              "active": 3,
+              "total": 4,
+              "abatement_Mt": 7.2
+            },
+            "other": {
+              "active": 3,
+              "total": 3,
+              "abatement_Mt": 16.38
+            }
+          },
+          "effective_shortfall_Mt": 94.4
+        },
+        {
+          "year": 2034,
+          "kau_price_krw": 70258,
+          "eua_price_krw": 274500,
+          "gap_krw": 204242,
+          "abatement_steel_Mt": 25.3,
+          "abatement_petrochem_Mt": 4.5,
+          "fundamental_shortfall_Mt": 97.9,
+          "banking_stock_Mt": 21.5,
+          "auction_ratio": 0.239,
+          "auction_ratio_power": 0.5,
+          "auction_ratio_non_power": 0.15,
+          "auction_ratio_leakage": 0.0,
+          "annual_revenue_trillion": 6.737,
+          "cumulative_revenue_trillion": 45.82,
+          "cbam_steel_trillion": 1.651,
+          "cbam_petrochem_trillion": 1.471,
+          "active_techs": {
+            "steel": {
+              "active": 3,
+              "total": 4,
+              "abatement_Mt": 25.3
+            },
+            "petrochem": {
+              "active": 2,
+              "total": 5,
+              "abatement_Mt": 4.5
+            },
+            "power": {
+              "active": 2,
+              "total": 5,
+              "abatement_Mt": 29.4
+            },
+            "cement": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 9.9
+            },
+            "refinery": {
+              "active": 3,
+              "total": 4,
+              "abatement_Mt": 7.2
+            },
+            "other": {
+              "active": 3,
+              "total": 3,
+              "abatement_Mt": 16.38
+            }
+          },
+          "effective_shortfall_Mt": 97.9
+        },
+        {
+          "year": 2035,
+          "kau_price_krw": 74230,
+          "eua_price_krw": 298500,
+          "gap_krw": 224270,
+          "abatement_steel_Mt": 25.3,
+          "abatement_petrochem_Mt": 4.5,
+          "fundamental_shortfall_Mt": 101.4,
+          "banking_stock_Mt": 12.8,
+          "auction_ratio": 0.239,
+          "auction_ratio_power": 0.5,
+          "auction_ratio_non_power": 0.15,
+          "auction_ratio_leakage": 0.0,
+          "annual_revenue_trillion": 6.976,
+          "cumulative_revenue_trillion": 52.79,
+          "cbam_steel_trillion": 1.813,
+          "cbam_petrochem_trillion": 1.615,
+          "active_techs": {
+            "steel": {
+              "active": 3,
+              "total": 4,
+              "abatement_Mt": 25.3
+            },
+            "petrochem": {
+              "active": 2,
+              "total": 5,
+              "abatement_Mt": 4.5
+            },
+            "power": {
+              "active": 2,
+              "total": 5,
+              "abatement_Mt": 29.4
+            },
+            "cement": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 9.9
+            },
+            "refinery": {
+              "active": 3,
+              "total": 4,
+              "abatement_Mt": 7.2
+            },
+            "other": {
+              "active": 3,
+              "total": 3,
+              "abatement_Mt": 16.38
+            }
+          },
+          "effective_shortfall_Mt": 101.4
+        },
+        {
+          "year": 2036,
+          "kau_price_krw": 78428,
+          "eua_price_krw": 322500,
+          "gap_krw": 244072,
+          "abatement_steel_Mt": 25.3,
+          "abatement_petrochem_Mt": 4.5,
+          "fundamental_shortfall_Mt": 104.8,
+          "banking_stock_Mt": 14.4,
+          "auction_ratio": 0.239,
+          "auction_ratio_power": 0.5,
+          "auction_ratio_non_power": 0.15,
+          "auction_ratio_leakage": 0.0,
+          "annual_revenue_trillion": 7.223,
+          "cumulative_revenue_trillion": 60.01,
+          "cbam_steel_trillion": 1.973,
+          "cbam_petrochem_trillion": 1.757,
+          "active_techs": {
+            "steel": {
+              "active": 3,
+              "total": 4,
+              "abatement_Mt": 25.3
+            },
+            "petrochem": {
+              "active": 2,
+              "total": 5,
+              "abatement_Mt": 4.5
+            },
+            "power": {
+              "active": 3,
+              "total": 5,
+              "abatement_Mt": 43.12
+            },
+            "cement": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 9.9
+            },
+            "refinery": {
+              "active": 3,
+              "total": 4,
+              "abatement_Mt": 7.2
+            },
+            "other": {
+              "active": 3,
+              "total": 3,
+              "abatement_Mt": 16.38
+            }
+          },
+          "effective_shortfall_Mt": 104.8
+        },
+        {
+          "year": 2037,
+          "kau_price_krw": 82862,
+          "eua_price_krw": 346500,
+          "gap_krw": 263638,
+          "abatement_steel_Mt": 25.3,
+          "abatement_petrochem_Mt": 4.5,
+          "fundamental_shortfall_Mt": 108.1,
+          "banking_stock_Mt": 12.7,
+          "auction_ratio": 0.239,
+          "auction_ratio_power": 0.5,
+          "auction_ratio_non_power": 0.15,
+          "auction_ratio_leakage": 0.0,
+          "annual_revenue_trillion": 7.479,
+          "cumulative_revenue_trillion": 67.49,
+          "cbam_steel_trillion": 2.131,
+          "cbam_petrochem_trillion": 1.898,
+          "active_techs": {
+            "steel": {
+              "active": 3,
+              "total": 4,
+              "abatement_Mt": 25.3
+            },
+            "petrochem": {
+              "active": 2,
+              "total": 5,
+              "abatement_Mt": 4.5
+            },
+            "power": {
+              "active": 3,
+              "total": 5,
+              "abatement_Mt": 43.12
+            },
+            "cement": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 9.9
+            },
+            "refinery": {
+              "active": 3,
+              "total": 4,
+              "abatement_Mt": 7.2
+            },
+            "other": {
+              "active": 3,
+              "total": 3,
+              "abatement_Mt": 16.38
+            }
+          },
+          "effective_shortfall_Mt": 108.1
+        },
+        {
+          "year": 2038,
+          "kau_price_krw": 87547,
+          "eua_price_krw": 370500,
+          "gap_krw": 282953,
+          "abatement_steel_Mt": 25.3,
+          "abatement_petrochem_Mt": 4.5,
+          "fundamental_shortfall_Mt": 111.3,
+          "banking_stock_Mt": 11.9,
+          "auction_ratio": 0.239,
+          "auction_ratio_power": 0.5,
+          "auction_ratio_non_power": 0.15,
+          "auction_ratio_leakage": 0.0,
+          "annual_revenue_trillion": 7.743,
+          "cumulative_revenue_trillion": 75.24,
+          "cbam_steel_trillion": 2.287,
+          "cbam_petrochem_trillion": 2.037,
+          "active_techs": {
+            "steel": {
+              "active": 3,
+              "total": 4,
+              "abatement_Mt": 25.3
+            },
+            "petrochem": {
+              "active": 2,
+              "total": 5,
+              "abatement_Mt": 4.5
+            },
+            "power": {
+              "active": 3,
+              "total": 5,
+              "abatement_Mt": 43.12
+            },
+            "cement": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 9.9
+            },
+            "refinery": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 11.2
+            },
+            "other": {
+              "active": 3,
+              "total": 3,
+              "abatement_Mt": 16.38
+            }
+          },
+          "effective_shortfall_Mt": 111.3
+        },
+        {
+          "year": 2039,
+          "kau_price_krw": 92497,
+          "eua_price_krw": 394500,
+          "gap_krw": 302003,
+          "abatement_steel_Mt": 25.3,
+          "abatement_petrochem_Mt": 4.5,
+          "fundamental_shortfall_Mt": 114.4,
+          "banking_stock_Mt": 7.9,
+          "auction_ratio": 0.239,
+          "auction_ratio_power": 0.5,
+          "auction_ratio_non_power": 0.15,
+          "auction_ratio_leakage": 0.0,
+          "annual_revenue_trillion": 8.018,
+          "cumulative_revenue_trillion": 83.25,
+          "cbam_steel_trillion": 2.441,
+          "cbam_petrochem_trillion": 2.174,
+          "active_techs": {
+            "steel": {
+              "active": 3,
+              "total": 4,
+              "abatement_Mt": 25.3
+            },
+            "petrochem": {
+              "active": 2,
+              "total": 5,
+              "abatement_Mt": 4.5
+            },
+            "power": {
+              "active": 3,
+              "total": 5,
+              "abatement_Mt": 43.12
+            },
+            "cement": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 9.9
+            },
+            "refinery": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 11.2
+            },
+            "other": {
+              "active": 3,
+              "total": 3,
+              "abatement_Mt": 16.38
+            }
+          },
+          "effective_shortfall_Mt": 114.4
+        },
+        {
+          "year": 2040,
+          "kau_price_krw": 97727,
+          "eua_price_krw": 418500,
+          "gap_krw": 320773,
+          "abatement_steel_Mt": 25.3,
+          "abatement_petrochem_Mt": 4.5,
+          "fundamental_shortfall_Mt": 117.4,
+          "banking_stock_Mt": 0.9,
+          "auction_ratio": 0.239,
+          "auction_ratio_power": 0.5,
+          "auction_ratio_non_power": 0.15,
+          "auction_ratio_leakage": 0.0,
+          "annual_revenue_trillion": 8.302,
+          "cumulative_revenue_trillion": 91.56,
+          "cbam_steel_trillion": 2.593,
+          "cbam_petrochem_trillion": 2.31,
+          "active_techs": {
+            "steel": {
+              "active": 3,
+              "total": 4,
+              "abatement_Mt": 25.3
+            },
+            "petrochem": {
+              "active": 2,
+              "total": 5,
+              "abatement_Mt": 4.5
+            },
+            "power": {
+              "active": 3,
+              "total": 5,
+              "abatement_Mt": 43.12
+            },
+            "cement": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 9.9
+            },
+            "refinery": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 11.2
+            },
+            "other": {
+              "active": 3,
+              "total": 3,
+              "abatement_Mt": 16.38
+            }
+          },
+          "effective_shortfall_Mt": 117.4
+        }
+      ],
+      "kpi": {
+        "price_2030": 56383,
+        "price_2040": 97727,
+        "gap_2030": 122117,
+        "cumulative_revenue_2040": 91.6,
+        "cumulative_abatement_Mt": 433.5,
+        "cbam_2030_steel": 0.987,
+        "cbam_2030_petrochem": 0.879
+      }
+    },
+    "middle": {
+      "p0": 49270,
+      "r": 0.05500000000000001,
+      "price_path": [
+        {
+          "year": 2026,
+          "kau_price_krw": 49270,
+          "eua_price_krw": 123000,
+          "gap_krw": 73730,
+          "abatement_steel_Mt": 25.3,
+          "abatement_petrochem_Mt": 2.25,
+          "fundamental_shortfall_Mt": 45.5,
+          "banking_stock_Mt": 15.7,
+          "auction_ratio": 0.099,
+          "auction_ratio_power": 0.15,
+          "auction_ratio_non_power": 0.15,
+          "auction_ratio_leakage": 0.0,
+          "annual_revenue_trillion": 2.473,
+          "cumulative_revenue_trillion": 2.47,
+          "cbam_steel_trillion": 0.596,
+          "cbam_petrochem_trillion": 0.531,
+          "active_techs": {
+            "steel": {
+              "active": 3,
+              "total": 4,
+              "abatement_Mt": 25.3
+            },
+            "petrochem": {
+              "active": 1,
+              "total": 5,
+              "abatement_Mt": 2.25
+            },
+            "power": {
+              "active": 1,
+              "total": 5,
+              "abatement_Mt": 5.88
+            },
+            "cement": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 9.9
+            },
+            "refinery": {
+              "active": 2,
+              "total": 4,
+              "abatement_Mt": 5.2
+            },
+            "other": {
+              "active": 2,
+              "total": 3,
+              "abatement_Mt": 12.6
+            }
+          },
+          "effective_shortfall_Mt": 45.5
+        },
+        {
+          "year": 2027,
+          "kau_price_krw": 52056,
+          "eua_price_krw": 132000,
+          "gap_krw": 79944,
+          "abatement_steel_Mt": 25.3,
+          "abatement_petrochem_Mt": 2.25,
+          "fundamental_shortfall_Mt": 56.1,
+          "banking_stock_Mt": 24.5,
+          "auction_ratio": 0.1425,
+          "auction_ratio_power": 0.2375,
+          "auction_ratio_non_power": 0.15,
+          "auction_ratio_leakage": 0.025,
+          "annual_revenue_trillion": 3.613,
+          "cumulative_revenue_trillion": 6.09,
+          "cbam_steel_trillion": 0.646,
+          "cbam_petrochem_trillion": 0.576,
+          "active_techs": {
+            "steel": {
+              "active": 3,
+              "total": 4,
+              "abatement_Mt": 25.3
+            },
+            "petrochem": {
+              "active": 1,
+              "total": 5,
+              "abatement_Mt": 2.25
+            },
+            "power": {
+              "active": 1,
+              "total": 5,
+              "abatement_Mt": 5.88
+            },
+            "cement": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 9.9
+            },
+            "refinery": {
+              "active": 2,
+              "total": 4,
+              "abatement_Mt": 5.2
+            },
+            "other": {
+              "active": 3,
+              "total": 3,
+              "abatement_Mt": 16.38
+            }
+          },
+          "effective_shortfall_Mt": 56.1
+        },
+        {
+          "year": 2028,
+          "kau_price_krw": 55000,
+          "eua_price_krw": 142500,
+          "gap_krw": 87500,
+          "abatement_steel_Mt": 25.3,
+          "abatement_petrochem_Mt": 2.25,
+          "fundamental_shortfall_Mt": 66.7,
+          "banking_stock_Mt": 48.2,
+          "auction_ratio": 0.186,
+          "auction_ratio_power": 0.325,
+          "auction_ratio_non_power": 0.15,
+          "auction_ratio_leakage": 0.05,
+          "annual_revenue_trillion": 4.777,
+          "cumulative_revenue_trillion": 10.86,
+          "cbam_steel_trillion": 0.707,
+          "cbam_petrochem_trillion": 0.63,
+          "active_techs": {
+            "steel": {
+              "active": 3,
+              "total": 4,
+              "abatement_Mt": 25.3
+            },
+            "petrochem": {
+              "active": 1,
+              "total": 5,
+              "abatement_Mt": 2.25
+            },
+            "power": {
+              "active": 2,
+              "total": 5,
+              "abatement_Mt": 29.4
+            },
+            "cement": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 9.9
+            },
+            "refinery": {
+              "active": 3,
+              "total": 4,
+              "abatement_Mt": 7.2
+            },
+            "other": {
+              "active": 3,
+              "total": 3,
+              "abatement_Mt": 16.38
+            }
+          },
+          "effective_shortfall_Mt": 66.7
+        },
+        {
+          "year": 2029,
+          "kau_price_krw": 58109,
+          "eua_price_krw": 159000,
+          "gap_krw": 100891,
+          "abatement_steel_Mt": 25.3,
+          "abatement_petrochem_Mt": 2.25,
+          "fundamental_shortfall_Mt": 76.7,
+          "banking_stock_Mt": 62.0,
+          "auction_ratio": 0.2295,
+          "auction_ratio_power": 0.4125,
+          "auction_ratio_non_power": 0.15,
+          "auction_ratio_leakage": 0.075,
+          "annual_revenue_trillion": 5.975,
+          "cumulative_revenue_trillion": 16.84,
+          "cbam_steel_trillion": 0.815,
+          "cbam_petrochem_trillion": 0.726,
+          "active_techs": {
+            "steel": {
+              "active": 3,
+              "total": 4,
+              "abatement_Mt": 25.3
+            },
+            "petrochem": {
+              "active": 1,
+              "total": 5,
+              "abatement_Mt": 2.25
+            },
+            "power": {
+              "active": 2,
+              "total": 5,
+              "abatement_Mt": 29.4
+            },
+            "cement": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 9.9
+            },
+            "refinery": {
+              "active": 3,
+              "total": 4,
+              "abatement_Mt": 7.2
+            },
+            "other": {
+              "active": 3,
+              "total": 3,
+              "abatement_Mt": 16.38
+            }
+          },
+          "effective_shortfall_Mt": 76.7
+        },
+        {
+          "year": 2030,
+          "kau_price_krw": 61395,
+          "eua_price_krw": 178500,
+          "gap_krw": 117105,
+          "abatement_steel_Mt": 25.3,
+          "abatement_petrochem_Mt": 2.25,
+          "fundamental_shortfall_Mt": 86.7,
+          "banking_stock_Mt": 65.7,
+          "auction_ratio": 0.273,
+          "auction_ratio_power": 0.5,
+          "auction_ratio_non_power": 0.15,
+          "auction_ratio_leakage": 0.1,
+          "annual_revenue_trillion": 7.19,
+          "cumulative_revenue_trillion": 24.03,
+          "cbam_steel_trillion": 0.947,
+          "cbam_petrochem_trillion": 0.843,
+          "active_techs": {
+            "steel": {
+              "active": 3,
+              "total": 4,
+              "abatement_Mt": 25.3
+            },
+            "petrochem": {
+              "active": 1,
+              "total": 5,
+              "abatement_Mt": 2.25
+            },
+            "power": {
+              "active": 2,
+              "total": 5,
+              "abatement_Mt": 29.4
+            },
+            "cement": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 9.9
+            },
+            "refinery": {
+              "active": 3,
+              "total": 4,
+              "abatement_Mt": 7.2
+            },
+            "other": {
+              "active": 3,
+              "total": 3,
+              "abatement_Mt": 16.38
+            }
+          },
+          "effective_shortfall_Mt": 86.7
+        },
+        {
+          "year": 2031,
+          "kau_price_krw": 64866,
+          "eua_price_krw": 202500,
+          "gap_krw": 137634,
+          "abatement_steel_Mt": 25.3,
+          "abatement_petrochem_Mt": 4.5,
+          "fundamental_shortfall_Mt": 93.2,
+          "banking_stock_Mt": 65.2,
+          "auction_ratio": 0.29,
+          "auction_ratio_power": 0.5,
+          "auction_ratio_non_power": 0.15,
+          "auction_ratio_leakage": 0.15,
+          "annual_revenue_trillion": 7.825,
+          "cumulative_revenue_trillion": 31.85,
+          "cbam_steel_trillion": 1.112,
+          "cbam_petrochem_trillion": 0.991,
+          "active_techs": {
+            "steel": {
+              "active": 3,
+              "total": 4,
+              "abatement_Mt": 25.3
+            },
+            "petrochem": {
+              "active": 2,
+              "total": 5,
+              "abatement_Mt": 4.5
+            },
+            "power": {
+              "active": 2,
+              "total": 5,
+              "abatement_Mt": 29.4
+            },
+            "cement": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 9.9
+            },
+            "refinery": {
+              "active": 3,
+              "total": 4,
+              "abatement_Mt": 7.2
+            },
+            "other": {
+              "active": 3,
+              "total": 3,
+              "abatement_Mt": 16.38
+            }
+          },
+          "effective_shortfall_Mt": 93.2
+        },
+        {
+          "year": 2032,
+          "kau_price_krw": 68534,
+          "eua_price_krw": 226500,
+          "gap_krw": 157966,
+          "abatement_steel_Mt": 25.3,
+          "abatement_petrochem_Mt": 4.5,
+          "fundamental_shortfall_Mt": 99.6,
+          "banking_stock_Mt": 58.3,
+          "auction_ratio": 0.307,
+          "auction_ratio_power": 0.5,
+          "auction_ratio_non_power": 0.15,
+          "auction_ratio_leakage": 0.2,
+          "annual_revenue_trillion": 8.479,
+          "cumulative_revenue_trillion": 40.33,
+          "cbam_steel_trillion": 1.277,
+          "cbam_petrochem_trillion": 1.137,
+          "active_techs": {
+            "steel": {
+              "active": 3,
+              "total": 4,
+              "abatement_Mt": 25.3
+            },
+            "petrochem": {
+              "active": 2,
+              "total": 5,
+              "abatement_Mt": 4.5
+            },
+            "power": {
+              "active": 2,
+              "total": 5,
+              "abatement_Mt": 29.4
+            },
+            "cement": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 9.9
+            },
+            "refinery": {
+              "active": 3,
+              "total": 4,
+              "abatement_Mt": 7.2
+            },
+            "other": {
+              "active": 3,
+              "total": 3,
+              "abatement_Mt": 16.38
+            }
+          },
+          "effective_shortfall_Mt": 99.6
+        },
+        {
+          "year": 2033,
+          "kau_price_krw": 72409,
+          "eua_price_krw": 250500,
+          "gap_krw": 178091,
+          "abatement_steel_Mt": 25.3,
+          "abatement_petrochem_Mt": 4.5,
+          "fundamental_shortfall_Mt": 105.4,
+          "banking_stock_Mt": 59.2,
+          "auction_ratio": 0.324,
+          "auction_ratio_power": 0.5,
+          "auction_ratio_non_power": 0.15,
+          "auction_ratio_leakage": 0.25,
+          "annual_revenue_trillion": 9.173,
+          "cumulative_revenue_trillion": 49.51,
+          "cbam_steel_trillion": 1.439,
+          "cbam_petrochem_trillion": 1.282,
+          "active_techs": {
+            "steel": {
+              "active": 3,
+              "total": 4,
+              "abatement_Mt": 25.3
+            },
+            "petrochem": {
+              "active": 2,
+              "total": 5,
+              "abatement_Mt": 4.5
+            },
+            "power": {
+              "active": 3,
+              "total": 5,
+              "abatement_Mt": 43.12
+            },
+            "cement": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 9.9
+            },
+            "refinery": {
+              "active": 3,
+              "total": 4,
+              "abatement_Mt": 7.2
+            },
+            "other": {
+              "active": 3,
+              "total": 3,
+              "abatement_Mt": 16.38
+            }
+          },
+          "effective_shortfall_Mt": 105.4
+        },
+        {
+          "year": 2034,
+          "kau_price_krw": 76503,
+          "eua_price_krw": 274500,
+          "gap_krw": 197997,
+          "abatement_steel_Mt": 25.3,
+          "abatement_petrochem_Mt": 4.5,
+          "fundamental_shortfall_Mt": 111.3,
+          "banking_stock_Mt": 54.4,
+          "auction_ratio": 0.341,
+          "auction_ratio_power": 0.5,
+          "auction_ratio_non_power": 0.15,
+          "auction_ratio_leakage": 0.3,
+          "annual_revenue_trillion": 9.887,
+          "cumulative_revenue_trillion": 59.39,
+          "cbam_steel_trillion": 1.6,
+          "cbam_petrochem_trillion": 1.426,
+          "active_techs": {
+            "steel": {
+              "active": 3,
+              "total": 4,
+              "abatement_Mt": 25.3
+            },
+            "petrochem": {
+              "active": 2,
+              "total": 5,
+              "abatement_Mt": 4.5
+            },
+            "power": {
+              "active": 3,
+              "total": 5,
+              "abatement_Mt": 43.12
+            },
+            "cement": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 9.9
+            },
+            "refinery": {
+              "active": 3,
+              "total": 4,
+              "abatement_Mt": 7.2
+            },
+            "other": {
+              "active": 3,
+              "total": 3,
+              "abatement_Mt": 16.38
+            }
+          },
+          "effective_shortfall_Mt": 111.3
+        },
+        {
+          "year": 2035,
+          "kau_price_krw": 80828,
+          "eua_price_krw": 298500,
+          "gap_krw": 217672,
+          "abatement_steel_Mt": 25.3,
+          "abatement_petrochem_Mt": 4.5,
+          "fundamental_shortfall_Mt": 117.1,
+          "banking_stock_Mt": 47.6,
+          "auction_ratio": 0.358,
+          "auction_ratio_power": 0.5,
+          "auction_ratio_non_power": 0.15,
+          "auction_ratio_leakage": 0.35,
+          "annual_revenue_trillion": 10.62,
+          "cumulative_revenue_trillion": 70.01,
+          "cbam_steel_trillion": 1.759,
+          "cbam_petrochem_trillion": 1.567,
+          "active_techs": {
+            "steel": {
+              "active": 3,
+              "total": 4,
+              "abatement_Mt": 25.3
+            },
+            "petrochem": {
+              "active": 2,
+              "total": 5,
+              "abatement_Mt": 4.5
+            },
+            "power": {
+              "active": 3,
+              "total": 5,
+              "abatement_Mt": 43.12
+            },
+            "cement": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 9.9
+            },
+            "refinery": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 11.2
+            },
+            "other": {
+              "active": 3,
+              "total": 3,
+              "abatement_Mt": 16.38
+            }
+          },
+          "effective_shortfall_Mt": 117.1
+        },
+        {
+          "year": 2036,
+          "kau_price_krw": 85398,
+          "eua_price_krw": 322500,
+          "gap_krw": 237102,
+          "abatement_steel_Mt": 25.3,
+          "abatement_petrochem_Mt": 4.5,
+          "fundamental_shortfall_Mt": 122.4,
+          "banking_stock_Mt": 35.7,
+          "auction_ratio": 0.375,
+          "auction_ratio_power": 0.5,
+          "auction_ratio_non_power": 0.15,
+          "auction_ratio_leakage": 0.4,
+          "annual_revenue_trillion": 11.401,
+          "cumulative_revenue_trillion": 81.41,
+          "cbam_steel_trillion": 1.916,
+          "cbam_petrochem_trillion": 1.707,
+          "active_techs": {
+            "steel": {
+              "active": 3,
+              "total": 4,
+              "abatement_Mt": 25.3
+            },
+            "petrochem": {
+              "active": 2,
+              "total": 5,
+              "abatement_Mt": 4.5
+            },
+            "power": {
+              "active": 3,
+              "total": 5,
+              "abatement_Mt": 43.12
+            },
+            "cement": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 9.9
+            },
+            "refinery": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 11.2
+            },
+            "other": {
+              "active": 3,
+              "total": 3,
+              "abatement_Mt": 16.38
+            }
+          },
+          "effective_shortfall_Mt": 122.4
+        },
+        {
+          "year": 2037,
+          "kau_price_krw": 90227,
+          "eua_price_krw": 346500,
+          "gap_krw": 256273,
+          "abatement_steel_Mt": 25.3,
+          "abatement_petrochem_Mt": 4.5,
+          "fundamental_shortfall_Mt": 127.6,
+          "banking_stock_Mt": 18.4,
+          "auction_ratio": 0.3835,
+          "auction_ratio_power": 0.5,
+          "auction_ratio_non_power": 0.15,
+          "auction_ratio_leakage": 0.425,
+          "annual_revenue_trillion": 11.938,
+          "cumulative_revenue_trillion": 93.35,
+          "cbam_steel_trillion": 2.071,
+          "cbam_petrochem_trillion": 1.845,
+          "active_techs": {
+            "steel": {
+              "active": 3,
+              "total": 4,
+              "abatement_Mt": 25.3
+            },
+            "petrochem": {
+              "active": 2,
+              "total": 5,
+              "abatement_Mt": 4.5
+            },
+            "power": {
+              "active": 3,
+              "total": 5,
+              "abatement_Mt": 43.12
+            },
+            "cement": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 9.9
+            },
+            "refinery": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 11.2
+            },
+            "other": {
+              "active": 3,
+              "total": 3,
+              "abatement_Mt": 16.38
+            }
+          },
+          "effective_shortfall_Mt": 127.6
+        },
+        {
+          "year": 2038,
+          "kau_price_krw": 95328,
+          "eua_price_krw": 370500,
+          "gap_krw": 275172,
+          "abatement_steel_Mt": 41.8,
+          "abatement_petrochem_Mt": 4.5,
+          "fundamental_shortfall_Mt": 133.4,
+          "banking_stock_Mt": 11.9,
+          "auction_ratio": 0.392,
+          "auction_ratio_power": 0.5,
+          "auction_ratio_non_power": 0.15,
+          "auction_ratio_leakage": 0.45,
+          "annual_revenue_trillion": 12.481,
+          "cumulative_revenue_trillion": 105.83,
+          "cbam_steel_trillion": 2.224,
+          "cbam_petrochem_trillion": 1.981,
+          "active_techs": {
+            "steel": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 41.8
+            },
+            "petrochem": {
+              "active": 2,
+              "total": 5,
+              "abatement_Mt": 4.5
+            },
+            "power": {
+              "active": 3,
+              "total": 5,
+              "abatement_Mt": 43.12
+            },
+            "cement": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 9.9
+            },
+            "refinery": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 11.2
+            },
+            "other": {
+              "active": 3,
+              "total": 3,
+              "abatement_Mt": 16.38
+            }
+          },
+          "effective_shortfall_Mt": 133.4
+        },
+        {
+          "year": 2039,
+          "kau_price_krw": 100718,
+          "eua_price_krw": 394500,
+          "gap_krw": 293782,
+          "abatement_steel_Mt": 41.8,
+          "abatement_petrochem_Mt": 4.5,
+          "fundamental_shortfall_Mt": 139.7,
+          "banking_stock_Mt": 8.9,
+          "auction_ratio": 0.4005,
+          "auction_ratio_power": 0.5,
+          "auction_ratio_non_power": 0.15,
+          "auction_ratio_leakage": 0.475,
+          "annual_revenue_trillion": 13.029,
+          "cumulative_revenue_trillion": 118.86,
+          "cbam_steel_trillion": 2.375,
+          "cbam_petrochem_trillion": 2.115,
+          "active_techs": {
+            "steel": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 41.8
+            },
+            "petrochem": {
+              "active": 2,
+              "total": 5,
+              "abatement_Mt": 4.5
+            },
+            "power": {
+              "active": 4,
+              "total": 5,
+              "abatement_Mt": 52.92
+            },
+            "cement": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 9.9
+            },
+            "refinery": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 11.2
+            },
+            "other": {
+              "active": 3,
+              "total": 3,
+              "abatement_Mt": 16.38
+            }
+          },
+          "effective_shortfall_Mt": 139.7
+        },
+        {
+          "year": 2040,
+          "kau_price_krw": 106413,
+          "eua_price_krw": 418500,
+          "gap_krw": 312087,
+          "abatement_steel_Mt": 41.8,
+          "abatement_petrochem_Mt": 7.65,
+          "fundamental_shortfall_Mt": 145.1,
+          "banking_stock_Mt": 3.7,
+          "auction_ratio": 0.409,
+          "auction_ratio_power": 0.5,
+          "auction_ratio_non_power": 0.15,
+          "auction_ratio_leakage": 0.5,
+          "annual_revenue_trillion": 13.623,
+          "cumulative_revenue_trillion": 132.48,
+          "cbam_steel_trillion": 2.522,
+          "cbam_petrochem_trillion": 2.247,
+          "active_techs": {
+            "steel": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 41.8
+            },
+            "petrochem": {
+              "active": 3,
+              "total": 5,
+              "abatement_Mt": 7.65
+            },
+            "power": {
+              "active": 4,
+              "total": 5,
+              "abatement_Mt": 52.92
+            },
+            "cement": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 9.9
+            },
+            "refinery": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 11.2
+            },
+            "other": {
+              "active": 3,
+              "total": 3,
+              "abatement_Mt": 16.38
+            }
+          },
+          "effective_shortfall_Mt": 145.1
+        }
+      ],
+      "kpi": {
+        "price_2030": 61395,
+        "price_2040": 106413,
+        "gap_2030": 117105,
+        "cumulative_revenue_2040": 132.5,
+        "cumulative_abatement_Mt": 488.4,
+        "cbam_2030_steel": 0.947,
+        "cbam_2030_petrochem": 0.843
+      }
+    },
+    "ideal": {
+      "p0": 123730,
+      "r": 0.05500000000000001,
+      "price_path": [
+        {
+          "year": 2026,
+          "kau_price_krw": 123730,
+          "eua_price_krw": 123000,
+          "gap_krw": -730,
+          "abatement_steel_Mt": 25.3,
+          "abatement_petrochem_Mt": 8.1,
+          "fundamental_shortfall_Mt": 45.5,
+          "banking_stock_Mt": 101.0,
+          "auction_ratio": 0.025,
+          "auction_ratio_power": 0.025,
+          "auction_ratio_non_power": 0.025,
+          "auction_ratio_leakage": 0.025,
+          "annual_revenue_trillion": 1.568,
+          "cumulative_revenue_trillion": 1.57,
+          "cbam_steel_trillion": 0.0,
+          "cbam_petrochem_trillion": 0.0,
+          "active_techs": {
+            "steel": {
+              "active": 3,
+              "total": 4,
+              "abatement_Mt": 25.3
+            },
+            "petrochem": {
+              "active": 3,
+              "total": 5,
+              "abatement_Mt": 8.1
+            },
+            "power": {
+              "active": 3,
+              "total": 5,
+              "abatement_Mt": 43.12
+            },
+            "cement": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 9.9
+            },
+            "refinery": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 11.2
+            },
+            "other": {
+              "active": 3,
+              "total": 3,
+              "abatement_Mt": 16.38
+            }
+          },
+          "effective_shortfall_Mt": 45.5
+        },
+        {
+          "year": 2027,
+          "kau_price_krw": 130726,
+          "eua_price_krw": 132000,
+          "gap_krw": 1274,
+          "abatement_steel_Mt": 25.3,
+          "abatement_petrochem_Mt": 8.1,
+          "fundamental_shortfall_Mt": 62.1,
+          "banking_stock_Mt": 171.9,
+          "auction_ratio": 0.05,
+          "auction_ratio_power": 0.05,
+          "auction_ratio_non_power": 0.05,
+          "auction_ratio_leakage": 0.05,
+          "annual_revenue_trillion": 3.118,
+          "cumulative_revenue_trillion": 4.69,
+          "cbam_steel_trillion": 0.01,
+          "cbam_petrochem_trillion": 0.009,
+          "active_techs": {
+            "steel": {
+              "active": 3,
+              "total": 4,
+              "abatement_Mt": 25.3
+            },
+            "petrochem": {
+              "active": 3,
+              "total": 5,
+              "abatement_Mt": 8.1
+            },
+            "power": {
+              "active": 3,
+              "total": 5,
+              "abatement_Mt": 43.12
+            },
+            "cement": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 9.9
+            },
+            "refinery": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 11.2
+            },
+            "other": {
+              "active": 3,
+              "total": 3,
+              "abatement_Mt": 16.38
+            }
+          },
+          "effective_shortfall_Mt": 62.1
+        },
+        {
+          "year": 2028,
+          "kau_price_krw": 138117,
+          "eua_price_krw": 142500,
+          "gap_krw": 4383,
+          "abatement_steel_Mt": 41.8,
+          "abatement_petrochem_Mt": 8.1,
+          "fundamental_shortfall_Mt": 78.1,
+          "banking_stock_Mt": 229.9,
+          "auction_ratio": 0.1,
+          "auction_ratio_power": 0.1,
+          "auction_ratio_non_power": 0.1,
+          "auction_ratio_leakage": 0.1,
+          "annual_revenue_trillion": 6.188,
+          "cumulative_revenue_trillion": 10.87,
+          "cbam_steel_trillion": 0.035,
+          "cbam_petrochem_trillion": 0.032,
+          "active_techs": {
+            "steel": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 41.8
+            },
+            "petrochem": {
+              "active": 3,
+              "total": 5,
+              "abatement_Mt": 8.1
+            },
+            "power": {
+              "active": 3,
+              "total": 5,
+              "abatement_Mt": 43.12
+            },
+            "cement": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 9.9
+            },
+            "refinery": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 11.2
+            },
+            "other": {
+              "active": 3,
+              "total": 3,
+              "abatement_Mt": 16.38
+            }
+          },
+          "effective_shortfall_Mt": 78.1
+        },
+        {
+          "year": 2029,
+          "kau_price_krw": 145927,
+          "eua_price_krw": 159000,
+          "gap_krw": 13073,
+          "abatement_steel_Mt": 41.8,
+          "abatement_petrochem_Mt": 8.1,
+          "fundamental_shortfall_Mt": 95.9,
+          "banking_stock_Mt": 274.4,
+          "auction_ratio": 0.225,
+          "auction_ratio_power": 0.225,
+          "auction_ratio_non_power": 0.225,
+          "auction_ratio_leakage": 0.225,
+          "annual_revenue_trillion": 13.724,
+          "cumulative_revenue_trillion": 24.6,
+          "cbam_steel_trillion": 0.106,
+          "cbam_petrochem_trillion": 0.094,
+          "active_techs": {
+            "steel": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 41.8
+            },
+            "petrochem": {
+              "active": 3,
+              "total": 5,
+              "abatement_Mt": 8.1
+            },
+            "power": {
+              "active": 4,
+              "total": 5,
+              "abatement_Mt": 52.92
+            },
+            "cement": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 9.9
+            },
+            "refinery": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 11.2
+            },
+            "other": {
+              "active": 3,
+              "total": 3,
+              "abatement_Mt": 16.38
+            }
+          },
+          "effective_shortfall_Mt": 95.9
+        },
+        {
+          "year": 2030,
+          "kau_price_krw": 154178,
+          "eua_price_krw": 178500,
+          "gap_krw": 24322,
+          "abatement_steel_Mt": 41.8,
+          "abatement_petrochem_Mt": 11.25,
+          "fundamental_shortfall_Mt": 119.3,
+          "banking_stock_Mt": 308.3,
+          "auction_ratio": 0.485,
+          "auction_ratio_power": 0.485,
+          "auction_ratio_non_power": 0.485,
+          "auction_ratio_leakage": 0.485,
+          "annual_revenue_trillion": 29.088,
+          "cumulative_revenue_trillion": 53.69,
+          "cbam_steel_trillion": 0.197,
+          "cbam_petrochem_trillion": 0.175,
+          "active_techs": {
+            "steel": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 41.8
+            },
+            "petrochem": {
+              "active": 4,
+              "total": 5,
+              "abatement_Mt": 11.25
+            },
+            "power": {
+              "active": 5,
+              "total": 5,
+              "abatement_Mt": 62.72
+            },
+            "cement": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 9.9
+            },
+            "refinery": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 11.2
+            },
+            "other": {
+              "active": 3,
+              "total": 3,
+              "abatement_Mt": 16.38
+            }
+          },
+          "effective_shortfall_Mt": 119.3
+        },
+        {
+          "year": 2031,
+          "kau_price_krw": 162895,
+          "eua_price_krw": 202500,
+          "gap_krw": 39605,
+          "abatement_steel_Mt": 41.8,
+          "abatement_petrochem_Mt": 11.25,
+          "fundamental_shortfall_Mt": 132.8,
+          "banking_stock_Mt": 328.8,
+          "auction_ratio": 0.61,
+          "auction_ratio_power": 0.61,
+          "auction_ratio_non_power": 0.61,
+          "auction_ratio_leakage": 0.61,
+          "annual_revenue_trillion": 36.765,
+          "cumulative_revenue_trillion": 90.45,
+          "cbam_steel_trillion": 0.32,
+          "cbam_petrochem_trillion": 0.285,
+          "active_techs": {
+            "steel": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 41.8
+            },
+            "petrochem": {
+              "active": 4,
+              "total": 5,
+              "abatement_Mt": 11.25
+            },
+            "power": {
+              "active": 5,
+              "total": 5,
+              "abatement_Mt": 62.72
+            },
+            "cement": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 9.9
+            },
+            "refinery": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 11.2
+            },
+            "other": {
+              "active": 3,
+              "total": 3,
+              "abatement_Mt": 16.38
+            }
+          },
+          "effective_shortfall_Mt": 132.8
+        },
+        {
+          "year": 2032,
+          "kau_price_krw": 172105,
+          "eua_price_krw": 226500,
+          "gap_krw": 54395,
+          "abatement_steel_Mt": 41.8,
+          "abatement_petrochem_Mt": 11.25,
+          "fundamental_shortfall_Mt": 145.5,
+          "banking_stock_Mt": 336.6,
+          "auction_ratio": 0.735,
+          "auction_ratio_power": 0.735,
+          "auction_ratio_non_power": 0.735,
+          "auction_ratio_leakage": 0.735,
+          "annual_revenue_trillion": 44.527,
+          "cumulative_revenue_trillion": 134.98,
+          "cbam_steel_trillion": 0.44,
+          "cbam_petrochem_trillion": 0.392,
+          "active_techs": {
+            "steel": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 41.8
+            },
+            "petrochem": {
+              "active": 4,
+              "total": 5,
+              "abatement_Mt": 11.25
+            },
+            "power": {
+              "active": 5,
+              "total": 5,
+              "abatement_Mt": 62.72
+            },
+            "cement": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 9.9
+            },
+            "refinery": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 11.2
+            },
+            "other": {
+              "active": 3,
+              "total": 3,
+              "abatement_Mt": 16.38
+            }
+          },
+          "effective_shortfall_Mt": 145.5
+        },
+        {
+          "year": 2033,
+          "kau_price_krw": 181836,
+          "eua_price_krw": 250500,
+          "gap_krw": 68664,
+          "abatement_steel_Mt": 41.8,
+          "abatement_petrochem_Mt": 11.25,
+          "fundamental_shortfall_Mt": 158.2,
+          "banking_stock_Mt": 331.6,
+          "auction_ratio": 0.86,
+          "auction_ratio_power": 0.86,
+          "auction_ratio_non_power": 0.86,
+          "auction_ratio_leakage": 0.86,
+          "annual_revenue_trillion": 52.231,
+          "cumulative_revenue_trillion": 187.21,
+          "cbam_steel_trillion": 0.555,
+          "cbam_petrochem_trillion": 0.494,
+          "active_techs": {
+            "steel": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 41.8
+            },
+            "petrochem": {
+              "active": 4,
+              "total": 5,
+              "abatement_Mt": 11.25
+            },
+            "power": {
+              "active": 5,
+              "total": 5,
+              "abatement_Mt": 62.72
+            },
+            "cement": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 9.9
+            },
+            "refinery": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 11.2
+            },
+            "other": {
+              "active": 3,
+              "total": 3,
+              "abatement_Mt": 16.38
+            }
+          },
+          "effective_shortfall_Mt": 158.2
+        },
+        {
+          "year": 2034,
+          "kau_price_krw": 192117,
+          "eua_price_krw": 274500,
+          "gap_krw": 82383,
+          "abatement_steel_Mt": 41.8,
+          "abatement_petrochem_Mt": 11.25,
+          "fundamental_shortfall_Mt": 171.0,
+          "banking_stock_Mt": 313.8,
+          "auction_ratio": 1.0,
+          "auction_ratio_power": 1.0,
+          "auction_ratio_non_power": 1.0,
+          "auction_ratio_leakage": 1.0,
+          "annual_revenue_trillion": 60.709,
+          "cumulative_revenue_trillion": 247.92,
+          "cbam_steel_trillion": 0.666,
+          "cbam_petrochem_trillion": 0.593,
+          "active_techs": {
+            "steel": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 41.8
+            },
+            "petrochem": {
+              "active": 4,
+              "total": 5,
+              "abatement_Mt": 11.25
+            },
+            "power": {
+              "active": 5,
+              "total": 5,
+              "abatement_Mt": 62.72
+            },
+            "cement": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 9.9
+            },
+            "refinery": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 11.2
+            },
+            "other": {
+              "active": 3,
+              "total": 3,
+              "abatement_Mt": 16.38
+            }
+          },
+          "effective_shortfall_Mt": 171.0
+        },
+        {
+          "year": 2035,
+          "kau_price_krw": 202979,
+          "eua_price_krw": 298500,
+          "gap_krw": 95521,
+          "abatement_steel_Mt": 41.8,
+          "abatement_petrochem_Mt": 11.25,
+          "fundamental_shortfall_Mt": 183.0,
+          "banking_stock_Mt": 284.1,
+          "auction_ratio": 1.0,
+          "auction_ratio_power": 1.0,
+          "auction_ratio_non_power": 1.0,
+          "auction_ratio_leakage": 1.0,
+          "annual_revenue_trillion": 60.691,
+          "cumulative_revenue_trillion": 308.61,
+          "cbam_steel_trillion": 0.772,
+          "cbam_petrochem_trillion": 0.688,
+          "active_techs": {
+            "steel": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 41.8
+            },
+            "petrochem": {
+              "active": 4,
+              "total": 5,
+              "abatement_Mt": 11.25
+            },
+            "power": {
+              "active": 5,
+              "total": 5,
+              "abatement_Mt": 62.72
+            },
+            "cement": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 9.9
+            },
+            "refinery": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 11.2
+            },
+            "other": {
+              "active": 3,
+              "total": 3,
+              "abatement_Mt": 16.38
+            }
+          },
+          "effective_shortfall_Mt": 183.0
+        },
+        {
+          "year": 2036,
+          "kau_price_krw": 214456,
+          "eua_price_krw": 322500,
+          "gap_krw": 108044,
+          "abatement_steel_Mt": 41.8,
+          "abatement_petrochem_Mt": 11.25,
+          "fundamental_shortfall_Mt": 193.0,
+          "banking_stock_Mt": 244.4,
+          "auction_ratio": 1.0,
+          "auction_ratio_power": 1.0,
+          "auction_ratio_non_power": 1.0,
+          "auction_ratio_leakage": 1.0,
+          "annual_revenue_trillion": 60.906,
+          "cumulative_revenue_trillion": 369.51,
+          "cbam_steel_trillion": 0.873,
+          "cbam_petrochem_trillion": 0.778,
+          "active_techs": {
+            "steel": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 41.8
+            },
+            "petrochem": {
+              "active": 4,
+              "total": 5,
+              "abatement_Mt": 11.25
+            },
+            "power": {
+              "active": 5,
+              "total": 5,
+              "abatement_Mt": 62.72
+            },
+            "cement": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 9.9
+            },
+            "refinery": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 11.2
+            },
+            "other": {
+              "active": 3,
+              "total": 3,
+              "abatement_Mt": 16.38
+            }
+          },
+          "effective_shortfall_Mt": 193.0
+        },
+        {
+          "year": 2037,
+          "kau_price_krw": 226581,
+          "eua_price_krw": 346500,
+          "gap_krw": 119919,
+          "abatement_steel_Mt": 41.8,
+          "abatement_petrochem_Mt": 11.25,
+          "fundamental_shortfall_Mt": 202.2,
+          "banking_stock_Mt": 195.5,
+          "auction_ratio": 1.0,
+          "auction_ratio_power": 1.0,
+          "auction_ratio_non_power": 1.0,
+          "auction_ratio_leakage": 1.0,
+          "annual_revenue_trillion": 61.177,
+          "cumulative_revenue_trillion": 430.69,
+          "cbam_steel_trillion": 0.969,
+          "cbam_petrochem_trillion": 0.863,
+          "active_techs": {
+            "steel": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 41.8
+            },
+            "petrochem": {
+              "active": 4,
+              "total": 5,
+              "abatement_Mt": 11.25
+            },
+            "power": {
+              "active": 5,
+              "total": 5,
+              "abatement_Mt": 62.72
+            },
+            "cement": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 9.9
+            },
+            "refinery": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 11.2
+            },
+            "other": {
+              "active": 3,
+              "total": 3,
+              "abatement_Mt": 16.38
+            }
+          },
+          "effective_shortfall_Mt": 202.2
+        },
+        {
+          "year": 2038,
+          "kau_price_krw": 239393,
+          "eua_price_krw": 370500,
+          "gap_krw": 131107,
+          "abatement_steel_Mt": 41.8,
+          "abatement_petrochem_Mt": 11.25,
+          "fundamental_shortfall_Mt": 210.4,
+          "banking_stock_Mt": 138.3,
+          "auction_ratio": 1.0,
+          "auction_ratio_power": 1.0,
+          "auction_ratio_non_power": 1.0,
+          "auction_ratio_leakage": 1.0,
+          "annual_revenue_trillion": 61.524,
+          "cumulative_revenue_trillion": 492.22,
+          "cbam_steel_trillion": 1.06,
+          "cbam_petrochem_trillion": 0.944,
+          "active_techs": {
+            "steel": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 41.8
+            },
+            "petrochem": {
+              "active": 4,
+              "total": 5,
+              "abatement_Mt": 11.25
+            },
+            "power": {
+              "active": 5,
+              "total": 5,
+              "abatement_Mt": 62.72
+            },
+            "cement": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 9.9
+            },
+            "refinery": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 11.2
+            },
+            "other": {
+              "active": 3,
+              "total": 3,
+              "abatement_Mt": 16.38
+            }
+          },
+          "effective_shortfall_Mt": 210.4
+        },
+        {
+          "year": 2039,
+          "kau_price_krw": 252928,
+          "eua_price_krw": 394500,
+          "gap_krw": 141572,
+          "abatement_steel_Mt": 41.8,
+          "abatement_petrochem_Mt": 11.25,
+          "fundamental_shortfall_Mt": 218.7,
+          "banking_stock_Mt": 72.9,
+          "auction_ratio": 1.0,
+          "auction_ratio_power": 1.0,
+          "auction_ratio_non_power": 1.0,
+          "auction_ratio_leakage": 1.0,
+          "annual_revenue_trillion": 61.714,
+          "cumulative_revenue_trillion": 553.93,
+          "cbam_steel_trillion": 1.144,
+          "cbam_petrochem_trillion": 1.019,
+          "active_techs": {
+            "steel": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 41.8
+            },
+            "petrochem": {
+              "active": 4,
+              "total": 5,
+              "abatement_Mt": 11.25
+            },
+            "power": {
+              "active": 5,
+              "total": 5,
+              "abatement_Mt": 62.72
+            },
+            "cement": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 9.9
+            },
+            "refinery": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 11.2
+            },
+            "other": {
+              "active": 3,
+              "total": 3,
+              "abatement_Mt": 16.38
+            }
+          },
+          "effective_shortfall_Mt": 218.7
+        },
+        {
+          "year": 2040,
+          "kau_price_krw": 267229,
+          "eua_price_krw": 418500,
+          "gap_krw": 151271,
+          "abatement_steel_Mt": 41.8,
+          "abatement_petrochem_Mt": 11.25,
+          "fundamental_shortfall_Mt": 226.1,
+          "banking_stock_Mt": 0.0,
+          "auction_ratio": 1.0,
+          "auction_ratio_power": 1.0,
+          "auction_ratio_non_power": 1.0,
+          "auction_ratio_leakage": 1.0,
+          "annual_revenue_trillion": 61.997,
+          "cumulative_revenue_trillion": 615.93,
+          "cbam_steel_trillion": 1.223,
+          "cbam_petrochem_trillion": 1.089,
+          "active_techs": {
+            "steel": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 41.8
+            },
+            "petrochem": {
+              "active": 4,
+              "total": 5,
+              "abatement_Mt": 11.25
+            },
+            "power": {
+              "active": 5,
+              "total": 5,
+              "abatement_Mt": 62.72
+            },
+            "cement": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 9.9
+            },
+            "refinery": {
+              "active": 4,
+              "total": 4,
+              "abatement_Mt": 11.2
+            },
+            "other": {
+              "active": 3,
+              "total": 3,
+              "abatement_Mt": 16.38
+            }
+          },
+          "effective_shortfall_Mt": 226.1
+        }
+      ],
+      "kpi": {
+        "price_2030": 154178,
+        "price_2040": 267229,
+        "gap_2030": 24322,
+        "cumulative_revenue_2040": 615.9,
+        "cumulative_abatement_Mt": 750.1,
+        "cbam_2030_steel": 0.197,
+        "cbam_2030_petrochem": 0.175
+      }
+    }
+  },
+  "eua": {
+    "2026": 123000.0,
+    "2027": 132000.0,
+    "2028": 142500.0,
+    "2029": 159000.0,
+    "2030": 178500.0,
+    "2031": 202500.0,
+    "2032": 226500.0,
+    "2033": 250500.0,
+    "2034": 274500.0,
+    "2035": 298500.0,
+    "2036": 322500.0,
+    "2037": 346500.0,
+    "2038": 370500.0,
+    "2039": 394500.0,
+    "2040": 418500.0
+  },
+  "compare_rows": [
+    {
+      "metric": "2030년 KAU 가격",
+      "en": "KAU price, 2030",
+      "unit": "원/tCO₂",
+      "base": "56,383",
+      "middle": "61,395",
+      "ideal": "154,178"
+    },
+    {
+      "metric": "2040년 KAU 가격",
+      "en": "KAU price, 2040",
+      "unit": "원/tCO₂",
+      "base": "97,727",
+      "middle": "106,413",
+      "ideal": "267,229"
+    },
+    {
+      "metric": "누적 경매수입 (2026–2040)",
+      "en": "Cum. auction revenue",
+      "unit": "조원",
+      "base": "91.6",
+      "middle": "132.5",
+      "ideal": "615.9"
+    },
+    {
+      "metric": "누적 감축량 (철강+석화)",
+      "en": "Cum. abatement",
+      "unit": "백만 tCO₂",
+      "base": "433.5",
+      "middle": "488.4",
+      "ideal": "750.1"
+    },
+    {
+      "metric": "2034년 무상할당 (누출업종)",
+      "en": "Free alloc. 2034",
+      "unit": "%",
+      "base": "100",
+      "middle": "70",
+      "ideal": "0"
+    },
+    {
+      "metric": "EUA−KAU 가격차 (2030)",
+      "en": "EUA−KAU gap, 2030",
+      "unit": "원/tCO₂",
+      "base": "122,117",
+      "middle": "117,105",
+      "ideal": "24,322"
+    },
+    {
+      "metric": "CBAM 부담 추정 (2030)",
+      "en": "CBAM exposure, 2030",
+      "unit": "조원/년",
+      "base": "1.87",
+      "middle": "1.79",
+      "ideal": "0.37",
+      "cbam": true
+    }
+  ],
+  "macc_technologies": [
+    {
+      "sector": "steel",
+      "technology": "에너지효율 개선",
+      "cost_usd": -8.5,
+      "cost_krw": -11750,
+      "potential_pct": 5.0,
+      "potential_Mt": 5.5,
+      "timeline": "즉시",
+      "source": "Nature 2025 s41586-025-09658-9 Table1. POSCO 에너지원단위 개선 실적(-2.1%/yr, 2019-2023)"
+    },
+    {
+      "sector": "steel",
+      "technology": "스크랩/전기로(EAF) 확대",
+      "cost_usd": 0.3,
+      "cost_krw": 414,
+      "potential_pct": 10.0,
+      "potential_Mt": 11.0,
+      "timeline": "2025-2030",
+      "source": "Nature 2025 Fig.3. 현대제철 EAF 전환 계획(2025). 한국 스크랩 자급률 38%(KOSA 2024)"
+    },
+    {
+      "sector": "steel",
+      "technology": "연료전환 (석탄→가스)",
+      "cost_usd": 25.0,
+      "cost_krw": 34500,
+      "potential_pct": 8.0,
+      "potential_Mt": 8.8,
+      "timeline": "2025-2030",
+      "source": "IEA Iron & Steel Roadmap 2024 Table 3.2. 한국 LNG CIF /MMBtu(KOGAS 2024 평균)"
+    },
+    {
+      "sector": "steel",
+      "technology": "수소환원제철 (H₂-DRI-EAF)",
+      "cost_usd": 110.0,
+      "cost_krw": 151800,
+      "potential_pct": 15.0,
+      "potential_Mt": 16.5,
+      "timeline": "2033+",
+      "source": "Nature 2025 Fig.4. POSCO HyREX 2026 실증→2033 상용화 로드맵. 그린H₂ /kg 가정(IEA GHR 2024)"
+    },
+    {
+      "sector": "petrochem",
+      "technology": "공정최적화/열통합",
+      "cost_usd": 5.0,
+      "cost_krw": 6900,
+      "potential_pct": 5.0,
+      "potential_Mt": 2.25,
+      "timeline": "즉시",
+      "source": "IEA Chemicals Roadmap 2024 Ch.3. LG화학/롯데케미칼 열통합 실적(산업부 2024)"
+    },
+    {
+      "sector": "petrochem",
+      "technology": "바이오 나프타 전환",
+      "cost_usd": 45.0,
+      "cost_krw": 62100,
+      "potential_pct": 5.0,
+      "potential_Mt": 2.25,
+      "timeline": "2028+",
+      "source": "RSC Green Chemistry 2025 D4GC04538F Table 2. 바이오 나프타 /t vs 석유 나프타 /t"
+    },
+    {
+      "sector": "petrochem",
+      "technology": "블루암모니아 연료 (50%)",
+      "cost_usd": 88.0,
+      "cost_krw": 121440,
+      "potential_pct": 8.0,
+      "potential_Mt": 3.6,
+      "timeline": "2030+",
+      "source": "ACS Sustainable Chem. Eng. 2024. 블루NH₃ /t(IEA 2024). NH₃ 혼소 50% 기준"
+    },
+    {
+      "sector": "petrochem",
+      "technology": "그린수소+메탄 연료 (50%)",
+      "cost_usd": 148.0,
+      "cost_krw": 204240,
+      "potential_pct": 7.0,
+      "potential_Mt": 3.15,
+      "timeline": "2033+",
+      "source": "ACS Sustainable Chem. Eng. 2024. 그린H₂ /kg 기준(IEA GHR 2024 Fig.2.3)"
+    },
+    {
+      "sector": "petrochem",
+      "technology": "전기크래킹",
+      "cost_usd": 561.0,
+      "cost_krw": 774180,
+      "potential_pct": 5.0,
+      "potential_Mt": 2.25,
+      "timeline": "2035+",
+      "source": "RSC Green Chemistry 2025. BASF/SABIC 실증 2025. 전력단가 /MWh(한국 산업용 76원/kWh)"
+    },
+    {
+      "sector": "power",
+      "technology": "석탄 효율개선 (USC)",
+      "cost_usd": 8.7,
+      "cost_krw": 12000,
+      "potential_pct": 3.0,
+      "potential_Mt": 5.88,
+      "timeline": "즉시",
+      "source": "KEPCO 2024 발전실적. USC 열효율 45%→47%, 배출 0.82→0.80 tCO₂/MWh. 한국전력통계(2024)"
+    },
+    {
+      "sector": "power",
+      "technology": "석탄→LNG 전환",
+      "cost_usd": 40.0,
+      "cost_krw": 55000,
+      "potential_pct": 12.0,
+      "potential_Mt": 23.52,
+      "timeline": "2025-2030",
+      "source": "11차 전력수급계획(2024). LNG LCOE 90원/kWh vs 석탄 55원/kWh. LNG 0.35tCO₂/MWh. KOGAS 수입가 /MMBtu"
+    },
+    {
+      "sector": "power",
+      "technology": "태양광 확대",
+      "cost_usd": 65.0,
+      "cost_krw": 90000,
+      "potential_pct": 7.0,
+      "potential_Mt": 13.72,
+      "timeline": "2026-2035",
+      "source": "MOTIE 9차 신재생기본계획. 한국 태양광 LCOE 107원/kWh(KEEI 2024). 글로벌 평균 대비 1.5배(국토제약+계통비용)"
+    },
+    {
+      "sector": "power",
+      "technology": "풍력 확대 (해상)",
+      "cost_usd": 129.0,
+      "cost_krw": 178000,
+      "potential_pct": 5.0,
+      "potential_Mt": 9.8,
+      "timeline": "2028-2035",
+      "source": "해상풍력 LCOE 165원/kWh(MOTIE 2024). 부유식 비중 확대(서남해 수심 30m+). IRENA WETO 2024 대비 60% 할증"
+    },
+    {
+      "sector": "power",
+      "technology": "그린수소/암모니아 혼소",
+      "cost_usd": 130.0,
+      "cost_krw": 180000,
+      "potential_pct": 5.0,
+      "potential_Mt": 9.8,
+      "timeline": "2035+",
+      "source": "IEA GHR 2024 Ch.4. 그린H₂ /kg, NH₃ /t 가정. 한국수력원자력 혼소 20% 실증계획(2028)"
+    },
+    {
+      "sector": "cement",
+      "technology": "에너지 효율개선",
+      "cost_usd": 3.6,
+      "cost_krw": 5000,
+      "potential_pct": 5.0,
+      "potential_Mt": 1.65,
+      "timeline": "즉시",
+      "source": "GCCA Roadmap 2024 Table 4.1. 쌍용C&E/한일시멘트 설비 효율화 실적(시멘트협회 2024)"
+    },
+    {
+      "sector": "cement",
+      "technology": "클링커 비율 저감",
+      "cost_usd": 10.9,
+      "cost_krw": 15000,
+      "potential_pct": 7.0,
+      "potential_Mt": 2.31,
+      "timeline": "즉시",
+      "source": "GCCA 2024. 혼합시멘트(고로슬래그/플라이애시) 확대. 한국 클링커비율 92%(유럽 75%). 구조적 한계 있음"
+    },
+    {
+      "sector": "cement",
+      "technology": "대체원료 (슬래그/플라이애시)",
+      "cost_usd": 18.1,
+      "cost_krw": 25000,
+      "potential_pct": 10.0,
+      "potential_Mt": 3.3,
+      "timeline": "2025-2030",
+      "source": "GCCA 2024 Ch.5. 고로슬래그 공급량 한계(POSCO 철강 생산 연동). 국내 가용량 연 800만톤(KS 2024)"
+    },
+    {
+      "sector": "cement",
+      "technology": "대체연료 (폐기물/바이오)",
+      "cost_usd": 25.4,
+      "cost_krw": 35000,
+      "potential_pct": 8.0,
+      "potential_Mt": 2.64,
+      "timeline": "2025-2030",
+      "source": "GCCA 2024. 유럽 대체연료율 50%, 한국 20%(환경부 2024). 폐기물→시멘트 킬른 소각 규제 완화 필요"
+    },
+    {
+      "sector": "refinery",
+      "technology": "에너지 효율개선",
+      "cost_usd": 3.6,
+      "cost_krw": 5000,
+      "potential_pct": 5.0,
+      "potential_Mt": 2.0,
+      "timeline": "즉시",
+      "source": "IEA Refinery Roadmap 2024 Table 2.1. SK에너지/GS칼텍스 설비 효율화 실적(에너지데일리 2024)"
+    },
+    {
+      "sector": "refinery",
+      "technology": "열통합/폐열회수",
+      "cost_usd": 8.7,
+      "cost_krw": 12000,
+      "potential_pct": 8.0,
+      "potential_Mt": 3.2,
+      "timeline": "즉시",
+      "source": "IEA Energy Efficiency 2024 Ch.4. 한국 정유 4사 폐열회수 잠재량 8%(KEMCO 에너지진단 2023)"
+    },
+    {
+      "sector": "refinery",
+      "technology": "전기가열로 전환",
+      "cost_usd": 39.9,
+      "cost_krw": 55000,
+      "potential_pct": 5.0,
+      "potential_Mt": 2.0,
+      "timeline": "2030+",
+      "source": "IEA 2024 + S-OIL 전기화 계획(2028 발표). 전기가열 효율 95% vs 연소 65%. 산업용 전력 76원/kWh(KEPCO 2024)"
+    },
+    {
+      "sector": "refinery",
+      "technology": "그린수소 도입 (수소화 공정)",
+      "cost_usd": 87.0,
+      "cost_krw": 120000,
+      "potential_pct": 10.0,
+      "potential_Mt": 4.0,
+      "timeline": "2033+",
+      "source": "IEA GHR 2024 Fig.3.5. 정유 수소 소비 ~15만톤/yr(석유공사 2024). 그린H₂ /kg 전환 시"
+    },
+    {
+      "sector": "other",
+      "technology": "산업 에너지효율",
+      "cost_usd": 7.2,
+      "cost_krw": 10000,
+      "potential_pct": 5.0,
+      "potential_Mt": 6.3,
+      "timeline": "즉시",
+      "source": "IEA Energy Efficiency 2024. KEMCO 에너지진단 잔여 잠재량 ~5%(2023 산업 에너지소비 기준)"
+    },
+    {
+      "sector": "other",
+      "technology": "전기화/열펌프 전환",
+      "cost_usd": 29.0,
+      "cost_krw": 40000,
+      "potential_pct": 5.0,
+      "potential_Mt": 6.3,
+      "timeline": "2028-2035",
+      "source": "IEA 2024 Ch.3. 산업용 열펌프 COP 3.5 기준. 한국 보급률 <1%(유럽 5%). 전력단가 의존적"
+    },
+    {
+      "sector": "other",
+      "technology": "재생에너지 자가발전",
+      "cost_usd": 36.2,
+      "cost_krw": 50000,
+      "potential_pct": 3.0,
+      "potential_Mt": 3.78,
+      "timeline": "2026-2035",
+      "source": "MOTIE 9차 신재생기본계획. RE100 가입 기업 PPA 단가 ~130원/kWh(한국에너지공단 2024)"
+    }
+  ],
+  "sector_baselines": {
+    "steel": 110.0,
+    "petrochem": 45.0,
+    "power": 196.0,
+    "cement": 33.0,
+    "refinery": 40.0,
+    "other": 126.0
+  },
+  "supply_demand": {
+    "base": [
+      {
+        "year": 2026,
+        "bau_Mt": 531.3,
+        "cap_Mt": 507.0,
+        "shortfall_Mt": 24.3
+      },
+      {
+        "year": 2027,
+        "bau_Mt": 525.4,
+        "cap_Mt": 489.0,
+        "shortfall_Mt": 36.4
+      },
+      {
+        "year": 2028,
+        "bau_Mt": 519.6,
+        "cap_Mt": 471.0,
+        "shortfall_Mt": 48.6
+      },
+      {
+        "year": 2029,
+        "bau_Mt": 513.9,
+        "cap_Mt": 453.0,
+        "shortfall_Mt": 60.9
+      },
+      {
+        "year": 2030,
+        "bau_Mt": 508.3,
+        "cap_Mt": 435.0,
+        "shortfall_Mt": 73.3
+      },
+      {
+        "year": 2031,
+        "bau_Mt": 502.8,
+        "cap_Mt": 426.3,
+        "shortfall_Mt": 76.5
+      },
+      {
+        "year": 2032,
+        "bau_Mt": 497.5,
+        "cap_Mt": 417.8,
+        "shortfall_Mt": 79.7
+      },
+      {
+        "year": 2033,
+        "bau_Mt": 492.2,
+        "cap_Mt": 409.4,
+        "shortfall_Mt": 82.8
+      },
+      {
+        "year": 2034,
+        "bau_Mt": 487.0,
+        "cap_Mt": 401.2,
+        "shortfall_Mt": 85.8
+      },
+      {
+        "year": 2035,
+        "bau_Mt": 482.0,
+        "cap_Mt": 393.2,
+        "shortfall_Mt": 88.8
+      },
+      {
+        "year": 2036,
+        "bau_Mt": 477.0,
+        "cap_Mt": 385.3,
+        "shortfall_Mt": 91.7
+      },
+      {
+        "year": 2037,
+        "bau_Mt": 472.2,
+        "cap_Mt": 377.6,
+        "shortfall_Mt": 94.5
+      },
+      {
+        "year": 2038,
+        "bau_Mt": 467.4,
+        "cap_Mt": 370.1,
+        "shortfall_Mt": 97.3
+      },
+      {
+        "year": 2039,
+        "bau_Mt": 462.7,
+        "cap_Mt": 362.7,
+        "shortfall_Mt": 100.0
+      },
+      {
+        "year": 2040,
+        "bau_Mt": 458.1,
+        "cap_Mt": 355.4,
+        "shortfall_Mt": 102.7
+      }
+    ],
+    "middle": [
+      {
+        "year": 2026,
+        "bau_Mt": 531.3,
+        "cap_Mt": 507.0,
+        "shortfall_Mt": 24.3
+      },
+      {
+        "year": 2027,
+        "bau_Mt": 525.4,
+        "cap_Mt": 487.0,
+        "shortfall_Mt": 38.4
+      },
+      {
+        "year": 2028,
+        "bau_Mt": 519.6,
+        "cap_Mt": 467.0,
+        "shortfall_Mt": 52.6
+      },
+      {
+        "year": 2029,
+        "bau_Mt": 513.9,
+        "cap_Mt": 448.0,
+        "shortfall_Mt": 65.9
+      },
+      {
+        "year": 2030,
+        "bau_Mt": 508.3,
+        "cap_Mt": 429.0,
+        "shortfall_Mt": 79.3
+      },
+      {
+        "year": 2031,
+        "bau_Mt": 502.8,
+        "cap_Mt": 416.0,
+        "shortfall_Mt": 86.8
+      },
+      {
+        "year": 2032,
+        "bau_Mt": 497.5,
+        "cap_Mt": 403.0,
+        "shortfall_Mt": 94.5
+      },
+      {
+        "year": 2033,
+        "bau_Mt": 492.2,
+        "cap_Mt": 391.0,
+        "shortfall_Mt": 101.2
+      },
+      {
+        "year": 2034,
+        "bau_Mt": 487.0,
+        "cap_Mt": 379.0,
+        "shortfall_Mt": 108.0
+      },
+      {
+        "year": 2035,
+        "bau_Mt": 482.0,
+        "cap_Mt": 367.0,
+        "shortfall_Mt": 115.0
+      },
+      {
+        "year": 2036,
+        "bau_Mt": 477.0,
+        "cap_Mt": 356.0,
+        "shortfall_Mt": 121.0
+      },
+      {
+        "year": 2037,
+        "bau_Mt": 472.2,
+        "cap_Mt": 345.0,
+        "shortfall_Mt": 127.2
+      },
+      {
+        "year": 2038,
+        "bau_Mt": 467.4,
+        "cap_Mt": 334.0,
+        "shortfall_Mt": 133.4
+      },
+      {
+        "year": 2039,
+        "bau_Mt": 462.7,
+        "cap_Mt": 323.0,
+        "shortfall_Mt": 139.7
+      },
+      {
+        "year": 2040,
+        "bau_Mt": 458.1,
+        "cap_Mt": 313.0,
+        "shortfall_Mt": 145.1
+      }
+    ],
+    "ideal": [
+      {
+        "year": 2026,
+        "bau_Mt": 531.3,
+        "cap_Mt": 507.0,
+        "shortfall_Mt": 24.3
+      },
+      {
+        "year": 2027,
+        "bau_Mt": 525.4,
+        "cap_Mt": 477.0,
+        "shortfall_Mt": 48.4
+      },
+      {
+        "year": 2028,
+        "bau_Mt": 519.6,
+        "cap_Mt": 448.0,
+        "shortfall_Mt": 71.6
+      },
+      {
+        "year": 2029,
+        "bau_Mt": 513.9,
+        "cap_Mt": 418.0,
+        "shortfall_Mt": 95.9
+      },
+      {
+        "year": 2030,
+        "bau_Mt": 508.3,
+        "cap_Mt": 389.0,
+        "shortfall_Mt": 119.3
+      },
+      {
+        "year": 2031,
+        "bau_Mt": 502.8,
+        "cap_Mt": 370.0,
+        "shortfall_Mt": 132.8
+      },
+      {
+        "year": 2032,
+        "bau_Mt": 497.5,
+        "cap_Mt": 352.0,
+        "shortfall_Mt": 145.5
+      },
+      {
+        "year": 2033,
+        "bau_Mt": 492.2,
+        "cap_Mt": 334.0,
+        "shortfall_Mt": 158.2
+      },
+      {
+        "year": 2034,
+        "bau_Mt": 487.0,
+        "cap_Mt": 316.0,
+        "shortfall_Mt": 171.0
+      },
+      {
+        "year": 2035,
+        "bau_Mt": 482.0,
+        "cap_Mt": 299.0,
+        "shortfall_Mt": 183.0
+      },
+      {
+        "year": 2036,
+        "bau_Mt": 477.0,
+        "cap_Mt": 284.0,
+        "shortfall_Mt": 193.0
+      },
+      {
+        "year": 2037,
+        "bau_Mt": 472.2,
+        "cap_Mt": 270.0,
+        "shortfall_Mt": 202.2
+      },
+      {
+        "year": 2038,
+        "bau_Mt": 467.4,
+        "cap_Mt": 257.0,
+        "shortfall_Mt": 210.4
+      },
+      {
+        "year": 2039,
+        "bau_Mt": 462.7,
+        "cap_Mt": 244.0,
+        "shortfall_Mt": 218.7
+      },
+      {
+        "year": 2040,
+        "bau_Mt": 458.1,
+        "cap_Mt": 232.0,
+        "shortfall_Mt": 226.1
+      }
+    ]
+  }
+}
