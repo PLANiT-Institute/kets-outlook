@@ -57,7 +57,7 @@ export function MechanismPanel() {
       <div className="bg-white border border-[#E5E7EB] rounded-[10px] p-6">
         <h2 className="text-[22px] font-bold text-[#111827] m-0 mb-2">K-ETS 배출권 가격 결정 메커니즘</h2>
         <p className="text-[13.5px] text-[#6B7280] m-0 mb-5 leading-[1.65] max-w-[800px]">
-          배출권 가격은 정부가 설정한 공급량(Cap)과 기업의 배출 수요(BAU) 사이의 갭을
+          배출권 가격은 법정 총량(Legal cap), 실제 시장 공급량(Effective supply), 기업의 배출 수요(BAU) 사이의 갭을
           감축기술(MACC)이 해소하는 과정에서 결정됩니다.
           아래 6단계를 통해 이 메커니즘이 어떻게 작동하는지 설명합니다.
         </p>
@@ -65,13 +65,13 @@ export function MechanismPanel() {
         <Diagram>{
 `┌─────────┐     ┌─────────┐     ┌─────────┐     ┌─────────┐
 │  정부    │     │  시장    │     │  기업    │     │  가격    │
-│ Cap 설정 │ ──→ │ 단일시장 │ ←── │ 감축/구매│ ──→ │ P* 결정 │
-│ (공급량) │     │ (경매=2차)│     │ (MACC)  │     │         │
+│ Cap/MSR │ ──→ │ 단일시장 │ ←── │ 감축/구매│ ──→ │ P* 결정 │
+│ 공급조정│     │ (경매=2차)│     │ (MACC)  │     │         │
 └─────────┘     └─────────┘     └─────────┘     └─────────┘
      │                │                               │
      │           무상/유상은                      Banking으로
-     │           경로만 다름                      미래→현재 전파
-     │           (가격 동일)                      (Hotelling)
+     │           비용분담 변수                    미래→현재 전파
+     │           K-MSR은 공급변수                  (Hotelling)
      ▼                                                │
   시간이 지나면                                        ▼
   Cap ↓ → 가격 ↑                              학습곡선으로
@@ -81,18 +81,18 @@ export function MechanismPanel() {
         <div className="space-y-0">
 
           {/* Step 1 */}
-          <Step num={1} title="Cap(배출허용총량) — 유일한 공급 변수">
+          <Step num={1} title="Legal cap(배출허용총량) — 제도의 총량 기준">
             <p className="m-0">
-              정부는 K-ETS 대상 기업들이 배출할 수 있는 <strong>총량(Cap)</strong>을 설정합니다.
-              이 Cap이 시장에 존재하는 배출권의 전부입니다.
-              무상으로 나눠주든, 경매로 팔든, <strong>총량은 동일</strong>합니다.
+              정부는 K-ETS 대상 기업들이 배출할 수 있는 <strong>법정 총량(Legal cap)</strong>을 설정합니다.
+              이 총량은 배출권거래제의 감축 강도를 나타내는 기준선입니다.
+              무상으로 나눠주든, 경매로 팔든, <strong>법정 총량 자체는 동일</strong>합니다.
             </p>
             <FormulaBox>
-              배출권 총 공급량 = Cap<sub>t</sub> (무상할당 + 유상할당 = 100%)
+              Legal cap<sub>t</sub> = 무상할당 대상 물량 + 유상할당 대상 물량 + 예비분
             </FormulaBox>
             <p className="m-0">
-              Cap은 5년 단위 할당계획에 따라 매년 줄어듭니다. 이 감소가 배출권의 <strong>희소성</strong>을 만들고,
-              가격 상승의 근본 원인입니다.
+              Cap은 5년 단위 할당계획에 따라 매년 줄어듭니다. 이 감소가 배출권의 장기 <strong>희소성</strong>을 만들고,
+              가격 상승의 구조적 원인입니다.
             </p>
             <div className="flex gap-3 mt-3">
               {SCEN_LIST.map(s => (
@@ -105,26 +105,28 @@ export function MechanismPanel() {
           </Step>
 
           {/* Step 2 */}
-          <Step num={2} title="Shortfall(감축수요) = BAU − Cap">
+          <Step num={2} title="Effective supply — 가격 형성에 실제 작동하는 공급">
             <p className="m-0">
-              기업의 현재 배출량(BAU)이 Cap을 초과하면, 그 차이만큼 감축하거나 배출권을 구매해야 합니다.
-              이 차이가 <strong>시장이 해결해야 할 총 감축 수요</strong>입니다.
+              가격은 법정 총량보다 한 단계 아래의 <strong>실제 시장 공급량</strong>에 반응합니다.
+              K-MSR은 경매 물량을 줄여 예비분으로 이전하거나, 예비분을 방출해 추가 경매를 하는 방식으로 이 공급량을 조정합니다.
             </p>
             <FormulaBox>
-              Shortfall<sub>t</sub> = BAU<sub>t</sub> − Cap<sub>t</sub>
+              Effective supply<sub>t</sub> = Legal cap<sub>t</sub> + K-MSR 방출<sub>t</sub> − K-MSR 흡수<sub>t</sub><br/>
+              Shortfall<sub>t</sub> = BAU<sub>t</sub> − Effective supply<sub>t</sub>
             </FormulaBox>
             <p className="m-0">
-              Cap이 줄어들수록 → Shortfall 증가 → 더 많은 감축 필요 → <strong>더 비싼 기술까지 동원</strong> → 가격 상승.
-              이것이 배출권 가격의 기본 동학입니다.
+              Effective supply가 줄어들수록 → Shortfall 증가 → 더 많은 감축 필요 → <strong>더 비싼 기술까지 동원</strong> → 가격 상승.
+              그래서 K-MSR은 cap을 바꾸지 않고도 단기 가격 신호를 보정할 수 있습니다.
             </p>
           </Step>
 
           {/* Step 3: 단일시장 정리 */}
-          <Step num={3} title="단일시장 정리 — 왜 유상할당은 가격에 영향이 없는가">
+          <Step num={3} title="단일시장 정리 — 유상할당과 K-MSR의 역할 분리">
             <Callout type="theorem" title="단일시장 정리 (Single Market Theorem)">
               K-ETS에서 경매시장과 2차시장(거래소)은 <strong>하나의 시장</strong>입니다.
               모든 참여자가 두 시장에 접근 가능하므로, 차익거래에 의해 가격은 수렴합니다.
-              따라서 배출권이 어떤 경로(무상/경매)로 배분되든, <strong>균형가격은 동일</strong>합니다.
+              따라서 같은 물량이 실제 시장에 공급된다면 배출권이 어떤 경로(무상/경매)로 배분되든,
+              <strong>균형가격은 동일</strong>합니다.
             </Callout>
 
             <p className="m-0"><strong>직관적 설명:</strong></p>
@@ -166,19 +168,23 @@ export function MechanismPanel() {
               </li>
             </ul>
 
-            <Callout type="key" title="그러면 유상할당 비율은 무엇을 결정하는가?">
-              <strong>경매수입</strong>(정부 세수)과 <strong>비용 분배</strong>(기업 부담)를 결정합니다.
+            <Callout type="key" title="그러면 유상할당 비율과 K-MSR은 무엇을 결정하는가?">
+              유상할당 비율은 <strong>경매수입</strong>(정부 세수)과 <strong>비용 분배</strong>(기업 부담)를 결정합니다.
+              K-MSR은 실제 경매 공급량을 조정하므로 <strong>effective supply와 가격</strong>에도 영향을 줄 수 있습니다.
               <div className="mt-2 grid grid-cols-2 gap-3">
                 <div className="bg-white/60 rounded px-3 py-2">
                   <div className="font-semibold text-[#065F46]">가격을 결정하는 변수</div>
-                  <div className="mt-1 text-[#065F46]/80">Cap (배출허용총량)</div>
+                  <div className="mt-1 text-[#065F46]/80">Legal cap (배출허용총량)</div>
+                  <div className="text-[#065F46]/80">K-MSR 경매 공급 조정</div>
+                  <div className="text-[#065F46]/80">Effective supply</div>
                   <div className="text-[#065F46]/80">BAU (배출 수요)</div>
                   <div className="text-[#065F46]/80">MACC (감축기술 비용)</div>
                 </div>
                 <div className="bg-white/60 rounded px-3 py-2">
-                  <div className="font-semibold text-[#065F46]">가격에 영향 없는 변수</div>
+                  <div className="font-semibold text-[#065F46]">가격에 직접 영향 없는 변수</div>
                   <div className="mt-1 text-[#065F46]/80">무상할당 비율</div>
                   <div className="text-[#065F46]/80">유상/무상 배분 방식</div>
+                  <div className="text-[#065F46]/80">경매수입의 사용처</div>
                   <div className="text-[#065F46]/80">경매 수입</div>
                 </div>
               </div>
@@ -186,8 +192,8 @@ export function MechanismPanel() {
 
             <Callout type="info" title="현실 시장에서의 마찰">
               완벽한 시장에서는 위 정리가 정확히 성립합니다. 그러나 현실의 K-ETS에서는:
-              (1) 중소기업의 거래 비참여, (2) 유동성 부족, (3) 정보 비대칭 등으로
-              무상할당이 가격에 미세한 영향을 줄 수 있습니다.
+              (1) 중소기업의 거래 비참여, (2) 유동성 부족, (3) 정보 비대칭, (4) 경매 보류와 예비분 운용 등으로
+              effective supply가 달라질 수 있습니다.
               본 모형은 이론적 기준선(frictionless)을 제시하며,
               마찰 효과는 향후 실증 분석으로 보정할 수 있습니다.
             </Callout>
@@ -201,7 +207,7 @@ export function MechanismPanel() {
             </p>
             <FormulaBox>
               균형가격 P*: Σ abatement<sub>i</sub>(P*) = Shortfall<sub>t</sub><br/>
-              → MAC<sub>i</sub> ≤ P* 인 모든 기술 i 의 잠재량 합 = BAU<sub>t</sub> − Cap<sub>t</sub>
+              → MAC<sub>i</sub> ≤ P* 인 모든 기술 i 의 잠재량 합 = BAU<sub>t</sub> − Effective supply<sub>t</sub>
             </FormulaBox>
 
             <Diagram>{
@@ -259,11 +265,13 @@ export function MechanismPanel() {
           {/* Step 6 */}
           <Step num={6} title="재정 흐름 — 유상할당이 결정하는 것">
             <p className="m-0">
-              가격은 Cap(Step 1)과 MACC(Step 4)로 결정되었습니다.
-              유상할당 비율은 이 가격을 바꾸지 않지만, <strong>돈이 어떻게 흐르는가</strong>를 결정합니다.
+              가격은 effective supply(Step 2)와 MACC(Step 4)로 결정되었습니다.
+              유상할당 비율은 가격을 직접 바꾸지 않지만, <strong>돈이 어떻게 흐르는가</strong>를 결정합니다.
+              K-MSR은 실제 경매 판매량도 함께 바꾸므로 경매수입에는 가격과 물량 양쪽으로 영향을 줍니다.
             </p>
             <FormulaBox>
-              경매수입 = Cap<sub>t</sub> × 유상비율<sub>t</sub> × P*<sub>t</sub><br/>
+              실제 경매 판매량 = Legal cap<sub>t</sub> × 유상비율<sub>t</sub> + K-MSR 방출<sub>t</sub> − K-MSR 흡수<sub>t</sub><br/>
+              경매수입 = 실제 경매 판매량<sub>t</sub> × P*<sub>t</sub><br/>
               기업 직접 부담 = 경매 구매비용 + 2차시장 구매비용<br/>
               기업 기회비용 = 무상할당 × P* (무상으로 받았지만 팔 수 있었던 가치)
             </FormulaBox>
@@ -301,7 +309,8 @@ export function MechanismPanel() {
             <div className="text-[#6B7280]"><strong className="text-[#111827]">제외 기술:</strong> CCUS (저장소 부재), 원전 확대 (정치적 불확실성)</div>
             <div className="text-[#6B7280]"><strong className="text-[#111827]">기간:</strong> 2026–2040 (4차~6차 할당계획 기간)</div>
             <div className="text-[#6B7280]"><strong className="text-[#111827]">Cap 기준:</strong> NDC 2030(-29%), 2035(-33~46%), 2040(-35~58%)</div>
-            <div className="text-[#6B7280]"><strong className="text-[#111827]">가격 결정:</strong> 단일시장 정리 — 유상할당 비율은 가격에 무관</div>
+            <div className="text-[#6B7280]"><strong className="text-[#111827]">공급 보정:</strong> K-MSR 경매 공급량 조정 → effective supply 반영</div>
+            <div className="text-[#6B7280]"><strong className="text-[#111827]">가격 결정:</strong> 단일시장 정리 — 유상할당 비율은 가격에 직접 무관, K-MSR은 공급을 통해 가격에 영향</div>
           </div>
         </div>
       </div>

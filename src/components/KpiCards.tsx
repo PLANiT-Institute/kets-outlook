@@ -1,29 +1,30 @@
 'use client';
 
-import { SCEN, SCEN_LIST, KPI, fmtWon, type ScenarioId } from '@/lib/data';
+import { SCEN_LIST, KPI } from '@/lib/data';
 
-export function KpiTriCard({ title, en, unit, values, formatter }: {
+export function KpiTriCard({ title, en, unit, values, formatter, feature }: {
   title: string; en: string; unit: string;
   values: Record<string, number>;
   formatter: (v: number) => string;
+  feature?: boolean;
 }) {
   return (
-    <div className="bg-white border border-[#E5E7EB] rounded-[10px] p-[14px_16px] hover:shadow-sm transition-shadow">
+    <div className={`ta-kpi-card ${feature ? 'feature' : ''}`}>
       <div className="flex justify-between items-baseline mb-3">
         <div>
-          <div className="text-[12.5px] font-semibold text-[#111827]">{title}</div>
-          <div className="text-[10px] text-[#9CA3AF] mt-[1px]" style={{ fontFamily: 'Inter' }}>{en}</div>
+          <div className="ta-kpi-label">{title}</div>
+          <div className="text-[10px] text-[var(--text-muted)] mt-[1px] num">{en}</div>
         </div>
-        <div className="text-[10px] text-[#9CA3AF] bg-[#F9FAFB] rounded px-1.5 py-0.5" style={{ fontFamily: 'Inter' }}>{unit}</div>
+        <div className="ta-kpi-unit">{unit}</div>
       </div>
       <div className="space-y-[8px]">
         {SCEN_LIST.map(s => (
           <div key={s.id} className="flex items-center justify-between">
             <div className="flex items-center gap-[6px]">
               <span className="w-[7px] h-[7px] rounded-full" style={{ background: s.color }} />
-              <span className="text-[11px] text-[#6B7280]">{s.ko}</span>
+              <span className={`text-[11px] ${feature ? 'text-[#AEB9CC]' : 'text-[var(--text-secondary)]'}`}>{s.ko}</span>
             </div>
-            <span className="text-[14px] font-semibold tabular-nums" style={{ fontFamily: 'Inter', color: s.color }}>
+            <span className="ta-kpi-value" style={{ color: s.color }}>
               {formatter(values[s.id])}
             </span>
           </div>
@@ -35,11 +36,12 @@ export function KpiTriCard({ title, en, unit, values, formatter }: {
 
 export function KpiCards() {
   return (
-    <div className="grid grid-cols-4 gap-3 mb-5">
+    <div className="ta-kpis">
       <KpiTriCard
         title="2030 KAU 가격" en="KAU price · 2030" unit="원/tCO₂"
         values={KPI.price2030}
         formatter={(v) => v.toLocaleString('ko-KR')}
+        feature
       />
       <KpiTriCard
         title="2040 KAU 가격" en="KAU price · 2040" unit="원/tCO₂"

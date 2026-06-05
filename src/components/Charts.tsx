@@ -9,10 +9,10 @@ import {
   SCEN, SCEN_LIST, EUA_COLOR,
   PRICE_PATH, GAP_PATH, CBAM_2030, KPI,
   BANKING_PATH, REVENUE_PATH, ANNUAL_REVENUE_PATH,
-  SHORTFALL_PATH, AUCTION_RATIO_PATH, AUCTION_BY_CATEGORY,
+  SHORTFALL_PATH, AUCTION_BY_CATEGORY,
   SUPPLY_DEMAND,
   MACC_ALL, SECTOR_INFO, MACC_TECH_DETAILS, type MaccTech,
-  fmtWon, fmtWonK, type ScenarioId,
+  fmtWon, fmtWonK,
 } from '@/lib/data';
 
 // ─── 공통 스타일 ─────────────────────────────────────────────
@@ -35,7 +35,7 @@ const scenLines = (dot = false, width = 2.2) => (
 );
 
 // ─── 1. KAU 가격 경로 라인차트 (EUA 토글 + 기술 임계가격 + 계획기간) ──
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 
 // K-ETS 계획기간 (5년 단위)
 const PLAN_PERIODS = [
@@ -329,11 +329,10 @@ export function MACCChartFull({ height = 320 }: { height?: number }) {
   const yScale = (cost: number) => pad.top + innerH - ((cost - minCost) / costRange) * innerH;
   const y0 = yScale(0);
 
-  let cum = 0;
-  const bars = data.map(d => {
+  const bars = data.map((d, index) => {
+    const cum = data.slice(0, index).reduce((s, item) => s + item.potential, 0);
     const x = xScale(cum);
     const w = xScale(cum + d.potential) - x;
-    cum += d.potential;
     const sectorColor = SECTOR_INFO[d.sector as keyof typeof SECTOR_INFO]?.color ?? '#6B7280';
     return { ...d, x, w, y: yScale(Math.max(d.cost, 0)), h: Math.abs(yScale(d.cost) - y0), sectorColor };
   });
@@ -442,11 +441,10 @@ export function MACCChart({ data, accent = '#5B7BAA', height = 260 }: { data: Ma
   const yScale = (cost: number) => pad.top + innerH - ((cost - minCost) / (maxCost - minCost)) * innerH;
   const y0 = yScale(0);
 
-  let cum = 0;
-  const bars = data.map(d => {
+  const bars = data.map((d, index) => {
+    const cum = data.slice(0, index).reduce((s, item) => s + item.potential, 0);
     const x = xScale(cum);
     const w = xScale(cum + d.potential) - x;
-    cum += d.potential;
     return { ...d, x, w, y: yScale(Math.max(d.cost, 0)), h: Math.abs(yScale(d.cost) - y0) };
   });
 

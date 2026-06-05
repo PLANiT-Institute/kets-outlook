@@ -4,15 +4,15 @@ import { SCEN_LIST, COMPARE_ROWS } from '@/lib/data';
 
 export function CompareTable() {
   return (
-    <table className="w-full border-collapse text-[12.5px]" style={{ fontFamily: 'Inter, Pretendard' }}>
+    <table className="ta-data-table">
       <thead>
-        <tr className="border-b border-[#E5E7EB]">
-          <th className="text-left py-[11px] px-[14px] text-[#6B7280] font-medium tracking-[.01em]">
-            지표 <span className="text-[#9CA3AF] font-normal">Indicator</span>
+        <tr>
+          <th>
+            지표 <span className="text-[var(--text-muted)] font-normal">Indicator</span>
           </th>
-          <th className="text-right py-[11px] px-[14px] text-[#6B7280] font-medium">단위</th>
+          <th>단위</th>
           {SCEN_LIST.map(s => (
-            <th key={s.id} className="text-right py-[11px] px-[14px] font-semibold" style={{ color: s.color }}>
+            <th key={s.id} style={{ color: s.color }}>
               <span className="inline-flex items-center gap-[6px]">
                 <span className="w-2 h-2 rounded-sm" style={{ background: s.color }} /> {s.ko}
               </span>
@@ -22,19 +22,18 @@ export function CompareTable() {
       </thead>
       <tbody>
         {COMPARE_ROWS.map((r, i) => (
-          <tr key={i} className="border-b border-[#F3F4F6]" style={{ background: r.cbam ? '#FAFBFC' : 'transparent' }}>
-            <td className="py-[11px] px-[14px] text-[#111827]">
+          <tr key={i} style={{ background: r.cbam ? 'var(--card-soft)' : 'transparent' }}>
+            <td className="text-[var(--text-primary)]">
               {r.cbam && (
-                <span className="inline-block text-[9px] font-semibold text-white bg-[#94A3B8] py-[2px] px-[5px] rounded-[3px] mr-[6px] align-middle tracking-[.05em]"
-                      style={{ fontFamily: 'Inter' }}>CBAM</span>
+                <span className="inline-block text-[9px] font-semibold text-white bg-[var(--eua)] py-[2px] px-[5px] rounded-[3px] mr-[6px] align-middle tracking-[.05em] num">CBAM</span>
               )}
               {r.metric}
-              <span className="text-[#9CA3AF] font-normal ml-[6px] text-[0.85em]">{r.en}</span>
+              <span className="text-[var(--text-muted)] font-normal ml-[6px] text-[0.85em]">{r.en}</span>
             </td>
-            <td className="py-[11px] px-[14px] text-right text-[#6B7280]">{r.unit}</td>
-            <td className="py-[11px] px-[14px] text-right text-[#111827]" style={{ fontVariantNumeric: 'tabular-nums' }}>{r.base}</td>
-            <td className="py-[11px] px-[14px] text-right text-[#111827]" style={{ fontVariantNumeric: 'tabular-nums' }}>{r.middle}</td>
-            <td className="py-[11px] px-[14px] text-right text-[#111827]" style={{ fontVariantNumeric: 'tabular-nums' }}>{r.ideal}</td>
+            <td className="text-[var(--text-secondary)]">{r.unit}</td>
+            <td className="text-[var(--text-primary)] num">{r.base}</td>
+            <td className="text-[var(--text-primary)] num">{r.middle}</td>
+            <td className="text-[var(--text-primary)] num">{r.ideal}</td>
           </tr>
         ))}
       </tbody>

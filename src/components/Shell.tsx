@@ -2,6 +2,14 @@
 
 import { NAV_ITEMS } from '@/lib/data';
 
+const TOPBAR_LABELS: Record<string, string> = {
+  overview: '홈',
+  mechanism: '메커니즘',
+  simulator: '시뮬레이터',
+  revenue: '재정',
+  gap: 'CBAM',
+};
+
 function NavIcon({ name, size = 16 }: { name: string; size?: number }) {
   const s = { width: size, height: size, stroke: 'currentColor', fill: 'none', strokeWidth: 1.7, strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const };
   switch (name) {
@@ -18,13 +26,42 @@ function NavIcon({ name, size = 16 }: { name: string; size?: number }) {
 
 export function PlanitMark() {
   return (
-    <div className="flex items-center gap-[9px]">
-      <div className="w-7 h-7 rounded-[6px] bg-[#111827] text-white flex items-center justify-center font-bold text-[13px] tracking-tight" style={{ fontFamily: 'Inter' }}>Pi</div>
+    <div className="ta-brand">
+      <div className="w-[22px] h-[22px] text-white flex items-center justify-center" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+          <path d="M11 3L19 18H3L11 3Z" fill="#2553D6" />
+          <path d="M11 9.5L15 18H7L11 9.5Z" fill="white" fillOpacity=".9" />
+        </svg>
+      </div>
       <div className="leading-tight">
-        <div className="font-semibold text-[13px] text-[#111827] tracking-tight" style={{ fontFamily: 'Inter' }}>PLANiT</div>
-        <div className="text-[9.5px] text-[#9CA3AF] tracking-[.08em] uppercase" style={{ fontFamily: 'Inter' }}>Institute</div>
+        <div>PLANiT</div>
       </div>
     </div>
+  );
+}
+
+export function Topbar({ active = 'overview', onNavigate }: { active?: string; onNavigate?: (id: string) => void }) {
+  return (
+    <header className="ta-topbar">
+      <div className="ta-brand">
+        <PlanitMark />
+        <span className="ta-brand-sub">K-ETS transition analysis</span>
+      </div>
+      <nav className="ta-nav" aria-label="분석 모듈">
+        {NAV_ITEMS.map((n) => {
+          const on = n.id === active;
+          return (
+            <button key={n.id} type="button" onClick={() => onNavigate?.(n.id)} className={on ? 'active' : undefined} title={`${n.ko} · ${n.en}`}>
+              <NavIcon name={n.icon} size={14} />
+              <span>{TOPBAR_LABELS[n.id] ?? n.ko}</span>
+              <span className="ta-nav-sub">{n.en}</span>
+            </button>
+          );
+        })}
+      </nav>
+      <span className="ta-env-chip">Mock model</span>
+      <div className="w-7 h-7 rounded-full bg-[#2553D6] text-white flex items-center justify-center text-[11px] font-semibold num">Pi</div>
+    </header>
   );
 }
 
@@ -90,19 +127,19 @@ export function ChartCard({ title, en, hint, accent, actions, children, noPad }:
   actions?: React.ReactNode; children: React.ReactNode; noPad?: boolean;
 }) {
   return (
-    <section className="bg-white border border-[#E5E7EB] rounded-[10px] relative" style={{ padding: noPad ? 0 : 18 }}>
-      <header className="flex justify-between items-start mb-[14px] gap-4" style={noPad ? { padding: '18px 18px 0' } : undefined}>
+    <section className={`ta-panel relative ${noPad ? '' : 'ta-panel-pad'}`}>
+      <header className="flex justify-between items-start mb-[14px] gap-4" style={noPad ? { padding: '16px 18px 0' } : undefined}>
         <div>
           <div className="flex items-center gap-2">
             {accent && <span className="w-[3px] h-[14px] rounded-sm" style={{ background: accent }} />}
-            <h3 className="m-0 text-[14px] font-semibold text-[#111827]">{title}</h3>
+            <h3 className="ta-panel-title">{title}</h3>
           </div>
-          {en && <div className="text-[10.5px] text-[#9CA3AF] mt-[3px]" style={{ fontFamily: 'Inter' }}>{en}</div>}
-          {hint && <div className="text-[11.5px] text-[#6B7280] mt-[6px] leading-[1.5]">{hint}</div>}
+          {en && <div className="ta-panel-sub">{en}</div>}
+          {hint && <div className="text-[11.5px] text-[var(--text-secondary)] mt-[6px] leading-[1.5]">{hint}</div>}
         </div>
         <div className="flex items-center gap-[6px]">
           {actions}
-          <button className="w-[26px] h-[26px] rounded-[6px] border border-[#E5E7EB] bg-white flex items-center justify-center">
+          <button className="ta-icon-button" aria-label="Download chart data">
             <NavIcon name="download" size={13} />
           </button>
         </div>
@@ -120,14 +157,14 @@ export function ChartLegend() {
     { color: '#94A3B8', label: 'EUA 참조', en: 'EU ETS reference', dashed: true },
   ];
   return (
-    <div className="flex gap-[18px] text-[11.5px] text-[#4B5563] flex-wrap">
+    <div className="flex gap-[18px] text-[11.5px] text-[var(--text-body)] flex-wrap">
       {items.map((it, i) => (
         <div key={i} className="flex items-center gap-[7px]">
           {it.dashed
             ? <span className="w-[18px]" style={{ borderTop: `1.5px dashed ${it.color}` }} />
             : <span className="w-[18px] h-[2.5px] rounded-sm" style={{ background: it.color }} />}
           <span>{it.label}</span>
-          <span className="text-[#9CA3AF] text-[10px]" style={{ fontFamily: 'Inter' }}>{it.en}</span>
+          <span className="text-[var(--text-muted)] text-[10px] num">{it.en}</span>
         </div>
       ))}
     </div>
@@ -136,9 +173,9 @@ export function ChartLegend() {
 
 export function PageFooter() {
   return (
-    <footer className="px-8 py-[18px] border-t border-[#E5E7EB] flex justify-between items-center text-[11px] text-[#9CA3AF] bg-white">
+    <footer className="px-8 py-[18px] border-t border-[var(--border)] flex justify-between items-center text-[11px] text-[var(--text-muted)] bg-white">
       <div>PLANiT Institute · Coase + Staircase MACC + Constrained Hotelling · 2026–2040</div>
-      <div style={{ fontFamily: 'Inter' }}>v0.6 · 6 sectors, 30 technologies</div>
+      <div className="num">v0.7 · K-MSR supply adjustment</div>
     </footer>
   );
 }

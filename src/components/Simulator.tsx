@@ -47,6 +47,8 @@ type CapPreset = 'base' | 'middle' | 'ideal';
 const CAP_LABELS: Record<CapPreset, string> = { base: '기준 (-35%)', middle: '중간 (-43%)', ideal: '이상 (-58%)' };
 const CAP_COLORS: Record<CapPreset, string> = { base: '#5B7BAA', middle: '#E8A33D', ideal: '#10A574' };
 
+const clampMsrAdjustment = (value: number) => Math.max(-30, Math.min(30, Math.round(value)));
+
 // ─── 메인 컴포넌트 ──────────────────────────────────────────
 export function SimulatorPanel() {
   // 기술 ON/OFF 상태
@@ -63,6 +65,9 @@ export function SimulatorPanel() {
   // 유상할당 비율 (2040 기준)
   const [auctionRate2040, setAuctionRate2040] = useState(50);
 
+  // K-MSR 경매 공급 조정: 음수는 경매 축소/예비분 적립, 양수는 예비분 방출/추가 경매
+  const [msrAdjustmentMt, setMsrAdjustmentMt] = useState(0);
+
   // 활성화된 기술만 필터
   const activeTechs = useMemo(
     () => MACC_ALL.filter(t => enabledTechs.has(t.tech)),
@@ -75,24 +80,30 @@ export function SimulatorPanel() {
   const pricePathSim = useMemo(() => {
     return SUPPLY_DEMAND.map(row => {
       const cap = row[`cap_${capPreset}` as keyof typeof row] as number;
-      const shortfall = Math.max(row.bau - cap, 0);
+      const effectiveSupply = Math.max(cap + msrAdjustmentMt, 0);
+      const shortfall = Math.max(row.bau - effectiveSupply, 0);
       const price = shortfall > 0
         ? solveEquilibrium(activeTechs, shortfall, learningFn, row.year)
         : 0;
       // 경매수입 (간이 계산)
       const auctionRatio = auctionRate2040 / 100 * ((row.year - 2026) / 14); // 선형 증가
-      const revenue = cap * 1e6 * Math.min(auctionRatio, auctionRate2040 / 100) * price / 1e12;
+      const baseAuctionVolumeMt = cap * Math.min(auctionRatio, auctionRate2040 / 100);
+      const auctionVolumeMt = Math.max(baseAuctionVolumeMt + msrAdjustmentMt, 0);
+      const revenue = auctionVolumeMt * 1e6 * price / 1e12;
       return {
         year: row.year,
         bau: row.bau,
         cap,
+        effectiveSupply: Math.round(effectiveSupply * 10) / 10,
+        msrAdjustment: msrAdjustmentMt,
+        auctionVolume: Math.round(auctionVolumeMt * 10) / 10,
         shortfall: Math.round(shortfall * 10) / 10,
         price,
         revenue: Math.round(revenue * 100) / 100,
         activeTechCount: activeTechs.filter(t => learningFn(t.cost, t.tech, row.year) <= price).length,
       };
     });
-  }, [activeTechs, capPreset, learningFn, auctionRate2040]);
+  }, [activeTechs, capPreset, learningFn, auctionRate2040, msrAdjustmentMt]);
 
   const toggleTech = (tech: string) => {
     setEnabledTechs(prev => {
@@ -117,6 +128,17 @@ export function SimulatorPanel() {
   const p2040 = pricePathSim.find(r => r.year === 2040)?.price ?? 0;
   const cumRevenue = pricePathSim.reduce((s, r) => s + r.revenue, 0);
   const totalPotential = activeTechs.reduce((s, t) => s + t.potential, 0);
+  const supply2030 = pricePathSim.find(r => r.year === 2030);
+  const msrLabel = msrAdjustmentMt === 0
+    ? '중립'
+    : msrAdjustmentMt < 0
+      ? `${Math.abs(msrAdjustmentMt)} Mt/yr 경매 축소`
+      : `${msrAdjustmentMt} Mt/yr 추가 경매`;
+  const handleMsrAdjustmentChange = (value: string) => {
+    const parsed = Number(value);
+    if (!Number.isFinite(parsed)) return;
+    setMsrAdjustmentMt(clampMsrAdjustment(parsed));
+  };
 
   const TOOLTIP_STYLE = { fontSize: 11, borderRadius: 8, border: '1px solid #E5E7EB', boxShadow: '0 4px 16px rgba(0,0,0,.06)' };
 
@@ -130,7 +152,7 @@ export function SimulatorPanel() {
             <div>
               <h3 className="text-[14px] font-semibold text-[#111827] m-0">시뮬레이션 결과</h3>
               <div className="text-[10.5px] text-[#9CA3AF] mt-1" style={{ fontFamily: 'Inter' }}>
-                Custom scenario · {activeTechs.length}/{MACC_ALL.length} techs · {CAP_LABELS[capPreset]} Cap
+                Custom scenario · {activeTechs.length}/{MACC_ALL.length} techs · Effective supply = Cap + K-MSR
               </div>
             </div>
             <div className="flex gap-4 text-[12px]" style={{ fontFamily: 'Inter' }}>
@@ -146,7 +168,7 @@ export function SimulatorPanel() {
               <YAxis stroke="#9CA3AF" tick={{ fontSize: 10.5, fontFamily: 'Inter' }} tickLine={false} axisLine={false}
                      tickFormatter={fmtWonK} />
               <Tooltip contentStyle={TOOLTIP_STYLE}
-                       formatter={(v: any) => fmtWon(Number(v)) + ' 원'} labelFormatter={(l) => l + '년'} />
+                       formatter={(v: unknown) => fmtWon(Number(v ?? 0)) + ' 원'} labelFormatter={(l) => l + '년'} />
               <Line type="monotone" dataKey="price" stroke={CAP_COLORS[capPreset]} strokeWidth={2.5} dot={false} name="균형가격" />
               {/* 기술 임계가격 참조선 (상위 5개) */}
               {activeTechs
@@ -162,14 +184,20 @@ export function SimulatorPanel() {
 
           {/* 수급 미니 차트 */}
           <div className="mt-3 pt-3 border-t border-[#F3F4F6]">
-            <div className="text-[11px] text-[#6B7280] mb-1">수급 구조 (BAU vs Cap)</div>
+            <div className="flex items-center justify-between mb-1">
+              <div className="text-[11px] text-[#6B7280]">수급 구조 (BAU vs Effective supply)</div>
+              <div className="text-[10.5px] text-[#9CA3AF]" style={{ fontFamily: 'Inter' }}>
+                K-MSR {msrAdjustmentMt > 0 ? '+' : ''}{msrAdjustmentMt} Mt/yr
+              </div>
+            </div>
             <ResponsiveContainer width="100%" height={120}>
               <AreaChart data={pricePathSim} margin={{ top: 4, right: 12, left: 0, bottom: 0 }}>
                 <XAxis dataKey="year" stroke="#9CA3AF" tick={{ fontSize: 9, fontFamily: 'Inter' }} tickLine={false} />
                 <YAxis stroke="#9CA3AF" tick={{ fontSize: 9, fontFamily: 'Inter' }} tickLine={false} axisLine={false} unit=" Mt" />
                 <Line type="monotone" dataKey="bau" stroke="#111827" strokeWidth={2} dot={false} name="BAU" />
-                <Area type="monotone" dataKey="cap" stroke={CAP_COLORS[capPreset]} fill={CAP_COLORS[capPreset]}
-                      strokeWidth={1.5} fillOpacity={0.1} dot={false} name="Cap" />
+                <Line type="monotone" dataKey="cap" stroke="#9CA3AF" strokeWidth={1.2} strokeDasharray="4 4" dot={false} name="Legal cap" />
+                <Area type="monotone" dataKey="effectiveSupply" stroke={CAP_COLORS[capPreset]} fill={CAP_COLORS[capPreset]}
+                      strokeWidth={1.8} fillOpacity={0.12} dot={false} name="Effective supply" />
               </AreaChart>
             </ResponsiveContainer>
           </div>
@@ -190,6 +218,43 @@ export function SimulatorPanel() {
                   {CAP_LABELS[k]}
                 </button>
               ))}
+            </div>
+          </div>
+
+          {/* K-MSR */}
+          <div className="bg-white border border-[#E5E7EB] rounded-[10px] p-4">
+            <div className="flex items-center justify-between gap-2 mb-1">
+              <div className="text-[12px] font-semibold text-[#111827]">K-MSR 경매 공급 조정</div>
+              <div className="flex items-center gap-1" style={{ fontFamily: 'Inter' }}>
+                <input type="number" min={-30} max={30} step={1} value={msrAdjustmentMt}
+                  aria-label="K-MSR 조정량"
+                  data-testid="kmsr-adjustment-input"
+                  onChange={e => handleMsrAdjustmentChange(e.target.value)}
+                  className="w-[58px] rounded border border-[#E5E7EB] px-1.5 py-1 text-right text-[11px] font-semibold text-[#111827] outline-none focus:border-[#5B7BAA]" />
+                <span className="text-[10px] text-[#9CA3AF]">Mt</span>
+              </div>
+            </div>
+            <div className="text-[10px] text-[#9CA3AF] mb-2">음수: 예비분 적립 · 양수: 예비분 방출</div>
+            <input type="range" min={-30} max={30} step={1} value={msrAdjustmentMt}
+              aria-label="K-MSR 경매 공급 조정량"
+              data-testid="kmsr-adjustment-slider"
+              onInput={e => handleMsrAdjustmentChange(e.currentTarget.value)}
+              onChange={e => handleMsrAdjustmentChange(e.target.value)}
+              className="w-full accent-[#5B7BAA]" />
+            <div className="flex justify-between text-[10px] text-[#9CA3AF] mt-1" style={{ fontFamily: 'Inter' }}>
+              <span>-30 Mt</span>
+              <span className="font-semibold text-[#111827]">{msrLabel}</span>
+              <span>+30 Mt</span>
+            </div>
+            <div className="mt-2 grid grid-cols-2 gap-2 text-[10.5px]" style={{ fontFamily: 'Inter' }}>
+              <div className="rounded bg-[#F9FAFB] px-2 py-1.5">
+                <div className="text-[#9CA3AF]">2030 Effective supply</div>
+                <div className="font-semibold text-[#111827]">{supply2030?.effectiveSupply.toFixed(1) ?? '-'} Mt</div>
+              </div>
+              <div className="rounded bg-[#F9FAFB] px-2 py-1.5">
+                <div className="text-[#9CA3AF]">2030 Shortfall</div>
+                <div className="font-semibold text-[#111827]">{supply2030?.shortfall.toFixed(1) ?? '-'} Mt</div>
+              </div>
             </div>
           </div>
 
@@ -230,8 +295,10 @@ export function SimulatorPanel() {
             <div className="space-y-1 text-[11px]" style={{ fontFamily: 'Inter' }}>
               <div className="flex justify-between"><span className="text-[#6B7280]">활성 기술</span><span className="text-[#111827] font-semibold">{activeTechs.length}/{MACC_ALL.length}</span></div>
               <div className="flex justify-between"><span className="text-[#6B7280]">감축잠재량</span><span className="text-[#111827] font-semibold">{totalPotential.toFixed(1)} Mt/yr</span></div>
+              <div className="flex justify-between"><span className="text-[#6B7280]">K-MSR 조정</span><span className="text-[#111827] font-semibold">{msrAdjustmentMt > 0 ? '+' : ''}{msrAdjustmentMt} Mt/yr</span></div>
               <div className="flex justify-between"><span className="text-[#6B7280]">2030 가격</span><span className="text-[#111827] font-semibold">{fmtWon(p2030)} 원</span></div>
               <div className="flex justify-between"><span className="text-[#6B7280]">2040 가격</span><span className="text-[#111827] font-semibold">{fmtWon(p2040)} 원</span></div>
+              <div className="flex justify-between"><span className="text-[#6B7280]">2030 경매량</span><span className="text-[#111827] font-semibold">{supply2030?.auctionVolume.toFixed(1) ?? '-'} Mt</span></div>
               <div className="flex justify-between"><span className="text-[#6B7280]">2040 활성기술</span><span className="text-[#111827] font-semibold">{pricePathSim.find(r => r.year === 2040)?.activeTechCount ?? 0}개</span></div>
             </div>
           </div>

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Sidebar, PageHeader, ChartCard, ChartLegend, PageFooter } from '@/components/Shell';
+import { Topbar, ChartCard, ChartLegend, PageFooter } from '@/components/Shell';
 import { KpiCards } from '@/components/KpiCards';
 import {
   KAUPriceChart, GapAreaChart, IndustryCBAMBarChart, MACCChartFull,
@@ -94,6 +94,46 @@ function OverviewTab() {
           <div className="py-1"><CompareTable /></div>
         </ChartCard>
       </div>
+
+      <AssumptionsPanel />
+    </>
+  );
+}
+
+function AssumptionsPanel() {
+  const assumptions = [
+    { name: '배출 총량 경로', value: '2026–2040', src: 'NDC 기반 3개 정책 시나리오' },
+    { name: '가격 정리 방식', value: 'BAU − Effective supply', src: 'Coase equilibrium + K-MSR supply adjustment' },
+    { name: '감축 비용곡선', value: `${MACC_ALL.length} tech`, src: '6개 부문 MACC staircase' },
+    { name: 'Banking 동학', value: 'Constrained Hotelling', src: '미래 희소성의 현재 가격 전파' },
+    { name: '경매수입', value: 'Auction volume × P*', src: '유상비율 및 K-MSR 경매 공급 조정 반영' },
+    { name: 'CBAM 노출', value: 'EUA − KAU', src: '가격차 × 수출량 × 배출집약도' },
+  ];
+
+  return (
+    <>
+      <div className="ta-section-gap"><span className="eyebrow">Assumptions & traceability</span></div>
+      <section className="ta-panel mt-0">
+        <div className="ta-panel-head">
+          <div>
+            <h2 className="ta-panel-title">모든 핵심 수치는 아래 가정에서 계산됩니다</h2>
+            <div className="ta-panel-sub">No hidden constants · mock model structured for future validated inputs</div>
+          </div>
+        </div>
+        <div className="px-[22px]">
+          <div className="ta-assump-grid">
+            {assumptions.map((item) => (
+              <div key={item.name} className="ta-assump">
+                <div>
+                  <div className="ta-assump-name">{item.name}</div>
+                  <div className="ta-assump-src">{item.src}</div>
+                </div>
+                <div className="ta-assump-value">{item.value}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
     </>
   );
 }
@@ -148,7 +188,7 @@ function CbamTab() {
 const TAB_HEADERS: Record<string, { title: string; subtitle: string }> = {
   overview:  { title: 'K-ETS 가격전망 및 정책 시나리오 분석', subtitle: 'Coase + Staircase MACC + Constrained Hotelling 모형으로 도출한 KAU 가격 경로와 핵심 지표.' },
   mechanism: { title: '가격 결정 메커니즘', subtitle: '배출권 가격이 어떻게 결정되는지, 각 변수가 어떤 역할을 하는지 단계별로 설명합니다.' },
-  simulator: { title: '시나리오 시뮬레이터', subtitle: '감축기술을 선택/해제하고, Cap 경로와 학습곡선을 조절하여 가격 변화를 실시간으로 확인합니다.' },
+  simulator: { title: '시나리오 시뮬레이터', subtitle: '감축기술, Cap 경로, K-MSR 공급조정, 학습곡선을 조절하여 가격 변화를 실시간으로 확인합니다.' },
   revenue:   { title: '재정 분석', subtitle: '무상할당 비율에 따른 경매수입 추이와 부문별 유상할당 경로.' },
   gap:       { title: 'CBAM 분석', subtitle: 'EUA−KAU 가격차와 한국 수출기업의 CBAM 부담 추정.' },
 };
@@ -159,22 +199,24 @@ export default function DashboardPage() {
   const header = TAB_HEADERS[activeTab] ?? TAB_HEADERS.overview;
 
   return (
-    <div className="flex min-h-screen bg-[#F9FAFB]" style={{ fontFamily: "'Pretendard', 'Inter', sans-serif", color: '#111827' }}>
-      <Sidebar active={activeTab} onNavigate={setActiveTab} />
+    <div className="min-h-screen bg-[var(--background)] text-[var(--text-primary)]">
+      <Topbar active={activeTab} onNavigate={setActiveTab} />
 
-      <div className="flex-1 flex flex-col min-w-0">
-        <div className="px-9 pt-6 flex-1">
+      <div className="flex min-h-[calc(100vh-56px)] flex-col">
+        <main className="ta-page flex-1">
           {/* 동적 헤더 */}
-          <div className="flex items-end justify-between gap-6 pb-[22px]">
+          <div className="ta-page-head">
             <div>
-              <div className="text-[10.5px] tracking-[.16em] text-[#9CA3AF] uppercase mb-[6px]" style={{ fontFamily: 'Inter' }}>
+              <div className="eyebrow mb-[6px]">
                 K-ETS Price Outlook · {activeTab.charAt(0).toUpperCase() + activeTab.slice(1)}
               </div>
-              <h1 className="text-[26px] font-bold text-[#111827] tracking-tight m-0">{header.title}</h1>
-              <div className="mt-2 text-[13px] text-[#6B7280] max-w-[720px] leading-[1.55]">{header.subtitle}</div>
+              <h1>{header.title}</h1>
+              <p>{header.subtitle}</p>
             </div>
-            <div className="flex items-center gap-2">
-              <span className="inline-flex items-center px-[11px] py-[6px] border border-[#E5E7EB] rounded-full text-[11.5px] text-[#4B5563] bg-white" style={{ fontFamily: 'Inter' }}>2026–2040</span>
+            <div className="ta-tags">
+              <span className="ta-tag num">2026–2040</span>
+              <span className="ta-tag">KAU price</span>
+              <span className="ta-tag">Mock model</span>
             </div>
           </div>
 
@@ -186,7 +228,7 @@ export default function DashboardPage() {
           {activeTab === 'gap' && <CbamTab />}
 
           <div className="h-6" />
-        </div>
+        </main>
 
         <PageFooter />
       </div>

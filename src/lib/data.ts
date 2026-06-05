@@ -13,8 +13,29 @@ export const SCEN_LIST = [SCEN.base, SCEN.middle, SCEN.ideal] as const;
 export type ScenarioId = 'base' | 'middle' | 'ideal';
 export const EUA_COLOR = '#94A3B8';
 
+type ModelPricePoint = typeof modelOutput.scenarios.base.price_path[number];
+type OptionalPricePoint = ModelPricePoint & {
+  auction_ratio_power?: number;
+  auction_ratio_non_power?: number;
+  auction_ratio_leakage?: number;
+  active_techs?: Record<string, unknown>;
+};
+type SupplyDemandPoint = { bau_Mt?: number; cap_Mt?: number };
+type MaccTechnologyDetail = {
+  sector: string; technology: string;
+  cost_usd: number; cost_krw: number;
+  potential_pct: number; potential_Mt: number;
+  timeline: string; source: string;
+};
+type ModelOutputWithOptional = typeof modelOutput & {
+  supply_demand?: Partial<Record<ScenarioId, SupplyDemandPoint[]>>;
+  macc_technologies?: MaccTechnologyDetail[];
+};
+
+const optionalPoint = (point: ModelPricePoint): OptionalPricePoint => point as OptionalPricePoint;
+
 // ─── 모형 출력에서 데이터 추출 ───────────────────────────────
-const m = modelOutput;
+const m = modelOutput as ModelOutputWithOptional;
 const paths = {
   base:   m.scenarios.base.price_path,
   middle: m.scenarios.middle.price_path,
@@ -82,32 +103,32 @@ export const AUCTION_RATIO_PATH = paths.base.map((b, i) => ({
 export const AUCTION_BY_CATEGORY = {
   power: paths.base.map((b, i) => ({
     year: b.year,
-    base:   (b as any).auction_ratio_power ?? b.auction_ratio,
-    middle: (paths.middle[i] as any).auction_ratio_power ?? paths.middle[i].auction_ratio,
-    ideal:  (paths.ideal[i] as any).auction_ratio_power ?? paths.ideal[i].auction_ratio,
+    base:   optionalPoint(b).auction_ratio_power ?? b.auction_ratio,
+    middle: optionalPoint(paths.middle[i]).auction_ratio_power ?? paths.middle[i].auction_ratio,
+    ideal:  optionalPoint(paths.ideal[i]).auction_ratio_power ?? paths.ideal[i].auction_ratio,
   })),
   non_power: paths.base.map((b, i) => ({
     year: b.year,
-    base:   (b as any).auction_ratio_non_power ?? 0,
-    middle: (paths.middle[i] as any).auction_ratio_non_power ?? 0,
-    ideal:  (paths.ideal[i] as any).auction_ratio_non_power ?? 0,
+    base:   optionalPoint(b).auction_ratio_non_power ?? 0,
+    middle: optionalPoint(paths.middle[i]).auction_ratio_non_power ?? 0,
+    ideal:  optionalPoint(paths.ideal[i]).auction_ratio_non_power ?? 0,
   })),
   leakage: paths.base.map((b, i) => ({
     year: b.year,
-    base:   (b as any).auction_ratio_leakage ?? 0,
-    middle: (paths.middle[i] as any).auction_ratio_leakage ?? 0,
-    ideal:  (paths.ideal[i] as any).auction_ratio_leakage ?? 0,
+    base:   optionalPoint(b).auction_ratio_leakage ?? 0,
+    middle: optionalPoint(paths.middle[i]).auction_ratio_leakage ?? 0,
+    ideal:  optionalPoint(paths.ideal[i]).auction_ratio_leakage ?? 0,
   })),
 };
 
 // 기술 도입 현황 (2030년 기준, 시나리오별)
 export function getActiveTechs(scenarioId: ScenarioId, yearIdx: number = 4) {
   const pp = paths[scenarioId][yearIdx];
-  return (pp as any).active_techs ?? {};
+  return optionalPoint(pp).active_techs ?? {};
 }
 
 // v0.6: 수급 구조 — BAU vs Cap (시나리오별)
-const sd = (m as any).supply_demand ?? {};
+const sd = m.supply_demand ?? {};
 export const SUPPLY_DEMAND = paths.base.map((b, i) => ({
   year: b.year,
   bau: sd.base?.[i]?.bau_Mt ?? 0,
@@ -117,12 +138,7 @@ export const SUPPLY_DEMAND = paths.base.map((b, i) => ({
 }));
 
 // MACC 기술 상세 (마스터 엑셀에서 로드)
-export const MACC_TECH_DETAILS: Array<{
-  sector: string; technology: string;
-  cost_usd: number; cost_krw: number;
-  potential_pct: number; potential_Mt: number;
-  timeline: string; source: string;
-}> = (m as any).macc_technologies ?? [];
+export const MACC_TECH_DETAILS: MaccTechnologyDetail[] = m.macc_technologies ?? [];
 
 // KPI 요약
 export const KPI = {
