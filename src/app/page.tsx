@@ -12,6 +12,7 @@ import { CompareTable } from '@/components/CompareTable';
 import { MechanismPanel } from '@/components/Mechanism';
 import { SimulatorPanel } from '@/components/Simulator';
 import { SCEN, SCEN_LIST, EUA_COLOR, KPI, MACC_ALL, SECTOR_INFO } from '@/lib/data';
+import { KETS_MSR_POLICY } from '@/lib/msr';
 
 // ─── 탭별 콘텐츠 ────────────────────────────────────────────
 
@@ -104,6 +105,7 @@ function AssumptionsPanel() {
   const assumptions = [
     { name: '배출 총량 경로', value: '2026–2040', src: 'NDC 기반 3개 정책 시나리오' },
     { name: '가격 정리 방식', value: 'BAU − Effective supply', src: 'Coase equilibrium + K-MSR supply adjustment' },
+    { name: 'K-MSR 예비분', value: `${KETS_MSR_POLICY.phase4ReserveMt.toFixed(1)} Mt`, src: '4기 할당계획 시장안정화 용도 예비분' },
     { name: '감축 비용곡선', value: `${MACC_ALL.length} tech`, src: '6개 부문 MACC staircase' },
     { name: 'Banking 동학', value: 'Constrained Hotelling', src: '미래 희소성의 현재 가격 전파' },
     { name: '경매수입', value: 'Auction volume × P*', src: '유상비율 및 K-MSR 경매 공급 조정 반영' },

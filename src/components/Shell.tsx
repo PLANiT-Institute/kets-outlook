@@ -175,7 +175,7 @@ export function PageFooter() {
   return (
     <footer className="px-8 py-[18px] border-t border-[var(--border)] flex justify-between items-center text-[11px] text-[var(--text-muted)] bg-white">
       <div>PLANiT Institute · Coase + Staircase MACC + Constrained Hotelling · 2026–2040</div>
-      <div className="num">v0.7 · K-MSR supply adjustment</div>
+      <div className="num">v0.8 · K-MSR rule modes</div>
     </footer>
   );
 }

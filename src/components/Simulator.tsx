@@ -5,7 +5,14 @@ import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip,
   ReferenceLine, ResponsiveContainer, AreaChart, Area,
 } from 'recharts';
-import { MACC_ALL, SECTOR_INFO, SUPPLY_DEMAND, fmtWon, fmtWonK, type MaccTech } from '@/lib/data';
+import { BANKING_PATH, MACC_ALL, SECTOR_INFO, SUPPLY_DEMAND, fmtWon, fmtWonK, type MaccTech } from '@/lib/data';
+import {
+  KETS_MSR_POLICY,
+  MSR_MODE_LABELS,
+  calculateMsrAction,
+  clampManualMsrAdjustment,
+  type MsrMode,
+} from '@/lib/msr';
 
 // ─── 브라우저 내 균형가격 솔버 ───────────────────────────────
 // Staircase MACC: 비용 ≤ P인 기술의 잠재량 합 = 감축량
@@ -47,7 +54,75 @@ type CapPreset = 'base' | 'middle' | 'ideal';
 const CAP_LABELS: Record<CapPreset, string> = { base: '기준 (-35%)', middle: '중간 (-43%)', ideal: '이상 (-58%)' };
 const CAP_COLORS: Record<CapPreset, string> = { base: '#5B7BAA', middle: '#E8A33D', ideal: '#10A574' };
 
-const clampMsrAdjustment = (value: number) => Math.max(-30, Math.min(30, Math.round(value)));
+function buildPricePathSim({
+  activeTechs,
+  capPreset,
+  learningFn,
+  auctionRate2040,
+  msrMode,
+  manualMsrAdjustmentMt,
+}: {
+  activeTechs: MaccTech[];
+  capPreset: CapPreset;
+  learningFn: ReturnType<typeof makeLearningFn>;
+  auctionRate2040: number;
+  msrMode: MsrMode;
+  manualMsrAdjustmentMt: number;
+}) {
+  let previousPriceKrw: number = KETS_MSR_POLICY.recentKau25Krw;
+  let previousSurplusRatio: number = 0;
+  let reserveStockMt: number = KETS_MSR_POLICY.phase4ReserveMt;
+
+  return SUPPLY_DEMAND.map((row, index) => {
+    const cap = row[`cap_${capPreset}` as keyof typeof row] as number;
+    const bankingPoint = BANKING_PATH.find(point => point.year === row.year);
+    const bankingStockMt = bankingPoint?.[capPreset] ?? 0;
+    const currentSurplusRatio = cap > 0 ? Math.max(bankingStockMt / cap, 0) : 0;
+
+    if (index === 0) previousSurplusRatio = currentSurplusRatio;
+
+    const msrAction = calculateMsrAction({
+      mode: msrMode,
+      manualAdjustmentMt: manualMsrAdjustmentMt,
+      previousPriceKrw,
+      previousSurplusRatio,
+      reserveStockStartMt: reserveStockMt,
+    });
+    const effectiveSupply = Math.max(cap + msrAction.adjustmentMt, 0);
+    const shortfall = Math.max(row.bau - effectiveSupply, 0);
+    const price = shortfall > 0
+      ? solveEquilibrium(activeTechs, shortfall, learningFn, row.year)
+      : 0;
+    const auctionRatio = auctionRate2040 / 100 * ((row.year - 2026) / 14);
+    const baseAuctionVolumeMt = cap * Math.min(auctionRatio, auctionRate2040 / 100);
+    const auctionVolumeMt = Math.max(baseAuctionVolumeMt + msrAction.adjustmentMt, 0);
+    const revenue = auctionVolumeMt * 1e6 * price / 1e12;
+
+    const output = {
+      year: row.year,
+      bau: row.bau,
+      cap,
+      effectiveSupply: Math.round(effectiveSupply * 10) / 10,
+      msrAdjustment: msrAction.adjustmentMt,
+      msrIntake: msrAction.intakeMt,
+      msrRelease: msrAction.releaseMt,
+      msrReserveStock: msrAction.reserveStockEndMt,
+      msrTrigger: msrAction.triggerLabel,
+      surplusRatio: Math.round(currentSurplusRatio * 1000) / 10,
+      auctionVolume: Math.round(auctionVolumeMt * 10) / 10,
+      shortfall: Math.round(shortfall * 10) / 10,
+      price,
+      revenue: Math.round(revenue * 100) / 100,
+      activeTechCount: activeTechs.filter(t => learningFn(t.cost, t.tech, row.year) <= price).length,
+    };
+
+    previousPriceKrw = price;
+    previousSurplusRatio = currentSurplusRatio;
+    reserveStockMt = msrAction.reserveStockEndMt;
+
+    return output;
+  });
+}
 
 // ─── 메인 컴포넌트 ──────────────────────────────────────────
 export function SimulatorPanel() {
@@ -66,7 +141,8 @@ export function SimulatorPanel() {
   const [auctionRate2040, setAuctionRate2040] = useState(50);
 
   // K-MSR 경매 공급 조정: 음수는 경매 축소/예비분 적립, 양수는 예비분 방출/추가 경매
-  const [msrAdjustmentMt, setMsrAdjustmentMt] = useState(0);
+  const [msrMode, setMsrMode] = useState<MsrMode>('manual');
+  const [manualMsrAdjustmentMt, setManualMsrAdjustmentMt] = useState(0);
 
   // 활성화된 기술만 필터
   const activeTechs = useMemo(
@@ -77,33 +153,17 @@ export function SimulatorPanel() {
   const learningFn = useMemo(() => makeLearningFn(learningRate / 100), [learningRate]);
 
   // 연도별 균형가격 계산
-  const pricePathSim = useMemo(() => {
-    return SUPPLY_DEMAND.map(row => {
-      const cap = row[`cap_${capPreset}` as keyof typeof row] as number;
-      const effectiveSupply = Math.max(cap + msrAdjustmentMt, 0);
-      const shortfall = Math.max(row.bau - effectiveSupply, 0);
-      const price = shortfall > 0
-        ? solveEquilibrium(activeTechs, shortfall, learningFn, row.year)
-        : 0;
-      // 경매수입 (간이 계산)
-      const auctionRatio = auctionRate2040 / 100 * ((row.year - 2026) / 14); // 선형 증가
-      const baseAuctionVolumeMt = cap * Math.min(auctionRatio, auctionRate2040 / 100);
-      const auctionVolumeMt = Math.max(baseAuctionVolumeMt + msrAdjustmentMt, 0);
-      const revenue = auctionVolumeMt * 1e6 * price / 1e12;
-      return {
-        year: row.year,
-        bau: row.bau,
-        cap,
-        effectiveSupply: Math.round(effectiveSupply * 10) / 10,
-        msrAdjustment: msrAdjustmentMt,
-        auctionVolume: Math.round(auctionVolumeMt * 10) / 10,
-        shortfall: Math.round(shortfall * 10) / 10,
-        price,
-        revenue: Math.round(revenue * 100) / 100,
-        activeTechCount: activeTechs.filter(t => learningFn(t.cost, t.tech, row.year) <= price).length,
-      };
-    });
-  }, [activeTechs, capPreset, learningFn, auctionRate2040, msrAdjustmentMt]);
+  const pricePathSim = useMemo(
+    () => buildPricePathSim({
+      activeTechs,
+      capPreset,
+      learningFn,
+      auctionRate2040,
+      msrMode,
+      manualMsrAdjustmentMt,
+    }),
+    [activeTechs, capPreset, learningFn, auctionRate2040, msrMode, manualMsrAdjustmentMt],
+  );
 
   const toggleTech = (tech: string) => {
     setEnabledTechs(prev => {
@@ -129,15 +189,16 @@ export function SimulatorPanel() {
   const cumRevenue = pricePathSim.reduce((s, r) => s + r.revenue, 0);
   const totalPotential = activeTechs.reduce((s, t) => s + t.potential, 0);
   const supply2030 = pricePathSim.find(r => r.year === 2030);
-  const msrLabel = msrAdjustmentMt === 0
+  const msrAdjustment2030 = supply2030?.msrAdjustment ?? 0;
+  const msrLabel = msrAdjustment2030 === 0
     ? '중립'
-    : msrAdjustmentMt < 0
-      ? `${Math.abs(msrAdjustmentMt)} Mt/yr 경매 축소`
-      : `${msrAdjustmentMt} Mt/yr 추가 경매`;
+    : msrAdjustment2030 < 0
+      ? `${Math.abs(msrAdjustment2030)} Mt 경매 축소`
+      : `${msrAdjustment2030} Mt 추가 경매`;
   const handleMsrAdjustmentChange = (value: string) => {
     const parsed = Number(value);
     if (!Number.isFinite(parsed)) return;
-    setMsrAdjustmentMt(clampMsrAdjustment(parsed));
+    setManualMsrAdjustmentMt(clampManualMsrAdjustment(parsed));
   };
 
   const TOOLTIP_STYLE = { fontSize: 11, borderRadius: 8, border: '1px solid #E5E7EB', boxShadow: '0 4px 16px rgba(0,0,0,.06)' };
@@ -187,7 +248,7 @@ export function SimulatorPanel() {
             <div className="flex items-center justify-between mb-1">
               <div className="text-[11px] text-[#6B7280]">수급 구조 (BAU vs Effective supply)</div>
               <div className="text-[10.5px] text-[#9CA3AF]" style={{ fontFamily: 'Inter' }}>
-                K-MSR {msrAdjustmentMt > 0 ? '+' : ''}{msrAdjustmentMt} Mt/yr
+                K-MSR {MSR_MODE_LABELS[msrMode].en} · 2030 {msrAdjustment2030 > 0 ? '+' : ''}{msrAdjustment2030} Mt
               </div>
             </div>
             <ResponsiveContainer width="100%" height={120}>
@@ -224,26 +285,52 @@ export function SimulatorPanel() {
           {/* K-MSR */}
           <div className="bg-white border border-[#E5E7EB] rounded-[10px] p-4">
             <div className="flex items-center justify-between gap-2 mb-1">
-              <div className="text-[12px] font-semibold text-[#111827]">K-MSR 경매 공급 조정</div>
+              <div>
+                <div className="text-[12px] font-semibold text-[#111827]">K-MSR 경매 공급 조정</div>
+                <div className="text-[10px] text-[#9CA3AF] mt-0.5">
+                  4기 예비분 {KETS_MSR_POLICY.phase4ReserveMt.toFixed(1)} Mt · 세부 운영 {KETS_MSR_POLICY.ruleFinalization}
+                </div>
+              </div>
               <div className="flex items-center gap-1" style={{ fontFamily: 'Inter' }}>
-                <input type="number" min={-30} max={30} step={1} value={msrAdjustmentMt}
+                <input type="number" min={-30} max={30} step={1} value={manualMsrAdjustmentMt}
                   aria-label="K-MSR 조정량"
                   data-testid="kmsr-adjustment-input"
+                  disabled={msrMode !== 'manual'}
                   onChange={e => handleMsrAdjustmentChange(e.target.value)}
-                  className="w-[58px] rounded border border-[#E5E7EB] px-1.5 py-1 text-right text-[11px] font-semibold text-[#111827] outline-none focus:border-[#5B7BAA]" />
+                  className={`w-[58px] rounded border border-[#E5E7EB] px-1.5 py-1 text-right text-[11px] font-semibold text-[#111827] outline-none focus:border-[#5B7BAA] ${msrMode !== 'manual' ? 'opacity-50' : ''}`} />
                 <span className="text-[10px] text-[#9CA3AF]">Mt</span>
               </div>
             </div>
-            <div className="text-[10px] text-[#9CA3AF] mb-2">음수: 예비분 적립 · 양수: 예비분 방출</div>
-            <input type="range" min={-30} max={30} step={1} value={msrAdjustmentMt}
+            <div className="grid grid-cols-4 gap-1.5 my-2">
+              {(Object.keys(MSR_MODE_LABELS) as MsrMode[]).map(mode => (
+                <button
+                  key={mode}
+                  type="button"
+                  aria-pressed={msrMode === mode}
+                  onClick={() => setMsrMode(mode)}
+                  className={`rounded border px-2 py-1.5 text-[10.5px] transition-all ${
+                    msrMode === mode
+                      ? 'border-[#111827] bg-[#111827] text-white'
+                      : 'border-[#E5E7EB] text-[#6B7280] hover:bg-[#F9FAFB]'
+                  }`}
+                >
+                  {MSR_MODE_LABELS[mode].ko}
+                </button>
+              ))}
+            </div>
+            <div className="text-[10px] text-[#9CA3AF] mb-2">
+              수동 음수: 예비분 적립 · 수동 양수: 예비분 방출 · 자동 모드는 전년도 신호로 조정
+            </div>
+            <input type="range" min={-30} max={30} step={1} value={manualMsrAdjustmentMt}
               aria-label="K-MSR 경매 공급 조정량"
               data-testid="kmsr-adjustment-slider"
+              disabled={msrMode !== 'manual'}
               onInput={e => handleMsrAdjustmentChange(e.currentTarget.value)}
               onChange={e => handleMsrAdjustmentChange(e.target.value)}
-              className="w-full accent-[#5B7BAA]" />
+              className={`w-full accent-[#5B7BAA] ${msrMode !== 'manual' ? 'opacity-50' : ''}`} />
             <div className="flex justify-between text-[10px] text-[#9CA3AF] mt-1" style={{ fontFamily: 'Inter' }}>
               <span>-30 Mt</span>
-              <span className="font-semibold text-[#111827]">{msrLabel}</span>
+              <span className="font-semibold text-[#111827]">2030 {msrLabel}</span>
               <span>+30 Mt</span>
             </div>
             <div className="mt-2 grid grid-cols-2 gap-2 text-[10.5px]" style={{ fontFamily: 'Inter' }}>
@@ -255,6 +342,19 @@ export function SimulatorPanel() {
                 <div className="text-[#9CA3AF]">2030 Shortfall</div>
                 <div className="font-semibold text-[#111827]">{supply2030?.shortfall.toFixed(1) ?? '-'} Mt</div>
               </div>
+              <div className="rounded bg-[#F9FAFB] px-2 py-1.5">
+                <div className="text-[#9CA3AF]">2030 Trigger</div>
+                <div className="font-semibold text-[#111827]">{supply2030?.msrTrigger ?? '-'}</div>
+              </div>
+              <div className="rounded bg-[#F9FAFB] px-2 py-1.5">
+                <div className="text-[#9CA3AF]">2030 Reserve stock</div>
+                <div className="font-semibold text-[#111827]">{supply2030?.msrReserveStock.toFixed(1) ?? '-'} Mt</div>
+              </div>
+            </div>
+            <div className="mt-2 rounded border border-[#E5E7EB] bg-[#FAFAFA] px-2.5 py-2 text-[10.5px] leading-[1.55] text-[#6B7280]" style={{ fontFamily: 'Inter' }}>
+              최근 KAU25 {fmtWon(KETS_MSR_POLICY.recentKau25Krw)}원 · 5월 경매 {fmtWon(KETS_MSR_POLICY.mayAuctionClearingKrw)}원 ·
+              감시선 {fmtWon(KETS_MSR_POLICY.lowPriceKrw)}~{fmtWon(KETS_MSR_POLICY.highPriceKrw)}원 ·
+              잉여비율 {Math.round(KETS_MSR_POLICY.lowerSurplusRatio * 100)}~{Math.round(KETS_MSR_POLICY.upperSurplusRatio * 100)}%
             </div>
           </div>
 
@@ -295,10 +395,12 @@ export function SimulatorPanel() {
             <div className="space-y-1 text-[11px]" style={{ fontFamily: 'Inter' }}>
               <div className="flex justify-between"><span className="text-[#6B7280]">활성 기술</span><span className="text-[#111827] font-semibold">{activeTechs.length}/{MACC_ALL.length}</span></div>
               <div className="flex justify-between"><span className="text-[#6B7280]">감축잠재량</span><span className="text-[#111827] font-semibold">{totalPotential.toFixed(1)} Mt/yr</span></div>
-              <div className="flex justify-between"><span className="text-[#6B7280]">K-MSR 조정</span><span className="text-[#111827] font-semibold">{msrAdjustmentMt > 0 ? '+' : ''}{msrAdjustmentMt} Mt/yr</span></div>
+              <div className="flex justify-between"><span className="text-[#6B7280]">K-MSR 모드</span><span className="text-[#111827] font-semibold">{MSR_MODE_LABELS[msrMode].ko}</span></div>
+              <div className="flex justify-between"><span className="text-[#6B7280]">2030 K-MSR</span><span className="text-[#111827] font-semibold">{msrAdjustment2030 > 0 ? '+' : ''}{msrAdjustment2030} Mt</span></div>
               <div className="flex justify-between"><span className="text-[#6B7280]">2030 가격</span><span className="text-[#111827] font-semibold">{fmtWon(p2030)} 원</span></div>
               <div className="flex justify-between"><span className="text-[#6B7280]">2040 가격</span><span className="text-[#111827] font-semibold">{fmtWon(p2040)} 원</span></div>
               <div className="flex justify-between"><span className="text-[#6B7280]">2030 경매량</span><span className="text-[#111827] font-semibold">{supply2030?.auctionVolume.toFixed(1) ?? '-'} Mt</span></div>
+              <div className="flex justify-between"><span className="text-[#6B7280]">2030 잉여비율</span><span className="text-[#111827] font-semibold">{supply2030?.surplusRatio.toFixed(1) ?? '-'}%</span></div>
               <div className="flex justify-between"><span className="text-[#6B7280]">2040 활성기술</span><span className="text-[#111827] font-semibold">{pricePathSim.find(r => r.year === 2040)?.activeTechCount ?? 0}개</span></div>
             </div>
           </div>

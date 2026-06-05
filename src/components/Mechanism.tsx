@@ -1,6 +1,7 @@
 'use client';
 
-import { SCEN, SCEN_LIST } from '@/lib/data';
+import { SCEN, SCEN_LIST, fmtWon } from '@/lib/data';
+import { KETS_MSR_POLICY } from '@/lib/msr';
 
 function Step({ num, title, children }: { num: number; title: string; children: React.ReactNode }) {
   return (
@@ -114,6 +115,12 @@ export function MechanismPanel() {
               Effective supply<sub>t</sub> = Legal cap<sub>t</sub> + K-MSR 방출<sub>t</sub> − K-MSR 흡수<sub>t</sub><br/>
               Shortfall<sub>t</sub> = BAU<sub>t</sub> − Effective supply<sub>t</sub>
             </FormulaBox>
+            <Callout type="key" title="2026년 제도 업데이트">
+              제4차 할당계획은 시장안정화 용도 예비분을 <strong>{KETS_MSR_POLICY.phase4ReserveMt.toFixed(1)} Mt</strong>로 설정했습니다.
+              이 물량은 배출허용총량 안에 있는 버퍼이며, 가격 또는 수량 기준이 벗어나면 유상할당 계정과 예비분 계정 사이에서 이동합니다.
+              현재 시뮬레이터의 자동 모드는 최근 KAU25 가격 <strong>{fmtWon(KETS_MSR_POLICY.recentKau25Krw)}원</strong>과
+              감시선 <strong>{fmtWon(KETS_MSR_POLICY.lowPriceKrw)}~{fmtWon(KETS_MSR_POLICY.highPriceKrw)}원</strong>을 기준선으로 사용합니다.
+            </Callout>
             <p className="m-0">
               Effective supply가 줄어들수록 → Shortfall 증가 → 더 많은 감축 필요 → <strong>더 비싼 기술까지 동원</strong> → 가격 상승.
               그래서 K-MSR은 cap을 바꾸지 않고도 단기 가격 신호를 보정할 수 있습니다.
