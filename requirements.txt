@@ -1,0 +1,3 @@
+# Vercel 서버리스 함수(api/solve.py) 런타임 의존성 — 이것만 함수 번들에 설치된다.
+# 엔진(kets/)은 numpy + stdlib만 쓴다. 개발용 의존성은 requirements-dev.txt 참조.
+numpy>=1.24

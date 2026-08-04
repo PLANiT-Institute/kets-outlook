@@ -1,36 +1,112 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# kets-outlook
 
-## Getting Started
+**K-ETS 배출권 가격전망 모형 · K-MSR 운영규칙 분석**
+Coase 정태균형 + 계단형 MACC + 제약 Hotelling + 유동성 전달(λ)
 
-First, run the development server:
+한국 배출권거래제(K-ETS)의 2026–2040 KAU 가격경로를 계산하고, 2026년 4월 법제화된
+K-MSR(시장안정화 예비분)을 **어떤 규칙으로 운영해야** 철강·석유화학의 전환기술이
+경제성을 갖는 시점에 도달하는지 평가한다.
+
+> **핵심 결과** — 현행 총량만으로는 2040년 KAU가 약 6.7만 원에 그쳐 철강
+> 수소환원제철 문턱(약 9.5만 원)에 닿지 않는다. 2026년 **4만 원 출발 · 실질 7%
+> 상승**의 사전공표 경매 최저가격에 **유찰물량 영구취소**를 결합하면 2039년에
+> 문턱에 도달하며, 기술비용 ±20% 전 범위에서 방어 가능한 유일한 출발가격이다.
+>
+> → 전체 설명: **[docs/report.md](docs/report.md)**
+
+---
+
+## 문서
+
+| 문서 | 내용 |
+|---|---|
+| **[docs/report.md](docs/report.md)** | 보고서 — 문제·모형·결과·반론·한계 (비전문가도 읽을 수 있게) |
+| [docs/methodology.md](docs/methodology.md) | 방법론 — 수식과 구현 대조, 데이터 계약 |
+| [docs/architecture.md](docs/architecture.md) | 구조 — CLI · MCP · Vercel 세 경로 |
+| [mcp/README.md](mcp/README.md) | MCP 서버 등록·도구 목록 |
+
+---
+
+## 빠른 시작
+
+### 1. 모형 돌리기 (CLI)
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pip install -r requirements-dev.txt
+bash scripts/reproduce_all.sh
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+전체 재현에는 수 분이 걸린다. 빠른 확인만 하려면:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+python3 scripts/run_escalator_floor.py     # 3초, 경매 최저가격 격자
+python3 -m pytest tests -q                 # ~30초, 헤드라인 수치 검증
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 2. Claude에서 쓰기 (MCP)
 
-## Learn More
+```json
+{
+  "mcpServers": {
+    "kets": { "command": "python3", "args": ["/절대경로/kets-outlook/mcp/server.py"] }
+  }
+}
+```
 
-To learn more about Next.js, take a look at the following resources:
+등록하면 Claude가 `solve_package`·`solve_custom`으로 실제 엔진을 돌린다.
+`pip install mcp` 불필요 — 표준 라이브러리 + numpy만 쓴다.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 3. 웹 대시보드 (Vercel)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npm install
+npm run dev              # http://localhost:3000
+python3 api/solve.py     # http://localhost:8531 (라이브 solve API, 별도 터미널)
+```
 
-## Deploy on Vercel
+Overview 탭은 확정 결과(정적 JSON), Simulator 탭은 `POST /api/solve`로 실제 엔진을
+재solve한다.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 저장소 구조
+
+```
+kets/           모형 엔진 (정본) — numpy + stdlib만
+data/           마스터 엑셀(SSOT) + KRX 시장 원자료
+scripts/        재현 파이프라인
+outputs/        실행 결과 JSON·CSV
+tests/          단위 + 골든 회귀 + MCP 계약 (40 tests)
+docs/           보고서·방법론·구조 + 그림
+mcp/            MCP 서버
+api/            Vercel 서버리스 함수 (+ vendored 엔진)
+src/, public/   Next.js 대시보드
+```
+
+---
+
+## 설계 원칙
+
+1. **SSOT는 엑셀 하나.** 모든 모형 입력은 `data/K-ETS_마스터데이터.xlsx`에서 온다.
+   엔진에 데이터 상수가 없다(유일한 예외: 이분법 탐색 상한).
+2. **계산은 한 곳에만.** CLI · MCP · 웹 API가 같은 `kets/` 엔진을 탄다.
+   `api/_engine/`은 Vercel 번들용 생성물이며 직접 고치지 않는다.
+3. **보고서 수치는 테스트가 잠근다.** `tests/test_reproducibility.py`가
+   `docs/report.md`에 인쇄된 값을 그대로 검증한다. 숫자는 엔진 → 결과 → 보고서
+   방향으로만 흐른다.
+
+작업 규칙은 [AGENTS.md](AGENTS.md).
+
+---
+
+## 검증 상태
+
+| 항목 | 상태 |
+|---|---|
+| 테스트 | 40 passed |
+| 엔진 커버리지 | 89% (`kets/engine.py`) |
+| 재현성 | 마스터 엑셀에서 재실행 시 `msr_results_v1.0.json` · `escalator_floor_cce_v2.0.json` · `carry_analysis_cce_v2.0.json` 바이트 동일 |
+
+---
+
+**PLANiT Institute** · 모형 v1.0 · 데이터 기준 2026-07

@@ -1,0 +1,20 @@
+[project]
+name = "kets-outlook"
+version = "1.0.0"
+description = "K-ETS/K-MSR 배출권 가격전망 모형 — Coase 정태균형 + 계단형 MACC + 제약 Hotelling + 유동성 전달"
+requires-python = ">=3.10"
+dependencies = ["numpy>=1.24"]
+
+[project.optional-dependencies]
+dev = ["pandas>=2.0", "openpyxl>=3.1", "matplotlib>=3.7", "pytest>=7.4", "pytest-cov>=4.1"]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["kets"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]

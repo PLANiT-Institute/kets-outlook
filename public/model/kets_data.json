@@ -1,0 +1,6483 @@
+{
+  "_meta": {
+    "source": "data/K-ETS_마스터데이터.xlsx",
+    "note": "빌드타임 export. 편집은 엑셀(SSOT)에서만. scripts/export_web_data.py로 재생성."
+  },
+  "model_params": {
+    "analysis": {
+      "start_year": 2026,
+      "end_year": 2040,
+      "calibration_period": {
+        "start": 2021,
+        "end": 2025
+      }
+    },
+    "hotelling": {
+      "discount_rate": 0.035,
+      "risk_premium": 0.02
+    },
+    "msr": {
+      "enabled": false
+    },
+    "exchange_rate": {
+      "eur_krw": 1500.0,
+      "usd_krw": 1380.0
+    },
+    "macc": {
+      "default_functional_form": "exponential",
+      "steel": {
+        "alpha": 6750.0,
+        "beta": 4.5,
+        "max_abatement_share": 0.5,
+        "baseline_emissions_MtCO2": 110.0
+      },
+      "petrochem": {
+        "alpha": 10800.0,
+        "beta": 5.5,
+        "max_abatement_share": 0.35,
+        "baseline_emissions_MtCO2": 45.0
+      }
+    },
+    "solver": {
+      "method": "brentq",
+      "price_lower_bound_krw": 5000.0,
+      "price_upper_bound_krw": 300000.0,
+      "tolerance": 1e-06,
+      "intl_steepness": 0.0005,
+      "step_smoothing_width": 0.02
+    },
+    "market": {
+      "total_kets_emissions_MtCO2": 550.0,
+      "intl_credit_limit_ratio": 0.1
+    },
+    "cbam": {
+      "steel_export_Mt": 3.8,
+      "steel_embed_tCO2": 2.127,
+      "petrochem_export_Mt": 4.0,
+      "petrochem_embed_tCO2": 1.8
+    }
+  },
+  "banking_initial_bank_Mt": 70.0,
+  "msr_reserve_Mt": 85.28,
+  "liquidity_defaults": {
+    "lambda_0": 0.0,
+    "lambda_terminal_default": 0.9,
+    "ramp_years_default": 10.0,
+    "psi_low": -0.5,
+    "psi_high": 0.0,
+    "psi_default": -0.25,
+    "lambda_2026_implied": 0.55,
+    "regime_relapse_years": 3.0,
+    "regime_consolidate_terminal": 0.9,
+    "regime_consolidate_years": 8.0
+  },
+  "sheets": {
+    "모형파라미터": [
+      {
+        "category": "분석기간",
+        "parameter": "start_year",
+        "value": 2026,
+        "unit": "년",
+        "description": "분석 시작 연도",
+        "source": "제안서"
+      },
+      {
+        "category": "분석기간",
+        "parameter": "end_year",
+        "value": 2040,
+        "unit": "년",
+        "description": "분석 종료 연도",
+        "source": "제안서"
+      },
+      {
+        "category": "분석기간",
+        "parameter": "calibration_start",
+        "value": 2021,
+        "unit": "년",
+        "description": "캘리브레이션 시작 (3차 계획기간)",
+        "source": "K-ETS 3차 계획기간"
+      },
+      {
+        "category": "분석기간",
+        "parameter": "calibration_end",
+        "value": 2025,
+        "unit": "년",
+        "description": "캘리브레이션 종료",
+        "source": "K-ETS 3차 계획기간"
+      },
+      {
+        "category": "Hotelling",
+        "parameter": "discount_rate",
+        "value": 0.035,
+        "unit": "연율",
+        "description": "무위험금리 r (한국 국고채 3년물 2024 평균)",
+        "source": "한국은행 경제통계시스템 ECOS"
+      },
+      {
+        "category": "Hotelling",
+        "parameter": "risk_premium",
+        "value": 0.02,
+        "unit": "연율",
+        "description": "배출권 시장 리스크 프리미엄 (캘리브레이션 대상)",
+        "source": "초기 가정. Ellerman & Montero (2007) 참조"
+      },
+      {
+        "category": "MSR",
+        "parameter": "msr_enabled",
+        "value": false,
+        "unit": "-",
+        "description": "시장안정화예비분. 세부규칙 2027.06 발표 예정",
+        "source": "환경부 보도자료 2025"
+      },
+      {
+        "category": "환율",
+        "parameter": "eur_krw",
+        "value": 1500,
+        "unit": "원/유로",
+        "description": "EUR/KRW (2025.05 기준 ~1,500원대)",
+        "source": "한국은행 환율 2025.05"
+      },
+      {
+        "category": "환율",
+        "parameter": "usd_krw",
+        "value": 1380,
+        "unit": "원/달러",
+        "description": "USD/KRW (2025.05 기준)",
+        "source": "한국은행 환율 2025.05"
+      },
+      {
+        "category": "MACC_철강",
+        "parameter": "alpha",
+        "value": 6750,
+        "unit": "원/tCO2",
+        "description": "스케일 (~$5). 에너지효율 최소비용 수준",
+        "source": "Nature 2025 s41586-025-09658-9; 에너지효율 -$8.5 → 환산"
+      },
+      {
+        "category": "MACC_철강",
+        "parameter": "beta",
+        "value": 4.5,
+        "unit": "-",
+        "description": "곡률. 20%감축→$12, 50%→$47/tCO2",
+        "source": "Nature 2025 기술별 비용 곡선에서 피팅"
+      },
+      {
+        "category": "MACC_철강",
+        "parameter": "max_abatement_share",
+        "value": 0.5,
+        "unit": "비율",
+        "description": "최대 감축비율 50% (H2-DRI+CCUS 포함 장기)",
+        "source": "IEA Net Zero Roadmap; POSCO HyREX 2033 목표"
+      },
+      {
+        "category": "MACC_철강",
+        "parameter": "functional_form",
+        "value": "exponential",
+        "unit": "-",
+        "description": "MAC(a) = alpha * exp(beta * a)",
+        "source": "Ellerman & Decaux (1998, MIT); DICE 모형 계열"
+      },
+      {
+        "category": "MACC_철강",
+        "parameter": "baseline_emissions_MtCO2",
+        "value": 110,
+        "unit": "MtCO2/yr",
+        "description": "2023년 기준 철강 배출량",
+        "source": "KIER/Climate TRACE"
+      },
+      {
+        "category": "MACC_석유화학",
+        "parameter": "alpha",
+        "value": 10800,
+        "unit": "원/tCO2",
+        "description": "스케일 (~$8). 공정최적화 최소비용",
+        "source": "ACS Sustainable Chem. Eng. 2024 acssuschemeng.4c09854"
+      },
+      {
+        "category": "MACC_석유화학",
+        "parameter": "beta",
+        "value": 5.5,
+        "unit": "-",
+        "description": "곡률. 20%감축→$24, 50%→$125/tCO2",
+        "source": "RSC Green Chemistry 2025 D4GC04538F; 기술비용 피팅"
+      },
+      {
+        "category": "MACC_석유화학",
+        "parameter": "max_abatement_share",
+        "value": 0.35,
+        "unit": "비율",
+        "description": "최대 감축비율 35% (전기분해+CCUS 포함 장기)",
+        "source": "RSC Green Chemistry 2025; 전기크래킹 $561/tCO2 상한"
+      },
+      {
+        "category": "MACC_석유화학",
+        "parameter": "functional_form",
+        "value": "exponential",
+        "unit": "-",
+        "description": "MAC(a) = alpha * exp(beta * a)",
+        "source": "동일 함수형태"
+      },
+      {
+        "category": "MACC_석유화학",
+        "parameter": "baseline_emissions_MtCO2",
+        "value": 45,
+        "unit": "MtCO2/yr",
+        "description": "2023년 기준 석유화학 배출량",
+        "source": "forourclimate.org"
+      },
+      {
+        "category": "Solver",
+        "parameter": "method",
+        "value": "brentq",
+        "unit": "-",
+        "description": "scipy.optimize.brentq (Brent 방법)",
+        "source": "표준 수치해법"
+      },
+      {
+        "category": "Solver",
+        "parameter": "price_lower_bound",
+        "value": 5000,
+        "unit": "원/tCO2",
+        "description": "가격 탐색 하한 (2023 최저 7,020원 참고)",
+        "source": "KRX 배출권시장 2023 최저가"
+      },
+      {
+        "category": "Solver",
+        "parameter": "price_upper_bound",
+        "value": 300000,
+        "unit": "원/tCO2",
+        "description": "가격 탐색 상한 (EUA 2040 ~€200 = ~30만원)",
+        "source": "EC Fit for 55 장기전망 환산"
+      },
+      {
+        "category": "Solver",
+        "parameter": "tolerance",
+        "value": 1e-06,
+        "unit": "-",
+        "description": "수렴 허용오차",
+        "source": "-"
+      },
+      {
+        "category": "K-ETS_시장",
+        "parameter": "total_kets_emissions_MtCO2",
+        "value": 550,
+        "unit": "MtCO2/yr",
+        "description": "2023년 기준 K-ETS 대상 총 배출량",
+        "source": "KIER/Climate TRACE"
+      },
+      {
+        "category": "K-ETS_시장",
+        "parameter": "intl_credit_limit_ratio",
+        "value": 0.1,
+        "unit": "비율",
+        "description": "국제감축 상한 (총량의 10%)",
+        "source": "K-ETS 규정"
+      },
+      {
+        "category": "Solver",
+        "parameter": "intl_steepness",
+        "value": 0.0005,
+        "unit": "-",
+        "description": "국제감축 smoothed step 기울기 (수치안정성)",
+        "source": "수치해법 파라미터"
+      },
+      {
+        "category": "CBAM",
+        "parameter": "cbam_steel_export_Mt",
+        "value": 3.8,
+        "unit": "Mt",
+        "description": "EU 철강 수출량",
+        "source": "한국-EU무역 시트 기반"
+      },
+      {
+        "category": "CBAM",
+        "parameter": "cbam_steel_embed_tCO2",
+        "value": 2.127,
+        "unit": "tCO2/t제품",
+        "description": "POSCO HRC 내재배출",
+        "source": "CBAM내재배출 시트 기반"
+      },
+      {
+        "category": "CBAM",
+        "parameter": "cbam_petrochem_export_Mt",
+        "value": 4,
+        "unit": "Mt",
+        "description": "EU 석유화학 수출량 (추정)",
+        "source": "한국석유화학공업협회 2024"
+      },
+      {
+        "category": "CBAM",
+        "parameter": "cbam_petrochem_embed_tCO2",
+        "value": 1.8,
+        "unit": "tCO2/t제품",
+        "description": "석유화학 내재배출 (추정)",
+        "source": "문헌 추정"
+      },
+      {
+        "category": "MACC_발전",
+        "parameter": "baseline_emissions_MtCO2",
+        "value": 196,
+        "unit": "MtCO2/yr",
+        "description": "2023년 기준 발전부문 배출량",
+        "source": "KIER"
+      },
+      {
+        "category": "MACC_발전",
+        "parameter": "alpha",
+        "value": 7000,
+        "unit": "원/tCO2",
+        "description": "스케일. 석탄효율개선 최소비용",
+        "source": "IEA World Energy Outlook 2024"
+      },
+      {
+        "category": "MACC_발전",
+        "parameter": "beta",
+        "value": 4,
+        "unit": "-",
+        "description": "곡률",
+        "source": "IEA 기술별 비용 기반"
+      },
+      {
+        "category": "MACC_발전",
+        "parameter": "max_abatement_share",
+        "value": 0.55,
+        "unit": "비율",
+        "description": "최대 감축비율 55%",
+        "source": "IEA Net Zero Roadmap 2023"
+      },
+      {
+        "category": "MACC_발전",
+        "parameter": "functional_form",
+        "value": "exponential",
+        "unit": "-",
+        "description": "MAC(a)=alpha*exp(beta*a)",
+        "source": "-"
+      },
+      {
+        "category": "MACC_시멘트",
+        "parameter": "baseline_emissions_MtCO2",
+        "value": 33,
+        "unit": "MtCO2/yr",
+        "description": "2023년 기준 시멘트 배출량",
+        "source": "GIR 추정"
+      },
+      {
+        "category": "MACC_시멘트",
+        "parameter": "alpha",
+        "value": 5500,
+        "unit": "원/tCO2",
+        "description": "스케일",
+        "source": "GCCA Net Zero Roadmap 2024"
+      },
+      {
+        "category": "MACC_시멘트",
+        "parameter": "beta",
+        "value": 5,
+        "unit": "-",
+        "description": "곡률",
+        "source": "GCCA 기술비용 기반"
+      },
+      {
+        "category": "MACC_시멘트",
+        "parameter": "max_abatement_share",
+        "value": 0.45,
+        "unit": "비율",
+        "description": "최대 감축비율 45%",
+        "source": "GCCA/IEA"
+      },
+      {
+        "category": "MACC_시멘트",
+        "parameter": "functional_form",
+        "value": "exponential",
+        "unit": "-",
+        "description": "MAC(a)=alpha*exp(beta*a)",
+        "source": "-"
+      },
+      {
+        "category": "MACC_정유",
+        "parameter": "baseline_emissions_MtCO2",
+        "value": 40,
+        "unit": "MtCO2/yr",
+        "description": "2023년 기준 정유 배출량",
+        "source": "에너지데일리 추정"
+      },
+      {
+        "category": "MACC_정유",
+        "parameter": "alpha",
+        "value": 6000,
+        "unit": "원/tCO2",
+        "description": "스케일",
+        "source": "IEA Refinery Roadmap"
+      },
+      {
+        "category": "MACC_정유",
+        "parameter": "beta",
+        "value": 5.2,
+        "unit": "-",
+        "description": "곡률",
+        "source": "IEA 기술비용 기반"
+      },
+      {
+        "category": "MACC_정유",
+        "parameter": "max_abatement_share",
+        "value": 0.4,
+        "unit": "비율",
+        "description": "최대 감축비율 40%",
+        "source": "IEA"
+      },
+      {
+        "category": "MACC_정유",
+        "parameter": "functional_form",
+        "value": "exponential",
+        "unit": "-",
+        "description": "MAC(a)=alpha*exp(beta*a)",
+        "source": "-"
+      },
+      {
+        "category": "Banking",
+        "parameter": "initial_bank_Mt",
+        "value": 70,
+        "unit": "MtCO2",
+        "description": "2025년말 누적 시중잉여(banking overhang) 초기스톡 B0. 2023말 70Mt 기준(2024·2025 외삽 전 보수적 적용)",
+        "source": "park2025; 4차 기본계획 2024.12; 시장잉여추정 시트"
+      },
+      {
+        "category": "Banking",
+        "parameter": "initial_bank_low_Mt",
+        "value": 60,
+        "unit": "MtCO2",
+        "description": "B0 민감도 하한",
+        "source": "시장잉여추정 시트"
+      },
+      {
+        "category": "Banking",
+        "parameter": "initial_bank_high_Mt",
+        "value": 80,
+        "unit": "MtCO2",
+        "description": "B0 민감도 상한",
+        "source": "시장잉여추정 시트"
+      },
+      {
+        "category": "MSR",
+        "parameter": "msr_reserve_Mt",
+        "value": 85.28,
+        "unit": "MtCO2",
+        "description": "4차 시장안정화 예비분(방출 가능 잔액 초기값)",
+        "source": "환경부/MCEE 2025; 김·장 2025"
+      },
+      {
+        "category": "Taschini",
+        "parameter": "risk_aversion_gamma",
+        "value": 2,
+        "unit": "-",
+        "description": "CRRA 위험회피계수. 위험회피 기업의 banking 위험프리미엄 크기 결정. γ=0이면 위험중립(KT2019에서 MSR 기대가격 무관)",
+        "source": "캘리브레이션 가정. 표준범위 1~5 (Gollier 2001). 민감도 대상"
+      },
+      {
+        "category": "Taschini",
+        "parameter": "banking_vol_sigma",
+        "value": 0.3,
+        "unit": "연변동성",
+        "description": "배출권 희소성(banking 스톡) 과정의 연환산 변동성. MSR이 이 분산에 작용해 위험프리미엄을 바꿈(KT2019 핵심)",
+        "source": "EUA 일간수익률 연환산 변동성 ~30-40%(Daskalakis et al. 2009). 보수적 30% 채택"
+      },
+      {
+        "category": "Taschini",
+        "parameter": "premium_scale_kappa",
+        "value": 1,
+        "unit": "-",
+        "description": "위험프리미엄 스케일 보정계수. premium=½·γ·κ·σ²·(banking/cap). 1.0=이론식 그대로, 민감도용 배율",
+        "source": "이론식 직접유도(½γσ²). κ는 식별 보정자, 기본 1.0"
+      },
+      {
+        "category": "Taschini",
+        "parameter": "option_rf_rate",
+        "value": 0.035,
+        "unit": "연율",
+        "description": "가격하한/상한 옵션가치 평가용 무위험할인율. Hotelling r_f와 동일",
+        "source": "한국 국고채 3년물 2024 평균(ECOS). Hotelling discount_rate와 정합"
+      },
+      {
+        "category": "Taschini",
+        "parameter": "option_vol_sigma",
+        "value": 0.35,
+        "unit": "연변동성",
+        "description": "Black-76 옵션평가용 KAU 선도가격 변동성. 가격하한=풋, 가격상한=콜로 분해(GT2011)",
+        "source": "KAU 변동성 추정(2020 코로나기 9,750~42,500원 변동 반영). 민감도 대상"
+      },
+      {
+        "category": "Taschini",
+        "parameter": "ccr_gain_phi",
+        "value": 0.5,
+        "unit": "-",
+        "description": "Carbon Cap Rule 반응계수(테일러준칙 analog). ΔCap_t=−φ·(P_t−P*_t)/P*_t·Cap_t. 가격편차에 비례해 cap 조정",
+        "source": "Benmir-Roman-Taschini(2025) WP421 CCR 설계. φ=0.5 기준, 민감도[0.25,1.0]"
+      },
+      {
+        "category": "Taschini",
+        "parameter": "ccr_target_ratio",
+        "value": 0.5,
+        "unit": "비율",
+        "description": "CCR 목표가격 P*_t = ratio×EUA_t. 한국 목표를 EUA의 50%로 설정",
+        "source": null
+      },
+      {
+        "category": "Taschini",
+        "parameter": "ccr_max_adjust",
+        "value": 0.15,
+        "unit": "비율",
+        "description": "연간 cap 조정 상한(±). 급격한 cap 변동 방지(현실 제도 제약)",
+        "source": "EU MSR 흡수율 24% 참조해 보수적 15% 상한 가정"
+      },
+      {
+        "category": "Solver",
+        "parameter": "step_smoothing_width",
+        "value": 0.02,
+        "unit": "-",
+        "description": "스텝 MACC 기술 활성화 선형램프 폭(비용의 ±비율). 기술 내 이질적 채택비용 근사 — A(P)를 강단조·연속으로 만들어 균형 유일성 확보(전량활성화 시 상분해 동률·plateau 부정성 발생)",
+        "source": "수치·이론적 정합성 가정 (민감도: 0.01–0.05)"
+      }
+    ],
+    "학습곡선": [
+      {
+        "scenario_id": "base",
+        "tech_keyword": "태양광",
+        "annual_decline_rate": 0.02,
+        "source": "IRENA Renewable Power Costs 2024(태양광·풍력); IEA Global Hydrogen Review 2024(전해조 14-18%/doubling). 한국 보급규모 제약 반영 할인"
+      },
+      {
+        "scenario_id": "base",
+        "tech_keyword": "풍력",
+        "annual_decline_rate": 0.015,
+        "source": "IRENA Renewable Power Costs 2024(태양광·풍력); IEA Global Hydrogen Review 2024(전해조 14-18%/doubling). 한국 보급규모 제약 반영 할인"
+      },
+      {
+        "scenario_id": "base",
+        "tech_keyword": "그린수소",
+        "annual_decline_rate": 0.03,
+        "source": "IRENA Renewable Power Costs 2024(태양광·풍력); IEA Global Hydrogen Review 2024(전해조 14-18%/doubling). 한국 보급규모 제약 반영 할인"
+      },
+      {
+        "scenario_id": "base",
+        "tech_keyword": "수소환원제철",
+        "annual_decline_rate": 0.04,
+        "source": "전해조 학습률 23–32%/더블링(IRENA 2020), 그린수소 2030 $2.2–2.9/kg(McKinsey/IEA) → 연 4%"
+      },
+      {
+        "scenario_id": "base",
+        "tech_keyword": "전기크래킹",
+        "annual_decline_rate": 0.02,
+        "source": "IRENA Renewable Power Costs 2024(태양광·풍력); IEA Global Hydrogen Review 2024(전해조 14-18%/doubling). 한국 보급규모 제약 반영 할인"
+      },
+      {
+        "scenario_id": "base",
+        "tech_keyword": "전기가열로",
+        "annual_decline_rate": 0.01,
+        "source": "IRENA Renewable Power Costs 2024(태양광·풍력); IEA Global Hydrogen Review 2024(전해조 14-18%/doubling). 한국 보급규모 제약 반영 할인"
+      },
+      {
+        "scenario_id": "base",
+        "tech_keyword": "열펌프",
+        "annual_decline_rate": 0.015,
+        "source": "IRENA Renewable Power Costs 2024(태양광·풍력); IEA Global Hydrogen Review 2024(전해조 14-18%/doubling). 한국 보급규모 제약 반영 할인"
+      },
+      {
+        "scenario_id": "middle",
+        "tech_keyword": "태양광",
+        "annual_decline_rate": 0.04,
+        "source": "IRENA Renewable Power Costs 2024(태양광·풍력); IEA Global Hydrogen Review 2024(전해조 14-18%/doubling). 한국 보급규모 제약 반영 할인"
+      },
+      {
+        "scenario_id": "middle",
+        "tech_keyword": "풍력",
+        "annual_decline_rate": 0.03,
+        "source": "IRENA Renewable Power Costs 2024(태양광·풍력); IEA Global Hydrogen Review 2024(전해조 14-18%/doubling). 한국 보급규모 제약 반영 할인"
+      },
+      {
+        "scenario_id": "middle",
+        "tech_keyword": "그린수소",
+        "annual_decline_rate": 0.05,
+        "source": "IRENA Renewable Power Costs 2024(태양광·풍력); IEA Global Hydrogen Review 2024(전해조 14-18%/doubling). 한국 보급규모 제약 반영 할인"
+      },
+      {
+        "scenario_id": "middle",
+        "tech_keyword": "수소환원제철",
+        "annual_decline_rate": 0.04,
+        "source": "전해조 학습률 23–32%/더블링(IRENA 2020), 그린수소 2030 $2.2–2.9/kg(McKinsey/IEA) → 연 4%"
+      },
+      {
+        "scenario_id": "middle",
+        "tech_keyword": "전기크래킹",
+        "annual_decline_rate": 0.03,
+        "source": "IRENA Renewable Power Costs 2024(태양광·풍력); IEA Global Hydrogen Review 2024(전해조 14-18%/doubling). 한국 보급규모 제약 반영 할인"
+      },
+      {
+        "scenario_id": "middle",
+        "tech_keyword": "전기가열로",
+        "annual_decline_rate": 0.02,
+        "source": "IRENA Renewable Power Costs 2024(태양광·풍력); IEA Global Hydrogen Review 2024(전해조 14-18%/doubling). 한국 보급규모 제약 반영 할인"
+      },
+      {
+        "scenario_id": "middle",
+        "tech_keyword": "열펌프",
+        "annual_decline_rate": 0.025,
+        "source": "IRENA Renewable Power Costs 2024(태양광·풍력); IEA Global Hydrogen Review 2024(전해조 14-18%/doubling). 한국 보급규모 제약 반영 할인"
+      },
+      {
+        "scenario_id": "ideal",
+        "tech_keyword": "태양광",
+        "annual_decline_rate": 0.06,
+        "source": "IRENA Renewable Power Costs 2024(태양광·풍력); IEA Global Hydrogen Review 2024(전해조 14-18%/doubling). 한국 보급규모 제약 반영 할인"
+      },
+      {
+        "scenario_id": "ideal",
+        "tech_keyword": "풍력",
+        "annual_decline_rate": 0.05,
+        "source": "IRENA Renewable Power Costs 2024(태양광·풍력); IEA Global Hydrogen Review 2024(전해조 14-18%/doubling). 한국 보급규모 제약 반영 할인"
+      },
+      {
+        "scenario_id": "ideal",
+        "tech_keyword": "그린수소",
+        "annual_decline_rate": 0.07,
+        "source": "IRENA Renewable Power Costs 2024(태양광·풍력); IEA Global Hydrogen Review 2024(전해조 14-18%/doubling). 한국 보급규모 제약 반영 할인"
+      },
+      {
+        "scenario_id": "ideal",
+        "tech_keyword": "수소환원제철",
+        "annual_decline_rate": 0.04,
+        "source": "전해조 학습률 23–32%/더블링(IRENA 2020), 그린수소 2030 $2.2–2.9/kg(McKinsey/IEA) → 연 4%"
+      },
+      {
+        "scenario_id": "ideal",
+        "tech_keyword": "전기크래킹",
+        "annual_decline_rate": 0.04,
+        "source": "IRENA Renewable Power Costs 2024(태양광·풍력); IEA Global Hydrogen Review 2024(전해조 14-18%/doubling). 한국 보급규모 제약 반영 할인"
+      },
+      {
+        "scenario_id": "ideal",
+        "tech_keyword": "전기가열로",
+        "annual_decline_rate": 0.03,
+        "source": "IRENA Renewable Power Costs 2024(태양광·풍력); IEA Global Hydrogen Review 2024(전해조 14-18%/doubling). 한국 보급규모 제약 반영 할인"
+      },
+      {
+        "scenario_id": "ideal",
+        "tech_keyword": "열펌프",
+        "annual_decline_rate": 0.03,
+        "source": "IRENA Renewable Power Costs 2024(태양광·풍력); IEA Global Hydrogen Review 2024(전해조 14-18%/doubling). 한국 보급규모 제약 반영 할인"
+      }
+    ],
+    "MACC기술상세": [
+      {
+        "sector": "steel",
+        "technology": "에너지효율 개선",
+        "cost_usd_per_tCO2": -8.5,
+        "cost_krw_per_tCO2": -11750,
+        "abatement_potential_pct": 5,
+        "timeline": "즉시",
+        "source": "Nature 2025 s41586-025-09658-9 Table1. POSCO 에너지원단위 개선 실적(-2.1%/yr, 2019-2023)",
+        "headline": 0,
+        "h2_intensity_kg_per_tCO2": null,
+        "elec_intensity_MWh_per_tCO2": null,
+        "avail_start_year": null,
+        "avail_full_year": null
+      },
+      {
+        "sector": "steel",
+        "technology": "스크랩/전기로(EAF) 확대",
+        "cost_usd_per_tCO2": 0.3,
+        "cost_krw_per_tCO2": 414,
+        "abatement_potential_pct": 10,
+        "timeline": "2025-2030",
+        "source": "Nature 2025 Fig.3. 현대제철 EAF 전환 계획(2025). 한국 스크랩 자급률 38%(KOSA 2024)",
+        "headline": 0,
+        "h2_intensity_kg_per_tCO2": null,
+        "elec_intensity_MWh_per_tCO2": null,
+        "avail_start_year": null,
+        "avail_full_year": null
+      },
+      {
+        "sector": "steel",
+        "technology": "연료전환 (석탄→가스)",
+        "cost_usd_per_tCO2": 25.0,
+        "cost_krw_per_tCO2": 34500,
+        "abatement_potential_pct": 8,
+        "timeline": "2025-2030",
+        "source": "IEA Iron & Steel Roadmap 2024 Table 3.2. 한국 LNG CIF /MMBtu(KOGAS 2024 평균)",
+        "headline": 0,
+        "h2_intensity_kg_per_tCO2": null,
+        "elec_intensity_MWh_per_tCO2": null,
+        "avail_start_year": null,
+        "avail_full_year": null
+      },
+      {
+        "sector": "steel",
+        "technology": "수소환원제철 (H₂-DRI-EAF)",
+        "cost_usd_per_tCO2": 152.2,
+        "cost_krw_per_tCO2": 210000,
+        "abatement_potential_pct": 15,
+        "timeline": "2033+",
+        "source": "IEA 재검토(2026-07): 글로벌 중심 $63–110/t(Nature 2025)·손익분기 EUR34–68(vogl2018, EUR40/MWh 전력). 한국은 수입수소 ~$5/kg로 프리미엄 확대(Transition Asia Korea factsheet 2024) → 한국중심 $150/t. 유리한 수소가 시나리오($108)는 감도용. 잠재 15% = IEA NZE 2030 8%→2050 15~29% 보간 | IEA Korea 2025(EPR p.54·57): 고품위 펠릿 제약·수입수소 1.96Mt@2030 목표 — 한국 비용 프리미엄 보강 | 수소원단위 30kg/tCO2 = 51kg H2/t강(vogl2018) ÷ 1.7tCO2/t 감축. 비수소 잔여비용 = 2026비용 − 30×P_H2(2026) (FOAK capex·펠릿 프리미엄 ≈ 원료탄 절감 상쇄 가정, 민감도 대상). 비용경로 = 잔여 + 30×정부수소가격경로(수소가격시나리오 시트) — 학습률 대체 | POSCO HyREX 데모 ~2030·상용화 2030년대(IEA Steel Roadmap 정합) → 2030 개시, 2040 전량 — 배치 램프 가정",
+        "headline": 1,
+        "h2_intensity_kg_per_tCO2": 30.0,
+        "elec_intensity_MWh_per_tCO2": null,
+        "avail_start_year": 2030.0,
+        "avail_full_year": 2040.0
+      },
+      {
+        "sector": "steel",
+        "technology": "고로 CCUS (BF-CCUS)",
+        "cost_usd_per_tCO2": 60.9,
+        "cost_krw_per_tCO2": 84000,
+        "abatement_potential_pct": 10,
+        "timeline": "2030+",
+        "source": "IEAGHG 2018-TR03 Table 1 (p.7–8): VPSA $34–52, 화학흡수 $52–80/t(2016USD) → 중심 $60. 주의: 상용 규모 BF-CCUS 가동 사례 없음(IEA) — 준비도 리스크, 잠재 10% 보수 설정 | 상용 규모 실적 전무(IEAGHG) → 2032 개시 램프",
+        "headline": 0,
+        "h2_intensity_kg_per_tCO2": null,
+        "elec_intensity_MWh_per_tCO2": null,
+        "avail_start_year": 2032.0,
+        "avail_full_year": 2042.0
+      },
+      {
+        "sector": "petrochem",
+        "technology": "공정최적화/열통합",
+        "cost_usd_per_tCO2": 5.0,
+        "cost_krw_per_tCO2": 6900,
+        "abatement_potential_pct": 5,
+        "timeline": "즉시",
+        "source": "IEA Chemicals Roadmap 2024 Ch.3. LG화학/롯데케미칼 열통합 실적(산업부 2024)",
+        "headline": 0,
+        "h2_intensity_kg_per_tCO2": null,
+        "elec_intensity_MWh_per_tCO2": null,
+        "avail_start_year": null,
+        "avail_full_year": null
+      },
+      {
+        "sector": "petrochem",
+        "technology": "바이오 나프타 전환",
+        "cost_usd_per_tCO2": 45.0,
+        "cost_krw_per_tCO2": 62100,
+        "abatement_potential_pct": 5,
+        "timeline": "2028+",
+        "source": "RSC Green Chemistry 2025 D4GC04538F Table 2. 바이오 나프타 /t vs 석유 나프타 /t",
+        "headline": 0,
+        "h2_intensity_kg_per_tCO2": null,
+        "elec_intensity_MWh_per_tCO2": null,
+        "avail_start_year": null,
+        "avail_full_year": null
+      },
+      {
+        "sector": "petrochem",
+        "technology": "블루암모니아 연료 (50%)",
+        "cost_usd_per_tCO2": 177.5,
+        "cost_krw_per_tCO2": 245000,
+        "abatement_potential_pct": 8,
+        "timeline": "2030+",
+        "source": "IEA 재검토: 북미 크래커 블루수소 연료전환 $150–200/t(Gunawan et al., Princeton 2025 §3.2, Fig.2a) 프록시 중심 $175. 기존 $88(ACS SCE 2024 인용)은 원문 미확인·비교치 대비 과소 → 상향 | 암모니아 공급망 연동 램프",
+        "headline": 0,
+        "h2_intensity_kg_per_tCO2": null,
+        "elec_intensity_MWh_per_tCO2": null,
+        "avail_start_year": 2030.0,
+        "avail_full_year": 2040.0
+      },
+      {
+        "sector": "petrochem",
+        "technology": "그린수소+메탄 연료 (50%)",
+        "cost_usd_per_tCO2": 148.0,
+        "cost_krw_per_tCO2": 204240,
+        "abatement_potential_pct": 7,
+        "timeline": "2033+",
+        "source": "ACS Sustainable Chem. Eng. 2024. 그린H₂ /kg 기준(IEA GHR 2024 Fig.2.3) | 수소 인프라 연동 램프",
+        "headline": 0,
+        "h2_intensity_kg_per_tCO2": null,
+        "elec_intensity_MWh_per_tCO2": null,
+        "avail_start_year": 2030.0,
+        "avail_full_year": 2040.0
+      },
+      {
+        "sector": "petrochem",
+        "technology": "NCC 전기분해로(e-cracker)",
+        "cost_usd_per_tCO2": 202.9,
+        "cost_krw_per_tCO2": 280000,
+        "abatement_potential_pct": 5,
+        "timeline": "2035+",
+        "source": "IEA 재검토: Shin et al. 2025(D4GC04538F)=그리드 전력 기준 거의 동등~+$87/t-에틸렌; Cattry&Vuppanapalli 2025=전력 $75–113/MWh·계통 ≤0.2tCO2/MWh면 ≤$100/t. 한국 계통 ~0.42tCO2/MWh(임계 2배) → 재생 PPA 필요, 한국중심 $200/t. 기존 $553은 인용논문 시나리오 오적용 — 비관 tail로만 유지 | 전력원단위 2.9MWh/tCO2 = Cattry&Vuppanapalli(2025) 2점 보간($75–113/MWh→≤$100/t vs 한국PPA $129→$200/t); TEA 원단위 2–3MWh/tCO2 정합. 비용경로 = (2026비용 − 2.9×PPA_2026) + 2.9×전력가격시나리오(t) — 잔여는 음수 허용(연료절감 반영), 최종비용 ≥0 | Princeton(2025)은 2040 전 상용배치 회의적 — 재생가속 시나리오 하 한국 선행 가정으로 2032 개시·2042 전량(보수 하한: Princeton). 지평 내 최대 80%",
+        "headline": 1,
+        "h2_intensity_kg_per_tCO2": null,
+        "elec_intensity_MWh_per_tCO2": 2.9,
+        "avail_start_year": 2032.0,
+        "avail_full_year": 2042.0
+      },
+      {
+        "sector": "petrochem",
+        "technology": "CCUS (크래커 배가스)",
+        "cost_usd_per_tCO2": 81.2,
+        "cost_krw_per_tCO2": 112000,
+        "abatement_potential_pct": 10,
+        "timeline": "2030+",
+        "source": "IEA The Future of Petrochemicals(2018) p.51·Fig.5.9: 희석 스트림 $40–120/t → 중심 $80. HVC는 화학 CCS 누적의 9%(2050) — 암모니아·메탄올 대비 후순위 | HVC CCS 후순위(IEA 2018) → 2030 개시 램프",
+        "headline": 0,
+        "h2_intensity_kg_per_tCO2": null,
+        "elec_intensity_MWh_per_tCO2": null,
+        "avail_start_year": 2030.0,
+        "avail_full_year": 2040.0
+      },
+      {
+        "sector": "power",
+        "technology": "석탄 효율개선 (USC)",
+        "cost_usd_per_tCO2": 8.7,
+        "cost_krw_per_tCO2": 12000,
+        "abatement_potential_pct": 3,
+        "timeline": "즉시",
+        "source": "KEPCO 2024 발전실적. USC 열효율 45%→47%, 배출 0.82→0.80 tCO₂/MWh. 한국전력통계(2024)",
+        "headline": 0,
+        "h2_intensity_kg_per_tCO2": null,
+        "elec_intensity_MWh_per_tCO2": null,
+        "avail_start_year": null,
+        "avail_full_year": null
+      },
+      {
+        "sector": "power",
+        "technology": "석탄→LNG 전환",
+        "cost_usd_per_tCO2": 40.0,
+        "cost_krw_per_tCO2": 55000,
+        "abatement_potential_pct": 12,
+        "timeline": "2025-2030",
+        "source": "11차 전력수급계획(2024). LNG LCOE 90원/kWh vs 석탄 55원/kWh. LNG 0.35tCO₂/MWh. KOGAS 수입가 /MMBtu",
+        "headline": 0,
+        "h2_intensity_kg_per_tCO2": null,
+        "elec_intensity_MWh_per_tCO2": null,
+        "avail_start_year": null,
+        "avail_full_year": null
+      },
+      {
+        "sector": "power",
+        "technology": "태양광 확대",
+        "cost_usd_per_tCO2": 65.0,
+        "cost_krw_per_tCO2": 90000,
+        "abatement_potential_pct": 7,
+        "timeline": "2026-2035",
+        "source": "ICAP/전기본 내 확대는 BAU 포함. 시트값은 계획외(beyond-BAU) 추가확대의 계통통합·간헐성 비용 반영. 참고: 국내 석탄대체 태양광+풍력 감축비용 −$54/t [−89, +105] (Choo, Kim & Kim 2024, RSER 196) — 계획내 대체분",
+        "headline": 0,
+        "h2_intensity_kg_per_tCO2": null,
+        "elec_intensity_MWh_per_tCO2": null,
+        "avail_start_year": null,
+        "avail_full_year": null
+      },
+      {
+        "sector": "power",
+        "technology": "풍력 확대 (해상)",
+        "cost_usd_per_tCO2": 129.0,
+        "cost_krw_per_tCO2": 178000,
+        "abatement_potential_pct": 5,
+        "timeline": "2028-2035",
+        "source": "해상풍력 beyond-BAU 확대, 계통통합비용 포함. 참고: Choo et al. 2024 국내범위 [−89, +105]/t; IRENA 2025(2024 LCOE 소폭 상승)",
+        "headline": 0,
+        "h2_intensity_kg_per_tCO2": null,
+        "elec_intensity_MWh_per_tCO2": null,
+        "avail_start_year": null,
+        "avail_full_year": null
+      },
+      {
+        "sector": "power",
+        "technology": "그린수소/암모니아 혼소",
+        "cost_usd_per_tCO2": 304.3,
+        "cost_krw_per_tCO2": 420000,
+        "abatement_potential_pct": 4,
+        "timeline": "2035+",
+        "source": "IEA 재검토: BNEF(2022) 상업성에 탄소가 ≥$300/t 필요, 재생E 대비 최대 4배 고비용. 청정수소발전 입찰 중단(2025.10, SFOC/IEEFA 태안 분석). 11차 전기본 2038 H2+NH3 6.2% → 잠재 4%로 하향 | IEA Korea 2025(EPR p.56): CHPS 인증 ≤4kgCO2/kgH2, 잔여수명<15년 플랜트 계약제한 — 잠재 하향 정합 | 혼소 실증 일정 연동 램프",
+        "headline": 0,
+        "h2_intensity_kg_per_tCO2": null,
+        "elec_intensity_MWh_per_tCO2": null,
+        "avail_start_year": 2030.0,
+        "avail_full_year": 2040.0
+      },
+      {
+        "sector": "power",
+        "technology": "석탄 CCUS 개보수",
+        "cost_usd_per_tCO2": 60.9,
+        "cost_krw_per_tCO2": 84000,
+        "abatement_potential_pct": 5,
+        "timeline": "2030+",
+        "source": "IEA Role of CCUS in Low-Carbon Power Systems(2020): 발전 포집 중심 ~$60/t(+바이오매스 $62). 국내 배치 저속 — 잠재 5% 보수 설정 | 국내 배치 저속(IEA 2020) → 2030 개시 램프",
+        "headline": 0,
+        "h2_intensity_kg_per_tCO2": null,
+        "elec_intensity_MWh_per_tCO2": null,
+        "avail_start_year": 2030.0,
+        "avail_full_year": 2040.0
+      },
+      {
+        "sector": "cement",
+        "technology": "에너지 효율개선",
+        "cost_usd_per_tCO2": 3.6,
+        "cost_krw_per_tCO2": 5000,
+        "abatement_potential_pct": 5,
+        "timeline": "즉시",
+        "source": "GCCA Roadmap 2024 Table 4.1. 쌍용C&E/한일시멘트 설비 효율화 실적(시멘트협회 2024)",
+        "headline": 0,
+        "h2_intensity_kg_per_tCO2": null,
+        "elec_intensity_MWh_per_tCO2": null,
+        "avail_start_year": null,
+        "avail_full_year": null
+      },
+      {
+        "sector": "cement",
+        "technology": "클링커 비율 저감",
+        "cost_usd_per_tCO2": 10.9,
+        "cost_krw_per_tCO2": 15000,
+        "abatement_potential_pct": 7,
+        "timeline": "즉시",
+        "source": "GCCA 2024. 혼합시멘트(고로슬래그/플라이애시) 확대. 한국 클링커비율 92%(유럽 75%). 구조적 한계 있음",
+        "headline": 0,
+        "h2_intensity_kg_per_tCO2": null,
+        "elec_intensity_MWh_per_tCO2": null,
+        "avail_start_year": null,
+        "avail_full_year": null
+      },
+      {
+        "sector": "cement",
+        "technology": "대체원료 (슬래그/플라이애시)",
+        "cost_usd_per_tCO2": 18.1,
+        "cost_krw_per_tCO2": 25000,
+        "abatement_potential_pct": 10,
+        "timeline": "2025-2030",
+        "source": "GCCA 2024 Ch.5. 고로슬래그 공급량 한계(POSCO 철강 생산 연동). 국내 가용량 연 800만톤(KS 2024)",
+        "headline": 0,
+        "h2_intensity_kg_per_tCO2": null,
+        "elec_intensity_MWh_per_tCO2": null,
+        "avail_start_year": null,
+        "avail_full_year": null
+      },
+      {
+        "sector": "cement",
+        "technology": "대체연료 (폐기물/바이오)",
+        "cost_usd_per_tCO2": 25.4,
+        "cost_krw_per_tCO2": 35000,
+        "abatement_potential_pct": 8,
+        "timeline": "2025-2030",
+        "source": "GCCA 2024. 유럽 대체연료율 50%, 한국 20%(환경부 2024). 폐기물→시멘트 킬른 소각 규제 완화 필요",
+        "headline": 0,
+        "h2_intensity_kg_per_tCO2": null,
+        "elec_intensity_MWh_per_tCO2": null,
+        "avail_start_year": null,
+        "avail_full_year": null
+      },
+      {
+        "sector": "refinery",
+        "technology": "에너지 효율개선",
+        "cost_usd_per_tCO2": 3.6,
+        "cost_krw_per_tCO2": 5000,
+        "abatement_potential_pct": 5,
+        "timeline": "즉시",
+        "source": "IEA Refinery Roadmap 2024 Table 2.1. SK에너지/GS칼텍스 설비 효율화 실적(에너지데일리 2024)",
+        "headline": 0,
+        "h2_intensity_kg_per_tCO2": null,
+        "elec_intensity_MWh_per_tCO2": null,
+        "avail_start_year": null,
+        "avail_full_year": null
+      },
+      {
+        "sector": "refinery",
+        "technology": "열통합/폐열회수",
+        "cost_usd_per_tCO2": 8.7,
+        "cost_krw_per_tCO2": 12000,
+        "abatement_potential_pct": 8,
+        "timeline": "즉시",
+        "source": "IEA Energy Efficiency 2024 Ch.4. 한국 정유 4사 폐열회수 잠재량 8%(KEMCO 에너지진단 2023)",
+        "headline": 0,
+        "h2_intensity_kg_per_tCO2": null,
+        "elec_intensity_MWh_per_tCO2": null,
+        "avail_start_year": null,
+        "avail_full_year": null
+      },
+      {
+        "sector": "refinery",
+        "technology": "전기가열로 전환",
+        "cost_usd_per_tCO2": 39.9,
+        "cost_krw_per_tCO2": 55000,
+        "abatement_potential_pct": 5,
+        "timeline": "2030+",
+        "source": "IEA 2024 + S-OIL 전기화 계획(2028 발표). 전기가열 효율 95% vs 연소 65%. 산업용 전력 76원/kWh(KEPCO 2024)",
+        "headline": 0,
+        "h2_intensity_kg_per_tCO2": null,
+        "elec_intensity_MWh_per_tCO2": null,
+        "avail_start_year": null,
+        "avail_full_year": null
+      },
+      {
+        "sector": "refinery",
+        "technology": "그린수소 도입 (수소화 공정)",
+        "cost_usd_per_tCO2": 87.0,
+        "cost_krw_per_tCO2": 120000,
+        "abatement_potential_pct": 10,
+        "timeline": "2033+",
+        "source": "IEA GHR 2024 Fig.3.5. 정유 수소 소비 ~15만톤/yr(석유공사 2024). 그린H₂ /kg 전환 시",
+        "headline": 0,
+        "h2_intensity_kg_per_tCO2": null,
+        "elec_intensity_MWh_per_tCO2": null,
+        "avail_start_year": null,
+        "avail_full_year": null
+      },
+      {
+        "sector": "other",
+        "technology": "산업 에너지효율",
+        "cost_usd_per_tCO2": 7.2,
+        "cost_krw_per_tCO2": 10000,
+        "abatement_potential_pct": 5,
+        "timeline": "즉시",
+        "source": "IEA Energy Efficiency 2024. KEMCO 에너지진단 잔여 잠재량 ~5%(2023 산업 에너지소비 기준)",
+        "headline": 0,
+        "h2_intensity_kg_per_tCO2": null,
+        "elec_intensity_MWh_per_tCO2": null,
+        "avail_start_year": null,
+        "avail_full_year": null
+      },
+      {
+        "sector": "other",
+        "technology": "전기화/열펌프 전환",
+        "cost_usd_per_tCO2": 29.0,
+        "cost_krw_per_tCO2": 40000,
+        "abatement_potential_pct": 5,
+        "timeline": "2028-2035",
+        "source": "IEA 2024 Ch.3. 산업용 열펌프 COP 3.5 기준. 한국 보급률 <1%(유럽 5%). 전력단가 의존적",
+        "headline": 0,
+        "h2_intensity_kg_per_tCO2": null,
+        "elec_intensity_MWh_per_tCO2": null,
+        "avail_start_year": null,
+        "avail_full_year": null
+      },
+      {
+        "sector": "other",
+        "technology": "재생에너지 자가발전",
+        "cost_usd_per_tCO2": 36.2,
+        "cost_krw_per_tCO2": 50000,
+        "abatement_potential_pct": 3,
+        "timeline": "2026-2035",
+        "source": "MOTIE 9차 신재생기본계획. RE100 가입 기업 PPA 단가 ~130원/kWh(한국에너지공단 2024)",
+        "headline": 0,
+        "h2_intensity_kg_per_tCO2": null,
+        "elec_intensity_MWh_per_tCO2": null,
+        "avail_start_year": null,
+        "avail_full_year": null
+      }
+    ],
+    "BAU배출전망": [
+      {
+        "sector_code": "steel",
+        "year": 2026,
+        "bau_emissions_MtCO2": 109.01,
+        "bau_emissions_tCO2": 109012967,
+        "source": "KIER. BAU=현행기술 유지, 자연감소만 반영"
+      },
+      {
+        "sector_code": "steel",
+        "year": 2027,
+        "bau_emissions_MtCO2": 108.69,
+        "bau_emissions_tCO2": 108685928,
+        "source": "KIER. BAU=현행기술 유지, 자연감소만 반영"
+      },
+      {
+        "sector_code": "steel",
+        "year": 2028,
+        "bau_emissions_MtCO2": 108.36,
+        "bau_emissions_tCO2": 108359870,
+        "source": "KIER. BAU=현행기술 유지, 자연감소만 반영"
+      },
+      {
+        "sector_code": "steel",
+        "year": 2029,
+        "bau_emissions_MtCO2": 108.03,
+        "bau_emissions_tCO2": 108034791,
+        "source": "KIER. BAU=현행기술 유지, 자연감소만 반영"
+      },
+      {
+        "sector_code": "steel",
+        "year": 2030,
+        "bau_emissions_MtCO2": 107.71,
+        "bau_emissions_tCO2": 107710686,
+        "source": "KIER. BAU=현행기술 유지, 자연감소만 반영"
+      },
+      {
+        "sector_code": "steel",
+        "year": 2031,
+        "bau_emissions_MtCO2": 107.39,
+        "bau_emissions_tCO2": 107387554,
+        "source": "KIER. BAU=현행기술 유지, 자연감소만 반영"
+      },
+      {
+        "sector_code": "steel",
+        "year": 2032,
+        "bau_emissions_MtCO2": 107.07,
+        "bau_emissions_tCO2": 107065392,
+        "source": "KIER. BAU=현행기술 유지, 자연감소만 반영"
+      },
+      {
+        "sector_code": "steel",
+        "year": 2033,
+        "bau_emissions_MtCO2": 106.74,
+        "bau_emissions_tCO2": 106744195,
+        "source": "KIER. BAU=현행기술 유지, 자연감소만 반영"
+      },
+      {
+        "sector_code": "steel",
+        "year": 2034,
+        "bau_emissions_MtCO2": 106.42,
+        "bau_emissions_tCO2": 106423963,
+        "source": "KIER. BAU=현행기술 유지, 자연감소만 반영"
+      },
+      {
+        "sector_code": "steel",
+        "year": 2035,
+        "bau_emissions_MtCO2": 106.1,
+        "bau_emissions_tCO2": 106104691,
+        "source": "KIER. BAU=현행기술 유지, 자연감소만 반영"
+      },
+      {
+        "sector_code": "steel",
+        "year": 2036,
+        "bau_emissions_MtCO2": 105.79,
+        "bau_emissions_tCO2": 105786377,
+        "source": "KIER. BAU=현행기술 유지, 자연감소만 반영"
+      },
+      {
+        "sector_code": "steel",
+        "year": 2037,
+        "bau_emissions_MtCO2": 105.47,
+        "bau_emissions_tCO2": 105469018,
+        "source": "KIER. BAU=현행기술 유지, 자연감소만 반영"
+      },
+      {
+        "sector_code": "steel",
+        "year": 2038,
+        "bau_emissions_MtCO2": 105.15,
+        "bau_emissions_tCO2": 105152611,
+        "source": "KIER. BAU=현행기술 유지, 자연감소만 반영"
+      },
+      {
+        "sector_code": "steel",
+        "year": 2039,
+        "bau_emissions_MtCO2": 104.84,
+        "bau_emissions_tCO2": 104837153,
+        "source": "KIER. BAU=현행기술 유지, 자연감소만 반영"
+      },
+      {
+        "sector_code": "steel",
+        "year": 2040,
+        "bau_emissions_MtCO2": 104.52,
+        "bau_emissions_tCO2": 104522641,
+        "source": "KIER. BAU=현행기술 유지, 자연감소만 반영"
+      },
+      {
+        "sector_code": "petrochem",
+        "year": 2026,
+        "bau_emissions_MtCO2": 44.73,
+        "bau_emissions_tCO2": 44730540,
+        "source": "forourclimate.org. NCC 중심, 자연감소 미미"
+      },
+      {
+        "sector_code": "petrochem",
+        "year": 2027,
+        "bau_emissions_MtCO2": 44.64,
+        "bau_emissions_tCO2": 44641079,
+        "source": "forourclimate.org. NCC 중심, 자연감소 미미"
+      },
+      {
+        "sector_code": "petrochem",
+        "year": 2028,
+        "bau_emissions_MtCO2": 44.55,
+        "bau_emissions_tCO2": 44551796,
+        "source": "forourclimate.org. NCC 중심, 자연감소 미미"
+      },
+      {
+        "sector_code": "petrochem",
+        "year": 2029,
+        "bau_emissions_MtCO2": 44.46,
+        "bau_emissions_tCO2": 44462693,
+        "source": "forourclimate.org. NCC 중심, 자연감소 미미"
+      },
+      {
+        "sector_code": "petrochem",
+        "year": 2030,
+        "bau_emissions_MtCO2": 44.37,
+        "bau_emissions_tCO2": 44373767,
+        "source": "forourclimate.org. NCC 중심, 자연감소 미미"
+      },
+      {
+        "sector_code": "petrochem",
+        "year": 2031,
+        "bau_emissions_MtCO2": 44.29,
+        "bau_emissions_tCO2": 44285020,
+        "source": "forourclimate.org. NCC 중심, 자연감소 미미"
+      },
+      {
+        "sector_code": "petrochem",
+        "year": 2032,
+        "bau_emissions_MtCO2": 44.2,
+        "bau_emissions_tCO2": 44196450,
+        "source": "forourclimate.org. NCC 중심, 자연감소 미미"
+      },
+      {
+        "sector_code": "petrochem",
+        "year": 2033,
+        "bau_emissions_MtCO2": 44.11,
+        "bau_emissions_tCO2": 44108057,
+        "source": "forourclimate.org. NCC 중심, 자연감소 미미"
+      },
+      {
+        "sector_code": "petrochem",
+        "year": 2034,
+        "bau_emissions_MtCO2": 44.02,
+        "bau_emissions_tCO2": 44019841,
+        "source": "forourclimate.org. NCC 중심, 자연감소 미미"
+      },
+      {
+        "sector_code": "petrochem",
+        "year": 2035,
+        "bau_emissions_MtCO2": 43.93,
+        "bau_emissions_tCO2": 43931801,
+        "source": "forourclimate.org. NCC 중심, 자연감소 미미"
+      },
+      {
+        "sector_code": "petrochem",
+        "year": 2036,
+        "bau_emissions_MtCO2": 43.84,
+        "bau_emissions_tCO2": 43843938,
+        "source": "forourclimate.org. NCC 중심, 자연감소 미미"
+      },
+      {
+        "sector_code": "petrochem",
+        "year": 2037,
+        "bau_emissions_MtCO2": 43.76,
+        "bau_emissions_tCO2": 43756250,
+        "source": "forourclimate.org. NCC 중심, 자연감소 미미"
+      },
+      {
+        "sector_code": "petrochem",
+        "year": 2038,
+        "bau_emissions_MtCO2": 43.67,
+        "bau_emissions_tCO2": 43668737,
+        "source": "forourclimate.org. NCC 중심, 자연감소 미미"
+      },
+      {
+        "sector_code": "petrochem",
+        "year": 2039,
+        "bau_emissions_MtCO2": 43.58,
+        "bau_emissions_tCO2": 43581400,
+        "source": "forourclimate.org. NCC 중심, 자연감소 미미"
+      },
+      {
+        "sector_code": "petrochem",
+        "year": 2040,
+        "bau_emissions_MtCO2": 43.49,
+        "bau_emissions_tCO2": 43494237,
+        "source": "forourclimate.org. NCC 중심, 자연감소 미미"
+      },
+      {
+        "sector_code": "power",
+        "year": 2026,
+        "bau_emissions_MtCO2": 181.66,
+        "bau_emissions_tCO2": 181664438,
+        "source": "KIER. 11차 전력수급기본계획 반영, 석탄 축소"
+      },
+      {
+        "sector_code": "power",
+        "year": 2027,
+        "bau_emissions_MtCO2": 177.12,
+        "bau_emissions_tCO2": 177122827,
+        "source": "KIER. 11차 전력수급기본계획 반영, 석탄 축소"
+      },
+      {
+        "sector_code": "power",
+        "year": 2028,
+        "bau_emissions_MtCO2": 172.69,
+        "bau_emissions_tCO2": 172694756,
+        "source": "KIER. 11차 전력수급기본계획 반영, 석탄 축소"
+      },
+      {
+        "sector_code": "power",
+        "year": 2029,
+        "bau_emissions_MtCO2": 168.38,
+        "bau_emissions_tCO2": 168377387,
+        "source": "KIER. 11차 전력수급기본계획 반영, 석탄 축소"
+      },
+      {
+        "sector_code": "power",
+        "year": 2030,
+        "bau_emissions_MtCO2": 164.17,
+        "bau_emissions_tCO2": 164167952,
+        "source": "KIER. 11차 전력수급기본계획 반영, 석탄 축소"
+      },
+      {
+        "sector_code": "power",
+        "year": 2031,
+        "bau_emissions_MtCO2": 160.06,
+        "bau_emissions_tCO2": 160063754,
+        "source": "KIER. 11차 전력수급기본계획 반영, 석탄 축소"
+      },
+      {
+        "sector_code": "power",
+        "year": 2032,
+        "bau_emissions_MtCO2": 156.06,
+        "bau_emissions_tCO2": 156062160,
+        "source": "KIER. 11차 전력수급기본계획 반영, 석탄 축소"
+      },
+      {
+        "sector_code": "power",
+        "year": 2033,
+        "bau_emissions_MtCO2": 152.16,
+        "bau_emissions_tCO2": 152160606,
+        "source": "KIER. 11차 전력수급기본계획 반영, 석탄 축소"
+      },
+      {
+        "sector_code": "power",
+        "year": 2034,
+        "bau_emissions_MtCO2": 148.36,
+        "bau_emissions_tCO2": 148356591,
+        "source": "KIER. 11차 전력수급기본계획 반영, 석탄 축소"
+      },
+      {
+        "sector_code": "power",
+        "year": 2035,
+        "bau_emissions_MtCO2": 144.65,
+        "bau_emissions_tCO2": 144647676,
+        "source": "KIER. 11차 전력수급기본계획 반영, 석탄 축소"
+      },
+      {
+        "sector_code": "power",
+        "year": 2036,
+        "bau_emissions_MtCO2": 141.03,
+        "bau_emissions_tCO2": 141031484,
+        "source": "KIER. 11차 전력수급기본계획 반영, 석탄 축소"
+      },
+      {
+        "sector_code": "power",
+        "year": 2037,
+        "bau_emissions_MtCO2": 137.51,
+        "bau_emissions_tCO2": 137505697,
+        "source": "KIER. 11차 전력수급기본계획 반영, 석탄 축소"
+      },
+      {
+        "sector_code": "power",
+        "year": 2038,
+        "bau_emissions_MtCO2": 134.07,
+        "bau_emissions_tCO2": 134068054,
+        "source": "KIER. 11차 전력수급기본계획 반영, 석탄 축소"
+      },
+      {
+        "sector_code": "power",
+        "year": 2039,
+        "bau_emissions_MtCO2": 130.72,
+        "bau_emissions_tCO2": 130716353,
+        "source": "KIER. 11차 전력수급기본계획 반영, 석탄 축소"
+      },
+      {
+        "sector_code": "power",
+        "year": 2040,
+        "bau_emissions_MtCO2": 127.45,
+        "bau_emissions_tCO2": 127448444,
+        "source": "KIER. 11차 전력수급기본계획 반영, 석탄 축소"
+      },
+      {
+        "sector_code": "cement",
+        "year": 2026,
+        "bau_emissions_MtCO2": 32.51,
+        "bau_emissions_tCO2": 32507471,
+        "source": "GIR 추정"
+      },
+      {
+        "sector_code": "cement",
+        "year": 2027,
+        "bau_emissions_MtCO2": 32.34,
+        "bau_emissions_tCO2": 32344934,
+        "source": "GIR 추정"
+      },
+      {
+        "sector_code": "cement",
+        "year": 2028,
+        "bau_emissions_MtCO2": 32.18,
+        "bau_emissions_tCO2": 32183209,
+        "source": "GIR 추정"
+      },
+      {
+        "sector_code": "cement",
+        "year": 2029,
+        "bau_emissions_MtCO2": 32.02,
+        "bau_emissions_tCO2": 32022293,
+        "source": "GIR 추정"
+      },
+      {
+        "sector_code": "cement",
+        "year": 2030,
+        "bau_emissions_MtCO2": 31.86,
+        "bau_emissions_tCO2": 31862181,
+        "source": "GIR 추정"
+      },
+      {
+        "sector_code": "cement",
+        "year": 2031,
+        "bau_emissions_MtCO2": 31.7,
+        "bau_emissions_tCO2": 31702870,
+        "source": "GIR 추정"
+      },
+      {
+        "sector_code": "cement",
+        "year": 2032,
+        "bau_emissions_MtCO2": 31.54,
+        "bau_emissions_tCO2": 31544356,
+        "source": "GIR 추정"
+      },
+      {
+        "sector_code": "cement",
+        "year": 2033,
+        "bau_emissions_MtCO2": 31.39,
+        "bau_emissions_tCO2": 31386634,
+        "source": "GIR 추정"
+      },
+      {
+        "sector_code": "cement",
+        "year": 2034,
+        "bau_emissions_MtCO2": 31.23,
+        "bau_emissions_tCO2": 31229701,
+        "source": "GIR 추정"
+      },
+      {
+        "sector_code": "cement",
+        "year": 2035,
+        "bau_emissions_MtCO2": 31.07,
+        "bau_emissions_tCO2": 31073553,
+        "source": "GIR 추정"
+      },
+      {
+        "sector_code": "cement",
+        "year": 2036,
+        "bau_emissions_MtCO2": 30.92,
+        "bau_emissions_tCO2": 30918185,
+        "source": "GIR 추정"
+      },
+      {
+        "sector_code": "cement",
+        "year": 2037,
+        "bau_emissions_MtCO2": 30.76,
+        "bau_emissions_tCO2": 30763594,
+        "source": "GIR 추정"
+      },
+      {
+        "sector_code": "cement",
+        "year": 2038,
+        "bau_emissions_MtCO2": 30.61,
+        "bau_emissions_tCO2": 30609776,
+        "source": "GIR 추정"
+      },
+      {
+        "sector_code": "cement",
+        "year": 2039,
+        "bau_emissions_MtCO2": 30.46,
+        "bau_emissions_tCO2": 30456727,
+        "source": "GIR 추정"
+      },
+      {
+        "sector_code": "cement",
+        "year": 2040,
+        "bau_emissions_MtCO2": 30.3,
+        "bau_emissions_tCO2": 30304443,
+        "source": "GIR 추정"
+      },
+      {
+        "sector_code": "refinery",
+        "year": 2026,
+        "bau_emissions_MtCO2": 39.4,
+        "bau_emissions_tCO2": 39402995,
+        "source": "에너지데일리 추정"
+      },
+      {
+        "sector_code": "refinery",
+        "year": 2027,
+        "bau_emissions_MtCO2": 39.21,
+        "bau_emissions_tCO2": 39205980,
+        "source": "에너지데일리 추정"
+      },
+      {
+        "sector_code": "refinery",
+        "year": 2028,
+        "bau_emissions_MtCO2": 39.01,
+        "bau_emissions_tCO2": 39009950,
+        "source": "에너지데일리 추정"
+      },
+      {
+        "sector_code": "refinery",
+        "year": 2029,
+        "bau_emissions_MtCO2": 38.81,
+        "bau_emissions_tCO2": 38814900,
+        "source": "에너지데일리 추정"
+      },
+      {
+        "sector_code": "refinery",
+        "year": 2030,
+        "bau_emissions_MtCO2": 38.62,
+        "bau_emissions_tCO2": 38620826,
+        "source": "에너지데일리 추정"
+      },
+      {
+        "sector_code": "refinery",
+        "year": 2031,
+        "bau_emissions_MtCO2": 38.43,
+        "bau_emissions_tCO2": 38427722,
+        "source": "에너지데일리 추정"
+      },
+      {
+        "sector_code": "refinery",
+        "year": 2032,
+        "bau_emissions_MtCO2": 38.24,
+        "bau_emissions_tCO2": 38235583,
+        "source": "에너지데일리 추정"
+      },
+      {
+        "sector_code": "refinery",
+        "year": 2033,
+        "bau_emissions_MtCO2": 38.04,
+        "bau_emissions_tCO2": 38044405,
+        "source": "에너지데일리 추정"
+      },
+      {
+        "sector_code": "refinery",
+        "year": 2034,
+        "bau_emissions_MtCO2": 37.85,
+        "bau_emissions_tCO2": 37854183,
+        "source": "에너지데일리 추정"
+      },
+      {
+        "sector_code": "refinery",
+        "year": 2035,
+        "bau_emissions_MtCO2": 37.66,
+        "bau_emissions_tCO2": 37664912,
+        "source": "에너지데일리 추정"
+      },
+      {
+        "sector_code": "refinery",
+        "year": 2036,
+        "bau_emissions_MtCO2": 37.48,
+        "bau_emissions_tCO2": 37476588,
+        "source": "에너지데일리 추정"
+      },
+      {
+        "sector_code": "refinery",
+        "year": 2037,
+        "bau_emissions_MtCO2": 37.29,
+        "bau_emissions_tCO2": 37289205,
+        "source": "에너지데일리 추정"
+      },
+      {
+        "sector_code": "refinery",
+        "year": 2038,
+        "bau_emissions_MtCO2": 37.1,
+        "bau_emissions_tCO2": 37102759,
+        "source": "에너지데일리 추정"
+      },
+      {
+        "sector_code": "refinery",
+        "year": 2039,
+        "bau_emissions_MtCO2": 36.92,
+        "bau_emissions_tCO2": 36917245,
+        "source": "에너지데일리 추정"
+      },
+      {
+        "sector_code": "refinery",
+        "year": 2040,
+        "bau_emissions_MtCO2": 36.73,
+        "bau_emissions_tCO2": 36732659,
+        "source": "에너지데일리 추정"
+      },
+      {
+        "sector_code": "other",
+        "year": 2026,
+        "bau_emissions_MtCO2": 124.02,
+        "bau_emissions_tCO2": 124020927,
+        "source": "잔차 계산. K-ETS 총 550Mt - 개별부문 합"
+      },
+      {
+        "sector_code": "other",
+        "year": 2027,
+        "bau_emissions_MtCO2": 123.4,
+        "bau_emissions_tCO2": 123400822,
+        "source": "잔차 계산. K-ETS 총 550Mt - 개별부문 합"
+      },
+      {
+        "sector_code": "other",
+        "year": 2028,
+        "bau_emissions_MtCO2": 122.78,
+        "bau_emissions_tCO2": 122783818,
+        "source": "잔차 계산. K-ETS 총 550Mt - 개별부문 합"
+      },
+      {
+        "sector_code": "other",
+        "year": 2029,
+        "bau_emissions_MtCO2": 122.17,
+        "bau_emissions_tCO2": 122169899,
+        "source": "잔차 계산. K-ETS 총 550Mt - 개별부문 합"
+      },
+      {
+        "sector_code": "other",
+        "year": 2030,
+        "bau_emissions_MtCO2": 121.56,
+        "bau_emissions_tCO2": 121559049,
+        "source": "잔차 계산. K-ETS 총 550Mt - 개별부문 합"
+      },
+      {
+        "sector_code": "other",
+        "year": 2031,
+        "bau_emissions_MtCO2": 120.95,
+        "bau_emissions_tCO2": 120951254,
+        "source": "잔차 계산. K-ETS 총 550Mt - 개별부문 합"
+      },
+      {
+        "sector_code": "other",
+        "year": 2032,
+        "bau_emissions_MtCO2": 120.35,
+        "bau_emissions_tCO2": 120346498,
+        "source": "잔차 계산. K-ETS 총 550Mt - 개별부문 합"
+      },
+      {
+        "sector_code": "other",
+        "year": 2033,
+        "bau_emissions_MtCO2": 119.74,
+        "bau_emissions_tCO2": 119744765,
+        "source": "잔차 계산. K-ETS 총 550Mt - 개별부문 합"
+      },
+      {
+        "sector_code": "other",
+        "year": 2034,
+        "bau_emissions_MtCO2": 119.15,
+        "bau_emissions_tCO2": 119146042,
+        "source": "잔차 계산. K-ETS 총 550Mt - 개별부문 합"
+      },
+      {
+        "sector_code": "other",
+        "year": 2035,
+        "bau_emissions_MtCO2": 118.55,
+        "bau_emissions_tCO2": 118550311,
+        "source": "잔차 계산. K-ETS 총 550Mt - 개별부문 합"
+      },
+      {
+        "sector_code": "other",
+        "year": 2036,
+        "bau_emissions_MtCO2": 117.96,
+        "bau_emissions_tCO2": 117957560,
+        "source": "잔차 계산. K-ETS 총 550Mt - 개별부문 합"
+      },
+      {
+        "sector_code": "other",
+        "year": 2037,
+        "bau_emissions_MtCO2": 117.37,
+        "bau_emissions_tCO2": 117367772,
+        "source": "잔차 계산. K-ETS 총 550Mt - 개별부문 합"
+      },
+      {
+        "sector_code": "other",
+        "year": 2038,
+        "bau_emissions_MtCO2": 116.78,
+        "bau_emissions_tCO2": 116780933,
+        "source": "잔차 계산. K-ETS 총 550Mt - 개별부문 합"
+      },
+      {
+        "sector_code": "other",
+        "year": 2039,
+        "bau_emissions_MtCO2": 116.2,
+        "bau_emissions_tCO2": 116197029,
+        "source": "잔차 계산. K-ETS 총 550Mt - 개별부문 합"
+      },
+      {
+        "sector_code": "other",
+        "year": 2040,
+        "bau_emissions_MtCO2": 115.62,
+        "bau_emissions_tCO2": 115616043,
+        "source": "잔차 계산. K-ETS 총 550Mt - 개별부문 합"
+      }
+    ],
+    "배출허용총량": [
+      {
+        "scenario_id": "base",
+        "sector_code": "steel",
+        "year": 2026,
+        "cap_MtCO2": 101.4,
+        "cap_tCO2": 101400000,
+        "cap_source": "4th_plan",
+        "source": "4차 할당계획 (ICAP 2025.10). 부문별 비례배분"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "steel",
+        "year": 2027,
+        "cap_MtCO2": 97.8,
+        "cap_tCO2": 97800000,
+        "cap_source": "4th_plan",
+        "source": "4차 할당계획 (ICAP 2025.10). 부문별 비례배분"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "steel",
+        "year": 2028,
+        "cap_MtCO2": 94.2,
+        "cap_tCO2": 94200000,
+        "cap_source": "4th_plan",
+        "source": "4차 할당계획 (ICAP 2025.10). 부문별 비례배분"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "steel",
+        "year": 2029,
+        "cap_MtCO2": 90.6,
+        "cap_tCO2": 90600000,
+        "cap_source": "4th_plan",
+        "source": "4차 할당계획 (ICAP 2025.10). 부문별 비례배분"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "steel",
+        "year": 2030,
+        "cap_MtCO2": 87.0,
+        "cap_tCO2": 87000000,
+        "cap_source": "4th_plan",
+        "source": "4차 할당계획 (ICAP 2025.10). 부문별 비례배분"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "steel",
+        "year": 2031,
+        "cap_MtCO2": 85.26,
+        "cap_tCO2": 85260000,
+        "cap_source": "projected",
+        "source": "2030 기준 연 2% 감축 외삽. 4차 이후 미확정"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "steel",
+        "year": 2032,
+        "cap_MtCO2": 83.55,
+        "cap_tCO2": 83554800,
+        "cap_source": "projected",
+        "source": "2030 기준 연 2% 감축 외삽. 4차 이후 미확정"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "steel",
+        "year": 2033,
+        "cap_MtCO2": 81.88,
+        "cap_tCO2": 81883704,
+        "cap_source": "projected",
+        "source": "2030 기준 연 2% 감축 외삽. 4차 이후 미확정"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "steel",
+        "year": 2034,
+        "cap_MtCO2": 80.25,
+        "cap_tCO2": 80246030,
+        "cap_source": "projected",
+        "source": "2030 기준 연 2% 감축 외삽. 4차 이후 미확정"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "steel",
+        "year": 2035,
+        "cap_MtCO2": 78.64,
+        "cap_tCO2": 78641109,
+        "cap_source": "projected",
+        "source": "2030 기준 연 2% 감축 외삽. 4차 이후 미확정"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "steel",
+        "year": 2036,
+        "cap_MtCO2": 77.07,
+        "cap_tCO2": 77068287,
+        "cap_source": "projected",
+        "source": "2030 기준 연 2% 감축 외삽. 4차 이후 미확정"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "steel",
+        "year": 2037,
+        "cap_MtCO2": 75.53,
+        "cap_tCO2": 75526921,
+        "cap_source": "projected",
+        "source": "2030 기준 연 2% 감축 외삽. 4차 이후 미확정"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "steel",
+        "year": 2038,
+        "cap_MtCO2": 74.02,
+        "cap_tCO2": 74016383,
+        "cap_source": "projected",
+        "source": "2030 기준 연 2% 감축 외삽. 4차 이후 미확정"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "steel",
+        "year": 2039,
+        "cap_MtCO2": 72.54,
+        "cap_tCO2": 72536055,
+        "cap_source": "projected",
+        "source": "2030 기준 연 2% 감축 외삽. 4차 이후 미확정"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "steel",
+        "year": 2040,
+        "cap_MtCO2": 71.09,
+        "cap_tCO2": 71085334,
+        "cap_source": "projected",
+        "source": "2030 기준 연 2% 감축 외삽. 4차 이후 미확정"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "petrochem",
+        "year": 2026,
+        "cap_MtCO2": 40.56,
+        "cap_tCO2": 40560000,
+        "cap_source": "4th_plan",
+        "source": "4차 할당계획 (ICAP 2025.10). 부문별 비례배분"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "petrochem",
+        "year": 2027,
+        "cap_MtCO2": 39.12,
+        "cap_tCO2": 39120000,
+        "cap_source": "4th_plan",
+        "source": "4차 할당계획 (ICAP 2025.10). 부문별 비례배분"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "petrochem",
+        "year": 2028,
+        "cap_MtCO2": 37.68,
+        "cap_tCO2": 37680000,
+        "cap_source": "4th_plan",
+        "source": "4차 할당계획 (ICAP 2025.10). 부문별 비례배분"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "petrochem",
+        "year": 2029,
+        "cap_MtCO2": 36.24,
+        "cap_tCO2": 36240000,
+        "cap_source": "4th_plan",
+        "source": "4차 할당계획 (ICAP 2025.10). 부문별 비례배분"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "petrochem",
+        "year": 2030,
+        "cap_MtCO2": 34.8,
+        "cap_tCO2": 34800000,
+        "cap_source": "4th_plan",
+        "source": "4차 할당계획 (ICAP 2025.10). 부문별 비례배분"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "petrochem",
+        "year": 2031,
+        "cap_MtCO2": 34.1,
+        "cap_tCO2": 34104000,
+        "cap_source": "projected",
+        "source": "2030 기준 연 2% 감축 외삽. 4차 이후 미확정"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "petrochem",
+        "year": 2032,
+        "cap_MtCO2": 33.42,
+        "cap_tCO2": 33421920,
+        "cap_source": "projected",
+        "source": "2030 기준 연 2% 감축 외삽. 4차 이후 미확정"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "petrochem",
+        "year": 2033,
+        "cap_MtCO2": 32.75,
+        "cap_tCO2": 32753482,
+        "cap_source": "projected",
+        "source": "2030 기준 연 2% 감축 외삽. 4차 이후 미확정"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "petrochem",
+        "year": 2034,
+        "cap_MtCO2": 32.1,
+        "cap_tCO2": 32098412,
+        "cap_source": "projected",
+        "source": "2030 기준 연 2% 감축 외삽. 4차 이후 미확정"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "petrochem",
+        "year": 2035,
+        "cap_MtCO2": 31.46,
+        "cap_tCO2": 31456444,
+        "cap_source": "projected",
+        "source": "2030 기준 연 2% 감축 외삽. 4차 이후 미확정"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "petrochem",
+        "year": 2036,
+        "cap_MtCO2": 30.83,
+        "cap_tCO2": 30827315,
+        "cap_source": "projected",
+        "source": "2030 기준 연 2% 감축 외삽. 4차 이후 미확정"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "petrochem",
+        "year": 2037,
+        "cap_MtCO2": 30.21,
+        "cap_tCO2": 30210769,
+        "cap_source": "projected",
+        "source": "2030 기준 연 2% 감축 외삽. 4차 이후 미확정"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "petrochem",
+        "year": 2038,
+        "cap_MtCO2": 29.61,
+        "cap_tCO2": 29606553,
+        "cap_source": "projected",
+        "source": "2030 기준 연 2% 감축 외삽. 4차 이후 미확정"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "petrochem",
+        "year": 2039,
+        "cap_MtCO2": 29.01,
+        "cap_tCO2": 29014422,
+        "cap_source": "projected",
+        "source": "2030 기준 연 2% 감축 외삽. 4차 이후 미확정"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "petrochem",
+        "year": 2040,
+        "cap_MtCO2": 28.43,
+        "cap_tCO2": 28434134,
+        "cap_source": "projected",
+        "source": "2030 기준 연 2% 감축 외삽. 4차 이후 미확정"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "power",
+        "year": 2026,
+        "cap_MtCO2": 202.8,
+        "cap_tCO2": 202800000,
+        "cap_source": "4th_plan",
+        "source": "4차 할당계획 (ICAP 2025.10). 부문별 비례배분"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "power",
+        "year": 2027,
+        "cap_MtCO2": 195.6,
+        "cap_tCO2": 195600000,
+        "cap_source": "4th_plan",
+        "source": "4차 할당계획 (ICAP 2025.10). 부문별 비례배분"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "power",
+        "year": 2028,
+        "cap_MtCO2": 188.4,
+        "cap_tCO2": 188400000,
+        "cap_source": "4th_plan",
+        "source": "4차 할당계획 (ICAP 2025.10). 부문별 비례배분"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "power",
+        "year": 2029,
+        "cap_MtCO2": 181.2,
+        "cap_tCO2": 181200000,
+        "cap_source": "4th_plan",
+        "source": "4차 할당계획 (ICAP 2025.10). 부문별 비례배분"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "power",
+        "year": 2030,
+        "cap_MtCO2": 174.0,
+        "cap_tCO2": 174000000,
+        "cap_source": "4th_plan",
+        "source": "4차 할당계획 (ICAP 2025.10). 부문별 비례배분"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "power",
+        "year": 2031,
+        "cap_MtCO2": 170.52,
+        "cap_tCO2": 170520000,
+        "cap_source": "projected",
+        "source": "2030 기준 연 2% 감축 외삽. 4차 이후 미확정"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "power",
+        "year": 2032,
+        "cap_MtCO2": 167.11,
+        "cap_tCO2": 167109600,
+        "cap_source": "projected",
+        "source": "2030 기준 연 2% 감축 외삽. 4차 이후 미확정"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "power",
+        "year": 2033,
+        "cap_MtCO2": 163.77,
+        "cap_tCO2": 163767408,
+        "cap_source": "projected",
+        "source": "2030 기준 연 2% 감축 외삽. 4차 이후 미확정"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "power",
+        "year": 2034,
+        "cap_MtCO2": 160.49,
+        "cap_tCO2": 160492060,
+        "cap_source": "projected",
+        "source": "2030 기준 연 2% 감축 외삽. 4차 이후 미확정"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "power",
+        "year": 2035,
+        "cap_MtCO2": 157.28,
+        "cap_tCO2": 157282219,
+        "cap_source": "projected",
+        "source": "2030 기준 연 2% 감축 외삽. 4차 이후 미확정"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "power",
+        "year": 2036,
+        "cap_MtCO2": 154.14,
+        "cap_tCO2": 154136574,
+        "cap_source": "projected",
+        "source": "2030 기준 연 2% 감축 외삽. 4차 이후 미확정"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "power",
+        "year": 2037,
+        "cap_MtCO2": 151.05,
+        "cap_tCO2": 151053843,
+        "cap_source": "projected",
+        "source": "2030 기준 연 2% 감축 외삽. 4차 이후 미확정"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "power",
+        "year": 2038,
+        "cap_MtCO2": 148.03,
+        "cap_tCO2": 148032766,
+        "cap_source": "projected",
+        "source": "2030 기준 연 2% 감축 외삽. 4차 이후 미확정"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "power",
+        "year": 2039,
+        "cap_MtCO2": 145.07,
+        "cap_tCO2": 145072111,
+        "cap_source": "projected",
+        "source": "2030 기준 연 2% 감축 외삽. 4차 이후 미확정"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "power",
+        "year": 2040,
+        "cap_MtCO2": 142.17,
+        "cap_tCO2": 142170668,
+        "cap_source": "projected",
+        "source": "2030 기준 연 2% 감축 외삽. 4차 이후 미확정"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "cement",
+        "year": 2026,
+        "cap_MtCO2": 30.42,
+        "cap_tCO2": 30420000,
+        "cap_source": "4th_plan",
+        "source": "4차 할당계획 (ICAP 2025.10). 부문별 비례배분"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "cement",
+        "year": 2027,
+        "cap_MtCO2": 29.34,
+        "cap_tCO2": 29340000,
+        "cap_source": "4th_plan",
+        "source": "4차 할당계획 (ICAP 2025.10). 부문별 비례배분"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "cement",
+        "year": 2028,
+        "cap_MtCO2": 28.26,
+        "cap_tCO2": 28260000,
+        "cap_source": "4th_plan",
+        "source": "4차 할당계획 (ICAP 2025.10). 부문별 비례배분"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "cement",
+        "year": 2029,
+        "cap_MtCO2": 27.18,
+        "cap_tCO2": 27180000,
+        "cap_source": "4th_plan",
+        "source": "4차 할당계획 (ICAP 2025.10). 부문별 비례배분"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "cement",
+        "year": 2030,
+        "cap_MtCO2": 26.1,
+        "cap_tCO2": 26100000,
+        "cap_source": "4th_plan",
+        "source": "4차 할당계획 (ICAP 2025.10). 부문별 비례배분"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "cement",
+        "year": 2031,
+        "cap_MtCO2": 25.58,
+        "cap_tCO2": 25578000,
+        "cap_source": "projected",
+        "source": "2030 기준 연 2% 감축 외삽. 4차 이후 미확정"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "cement",
+        "year": 2032,
+        "cap_MtCO2": 25.07,
+        "cap_tCO2": 25066440,
+        "cap_source": "projected",
+        "source": "2030 기준 연 2% 감축 외삽. 4차 이후 미확정"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "cement",
+        "year": 2033,
+        "cap_MtCO2": 24.57,
+        "cap_tCO2": 24565111,
+        "cap_source": "projected",
+        "source": "2030 기준 연 2% 감축 외삽. 4차 이후 미확정"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "cement",
+        "year": 2034,
+        "cap_MtCO2": 24.07,
+        "cap_tCO2": 24073809,
+        "cap_source": "projected",
+        "source": "2030 기준 연 2% 감축 외삽. 4차 이후 미확정"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "cement",
+        "year": 2035,
+        "cap_MtCO2": 23.59,
+        "cap_tCO2": 23592333,
+        "cap_source": "projected",
+        "source": "2030 기준 연 2% 감축 외삽. 4차 이후 미확정"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "cement",
+        "year": 2036,
+        "cap_MtCO2": 23.12,
+        "cap_tCO2": 23120486,
+        "cap_source": "projected",
+        "source": "2030 기준 연 2% 감축 외삽. 4차 이후 미확정"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "cement",
+        "year": 2037,
+        "cap_MtCO2": 22.66,
+        "cap_tCO2": 22658076,
+        "cap_source": "projected",
+        "source": "2030 기준 연 2% 감축 외삽. 4차 이후 미확정"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "cement",
+        "year": 2038,
+        "cap_MtCO2": 22.2,
+        "cap_tCO2": 22204915,
+        "cap_source": "projected",
+        "source": "2030 기준 연 2% 감축 외삽. 4차 이후 미확정"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "cement",
+        "year": 2039,
+        "cap_MtCO2": 21.76,
+        "cap_tCO2": 21760817,
+        "cap_source": "projected",
+        "source": "2030 기준 연 2% 감축 외삽. 4차 이후 미확정"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "cement",
+        "year": 2040,
+        "cap_MtCO2": 21.33,
+        "cap_tCO2": 21325600,
+        "cap_source": "projected",
+        "source": "2030 기준 연 2% 감축 외삽. 4차 이후 미확정"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "refinery",
+        "year": 2026,
+        "cap_MtCO2": 35.49,
+        "cap_tCO2": 35490000,
+        "cap_source": "4th_plan",
+        "source": "4차 할당계획 (ICAP 2025.10). 부문별 비례배분"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "refinery",
+        "year": 2027,
+        "cap_MtCO2": 34.23,
+        "cap_tCO2": 34230000,
+        "cap_source": "4th_plan",
+        "source": "4차 할당계획 (ICAP 2025.10). 부문별 비례배분"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "refinery",
+        "year": 2028,
+        "cap_MtCO2": 32.97,
+        "cap_tCO2": 32970000,
+        "cap_source": "4th_plan",
+        "source": "4차 할당계획 (ICAP 2025.10). 부문별 비례배분"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "refinery",
+        "year": 2029,
+        "cap_MtCO2": 31.71,
+        "cap_tCO2": 31710000,
+        "cap_source": "4th_plan",
+        "source": "4차 할당계획 (ICAP 2025.10). 부문별 비례배분"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "refinery",
+        "year": 2030,
+        "cap_MtCO2": 30.45,
+        "cap_tCO2": 30450000,
+        "cap_source": "4th_plan",
+        "source": "4차 할당계획 (ICAP 2025.10). 부문별 비례배분"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "refinery",
+        "year": 2031,
+        "cap_MtCO2": 29.84,
+        "cap_tCO2": 29841000,
+        "cap_source": "projected",
+        "source": "2030 기준 연 2% 감축 외삽. 4차 이후 미확정"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "refinery",
+        "year": 2032,
+        "cap_MtCO2": 29.24,
+        "cap_tCO2": 29244180,
+        "cap_source": "projected",
+        "source": "2030 기준 연 2% 감축 외삽. 4차 이후 미확정"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "refinery",
+        "year": 2033,
+        "cap_MtCO2": 28.66,
+        "cap_tCO2": 28659296,
+        "cap_source": "projected",
+        "source": "2030 기준 연 2% 감축 외삽. 4차 이후 미확정"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "refinery",
+        "year": 2034,
+        "cap_MtCO2": 28.09,
+        "cap_tCO2": 28086110,
+        "cap_source": "projected",
+        "source": "2030 기준 연 2% 감축 외삽. 4차 이후 미확정"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "refinery",
+        "year": 2035,
+        "cap_MtCO2": 27.52,
+        "cap_tCO2": 27524388,
+        "cap_source": "projected",
+        "source": "2030 기준 연 2% 감축 외삽. 4차 이후 미확정"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "refinery",
+        "year": 2036,
+        "cap_MtCO2": 26.97,
+        "cap_tCO2": 26973900,
+        "cap_source": "projected",
+        "source": "2030 기준 연 2% 감축 외삽. 4차 이후 미확정"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "refinery",
+        "year": 2037,
+        "cap_MtCO2": 26.43,
+        "cap_tCO2": 26434422,
+        "cap_source": "projected",
+        "source": "2030 기준 연 2% 감축 외삽. 4차 이후 미확정"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "refinery",
+        "year": 2038,
+        "cap_MtCO2": 25.91,
+        "cap_tCO2": 25905734,
+        "cap_source": "projected",
+        "source": "2030 기준 연 2% 감축 외삽. 4차 이후 미확정"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "refinery",
+        "year": 2039,
+        "cap_MtCO2": 25.39,
+        "cap_tCO2": 25387619,
+        "cap_source": "projected",
+        "source": "2030 기준 연 2% 감축 외삽. 4차 이후 미확정"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "refinery",
+        "year": 2040,
+        "cap_MtCO2": 24.88,
+        "cap_tCO2": 24879867,
+        "cap_source": "projected",
+        "source": "2030 기준 연 2% 감축 외삽. 4차 이후 미확정"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "other",
+        "year": 2026,
+        "cap_MtCO2": 96.33,
+        "cap_tCO2": 96330000,
+        "cap_source": "4th_plan",
+        "source": "4차 할당계획 (ICAP 2025.10). 부문별 비례배분"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "other",
+        "year": 2027,
+        "cap_MtCO2": 92.91,
+        "cap_tCO2": 92910000,
+        "cap_source": "4th_plan",
+        "source": "4차 할당계획 (ICAP 2025.10). 부문별 비례배분"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "other",
+        "year": 2028,
+        "cap_MtCO2": 89.49,
+        "cap_tCO2": 89490000,
+        "cap_source": "4th_plan",
+        "source": "4차 할당계획 (ICAP 2025.10). 부문별 비례배분"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "other",
+        "year": 2029,
+        "cap_MtCO2": 86.07,
+        "cap_tCO2": 86070000,
+        "cap_source": "4th_plan",
+        "source": "4차 할당계획 (ICAP 2025.10). 부문별 비례배분"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "other",
+        "year": 2030,
+        "cap_MtCO2": 82.65,
+        "cap_tCO2": 82650000,
+        "cap_source": "4th_plan",
+        "source": "4차 할당계획 (ICAP 2025.10). 부문별 비례배분"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "other",
+        "year": 2031,
+        "cap_MtCO2": 81.0,
+        "cap_tCO2": 80997000,
+        "cap_source": "projected",
+        "source": "2030 기준 연 2% 감축 외삽. 4차 이후 미확정"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "other",
+        "year": 2032,
+        "cap_MtCO2": 79.38,
+        "cap_tCO2": 79377060,
+        "cap_source": "projected",
+        "source": "2030 기준 연 2% 감축 외삽. 4차 이후 미확정"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "other",
+        "year": 2033,
+        "cap_MtCO2": 77.79,
+        "cap_tCO2": 77789519,
+        "cap_source": "projected",
+        "source": "2030 기준 연 2% 감축 외삽. 4차 이후 미확정"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "other",
+        "year": 2034,
+        "cap_MtCO2": 76.23,
+        "cap_tCO2": 76233728,
+        "cap_source": "projected",
+        "source": "2030 기준 연 2% 감축 외삽. 4차 이후 미확정"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "other",
+        "year": 2035,
+        "cap_MtCO2": 74.71,
+        "cap_tCO2": 74709054,
+        "cap_source": "projected",
+        "source": "2030 기준 연 2% 감축 외삽. 4차 이후 미확정"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "other",
+        "year": 2036,
+        "cap_MtCO2": 73.21,
+        "cap_tCO2": 73214873,
+        "cap_source": "projected",
+        "source": "2030 기준 연 2% 감축 외삽. 4차 이후 미확정"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "other",
+        "year": 2037,
+        "cap_MtCO2": 71.75,
+        "cap_tCO2": 71750575,
+        "cap_source": "projected",
+        "source": "2030 기준 연 2% 감축 외삽. 4차 이후 미확정"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "other",
+        "year": 2038,
+        "cap_MtCO2": 70.32,
+        "cap_tCO2": 70315564,
+        "cap_source": "projected",
+        "source": "2030 기준 연 2% 감축 외삽. 4차 이후 미확정"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "other",
+        "year": 2039,
+        "cap_MtCO2": 68.91,
+        "cap_tCO2": 68909253,
+        "cap_source": "projected",
+        "source": "2030 기준 연 2% 감축 외삽. 4차 이후 미확정"
+      },
+      {
+        "scenario_id": "base",
+        "sector_code": "other",
+        "year": 2040,
+        "cap_MtCO2": 67.53,
+        "cap_tCO2": 67531067,
+        "cap_source": "projected",
+        "source": "2030 기준 연 2% 감축 외삽. 4차 이후 미확정"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "steel",
+        "year": 2026,
+        "cap_MtCO2": 101.4,
+        "cap_tCO2": 101400000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (8% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "petrochem",
+        "year": 2026,
+        "cap_MtCO2": 40.56,
+        "cap_tCO2": 40560000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (8% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "power",
+        "year": 2026,
+        "cap_MtCO2": 202.8,
+        "cap_tCO2": 202800000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (8% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "cement",
+        "year": 2026,
+        "cap_MtCO2": 30.42,
+        "cap_tCO2": 30420000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (8% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "refinery",
+        "year": 2026,
+        "cap_MtCO2": 35.49,
+        "cap_tCO2": 35490000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (8% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "other",
+        "year": 2026,
+        "cap_MtCO2": 96.33,
+        "cap_tCO2": 96330000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (8% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "steel",
+        "year": 2027,
+        "cap_MtCO2": 95.4,
+        "cap_tCO2": 95400000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (13% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "petrochem",
+        "year": 2027,
+        "cap_MtCO2": 38.16,
+        "cap_tCO2": 38160000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (13% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "power",
+        "year": 2027,
+        "cap_MtCO2": 190.8,
+        "cap_tCO2": 190800000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (13% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "cement",
+        "year": 2027,
+        "cap_MtCO2": 28.62,
+        "cap_tCO2": 28620000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (13% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "refinery",
+        "year": 2027,
+        "cap_MtCO2": 33.39,
+        "cap_tCO2": 33390000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (13% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "other",
+        "year": 2027,
+        "cap_MtCO2": 90.63,
+        "cap_tCO2": 90630000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (13% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "steel",
+        "year": 2028,
+        "cap_MtCO2": 89.6,
+        "cap_tCO2": 89600000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (19% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "petrochem",
+        "year": 2028,
+        "cap_MtCO2": 35.84,
+        "cap_tCO2": 35840000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (19% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "power",
+        "year": 2028,
+        "cap_MtCO2": 179.2,
+        "cap_tCO2": 179200000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (19% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "cement",
+        "year": 2028,
+        "cap_MtCO2": 26.88,
+        "cap_tCO2": 26880000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (19% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "refinery",
+        "year": 2028,
+        "cap_MtCO2": 31.36,
+        "cap_tCO2": 31360000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (19% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "other",
+        "year": 2028,
+        "cap_MtCO2": 85.12,
+        "cap_tCO2": 85120000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (19% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "steel",
+        "year": 2029,
+        "cap_MtCO2": 83.6,
+        "cap_tCO2": 83600000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (24% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "petrochem",
+        "year": 2029,
+        "cap_MtCO2": 33.44,
+        "cap_tCO2": 33440000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (24% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "power",
+        "year": 2029,
+        "cap_MtCO2": 167.2,
+        "cap_tCO2": 167200000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (24% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "cement",
+        "year": 2029,
+        "cap_MtCO2": 25.08,
+        "cap_tCO2": 25080000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (24% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "refinery",
+        "year": 2029,
+        "cap_MtCO2": 29.26,
+        "cap_tCO2": 29260000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (24% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "other",
+        "year": 2029,
+        "cap_MtCO2": 79.42,
+        "cap_tCO2": 79420000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (24% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "steel",
+        "year": 2030,
+        "cap_MtCO2": 77.8,
+        "cap_tCO2": 77800000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (29% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "petrochem",
+        "year": 2030,
+        "cap_MtCO2": 31.12,
+        "cap_tCO2": 31120000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (29% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "power",
+        "year": 2030,
+        "cap_MtCO2": 155.6,
+        "cap_tCO2": 155600000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (29% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "cement",
+        "year": 2030,
+        "cap_MtCO2": 23.34,
+        "cap_tCO2": 23340000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (29% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "refinery",
+        "year": 2030,
+        "cap_MtCO2": 27.23,
+        "cap_tCO2": 27230000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (29% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "other",
+        "year": 2030,
+        "cap_MtCO2": 73.91,
+        "cap_tCO2": 73910000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (29% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "steel",
+        "year": 2031,
+        "cap_MtCO2": 74.0,
+        "cap_tCO2": 74000000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (33% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "petrochem",
+        "year": 2031,
+        "cap_MtCO2": 29.6,
+        "cap_tCO2": 29600000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (33% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "power",
+        "year": 2031,
+        "cap_MtCO2": 148.0,
+        "cap_tCO2": 148000000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (33% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "cement",
+        "year": 2031,
+        "cap_MtCO2": 22.2,
+        "cap_tCO2": 22200000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (33% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "refinery",
+        "year": 2031,
+        "cap_MtCO2": 25.9,
+        "cap_tCO2": 25900000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (33% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "other",
+        "year": 2031,
+        "cap_MtCO2": 70.3,
+        "cap_tCO2": 70300000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (33% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "steel",
+        "year": 2032,
+        "cap_MtCO2": 70.4,
+        "cap_tCO2": 70400000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (36% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "petrochem",
+        "year": 2032,
+        "cap_MtCO2": 28.16,
+        "cap_tCO2": 28160000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (36% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "power",
+        "year": 2032,
+        "cap_MtCO2": 140.8,
+        "cap_tCO2": 140800000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (36% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "cement",
+        "year": 2032,
+        "cap_MtCO2": 21.12,
+        "cap_tCO2": 21120000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (36% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "refinery",
+        "year": 2032,
+        "cap_MtCO2": 24.64,
+        "cap_tCO2": 24640000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (36% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "other",
+        "year": 2032,
+        "cap_MtCO2": 66.88,
+        "cap_tCO2": 66880000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (36% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "steel",
+        "year": 2033,
+        "cap_MtCO2": 66.8,
+        "cap_tCO2": 66800000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (39% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "petrochem",
+        "year": 2033,
+        "cap_MtCO2": 26.72,
+        "cap_tCO2": 26720000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (39% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "power",
+        "year": 2033,
+        "cap_MtCO2": 133.6,
+        "cap_tCO2": 133600000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (39% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "cement",
+        "year": 2033,
+        "cap_MtCO2": 20.04,
+        "cap_tCO2": 20040000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (39% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "refinery",
+        "year": 2033,
+        "cap_MtCO2": 23.38,
+        "cap_tCO2": 23380000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (39% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "other",
+        "year": 2033,
+        "cap_MtCO2": 63.46,
+        "cap_tCO2": 63460000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (39% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "steel",
+        "year": 2034,
+        "cap_MtCO2": 63.2,
+        "cap_tCO2": 63200000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (43% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "petrochem",
+        "year": 2034,
+        "cap_MtCO2": 25.28,
+        "cap_tCO2": 25280000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (43% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "power",
+        "year": 2034,
+        "cap_MtCO2": 126.4,
+        "cap_tCO2": 126400000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (43% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "cement",
+        "year": 2034,
+        "cap_MtCO2": 18.96,
+        "cap_tCO2": 18960000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (43% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "refinery",
+        "year": 2034,
+        "cap_MtCO2": 22.12,
+        "cap_tCO2": 22120000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (43% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "other",
+        "year": 2034,
+        "cap_MtCO2": 60.04,
+        "cap_tCO2": 60040000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (43% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "steel",
+        "year": 2035,
+        "cap_MtCO2": 59.8,
+        "cap_tCO2": 59800000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (46% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "petrochem",
+        "year": 2035,
+        "cap_MtCO2": 23.92,
+        "cap_tCO2": 23920000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (46% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "power",
+        "year": 2035,
+        "cap_MtCO2": 119.6,
+        "cap_tCO2": 119600000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (46% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "cement",
+        "year": 2035,
+        "cap_MtCO2": 17.94,
+        "cap_tCO2": 17940000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (46% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "refinery",
+        "year": 2035,
+        "cap_MtCO2": 20.93,
+        "cap_tCO2": 20930000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (46% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "other",
+        "year": 2035,
+        "cap_MtCO2": 56.81,
+        "cap_tCO2": 56810000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (46% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "steel",
+        "year": 2036,
+        "cap_MtCO2": 56.8,
+        "cap_tCO2": 56800000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (48% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "petrochem",
+        "year": 2036,
+        "cap_MtCO2": 22.72,
+        "cap_tCO2": 22720000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (48% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "power",
+        "year": 2036,
+        "cap_MtCO2": 113.6,
+        "cap_tCO2": 113600000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (48% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "cement",
+        "year": 2036,
+        "cap_MtCO2": 17.04,
+        "cap_tCO2": 17040000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (48% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "refinery",
+        "year": 2036,
+        "cap_MtCO2": 19.88,
+        "cap_tCO2": 19880000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (48% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "other",
+        "year": 2036,
+        "cap_MtCO2": 53.96,
+        "cap_tCO2": 53960000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (48% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "steel",
+        "year": 2037,
+        "cap_MtCO2": 54.0,
+        "cap_tCO2": 54000000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (51% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "petrochem",
+        "year": 2037,
+        "cap_MtCO2": 21.6,
+        "cap_tCO2": 21600000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (51% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "power",
+        "year": 2037,
+        "cap_MtCO2": 108.0,
+        "cap_tCO2": 108000000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (51% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "cement",
+        "year": 2037,
+        "cap_MtCO2": 16.2,
+        "cap_tCO2": 16200000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (51% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "refinery",
+        "year": 2037,
+        "cap_MtCO2": 18.9,
+        "cap_tCO2": 18900000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (51% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "other",
+        "year": 2037,
+        "cap_MtCO2": 51.3,
+        "cap_tCO2": 51300000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (51% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "steel",
+        "year": 2038,
+        "cap_MtCO2": 51.4,
+        "cap_tCO2": 51400000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (53% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "petrochem",
+        "year": 2038,
+        "cap_MtCO2": 20.56,
+        "cap_tCO2": 20560000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (53% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "power",
+        "year": 2038,
+        "cap_MtCO2": 102.8,
+        "cap_tCO2": 102800000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (53% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "cement",
+        "year": 2038,
+        "cap_MtCO2": 15.42,
+        "cap_tCO2": 15420000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (53% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "refinery",
+        "year": 2038,
+        "cap_MtCO2": 17.99,
+        "cap_tCO2": 17990000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (53% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "other",
+        "year": 2038,
+        "cap_MtCO2": 48.83,
+        "cap_tCO2": 48830000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (53% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "steel",
+        "year": 2039,
+        "cap_MtCO2": 48.8,
+        "cap_tCO2": 48800000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (56% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "petrochem",
+        "year": 2039,
+        "cap_MtCO2": 19.52,
+        "cap_tCO2": 19520000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (56% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "power",
+        "year": 2039,
+        "cap_MtCO2": 97.6,
+        "cap_tCO2": 97600000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (56% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "cement",
+        "year": 2039,
+        "cap_MtCO2": 14.64,
+        "cap_tCO2": 14640000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (56% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "refinery",
+        "year": 2039,
+        "cap_MtCO2": 17.08,
+        "cap_tCO2": 17080000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (56% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "other",
+        "year": 2039,
+        "cap_MtCO2": 46.36,
+        "cap_tCO2": 46360000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (56% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "steel",
+        "year": 2040,
+        "cap_MtCO2": 46.4,
+        "cap_tCO2": 46400000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (58% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "petrochem",
+        "year": 2040,
+        "cap_MtCO2": 18.56,
+        "cap_tCO2": 18560000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (58% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "power",
+        "year": 2040,
+        "cap_MtCO2": 92.8,
+        "cap_tCO2": 92800000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (58% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "cement",
+        "year": 2040,
+        "cap_MtCO2": 13.92,
+        "cap_tCO2": 13920000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (58% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "refinery",
+        "year": 2040,
+        "cap_MtCO2": 16.24,
+        "cap_tCO2": 16240000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (58% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "ideal",
+        "sector_code": "other",
+        "year": 2040,
+        "cap_MtCO2": 44.08,
+        "cap_tCO2": 44080000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 기반 (58% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "steel",
+        "year": 2026,
+        "cap_MtCO2": 101.4,
+        "cap_tCO2": 101400000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (8% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "petrochem",
+        "year": 2026,
+        "cap_MtCO2": 40.56,
+        "cap_tCO2": 40560000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (8% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "power",
+        "year": 2026,
+        "cap_MtCO2": 202.8,
+        "cap_tCO2": 202800000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (8% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "cement",
+        "year": 2026,
+        "cap_MtCO2": 30.42,
+        "cap_tCO2": 30420000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (8% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "refinery",
+        "year": 2026,
+        "cap_MtCO2": 35.49,
+        "cap_tCO2": 35490000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (8% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "other",
+        "year": 2026,
+        "cap_MtCO2": 96.33,
+        "cap_tCO2": 96330000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (8% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "steel",
+        "year": 2027,
+        "cap_MtCO2": 97.4,
+        "cap_tCO2": 97400000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (11% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "petrochem",
+        "year": 2027,
+        "cap_MtCO2": 38.96,
+        "cap_tCO2": 38960000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (11% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "power",
+        "year": 2027,
+        "cap_MtCO2": 194.8,
+        "cap_tCO2": 194800000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (11% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "cement",
+        "year": 2027,
+        "cap_MtCO2": 29.22,
+        "cap_tCO2": 29220000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (11% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "refinery",
+        "year": 2027,
+        "cap_MtCO2": 34.09,
+        "cap_tCO2": 34090000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (11% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "other",
+        "year": 2027,
+        "cap_MtCO2": 92.53,
+        "cap_tCO2": 92530000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (11% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "steel",
+        "year": 2028,
+        "cap_MtCO2": 93.4,
+        "cap_tCO2": 93400000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (15% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "petrochem",
+        "year": 2028,
+        "cap_MtCO2": 37.36,
+        "cap_tCO2": 37360000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (15% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "power",
+        "year": 2028,
+        "cap_MtCO2": 186.8,
+        "cap_tCO2": 186800000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (15% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "cement",
+        "year": 2028,
+        "cap_MtCO2": 28.02,
+        "cap_tCO2": 28020000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (15% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "refinery",
+        "year": 2028,
+        "cap_MtCO2": 32.69,
+        "cap_tCO2": 32690000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (15% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "other",
+        "year": 2028,
+        "cap_MtCO2": 88.73,
+        "cap_tCO2": 88730000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (15% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "steel",
+        "year": 2029,
+        "cap_MtCO2": 89.6,
+        "cap_tCO2": 89600000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (19% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "petrochem",
+        "year": 2029,
+        "cap_MtCO2": 35.84,
+        "cap_tCO2": 35840000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (19% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "power",
+        "year": 2029,
+        "cap_MtCO2": 179.2,
+        "cap_tCO2": 179200000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (19% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "cement",
+        "year": 2029,
+        "cap_MtCO2": 26.88,
+        "cap_tCO2": 26880000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (19% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "refinery",
+        "year": 2029,
+        "cap_MtCO2": 31.36,
+        "cap_tCO2": 31360000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (19% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "other",
+        "year": 2029,
+        "cap_MtCO2": 85.12,
+        "cap_tCO2": 85120000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (19% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "steel",
+        "year": 2030,
+        "cap_MtCO2": 85.8,
+        "cap_tCO2": 85800000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (22% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "petrochem",
+        "year": 2030,
+        "cap_MtCO2": 34.32,
+        "cap_tCO2": 34320000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (22% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "power",
+        "year": 2030,
+        "cap_MtCO2": 171.6,
+        "cap_tCO2": 171600000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (22% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "cement",
+        "year": 2030,
+        "cap_MtCO2": 25.74,
+        "cap_tCO2": 25740000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (22% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "refinery",
+        "year": 2030,
+        "cap_MtCO2": 30.03,
+        "cap_tCO2": 30030000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (22% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "other",
+        "year": 2030,
+        "cap_MtCO2": 81.51,
+        "cap_tCO2": 81510000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (22% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "steel",
+        "year": 2031,
+        "cap_MtCO2": 83.2,
+        "cap_tCO2": 83200000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (24% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "petrochem",
+        "year": 2031,
+        "cap_MtCO2": 33.28,
+        "cap_tCO2": 33280000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (24% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "power",
+        "year": 2031,
+        "cap_MtCO2": 166.4,
+        "cap_tCO2": 166400000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (24% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "cement",
+        "year": 2031,
+        "cap_MtCO2": 24.96,
+        "cap_tCO2": 24960000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (24% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "refinery",
+        "year": 2031,
+        "cap_MtCO2": 29.12,
+        "cap_tCO2": 29120000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (24% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "other",
+        "year": 2031,
+        "cap_MtCO2": 79.04,
+        "cap_tCO2": 79040000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (24% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "steel",
+        "year": 2032,
+        "cap_MtCO2": 80.6,
+        "cap_tCO2": 80600000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (27% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "petrochem",
+        "year": 2032,
+        "cap_MtCO2": 32.24,
+        "cap_tCO2": 32240000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (27% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "power",
+        "year": 2032,
+        "cap_MtCO2": 161.2,
+        "cap_tCO2": 161200000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (27% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "cement",
+        "year": 2032,
+        "cap_MtCO2": 24.18,
+        "cap_tCO2": 24180000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (27% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "refinery",
+        "year": 2032,
+        "cap_MtCO2": 28.21,
+        "cap_tCO2": 28210000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (27% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "other",
+        "year": 2032,
+        "cap_MtCO2": 76.57,
+        "cap_tCO2": 76570000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (27% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "steel",
+        "year": 2033,
+        "cap_MtCO2": 78.2,
+        "cap_tCO2": 78200000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (29% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "petrochem",
+        "year": 2033,
+        "cap_MtCO2": 31.28,
+        "cap_tCO2": 31280000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (29% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "power",
+        "year": 2033,
+        "cap_MtCO2": 156.4,
+        "cap_tCO2": 156400000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (29% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "cement",
+        "year": 2033,
+        "cap_MtCO2": 23.46,
+        "cap_tCO2": 23460000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (29% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "refinery",
+        "year": 2033,
+        "cap_MtCO2": 27.37,
+        "cap_tCO2": 27370000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (29% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "other",
+        "year": 2033,
+        "cap_MtCO2": 74.29,
+        "cap_tCO2": 74290000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (29% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "steel",
+        "year": 2034,
+        "cap_MtCO2": 75.8,
+        "cap_tCO2": 75800000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (31% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "petrochem",
+        "year": 2034,
+        "cap_MtCO2": 30.32,
+        "cap_tCO2": 30320000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (31% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "power",
+        "year": 2034,
+        "cap_MtCO2": 151.6,
+        "cap_tCO2": 151600000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (31% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "cement",
+        "year": 2034,
+        "cap_MtCO2": 22.74,
+        "cap_tCO2": 22740000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (31% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "refinery",
+        "year": 2034,
+        "cap_MtCO2": 26.53,
+        "cap_tCO2": 26530000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (31% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "other",
+        "year": 2034,
+        "cap_MtCO2": 72.01,
+        "cap_tCO2": 72010000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (31% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "steel",
+        "year": 2035,
+        "cap_MtCO2": 73.4,
+        "cap_tCO2": 73400000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (33% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "petrochem",
+        "year": 2035,
+        "cap_MtCO2": 29.36,
+        "cap_tCO2": 29360000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (33% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "power",
+        "year": 2035,
+        "cap_MtCO2": 146.8,
+        "cap_tCO2": 146800000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (33% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "cement",
+        "year": 2035,
+        "cap_MtCO2": 22.02,
+        "cap_tCO2": 22020000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (33% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "refinery",
+        "year": 2035,
+        "cap_MtCO2": 25.69,
+        "cap_tCO2": 25690000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (33% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "other",
+        "year": 2035,
+        "cap_MtCO2": 69.73,
+        "cap_tCO2": 69730000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (33% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "steel",
+        "year": 2036,
+        "cap_MtCO2": 71.2,
+        "cap_tCO2": 71200000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (35% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "petrochem",
+        "year": 2036,
+        "cap_MtCO2": 28.48,
+        "cap_tCO2": 28480000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (35% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "power",
+        "year": 2036,
+        "cap_MtCO2": 142.4,
+        "cap_tCO2": 142400000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (35% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "cement",
+        "year": 2036,
+        "cap_MtCO2": 21.36,
+        "cap_tCO2": 21360000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (35% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "refinery",
+        "year": 2036,
+        "cap_MtCO2": 24.92,
+        "cap_tCO2": 24920000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (35% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "other",
+        "year": 2036,
+        "cap_MtCO2": 67.64,
+        "cap_tCO2": 67640000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (35% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "steel",
+        "year": 2037,
+        "cap_MtCO2": 69.0,
+        "cap_tCO2": 69000000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (37% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "petrochem",
+        "year": 2037,
+        "cap_MtCO2": 27.6,
+        "cap_tCO2": 27600000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (37% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "power",
+        "year": 2037,
+        "cap_MtCO2": 138.0,
+        "cap_tCO2": 138000000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (37% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "cement",
+        "year": 2037,
+        "cap_MtCO2": 20.7,
+        "cap_tCO2": 20700000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (37% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "refinery",
+        "year": 2037,
+        "cap_MtCO2": 24.15,
+        "cap_tCO2": 24150000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (37% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "other",
+        "year": 2037,
+        "cap_MtCO2": 65.55,
+        "cap_tCO2": 65550000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (37% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "steel",
+        "year": 2038,
+        "cap_MtCO2": 66.8,
+        "cap_tCO2": 66800000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (39% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "petrochem",
+        "year": 2038,
+        "cap_MtCO2": 26.72,
+        "cap_tCO2": 26720000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (39% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "power",
+        "year": 2038,
+        "cap_MtCO2": 133.6,
+        "cap_tCO2": 133600000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (39% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "cement",
+        "year": 2038,
+        "cap_MtCO2": 20.04,
+        "cap_tCO2": 20040000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (39% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "refinery",
+        "year": 2038,
+        "cap_MtCO2": 23.38,
+        "cap_tCO2": 23380000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (39% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "other",
+        "year": 2038,
+        "cap_MtCO2": 63.46,
+        "cap_tCO2": 63460000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (39% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "steel",
+        "year": 2039,
+        "cap_MtCO2": 64.6,
+        "cap_tCO2": 64600000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (41% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "petrochem",
+        "year": 2039,
+        "cap_MtCO2": 25.84,
+        "cap_tCO2": 25840000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (41% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "power",
+        "year": 2039,
+        "cap_MtCO2": 129.2,
+        "cap_tCO2": 129200000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (41% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "cement",
+        "year": 2039,
+        "cap_MtCO2": 19.38,
+        "cap_tCO2": 19380000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (41% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "refinery",
+        "year": 2039,
+        "cap_MtCO2": 22.61,
+        "cap_tCO2": 22610000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (41% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "other",
+        "year": 2039,
+        "cap_MtCO2": 61.37,
+        "cap_tCO2": 61370000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (41% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "steel",
+        "year": 2040,
+        "cap_MtCO2": 62.6,
+        "cap_tCO2": 62600000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (43% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "petrochem",
+        "year": 2040,
+        "cap_MtCO2": 25.04,
+        "cap_tCO2": 25040000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (43% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "power",
+        "year": 2040,
+        "cap_MtCO2": 125.2,
+        "cap_tCO2": 125200000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (43% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "cement",
+        "year": 2040,
+        "cap_MtCO2": 18.78,
+        "cap_tCO2": 18780000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (43% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "refinery",
+        "year": 2040,
+        "cap_MtCO2": 21.91,
+        "cap_tCO2": 21910000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (43% 감축 vs 2018)"
+      },
+      {
+        "scenario_id": "middle",
+        "sector_code": "other",
+        "year": 2040,
+        "cap_MtCO2": 59.47,
+        "cap_tCO2": 59470000,
+        "cap_source": "ndc_projected",
+        "source": "NDC 상한 기반 (43% 감축 vs 2018)"
+      }
+    ],
+    "EUA가격전망": [
+      {
+        "year": 2026,
+        "eua_price_eur": 82,
+        "eua_price_krw": 123000,
+        "exchange_rate_eur_krw": 1500,
+        "source": "EC PRIMES Fit for 55 MIX (SWD/2021/452). 2025 시장가 €77에서 수렴"
+      },
+      {
+        "year": 2027,
+        "eua_price_eur": 88,
+        "eua_price_krw": 132000,
+        "exchange_rate_eur_krw": 1500,
+        "source": "EC PRIMES Fit for 55 MIX (SWD/2021/452). 2025 시장가 €77에서 수렴"
+      },
+      {
+        "year": 2028,
+        "eua_price_eur": 95,
+        "eua_price_krw": 142500,
+        "exchange_rate_eur_krw": 1500,
+        "source": "EC PRIMES Fit for 55 MIX (SWD/2021/452). 2025 시장가 €77에서 수렴"
+      },
+      {
+        "year": 2029,
+        "eua_price_eur": 106,
+        "eua_price_krw": 159000,
+        "exchange_rate_eur_krw": 1500,
+        "source": "EC PRIMES Fit for 55 MIX (SWD/2021/452). 2025 시장가 €77에서 수렴"
+      },
+      {
+        "year": 2030,
+        "eua_price_eur": 119,
+        "eua_price_krw": 178500,
+        "exchange_rate_eur_krw": 1500,
+        "source": "EC PRIMES Fit for 55 MIX (SWD/2021/452). 2025 시장가 €77에서 수렴"
+      },
+      {
+        "year": 2031,
+        "eua_price_eur": 135,
+        "eua_price_krw": 202500,
+        "exchange_rate_eur_krw": 1500,
+        "source": "EC PRIMES Fit for 55 MIX (SWD/2021/452). 2025 시장가 €77에서 수렴"
+      },
+      {
+        "year": 2032,
+        "eua_price_eur": 151,
+        "eua_price_krw": 226500,
+        "exchange_rate_eur_krw": 1500,
+        "source": "EC PRIMES Fit for 55 MIX (SWD/2021/452). 2025 시장가 €77에서 수렴"
+      },
+      {
+        "year": 2033,
+        "eua_price_eur": 167,
+        "eua_price_krw": 250500,
+        "exchange_rate_eur_krw": 1500,
+        "source": "EC PRIMES Fit for 55 MIX (SWD/2021/452). 2025 시장가 €77에서 수렴"
+      },
+      {
+        "year": 2034,
+        "eua_price_eur": 183,
+        "eua_price_krw": 274500,
+        "exchange_rate_eur_krw": 1500,
+        "source": "EC PRIMES Fit for 55 MIX (SWD/2021/452). 2025 시장가 €77에서 수렴"
+      },
+      {
+        "year": 2035,
+        "eua_price_eur": 199,
+        "eua_price_krw": 298500,
+        "exchange_rate_eur_krw": 1500,
+        "source": "EC PRIMES Fit for 55 MIX (SWD/2021/452). 2025 시장가 €77에서 수렴"
+      },
+      {
+        "year": 2036,
+        "eua_price_eur": 215,
+        "eua_price_krw": 322500,
+        "exchange_rate_eur_krw": 1500,
+        "source": "EC PRIMES Fit for 55 MIX (SWD/2021/452). 2025 시장가 €77에서 수렴"
+      },
+      {
+        "year": 2037,
+        "eua_price_eur": 231,
+        "eua_price_krw": 346500,
+        "exchange_rate_eur_krw": 1500,
+        "source": "EC PRIMES Fit for 55 MIX (SWD/2021/452). 2025 시장가 €77에서 수렴"
+      },
+      {
+        "year": 2038,
+        "eua_price_eur": 247,
+        "eua_price_krw": 370500,
+        "exchange_rate_eur_krw": 1500,
+        "source": "EC PRIMES Fit for 55 MIX (SWD/2021/452). 2025 시장가 €77에서 수렴"
+      },
+      {
+        "year": 2039,
+        "eua_price_eur": 263,
+        "eua_price_krw": 394500,
+        "exchange_rate_eur_krw": 1500,
+        "source": "EC PRIMES Fit for 55 MIX (SWD/2021/452). 2025 시장가 €77에서 수렴"
+      },
+      {
+        "year": 2040,
+        "eua_price_eur": 279,
+        "eua_price_krw": 418500,
+        "exchange_rate_eur_krw": 1500,
+        "source": "EC PRIMES Fit for 55 MIX (SWD/2021/452). 2025 시장가 €77에서 수렴"
+      }
+    ],
+    "무상할당비율": [
+      {
+        "scenario_id": "base",
+        "allocation_category": "power_sector",
+        "year": 2026,
+        "free_ratio": 0.85,
+        "auction_ratio": 0.15,
+        "source": "4차 할당계획안: 발전 유상 15→50%(2026-2030)"
+      },
+      {
+        "scenario_id": "base",
+        "allocation_category": "non_power_sector",
+        "year": 2026,
+        "free_ratio": 0.85,
+        "auction_ratio": 0.15,
+        "source": "4차 할당계획: 비발전 일반 유상 15%"
+      },
+      {
+        "scenario_id": "base",
+        "allocation_category": "carbon_leakage_sector",
+        "year": 2026,
+        "free_ratio": 1.0,
+        "auction_ratio": 0.0,
+        "source": "4차 할당계획: 탄소누출업종 무상 100% 유지"
+      },
+      {
+        "scenario_id": "middle",
+        "allocation_category": "power_sector",
+        "year": 2026,
+        "free_ratio": 0.85,
+        "auction_ratio": 0.15,
+        "source": "발전은 기준과 동일"
+      },
+      {
+        "scenario_id": "middle",
+        "allocation_category": "non_power_sector",
+        "year": 2026,
+        "free_ratio": 0.85,
+        "auction_ratio": 0.15,
+        "source": "비발전 일반은 기준과 동일"
+      },
+      {
+        "scenario_id": "middle",
+        "allocation_category": "carbon_leakage_sector",
+        "year": 2026,
+        "free_ratio": 1.0,
+        "auction_ratio": 0.0,
+        "source": "NDC 연동 점진 축소 가정"
+      },
+      {
+        "scenario_id": "ideal",
+        "allocation_category": "power_sector",
+        "year": 2026,
+        "free_ratio": 0.975,
+        "auction_ratio": 0.025,
+        "source": "EU CBAM Reg 2023/956 Art.36 phase-out"
+      },
+      {
+        "scenario_id": "ideal",
+        "allocation_category": "non_power_sector",
+        "year": 2026,
+        "free_ratio": 0.975,
+        "auction_ratio": 0.025,
+        "source": "EU CBAM Reg 2023/956 Art.36 phase-out"
+      },
+      {
+        "scenario_id": "ideal",
+        "allocation_category": "carbon_leakage_sector",
+        "year": 2026,
+        "free_ratio": 0.975,
+        "auction_ratio": 0.025,
+        "source": "EU CBAM Reg 2023/956 Art.36 phase-out"
+      },
+      {
+        "scenario_id": "base",
+        "allocation_category": "power_sector",
+        "year": 2027,
+        "free_ratio": 0.7625,
+        "auction_ratio": 0.2375,
+        "source": "4차 할당계획안: 발전 유상 15→50%(2026-2030)"
+      },
+      {
+        "scenario_id": "base",
+        "allocation_category": "non_power_sector",
+        "year": 2027,
+        "free_ratio": 0.85,
+        "auction_ratio": 0.15,
+        "source": "4차 할당계획: 비발전 일반 유상 15%"
+      },
+      {
+        "scenario_id": "base",
+        "allocation_category": "carbon_leakage_sector",
+        "year": 2027,
+        "free_ratio": 1.0,
+        "auction_ratio": 0.0,
+        "source": "4차 할당계획: 탄소누출업종 무상 100% 유지"
+      },
+      {
+        "scenario_id": "middle",
+        "allocation_category": "power_sector",
+        "year": 2027,
+        "free_ratio": 0.7625,
+        "auction_ratio": 0.2375,
+        "source": "발전은 기준과 동일"
+      },
+      {
+        "scenario_id": "middle",
+        "allocation_category": "non_power_sector",
+        "year": 2027,
+        "free_ratio": 0.85,
+        "auction_ratio": 0.15,
+        "source": "비발전 일반은 기준과 동일"
+      },
+      {
+        "scenario_id": "middle",
+        "allocation_category": "carbon_leakage_sector",
+        "year": 2027,
+        "free_ratio": 0.975,
+        "auction_ratio": 0.025,
+        "source": "NDC 연동 점진 축소 가정"
+      },
+      {
+        "scenario_id": "ideal",
+        "allocation_category": "power_sector",
+        "year": 2027,
+        "free_ratio": 0.95,
+        "auction_ratio": 0.05,
+        "source": "EU CBAM Reg 2023/956 Art.36 phase-out"
+      },
+      {
+        "scenario_id": "ideal",
+        "allocation_category": "non_power_sector",
+        "year": 2027,
+        "free_ratio": 0.95,
+        "auction_ratio": 0.05,
+        "source": "EU CBAM Reg 2023/956 Art.36 phase-out"
+      },
+      {
+        "scenario_id": "ideal",
+        "allocation_category": "carbon_leakage_sector",
+        "year": 2027,
+        "free_ratio": 0.95,
+        "auction_ratio": 0.05,
+        "source": "EU CBAM Reg 2023/956 Art.36 phase-out"
+      },
+      {
+        "scenario_id": "base",
+        "allocation_category": "power_sector",
+        "year": 2028,
+        "free_ratio": 0.675,
+        "auction_ratio": 0.325,
+        "source": "4차 할당계획안: 발전 유상 15→50%(2026-2030)"
+      },
+      {
+        "scenario_id": "base",
+        "allocation_category": "non_power_sector",
+        "year": 2028,
+        "free_ratio": 0.85,
+        "auction_ratio": 0.15,
+        "source": "4차 할당계획: 비발전 일반 유상 15%"
+      },
+      {
+        "scenario_id": "base",
+        "allocation_category": "carbon_leakage_sector",
+        "year": 2028,
+        "free_ratio": 1.0,
+        "auction_ratio": 0.0,
+        "source": "4차 할당계획: 탄소누출업종 무상 100% 유지"
+      },
+      {
+        "scenario_id": "middle",
+        "allocation_category": "power_sector",
+        "year": 2028,
+        "free_ratio": 0.675,
+        "auction_ratio": 0.325,
+        "source": "발전은 기준과 동일"
+      },
+      {
+        "scenario_id": "middle",
+        "allocation_category": "non_power_sector",
+        "year": 2028,
+        "free_ratio": 0.85,
+        "auction_ratio": 0.15,
+        "source": "비발전 일반은 기준과 동일"
+      },
+      {
+        "scenario_id": "middle",
+        "allocation_category": "carbon_leakage_sector",
+        "year": 2028,
+        "free_ratio": 0.95,
+        "auction_ratio": 0.05,
+        "source": "NDC 연동 점진 축소 가정"
+      },
+      {
+        "scenario_id": "ideal",
+        "allocation_category": "power_sector",
+        "year": 2028,
+        "free_ratio": 0.9,
+        "auction_ratio": 0.1,
+        "source": "EU CBAM Reg 2023/956 Art.36 phase-out"
+      },
+      {
+        "scenario_id": "ideal",
+        "allocation_category": "non_power_sector",
+        "year": 2028,
+        "free_ratio": 0.9,
+        "auction_ratio": 0.1,
+        "source": "EU CBAM Reg 2023/956 Art.36 phase-out"
+      },
+      {
+        "scenario_id": "ideal",
+        "allocation_category": "carbon_leakage_sector",
+        "year": 2028,
+        "free_ratio": 0.9,
+        "auction_ratio": 0.1,
+        "source": "EU CBAM Reg 2023/956 Art.36 phase-out"
+      },
+      {
+        "scenario_id": "base",
+        "allocation_category": "power_sector",
+        "year": 2029,
+        "free_ratio": 0.5875,
+        "auction_ratio": 0.4125,
+        "source": "4차 할당계획안: 발전 유상 15→50%(2026-2030)"
+      },
+      {
+        "scenario_id": "base",
+        "allocation_category": "non_power_sector",
+        "year": 2029,
+        "free_ratio": 0.85,
+        "auction_ratio": 0.15,
+        "source": "4차 할당계획: 비발전 일반 유상 15%"
+      },
+      {
+        "scenario_id": "base",
+        "allocation_category": "carbon_leakage_sector",
+        "year": 2029,
+        "free_ratio": 1.0,
+        "auction_ratio": 0.0,
+        "source": "4차 할당계획: 탄소누출업종 무상 100% 유지"
+      },
+      {
+        "scenario_id": "middle",
+        "allocation_category": "power_sector",
+        "year": 2029,
+        "free_ratio": 0.5875,
+        "auction_ratio": 0.4125,
+        "source": "발전은 기준과 동일"
+      },
+      {
+        "scenario_id": "middle",
+        "allocation_category": "non_power_sector",
+        "year": 2029,
+        "free_ratio": 0.85,
+        "auction_ratio": 0.15,
+        "source": "비발전 일반은 기준과 동일"
+      },
+      {
+        "scenario_id": "middle",
+        "allocation_category": "carbon_leakage_sector",
+        "year": 2029,
+        "free_ratio": 0.925,
+        "auction_ratio": 0.075,
+        "source": "NDC 연동 점진 축소 가정"
+      },
+      {
+        "scenario_id": "ideal",
+        "allocation_category": "power_sector",
+        "year": 2029,
+        "free_ratio": 0.775,
+        "auction_ratio": 0.225,
+        "source": "EU CBAM Reg 2023/956 Art.36 phase-out"
+      },
+      {
+        "scenario_id": "ideal",
+        "allocation_category": "non_power_sector",
+        "year": 2029,
+        "free_ratio": 0.775,
+        "auction_ratio": 0.225,
+        "source": "EU CBAM Reg 2023/956 Art.36 phase-out"
+      },
+      {
+        "scenario_id": "ideal",
+        "allocation_category": "carbon_leakage_sector",
+        "year": 2029,
+        "free_ratio": 0.775,
+        "auction_ratio": 0.225,
+        "source": "EU CBAM Reg 2023/956 Art.36 phase-out"
+      },
+      {
+        "scenario_id": "base",
+        "allocation_category": "power_sector",
+        "year": 2030,
+        "free_ratio": 0.5,
+        "auction_ratio": 0.5,
+        "source": "4차 할당계획안: 발전 유상 15→50%(2026-2030)"
+      },
+      {
+        "scenario_id": "base",
+        "allocation_category": "non_power_sector",
+        "year": 2030,
+        "free_ratio": 0.85,
+        "auction_ratio": 0.15,
+        "source": "4차 할당계획: 비발전 일반 유상 15%"
+      },
+      {
+        "scenario_id": "base",
+        "allocation_category": "carbon_leakage_sector",
+        "year": 2030,
+        "free_ratio": 1.0,
+        "auction_ratio": 0.0,
+        "source": "4차 할당계획: 탄소누출업종 무상 100% 유지"
+      },
+      {
+        "scenario_id": "middle",
+        "allocation_category": "power_sector",
+        "year": 2030,
+        "free_ratio": 0.5,
+        "auction_ratio": 0.5,
+        "source": "발전은 기준과 동일"
+      },
+      {
+        "scenario_id": "middle",
+        "allocation_category": "non_power_sector",
+        "year": 2030,
+        "free_ratio": 0.85,
+        "auction_ratio": 0.15,
+        "source": "비발전 일반은 기준과 동일"
+      },
+      {
+        "scenario_id": "middle",
+        "allocation_category": "carbon_leakage_sector",
+        "year": 2030,
+        "free_ratio": 0.9,
+        "auction_ratio": 0.1,
+        "source": "NDC 연동 점진 축소 가정"
+      },
+      {
+        "scenario_id": "ideal",
+        "allocation_category": "power_sector",
+        "year": 2030,
+        "free_ratio": 0.515,
+        "auction_ratio": 0.485,
+        "source": "EU CBAM Reg 2023/956 Art.36 phase-out"
+      },
+      {
+        "scenario_id": "ideal",
+        "allocation_category": "non_power_sector",
+        "year": 2030,
+        "free_ratio": 0.515,
+        "auction_ratio": 0.485,
+        "source": "EU CBAM Reg 2023/956 Art.36 phase-out"
+      },
+      {
+        "scenario_id": "ideal",
+        "allocation_category": "carbon_leakage_sector",
+        "year": 2030,
+        "free_ratio": 0.515,
+        "auction_ratio": 0.485,
+        "source": "EU CBAM Reg 2023/956 Art.36 phase-out"
+      },
+      {
+        "scenario_id": "base",
+        "allocation_category": "power_sector",
+        "year": 2031,
+        "free_ratio": 0.5,
+        "auction_ratio": 0.5,
+        "source": "4차 할당계획안: 발전 유상 15→50%(2026-2030)"
+      },
+      {
+        "scenario_id": "base",
+        "allocation_category": "non_power_sector",
+        "year": 2031,
+        "free_ratio": 0.85,
+        "auction_ratio": 0.15,
+        "source": "4차 할당계획: 비발전 일반 유상 15%"
+      },
+      {
+        "scenario_id": "base",
+        "allocation_category": "carbon_leakage_sector",
+        "year": 2031,
+        "free_ratio": 1.0,
+        "auction_ratio": 0.0,
+        "source": "4차 할당계획: 탄소누출업종 무상 100% 유지"
+      },
+      {
+        "scenario_id": "middle",
+        "allocation_category": "power_sector",
+        "year": 2031,
+        "free_ratio": 0.5,
+        "auction_ratio": 0.5,
+        "source": "발전은 기준과 동일"
+      },
+      {
+        "scenario_id": "middle",
+        "allocation_category": "non_power_sector",
+        "year": 2031,
+        "free_ratio": 0.85,
+        "auction_ratio": 0.15,
+        "source": "비발전 일반은 기준과 동일"
+      },
+      {
+        "scenario_id": "middle",
+        "allocation_category": "carbon_leakage_sector",
+        "year": 2031,
+        "free_ratio": 0.85,
+        "auction_ratio": 0.15,
+        "source": "NDC 연동 점진 축소 가정"
+      },
+      {
+        "scenario_id": "ideal",
+        "allocation_category": "power_sector",
+        "year": 2031,
+        "free_ratio": 0.39,
+        "auction_ratio": 0.61,
+        "source": "EU CBAM Reg 2023/956 Art.36 phase-out"
+      },
+      {
+        "scenario_id": "ideal",
+        "allocation_category": "non_power_sector",
+        "year": 2031,
+        "free_ratio": 0.39,
+        "auction_ratio": 0.61,
+        "source": "EU CBAM Reg 2023/956 Art.36 phase-out"
+      },
+      {
+        "scenario_id": "ideal",
+        "allocation_category": "carbon_leakage_sector",
+        "year": 2031,
+        "free_ratio": 0.39,
+        "auction_ratio": 0.61,
+        "source": "EU CBAM Reg 2023/956 Art.36 phase-out"
+      },
+      {
+        "scenario_id": "base",
+        "allocation_category": "power_sector",
+        "year": 2032,
+        "free_ratio": 0.5,
+        "auction_ratio": 0.5,
+        "source": "4차 할당계획안: 발전 유상 15→50%(2026-2030)"
+      },
+      {
+        "scenario_id": "base",
+        "allocation_category": "non_power_sector",
+        "year": 2032,
+        "free_ratio": 0.85,
+        "auction_ratio": 0.15,
+        "source": "4차 할당계획: 비발전 일반 유상 15%"
+      },
+      {
+        "scenario_id": "base",
+        "allocation_category": "carbon_leakage_sector",
+        "year": 2032,
+        "free_ratio": 1.0,
+        "auction_ratio": 0.0,
+        "source": "4차 할당계획: 탄소누출업종 무상 100% 유지"
+      },
+      {
+        "scenario_id": "middle",
+        "allocation_category": "power_sector",
+        "year": 2032,
+        "free_ratio": 0.5,
+        "auction_ratio": 0.5,
+        "source": "발전은 기준과 동일"
+      },
+      {
+        "scenario_id": "middle",
+        "allocation_category": "non_power_sector",
+        "year": 2032,
+        "free_ratio": 0.85,
+        "auction_ratio": 0.15,
+        "source": "비발전 일반은 기준과 동일"
+      },
+      {
+        "scenario_id": "middle",
+        "allocation_category": "carbon_leakage_sector",
+        "year": 2032,
+        "free_ratio": 0.8,
+        "auction_ratio": 0.2,
+        "source": "NDC 연동 점진 축소 가정"
+      },
+      {
+        "scenario_id": "ideal",
+        "allocation_category": "power_sector",
+        "year": 2032,
+        "free_ratio": 0.265,
+        "auction_ratio": 0.735,
+        "source": "EU CBAM Reg 2023/956 Art.36 phase-out"
+      },
+      {
+        "scenario_id": "ideal",
+        "allocation_category": "non_power_sector",
+        "year": 2032,
+        "free_ratio": 0.265,
+        "auction_ratio": 0.735,
+        "source": "EU CBAM Reg 2023/956 Art.36 phase-out"
+      },
+      {
+        "scenario_id": "ideal",
+        "allocation_category": "carbon_leakage_sector",
+        "year": 2032,
+        "free_ratio": 0.265,
+        "auction_ratio": 0.735,
+        "source": "EU CBAM Reg 2023/956 Art.36 phase-out"
+      },
+      {
+        "scenario_id": "base",
+        "allocation_category": "power_sector",
+        "year": 2033,
+        "free_ratio": 0.5,
+        "auction_ratio": 0.5,
+        "source": "4차 할당계획안: 발전 유상 15→50%(2026-2030)"
+      },
+      {
+        "scenario_id": "base",
+        "allocation_category": "non_power_sector",
+        "year": 2033,
+        "free_ratio": 0.85,
+        "auction_ratio": 0.15,
+        "source": "4차 할당계획: 비발전 일반 유상 15%"
+      },
+      {
+        "scenario_id": "base",
+        "allocation_category": "carbon_leakage_sector",
+        "year": 2033,
+        "free_ratio": 1.0,
+        "auction_ratio": 0.0,
+        "source": "4차 할당계획: 탄소누출업종 무상 100% 유지"
+      },
+      {
+        "scenario_id": "middle",
+        "allocation_category": "power_sector",
+        "year": 2033,
+        "free_ratio": 0.5,
+        "auction_ratio": 0.5,
+        "source": "발전은 기준과 동일"
+      },
+      {
+        "scenario_id": "middle",
+        "allocation_category": "non_power_sector",
+        "year": 2033,
+        "free_ratio": 0.85,
+        "auction_ratio": 0.15,
+        "source": "비발전 일반은 기준과 동일"
+      },
+      {
+        "scenario_id": "middle",
+        "allocation_category": "carbon_leakage_sector",
+        "year": 2033,
+        "free_ratio": 0.75,
+        "auction_ratio": 0.25,
+        "source": "NDC 연동 점진 축소 가정"
+      },
+      {
+        "scenario_id": "ideal",
+        "allocation_category": "power_sector",
+        "year": 2033,
+        "free_ratio": 0.14,
+        "auction_ratio": 0.86,
+        "source": "EU CBAM Reg 2023/956 Art.36 phase-out"
+      },
+      {
+        "scenario_id": "ideal",
+        "allocation_category": "non_power_sector",
+        "year": 2033,
+        "free_ratio": 0.14,
+        "auction_ratio": 0.86,
+        "source": "EU CBAM Reg 2023/956 Art.36 phase-out"
+      },
+      {
+        "scenario_id": "ideal",
+        "allocation_category": "carbon_leakage_sector",
+        "year": 2033,
+        "free_ratio": 0.14,
+        "auction_ratio": 0.86,
+        "source": "EU CBAM Reg 2023/956 Art.36 phase-out"
+      },
+      {
+        "scenario_id": "base",
+        "allocation_category": "power_sector",
+        "year": 2034,
+        "free_ratio": 0.5,
+        "auction_ratio": 0.5,
+        "source": "4차 할당계획안: 발전 유상 15→50%(2026-2030)"
+      },
+      {
+        "scenario_id": "base",
+        "allocation_category": "non_power_sector",
+        "year": 2034,
+        "free_ratio": 0.85,
+        "auction_ratio": 0.15,
+        "source": "4차 할당계획: 비발전 일반 유상 15%"
+      },
+      {
+        "scenario_id": "base",
+        "allocation_category": "carbon_leakage_sector",
+        "year": 2034,
+        "free_ratio": 1.0,
+        "auction_ratio": 0.0,
+        "source": "4차 할당계획: 탄소누출업종 무상 100% 유지"
+      },
+      {
+        "scenario_id": "middle",
+        "allocation_category": "power_sector",
+        "year": 2034,
+        "free_ratio": 0.5,
+        "auction_ratio": 0.5,
+        "source": "발전은 기준과 동일"
+      },
+      {
+        "scenario_id": "middle",
+        "allocation_category": "non_power_sector",
+        "year": 2034,
+        "free_ratio": 0.85,
+        "auction_ratio": 0.15,
+        "source": "비발전 일반은 기준과 동일"
+      },
+      {
+        "scenario_id": "middle",
+        "allocation_category": "carbon_leakage_sector",
+        "year": 2034,
+        "free_ratio": 0.7,
+        "auction_ratio": 0.3,
+        "source": "NDC 연동 점진 축소 가정"
+      },
+      {
+        "scenario_id": "ideal",
+        "allocation_category": "power_sector",
+        "year": 2034,
+        "free_ratio": 0.0,
+        "auction_ratio": 1.0,
+        "source": "EU CBAM Reg 2023/956 Art.36 phase-out"
+      },
+      {
+        "scenario_id": "ideal",
+        "allocation_category": "non_power_sector",
+        "year": 2034,
+        "free_ratio": 0.0,
+        "auction_ratio": 1.0,
+        "source": "EU CBAM Reg 2023/956 Art.36 phase-out"
+      },
+      {
+        "scenario_id": "ideal",
+        "allocation_category": "carbon_leakage_sector",
+        "year": 2034,
+        "free_ratio": 0.0,
+        "auction_ratio": 1.0,
+        "source": "EU CBAM Reg 2023/956 Art.36 phase-out"
+      },
+      {
+        "scenario_id": "base",
+        "allocation_category": "power_sector",
+        "year": 2035,
+        "free_ratio": 0.5,
+        "auction_ratio": 0.5,
+        "source": "4차 할당계획안: 발전 유상 15→50%(2026-2030)"
+      },
+      {
+        "scenario_id": "base",
+        "allocation_category": "non_power_sector",
+        "year": 2035,
+        "free_ratio": 0.85,
+        "auction_ratio": 0.15,
+        "source": "4차 할당계획: 비발전 일반 유상 15%"
+      },
+      {
+        "scenario_id": "base",
+        "allocation_category": "carbon_leakage_sector",
+        "year": 2035,
+        "free_ratio": 1.0,
+        "auction_ratio": 0.0,
+        "source": "4차 할당계획: 탄소누출업종 무상 100% 유지"
+      },
+      {
+        "scenario_id": "middle",
+        "allocation_category": "power_sector",
+        "year": 2035,
+        "free_ratio": 0.5,
+        "auction_ratio": 0.5,
+        "source": "발전은 기준과 동일"
+      },
+      {
+        "scenario_id": "middle",
+        "allocation_category": "non_power_sector",
+        "year": 2035,
+        "free_ratio": 0.85,
+        "auction_ratio": 0.15,
+        "source": "비발전 일반은 기준과 동일"
+      },
+      {
+        "scenario_id": "middle",
+        "allocation_category": "carbon_leakage_sector",
+        "year": 2035,
+        "free_ratio": 0.65,
+        "auction_ratio": 0.35,
+        "source": "NDC 연동 점진 축소 가정"
+      },
+      {
+        "scenario_id": "ideal",
+        "allocation_category": "power_sector",
+        "year": 2035,
+        "free_ratio": 0.0,
+        "auction_ratio": 1.0,
+        "source": "EU CBAM Reg 2023/956 Art.36 phase-out"
+      },
+      {
+        "scenario_id": "ideal",
+        "allocation_category": "non_power_sector",
+        "year": 2035,
+        "free_ratio": 0.0,
+        "auction_ratio": 1.0,
+        "source": "EU CBAM Reg 2023/956 Art.36 phase-out"
+      },
+      {
+        "scenario_id": "ideal",
+        "allocation_category": "carbon_leakage_sector",
+        "year": 2035,
+        "free_ratio": 0.0,
+        "auction_ratio": 1.0,
+        "source": "EU CBAM Reg 2023/956 Art.36 phase-out"
+      },
+      {
+        "scenario_id": "base",
+        "allocation_category": "power_sector",
+        "year": 2036,
+        "free_ratio": 0.5,
+        "auction_ratio": 0.5,
+        "source": "4차 할당계획안: 발전 유상 15→50%(2026-2030)"
+      },
+      {
+        "scenario_id": "base",
+        "allocation_category": "non_power_sector",
+        "year": 2036,
+        "free_ratio": 0.85,
+        "auction_ratio": 0.15,
+        "source": "4차 할당계획: 비발전 일반 유상 15%"
+      },
+      {
+        "scenario_id": "base",
+        "allocation_category": "carbon_leakage_sector",
+        "year": 2036,
+        "free_ratio": 1.0,
+        "auction_ratio": 0.0,
+        "source": "4차 할당계획: 탄소누출업종 무상 100% 유지"
+      },
+      {
+        "scenario_id": "middle",
+        "allocation_category": "power_sector",
+        "year": 2036,
+        "free_ratio": 0.5,
+        "auction_ratio": 0.5,
+        "source": "발전은 기준과 동일"
+      },
+      {
+        "scenario_id": "middle",
+        "allocation_category": "non_power_sector",
+        "year": 2036,
+        "free_ratio": 0.85,
+        "auction_ratio": 0.15,
+        "source": "비발전 일반은 기준과 동일"
+      },
+      {
+        "scenario_id": "middle",
+        "allocation_category": "carbon_leakage_sector",
+        "year": 2036,
+        "free_ratio": 0.6,
+        "auction_ratio": 0.4,
+        "source": "NDC 연동 점진 축소 가정"
+      },
+      {
+        "scenario_id": "ideal",
+        "allocation_category": "power_sector",
+        "year": 2036,
+        "free_ratio": 0.0,
+        "auction_ratio": 1.0,
+        "source": "EU CBAM Reg 2023/956 Art.36 phase-out"
+      },
+      {
+        "scenario_id": "ideal",
+        "allocation_category": "non_power_sector",
+        "year": 2036,
+        "free_ratio": 0.0,
+        "auction_ratio": 1.0,
+        "source": "EU CBAM Reg 2023/956 Art.36 phase-out"
+      },
+      {
+        "scenario_id": "ideal",
+        "allocation_category": "carbon_leakage_sector",
+        "year": 2036,
+        "free_ratio": 0.0,
+        "auction_ratio": 1.0,
+        "source": "EU CBAM Reg 2023/956 Art.36 phase-out"
+      },
+      {
+        "scenario_id": "base",
+        "allocation_category": "power_sector",
+        "year": 2037,
+        "free_ratio": 0.5,
+        "auction_ratio": 0.5,
+        "source": "4차 할당계획안: 발전 유상 15→50%(2026-2030)"
+      },
+      {
+        "scenario_id": "base",
+        "allocation_category": "non_power_sector",
+        "year": 2037,
+        "free_ratio": 0.85,
+        "auction_ratio": 0.15,
+        "source": "4차 할당계획: 비발전 일반 유상 15%"
+      },
+      {
+        "scenario_id": "base",
+        "allocation_category": "carbon_leakage_sector",
+        "year": 2037,
+        "free_ratio": 1.0,
+        "auction_ratio": 0.0,
+        "source": "4차 할당계획: 탄소누출업종 무상 100% 유지"
+      },
+      {
+        "scenario_id": "middle",
+        "allocation_category": "power_sector",
+        "year": 2037,
+        "free_ratio": 0.5,
+        "auction_ratio": 0.5,
+        "source": "발전은 기준과 동일"
+      },
+      {
+        "scenario_id": "middle",
+        "allocation_category": "non_power_sector",
+        "year": 2037,
+        "free_ratio": 0.85,
+        "auction_ratio": 0.15,
+        "source": "비발전 일반은 기준과 동일"
+      },
+      {
+        "scenario_id": "middle",
+        "allocation_category": "carbon_leakage_sector",
+        "year": 2037,
+        "free_ratio": 0.575,
+        "auction_ratio": 0.425,
+        "source": "NDC 연동 점진 축소 가정"
+      },
+      {
+        "scenario_id": "ideal",
+        "allocation_category": "power_sector",
+        "year": 2037,
+        "free_ratio": 0.0,
+        "auction_ratio": 1.0,
+        "source": "EU CBAM Reg 2023/956 Art.36 phase-out"
+      },
+      {
+        "scenario_id": "ideal",
+        "allocation_category": "non_power_sector",
+        "year": 2037,
+        "free_ratio": 0.0,
+        "auction_ratio": 1.0,
+        "source": "EU CBAM Reg 2023/956 Art.36 phase-out"
+      },
+      {
+        "scenario_id": "ideal",
+        "allocation_category": "carbon_leakage_sector",
+        "year": 2037,
+        "free_ratio": 0.0,
+        "auction_ratio": 1.0,
+        "source": "EU CBAM Reg 2023/956 Art.36 phase-out"
+      },
+      {
+        "scenario_id": "base",
+        "allocation_category": "power_sector",
+        "year": 2038,
+        "free_ratio": 0.5,
+        "auction_ratio": 0.5,
+        "source": "4차 할당계획안: 발전 유상 15→50%(2026-2030)"
+      },
+      {
+        "scenario_id": "base",
+        "allocation_category": "non_power_sector",
+        "year": 2038,
+        "free_ratio": 0.85,
+        "auction_ratio": 0.15,
+        "source": "4차 할당계획: 비발전 일반 유상 15%"
+      },
+      {
+        "scenario_id": "base",
+        "allocation_category": "carbon_leakage_sector",
+        "year": 2038,
+        "free_ratio": 1.0,
+        "auction_ratio": 0.0,
+        "source": "4차 할당계획: 탄소누출업종 무상 100% 유지"
+      },
+      {
+        "scenario_id": "middle",
+        "allocation_category": "power_sector",
+        "year": 2038,
+        "free_ratio": 0.5,
+        "auction_ratio": 0.5,
+        "source": "발전은 기준과 동일"
+      },
+      {
+        "scenario_id": "middle",
+        "allocation_category": "non_power_sector",
+        "year": 2038,
+        "free_ratio": 0.85,
+        "auction_ratio": 0.15,
+        "source": "비발전 일반은 기준과 동일"
+      },
+      {
+        "scenario_id": "middle",
+        "allocation_category": "carbon_leakage_sector",
+        "year": 2038,
+        "free_ratio": 0.55,
+        "auction_ratio": 0.45,
+        "source": "NDC 연동 점진 축소 가정"
+      },
+      {
+        "scenario_id": "ideal",
+        "allocation_category": "power_sector",
+        "year": 2038,
+        "free_ratio": 0.0,
+        "auction_ratio": 1.0,
+        "source": "EU CBAM Reg 2023/956 Art.36 phase-out"
+      },
+      {
+        "scenario_id": "ideal",
+        "allocation_category": "non_power_sector",
+        "year": 2038,
+        "free_ratio": 0.0,
+        "auction_ratio": 1.0,
+        "source": "EU CBAM Reg 2023/956 Art.36 phase-out"
+      },
+      {
+        "scenario_id": "ideal",
+        "allocation_category": "carbon_leakage_sector",
+        "year": 2038,
+        "free_ratio": 0.0,
+        "auction_ratio": 1.0,
+        "source": "EU CBAM Reg 2023/956 Art.36 phase-out"
+      },
+      {
+        "scenario_id": "base",
+        "allocation_category": "power_sector",
+        "year": 2039,
+        "free_ratio": 0.5,
+        "auction_ratio": 0.5,
+        "source": "4차 할당계획안: 발전 유상 15→50%(2026-2030)"
+      },
+      {
+        "scenario_id": "base",
+        "allocation_category": "non_power_sector",
+        "year": 2039,
+        "free_ratio": 0.85,
+        "auction_ratio": 0.15,
+        "source": "4차 할당계획: 비발전 일반 유상 15%"
+      },
+      {
+        "scenario_id": "base",
+        "allocation_category": "carbon_leakage_sector",
+        "year": 2039,
+        "free_ratio": 1.0,
+        "auction_ratio": 0.0,
+        "source": "4차 할당계획: 탄소누출업종 무상 100% 유지"
+      },
+      {
+        "scenario_id": "middle",
+        "allocation_category": "power_sector",
+        "year": 2039,
+        "free_ratio": 0.5,
+        "auction_ratio": 0.5,
+        "source": "발전은 기준과 동일"
+      },
+      {
+        "scenario_id": "middle",
+        "allocation_category": "non_power_sector",
+        "year": 2039,
+        "free_ratio": 0.85,
+        "auction_ratio": 0.15,
+        "source": "비발전 일반은 기준과 동일"
+      },
+      {
+        "scenario_id": "middle",
+        "allocation_category": "carbon_leakage_sector",
+        "year": 2039,
+        "free_ratio": 0.525,
+        "auction_ratio": 0.475,
+        "source": "NDC 연동 점진 축소 가정"
+      },
+      {
+        "scenario_id": "ideal",
+        "allocation_category": "power_sector",
+        "year": 2039,
+        "free_ratio": 0.0,
+        "auction_ratio": 1.0,
+        "source": "EU CBAM Reg 2023/956 Art.36 phase-out"
+      },
+      {
+        "scenario_id": "ideal",
+        "allocation_category": "non_power_sector",
+        "year": 2039,
+        "free_ratio": 0.0,
+        "auction_ratio": 1.0,
+        "source": "EU CBAM Reg 2023/956 Art.36 phase-out"
+      },
+      {
+        "scenario_id": "ideal",
+        "allocation_category": "carbon_leakage_sector",
+        "year": 2039,
+        "free_ratio": 0.0,
+        "auction_ratio": 1.0,
+        "source": "EU CBAM Reg 2023/956 Art.36 phase-out"
+      },
+      {
+        "scenario_id": "base",
+        "allocation_category": "power_sector",
+        "year": 2040,
+        "free_ratio": 0.5,
+        "auction_ratio": 0.5,
+        "source": "4차 할당계획안: 발전 유상 15→50%(2026-2030)"
+      },
+      {
+        "scenario_id": "base",
+        "allocation_category": "non_power_sector",
+        "year": 2040,
+        "free_ratio": 0.85,
+        "auction_ratio": 0.15,
+        "source": "4차 할당계획: 비발전 일반 유상 15%"
+      },
+      {
+        "scenario_id": "base",
+        "allocation_category": "carbon_leakage_sector",
+        "year": 2040,
+        "free_ratio": 1.0,
+        "auction_ratio": 0.0,
+        "source": "4차 할당계획: 탄소누출업종 무상 100% 유지"
+      },
+      {
+        "scenario_id": "middle",
+        "allocation_category": "power_sector",
+        "year": 2040,
+        "free_ratio": 0.5,
+        "auction_ratio": 0.5,
+        "source": "발전은 기준과 동일"
+      },
+      {
+        "scenario_id": "middle",
+        "allocation_category": "non_power_sector",
+        "year": 2040,
+        "free_ratio": 0.85,
+        "auction_ratio": 0.15,
+        "source": "비발전 일반은 기준과 동일"
+      },
+      {
+        "scenario_id": "middle",
+        "allocation_category": "carbon_leakage_sector",
+        "year": 2040,
+        "free_ratio": 0.5,
+        "auction_ratio": 0.5,
+        "source": "NDC 연동 점진 축소 가정"
+      },
+      {
+        "scenario_id": "ideal",
+        "allocation_category": "power_sector",
+        "year": 2040,
+        "free_ratio": 0.0,
+        "auction_ratio": 1.0,
+        "source": "EU CBAM Reg 2023/956 Art.36 phase-out"
+      },
+      {
+        "scenario_id": "ideal",
+        "allocation_category": "non_power_sector",
+        "year": 2040,
+        "free_ratio": 0.0,
+        "auction_ratio": 1.0,
+        "source": "EU CBAM Reg 2023/956 Art.36 phase-out"
+      },
+      {
+        "scenario_id": "ideal",
+        "allocation_category": "carbon_leakage_sector",
+        "year": 2040,
+        "free_ratio": 0.0,
+        "auction_ratio": 1.0,
+        "source": "EU CBAM Reg 2023/956 Art.36 phase-out"
+      }
+    ],
+    "MSR설계": [
+      {
+        "level_id": "L0",
+        "name_kr": "MSR 미도입",
+        "rho_intake": 0.0,
+        "theta_plus_Mt": 999.0,
+        "theta_minus_Mt": 0.0,
+        "release_Mt": 0.0,
+        "cancel_rate": 0.0,
+        "source": "반사실 기준선(no MSR)",
+        "carve_reserve": 0.0,
+        "intake_basis": "excess",
+        "invalidate_above_Mt": null,
+        "theta_cap_frac": null,
+        "start_year": null
+      },
+      {
+        "level_id": "L1",
+        "name_kr": "최소",
+        "rho_intake": 0.12,
+        "theta_plus_Mt": 50.0,
+        "theta_minus_Mt": 15.0,
+        "release_Mt": 20.0,
+        "cancel_rate": 0.0,
+        "source": "보수적. 흡수율 EU(24%)의 절반. 임계는 한국 잉여규모 정합(절대 Mt)",
+        "carve_reserve": 1.0,
+        "intake_basis": "excess",
+        "invalidate_above_Mt": null,
+        "theta_cap_frac": null,
+        "start_year": null
+      },
+      {
+        "level_id": "L2",
+        "name_kr": "보통",
+        "rho_intake": 0.18,
+        "theta_plus_Mt": 40.0,
+        "theta_minus_Mt": 15.0,
+        "release_Mt": 20.0,
+        "cancel_rate": 0.0,
+        "source": "중간 강도",
+        "carve_reserve": 1.0,
+        "intake_basis": "excess",
+        "invalidate_above_Mt": null,
+        "theta_cap_frac": null,
+        "start_year": null
+      },
+      {
+        "level_id": "L3",
+        "name_kr": "적극",
+        "rho_intake": 0.24,
+        "theta_plus_Mt": 30.0,
+        "theta_minus_Mt": 15.0,
+        "release_Mt": 20.0,
+        "cancel_rate": 0.0,
+        "source": "흡수율 EU 정합(24%). borghesi2023",
+        "carve_reserve": 1.0,
+        "intake_basis": "excess",
+        "invalidate_above_Mt": null,
+        "theta_cap_frac": null,
+        "start_year": null
+      },
+      {
+        "level_id": "L3C",
+        "name_kr": "적극+전량취소",
+        "rho_intake": 0.24,
+        "theta_plus_Mt": 30.0,
+        "theta_minus_Mt": 15.0,
+        "release_Mt": 20.0,
+        "cancel_rate": 1.0,
+        "source": "L3 동일 흡수 + 흡수분 100% 영구취소 — 이연(deferral) vs 취소(cancellation) 비교용 (Policy Brief Design ①, kollenberg2019·gerlagh2022)",
+        "carve_reserve": 1.0,
+        "intake_basis": "excess",
+        "invalidate_above_Mt": null,
+        "theta_cap_frac": null,
+        "start_year": null
+      },
+      {
+        "level_id": "L4",
+        "name_kr": "강력",
+        "rho_intake": 0.24,
+        "theta_plus_Mt": 25.0,
+        "theta_minus_Mt": 15.0,
+        "release_Mt": 20.0,
+        "cancel_rate": 0.5,
+        "source": "적극+예비분 50% 영구취소(gerlagh2022 급등위험 검토용)",
+        "carve_reserve": 1.0,
+        "intake_basis": "excess",
+        "invalidate_above_Mt": null,
+        "theta_cap_frac": null,
+        "start_year": null
+      },
+      {
+        "level_id": "L_EU",
+        "name_kr": "EU-미러(잉여스케일)",
+        "rho_intake": 0.24,
+        "theta_plus_Mt": 48.0,
+        "theta_minus_Mt": 23.0,
+        "release_Mt": 6.0,
+        "cancel_rate": 0.0,
+        "source": "EU MSR 규칙의 잉여규모 스케일 이식: 흡수=min(24%×TNAC, TNAC−θ⁺) [EU Decision 2023/852 완충규칙], 방출 6Mt@TNAC<23Mt [EU 100Mt@400], 스톡무효화>23Mt [EU 2024+ 400Mt 고정임계]. 스케일 = 한국 TNAC피크(~114Mt)/EU 피크(~2,000Mt): θ⁺ 833→48, θ⁻ 400→23, 방출 100→6. EU식 cap비율(θ⁺=cap의 60%≈300Mt) 이식 시 흡수 미발동(F5) — 잉여기준 스케일이 유일하게 정합.",
+        "carve_reserve": 1.0,
+        "intake_basis": "tnac",
+        "invalidate_above_Mt": 23.0,
+        "theta_cap_frac": null,
+        "start_year": null
+      },
+      {
+        "level_id": "L_C",
+        "name_kr": "가격약속형 백스톱(carve-only)",
+        "rho_intake": 0.0,
+        "theta_plus_Mt": 999.0,
+        "theta_minus_Mt": 0.0,
+        "release_Mt": 0.0,
+        "cancel_rate": 0.0,
+        "source": "A(가격약속형)의 MSR 백스톱: 수량흡수 없음(L0 규칙) + 예비분 85.28Mt 사전격리(carve)만. 하한 방어는 경매보류(회랑 overlay)가 담당, 미유찰 보류물량은 무효화 — 1차 overlay(정책그리드와 동일 근사)",
+        "carve_reserve": 1.0,
+        "intake_basis": "excess",
+        "invalidate_above_Mt": null,
+        "theta_cap_frac": null,
+        "start_year": null
+      },
+      {
+        "level_id": "L_QB",
+        "name_kr": "수량약속형",
+        "rho_intake": 0.5,
+        "theta_plus_Mt": 0.0,
+        "theta_minus_Mt": 0.0,
+        "release_Mt": 0.0,
+        "cancel_rate": 1.0,
+        "source": "B(수량약속형, B8): 2035 개시 사전공표(은행채널 선반영), 무조건 발동(theta_cap_frac=-1), 그 해 경매물량(auction_share_t, 무상할당비율 시트 도출 A_gov 경로)의 50% 자동 보류·전량 영구취소, 방출 0. 프런티어 그리드(rho×theta×개시연도)는 러너 quantity_frontier 산출 — 2026-07-03 v4 확정",
+        "carve_reserve": 1.0,
+        "intake_basis": "auction",
+        "invalidate_above_Mt": null,
+        "theta_cap_frac": -1.0,
+        "start_year": 2035.0
+      },
+      {
+        "level_id": null,
+        "name_kr": null,
+        "rho_intake": null,
+        "theta_plus_Mt": null,
+        "theta_minus_Mt": null,
+        "release_Mt": null,
+        "cancel_rate": null,
+        "source": null,
+        "carve_reserve": null,
+        "intake_basis": null,
+        "invalidate_above_Mt": null,
+        "theta_cap_frac": null,
+        "start_year": null
+      },
+      {
+        "level_id": "[주]",
+        "name_kr": "흡수 I_t = rho × max(TNAC − theta_plus, 0). TNAC=직전 banking 스톡.",
+        "rho_intake": null,
+        "theta_plus_Mt": null,
+        "theta_minus_Mt": null,
+        "release_Mt": null,
+        "cancel_rate": null,
+        "source": null,
+        "carve_reserve": null,
+        "intake_basis": null,
+        "invalidate_above_Mt": null,
+        "theta_cap_frac": null,
+        "start_year": null
+      },
+      {
+        "level_id": "[주]",
+        "name_kr": "EU 임계(TNAC 상한 833Mt=연cap의 ~55%)를 한국에 비율적용하면 잉여(14%)가 항상 미달→흡수 0.",
+        "rho_intake": null,
+        "theta_plus_Mt": null,
+        "theta_minus_Mt": null,
+        "release_Mt": null,
+        "cancel_rate": null,
+        "source": null,
+        "carve_reserve": null,
+        "intake_basis": null,
+        "invalidate_above_Mt": null,
+        "theta_cap_frac": null,
+        "start_year": null
+      },
+      {
+        "level_id": "[주]",
+        "name_kr": "따라서 한국형 임계는 절대 Mt로 설정. 이 설계선택 자체가 연구결과(EU식 비율 부적용).",
+        "rho_intake": null,
+        "theta_plus_Mt": null,
+        "theta_minus_Mt": null,
+        "release_Mt": null,
+        "cancel_rate": null,
+        "source": null,
+        "carve_reserve": null,
+        "intake_basis": null,
+        "invalidate_above_Mt": null,
+        "theta_cap_frac": null,
+        "start_year": null
+      },
+      {
+        "level_id": "[주]",
+        "name_kr": "carve_reserve=1: 예비분 85.28Mt(모형파라미터 MSR.msr_reserve_Mt)을 4차기간(2026–2030) cap 비례로 유통공급에서 차감(사전 격리). ICAP 2025: 4차 총량 2,537.3Mt은 예비분 포함 → 차감 없이는 방출이 공급 이중계상. L0(무MSR 반사실)=0.",
+        "rho_intake": null,
+        "theta_plus_Mt": null,
+        "theta_minus_Mt": null,
+        "release_Mt": null,
+        "cancel_rate": null,
+        "source": null,
+        "carve_reserve": null,
+        "intake_basis": null,
+        "invalidate_above_Mt": null,
+        "theta_cap_frac": null,
+        "start_year": null
+      },
+      {
+        "level_id": "[주]",
+        "name_kr": "theta_cap_frac: 발동임계=연cap 대비 TNAC 비율(-1=무조건). start_year: 개시연도(공란=즉시). intake_basis='auction'은 흡수상한도 그 해 경매물량(A_gov)",
+        "rho_intake": null,
+        "theta_plus_Mt": null,
+        "theta_minus_Mt": null,
+        "release_Mt": null,
+        "cancel_rate": null,
+        "source": null,
+        "carve_reserve": null,
+        "intake_basis": null,
+        "invalidate_above_Mt": null,
+        "theta_cap_frac": null,
+        "start_year": null
+      }
+    ],
+    "유동성모수": [
+      {
+        "category": "Liquidity",
+        "parameter": "lambda_0",
+        "value": 0.0,
+        "unit": "-",
+        "description": "초기 전달효율 λ₀. 실증 웨지 캘리브레이션 ≈0",
+        "source": "본 연구: KAU과거가격 2023-25 관측 vs 엔진 정태/Hotelling. λ=(P_obs−P_static)/(P_hotel−P_static)=−0.019≈0"
+      },
+      {
+        "category": "Liquidity",
+        "parameter": "lambda_terminal_default",
+        "value": 0.9,
+        "unit": "-",
+        "description": "유동성개혁 목표 λ (정책 시나리오 가정)",
+        "source": "가정(정책 시나리오). 유동성 인프라 도입 후 EU형 접근"
+      },
+      {
+        "category": "Liquidity",
+        "parameter": "ramp_years_default",
+        "value": 10.0,
+        "unit": "년",
+        "description": "λ₀→λ_terminal 램프 연수 (가정)",
+        "source": "가정(정책 시나리오)"
+      },
+      {
+        "category": "Liquidity",
+        "parameter": "psi_low",
+        "value": -0.5,
+        "unit": "-",
+        "description": "행태승수 하한 (dumping)",
+        "source": "Yoo & Seo (2023): 이월제한→dumping→가격하락"
+      },
+      {
+        "category": "Liquidity",
+        "parameter": "psi_high",
+        "value": 0.0,
+        "unit": "-",
+        "description": "행태승수 상한 (무반응)",
+        "source": "Yoo & Lee (2020): 잠깐 dip 후 회귀, 지속효과 미미"
+      },
+      {
+        "category": "Liquidity",
+        "parameter": "psi_default",
+        "value": -0.25,
+        "unit": "-",
+        "description": "행태승수 중앙값 (문헌 범위 중앙)",
+        "source": "Yoo&Lee(2020)·Yoo&Seo(2023) 범위 중앙. 점추정은 원자료 재추정 필요"
+      },
+      {
+        "category": "Liquidity",
+        "parameter": "lambda_2026_implied",
+        "value": 0.55,
+        "unit": "-",
+        "description": "캘리브레이션: (P_obs−P_static)/(P_hotel−P_static)=(22,750−9,862)/(33,188−9,862)=0.553. P_obs=KAU2026시세 2026-06, 앵커=base/L0 level_bridge. 중심(Hold) λ. lambda_0=0.0은 2023–25 역사적 레짐",
+        "source": "2026-07-02 v2 재구성 (three gates)"
+      },
+      {
+        "category": "Liquidity",
+        "parameter": "regime_relapse_years",
+        "value": 3.0,
+        "unit": "-",
+        "description": "Relapse: λ 0.55→0 선형 3년 — 2019·2021 이월제한 사례형 기대 리프라이싱 붕괴",
+        "source": "2026-07-02 v2 재구성 (three gates)"
+      },
+      {
+        "category": "Liquidity",
+        "parameter": "regime_consolidate_terminal",
+        "value": 0.9,
+        "unit": "-",
+        "description": "Consolidate 목표 λ: 비이행 금융참여·장외중개·마켓메이킹 (Yoo 2025)",
+        "source": "2026-07-02 v2 재구성 (three gates)"
+      },
+      {
+        "category": "Liquidity",
+        "parameter": "regime_consolidate_years",
+        "value": 8.0,
+        "unit": "-",
+        "description": "Consolidate 도달 연수 — H1-2026 속도(6개월 0→0.55) 대비 보수적",
+        "source": "2026-07-02 v2 재구성 (three gates)"
+      }
+    ],
+    "유상할당레버": [
+      {
+        "lever_id": "A_cur",
+        "auction_ratio": 0.15,
+        "desc": "현행 수준(발전 유상15%, 누출업종 무상100% → 경제전체 ~15%)",
+        "source": "4차 할당계획 ICAP 2025"
+      },
+      {
+        "lever_id": "A30",
+        "auction_ratio": 0.3,
+        "desc": "유상 30%로 확대",
+        "source": "정책 시나리오"
+      },
+      {
+        "lever_id": "A50",
+        "auction_ratio": 0.5,
+        "desc": "유상 50%로 확대",
+        "source": "정책 시나리오"
+      },
+      {
+        "lever_id": "A70",
+        "auction_ratio": 0.7,
+        "desc": "유상 70%로 확대(EU ETS 발전 100%·산업 점증 참조)",
+        "source": "정책 시나리오; EU ETS 벤치마크"
+      },
+      {
+        "lever_id": "[주]",
+        "auction_ratio": null,
+        "desc": "A_gov = 상수레버 아님: 정부공표 유상할당경로(무상할당비율 시트에서 cap 가중 도출, engine.auction_share_t; base: 2026 ~9.9% → 2030+ 23.9%). 정책패키지 v4의 통일 기준",
+        "source": "4차 할당계획(발전 유상 15→50%) — v4 2026-07-03"
+      }
+    ],
+    "MSR가격하한": [
+      {
+        "floor_id": "M0",
+        "floor_2026_krw": 0,
+        "floor_2040_krw": 0.0,
+        "cancel_rate": 0.0,
+        "desc": "MSR 가격하한 없음(반사실)",
+        "source": "-"
+      },
+      {
+        "floor_id": "M_mid",
+        "floor_2026_krw": 15000,
+        "floor_2040_krw": 50000.0,
+        "cancel_rate": 0.3,
+        "desc": "중간: 2026 1.5만→2040 5만원, withhold 30% 영구취소",
+        "source": "정책 시나리오"
+      },
+      {
+        "floor_id": "M_high",
+        "floor_2026_krw": 25000,
+        "floor_2040_krw": 90000.0,
+        "cancel_rate": 0.5,
+        "desc": "적극: 2026 2.5만→2040 9만원(EUA 근접), 50% 취소",
+        "source": "정책 시나리오; EUA 수렴 추구"
+      },
+      {
+        "floor_id": "M_max",
+        "floor_2026_krw": 40000,
+        "floor_2040_krw": 150000.0,
+        "cancel_rate": 0.5,
+        "desc": "최대: 2026 4만→2040 15만원, EUA 추종",
+        "source": "정책 시나리오; CBAM 격차 해소 목표"
+      },
+      {
+        "floor_id": null,
+        "floor_2026_krw": null,
+        "floor_2040_krw": null,
+        "cancel_rate": null,
+        "desc": null,
+        "source": null
+      },
+      {
+        "floor_id": "[주]",
+        "floor_2026_krw": "연도별 하한은 2026→2040 선형보간. 하한 방어 물량 = auction_ratio×cap. 부족 시 하한 미달.",
+        "floor_2040_krw": null,
+        "cancel_rate": null,
+        "desc": null,
+        "source": null
+      }
+    ],
+    "KAU과거가격": [
+      {
+        "year": 2015,
+        "kau_avg_krw": 11013,
+        "kau_yearend_krw": 11000.0,
+        "trading_volume_Mt": 5.66,
+        "trading_value_billion_krw": 62.4,
+        "entities": 525.0,
+        "source": "KRX/환경부. 1차 계획기간 시작"
+      },
+      {
+        "year": 2016,
+        "kau_avg_krw": 16520,
+        "kau_yearend_krw": 17000.0,
+        "trading_volume_Mt": null,
+        "trading_value_billion_krw": null,
+        "entities": 525.0,
+        "source": "KRX. 공급 부족 우려로 상승"
+      },
+      {
+        "year": 2017,
+        "kau_avg_krw": 20000,
+        "kau_yearend_krw": 21000.0,
+        "trading_volume_Mt": null,
+        "trading_value_billion_krw": null,
+        "entities": 525.0,
+        "source": "KRX. 1차 계획기간 마지막 해"
+      },
+      {
+        "year": 2018,
+        "kau_avg_krw": 22429,
+        "kau_yearend_krw": 24000.0,
+        "trading_volume_Mt": null,
+        "trading_value_billion_krw": null,
+        "entities": 586.0,
+        "source": "KRX. 2차 계획기간 시작, 유상할당 3% 도입"
+      },
+      {
+        "year": 2019,
+        "kau_avg_krw": 30000,
+        "kau_yearend_krw": 40900.0,
+        "trading_volume_Mt": null,
+        "trading_value_billion_krw": null,
+        "entities": 610.0,
+        "source": "KRX. 12월 40,900원 최고가 기록"
+      },
+      {
+        "year": 2020,
+        "kau_avg_krw": 18510,
+        "kau_yearend_krw": 22500.0,
+        "trading_volume_Mt": 44.0,
+        "trading_value_billion_krw": 1300.0,
+        "entities": 636.0,
+        "source": "환경부 운영결과. 코로나 영향 변동 극심(9,750~42,500)"
+      },
+      {
+        "year": 2021,
+        "kau_avg_krw": 23023,
+        "kau_yearend_krw": 35350.0,
+        "trading_volume_Mt": null,
+        "trading_value_billion_krw": null,
+        "entities": 687.0,
+        "source": "KRX. 3차 계획기간 시작. 12월 35,350원"
+      },
+      {
+        "year": 2022,
+        "kau_avg_krw": 22600,
+        "kau_yearend_krw": 15500.0,
+        "trading_volume_Mt": null,
+        "trading_value_billion_krw": null,
+        "entities": 714.0,
+        "source": "KRX. 상반기 3만원대→하반기 급락"
+      },
+      {
+        "year": 2023,
+        "kau_avg_krw": 9167,
+        "kau_yearend_krw": 9000.0,
+        "trading_volume_Mt": null,
+        "trading_value_billion_krw": null,
+        "entities": 735.0,
+        "source": "KRX. 7월 최저 7,020원. 과잉공급 지속"
+      },
+      {
+        "year": 2024,
+        "kau_avg_krw": 9582,
+        "kau_yearend_krw": 8400.0,
+        "trading_volume_Mt": 111.24,
+        "trading_value_billion_krw": null,
+        "entities": null,
+        "source": "KRX. 낮은 가격 횡보"
+      },
+      {
+        "year": 2025,
+        "kau_avg_krw": 9956,
+        "kau_yearend_krw": null,
+        "trading_volume_Mt": null,
+        "trading_value_billion_krw": null,
+        "entities": 813.0,
+        "source": "KRX 경매평균 9,956원, 2차시장 9,393원 (5월 기준)"
+      }
+    ],
+    "CBAM무상폐지일정": [
+      {
+        "year": 2026,
+        "cbam_factor_pct": 2.5,
+        "free_remaining_pct": 97.5,
+        "source": "EU Reg 2023/956 Art.36"
+      },
+      {
+        "year": 2027,
+        "cbam_factor_pct": 5.0,
+        "free_remaining_pct": 95.0,
+        "source": "동일"
+      },
+      {
+        "year": 2028,
+        "cbam_factor_pct": 10.0,
+        "free_remaining_pct": 90.0,
+        "source": "동일"
+      },
+      {
+        "year": 2029,
+        "cbam_factor_pct": 22.5,
+        "free_remaining_pct": 77.5,
+        "source": "동일"
+      },
+      {
+        "year": 2030,
+        "cbam_factor_pct": 48.5,
+        "free_remaining_pct": 51.5,
+        "source": "동일"
+      },
+      {
+        "year": 2031,
+        "cbam_factor_pct": 61.0,
+        "free_remaining_pct": 39.0,
+        "source": "동일"
+      },
+      {
+        "year": 2032,
+        "cbam_factor_pct": 73.5,
+        "free_remaining_pct": 26.5,
+        "source": "동일"
+      },
+      {
+        "year": 2033,
+        "cbam_factor_pct": 86.0,
+        "free_remaining_pct": 14.0,
+        "source": "동일"
+      },
+      {
+        "year": 2034,
+        "cbam_factor_pct": 100.0,
+        "free_remaining_pct": 0.0,
+        "source": "동일"
+      }
+    ],
+    "CBAM내재배출": [
+      {
+        "product": "열연코일(HRC) BF-BOF",
+        "cn_code": 7208,
+        "default_tCO2_per_tonne": 1.37,
+        "scope": "direct",
+        "source": "IR 2025/2621 (EUROMETAL)"
+      },
+      {
+        "product": "열연코일 DRI-EAF",
+        "cn_code": 7208,
+        "default_tCO2_per_tonne": 0.481,
+        "scope": "direct",
+        "source": "IR 2025/2621"
+      },
+      {
+        "product": "열연코일 Scrap-EAF",
+        "cn_code": 7208,
+        "default_tCO2_per_tonne": 0.072,
+        "scope": "direct",
+        "source": "IR 2025/2621"
+      },
+      {
+        "product": "시멘트 클링커",
+        "cn_code": 2523,
+        "default_tCO2_per_tonne": 0.83,
+        "scope": "direct",
+        "source": "문헌 추정"
+      },
+      {
+        "product": "포틀랜드 시멘트",
+        "cn_code": 2523,
+        "default_tCO2_per_tonne": 0.65,
+        "scope": "direct",
+        "source": "문헌 추정"
+      },
+      {
+        "product": "1차 알루미늄",
+        "cn_code": 7601,
+        "default_tCO2_per_tonne": 1.464,
+        "scope": "direct",
+        "source": "IR 2025/2621"
+      },
+      {
+        "product": "POSCO HRC 실제 배출집약도",
+        "cn_code": 7208,
+        "default_tCO2_per_tonne": 2.127,
+        "scope": "direct",
+        "source": "Climate TRACE/TTI Korea. EU 벤치마크 1.30 대비 64% 초과"
+      }
+    ],
+    "한국-EU무역": [
+      {
+        "sector": "철강 (HS 72-73)",
+        "eu_export_eur_billion": 3.6,
+        "eu_export_volume_Mt": 3.8,
+        "total_export_usd_billion": 24.8,
+        "eu_share_pct": 14.0,
+        "year": 2024,
+        "source": "Eurostat. 한국 EU 철강수출 2위"
+      },
+      {
+        "sector": "화학 전체",
+        "eu_export_eur_billion": 9.81,
+        "eu_export_volume_Mt": null,
+        "total_export_usd_billion": null,
+        "eu_share_pct": 22.2,
+        "year": 2023,
+        "source": "Eurostat. EU 수입 중 한국 화학 22.2%"
+      },
+      {
+        "sector": "시멘트",
+        "eu_export_eur_billion": 0.001,
+        "eu_export_volume_Mt": null,
+        "total_export_usd_billion": null,
+        "eu_share_pct": 0.0,
+        "year": 2024,
+        "source": "무시 가능 수준"
+      },
+      {
+        "sector": "알루미늄",
+        "eu_export_eur_billion": 0.5,
+        "eu_export_volume_Mt": null,
+        "total_export_usd_billion": null,
+        "eu_share_pct": null,
+        "year": 2022,
+        "source": "추정"
+      }
+    ],
+    "K-ETS시장총괄": [
+      {
+        "period": "1차 (2015-2017)",
+        "total_cap_Mt": 1686.5,
+        "annual_caps": "540/561/586",
+        "entities": 525,
+        "free_alloc_pct": 100.0,
+        "auction_pct": 0.0,
+        "national_coverage_pct": 68.0,
+        "source": "ICAP K-ETS Profile"
+      },
+      {
+        "period": "2차 (2018-2020)",
+        "total_cap_Mt": 1796.1,
+        "annual_caps": "594/563/563",
+        "entities": 636,
+        "free_alloc_pct": 97.0,
+        "auction_pct": 3.0,
+        "national_coverage_pct": 73.5,
+        "source": "ICAP. 유상할당 3% 최초 도입"
+      },
+      {
+        "period": "3차 (2021-2025)",
+        "total_cap_Mt": 3048.8,
+        "annual_caps": "585/585/585/563/563",
+        "entities": 735,
+        "free_alloc_pct": 90.0,
+        "auction_pct": 10.0,
+        "national_coverage_pct": 77.8,
+        "source": "ICAP. 명목 10% 유상, 실질 2023년 99% 무상(5.9Mt만 경매)"
+      },
+      {
+        "period": "4차 (2026-2030)",
+        "total_cap_Mt": 2537.3,
+        "annual_caps": "~500→~435 (점감)",
+        "entities": 813,
+        "free_alloc_pct": null,
+        "auction_pct": null,
+        "national_coverage_pct": null,
+        "source": "ICAP 2025.10. 발전 유상 15→50%, 탄소누출 무상 100% 유지. MSR 133Mt 예비"
+      }
+    ],
+    "KAU2026시세": [
+      {
+        "date": "2026-01",
+        "kau_krw": 10299.0,
+        "source": "연초 수준 — 환경보건신문(2026.6) \"최근 22,750원, 연초대비 +120.9%\"에서 역산 (22,750/2.209)"
+      },
+      {
+        "date": "2026-04-07",
+        "kau_krw": 16450.0,
+        "source": "데일리e뉴스 2026-04-07: KAU25 종가 16,450원"
+      },
+      {
+        "date": "2026-05-21",
+        "kau_krw": 19600.0,
+        "source": "데일리e뉴스 2026-05-21: KAU25 종가 19,600원"
+      },
+      {
+        "date": "2026-05-29",
+        "kau_krw": 24550.0,
+        "source": "데일리e뉴스 2026-05-29: KAU25 종가 24,550원, 거래금액 연중 최대"
+      },
+      {
+        "date": "2026-06",
+        "kau_krw": 22750.0,
+        "source": "환경보건신문(2026.6): 톤당 22,750원, 연초대비 +120.9%. 나무이엔알(에너지경제 2026-05-28): 2026 연간 25,000원 전망"
+      },
+      {
+        "date": null,
+        "kau_krw": null,
+        "source": null
+      },
+      {
+        "date": "[주]",
+        "kau_krw": null,
+        "source": "4차 계획기간 개시(유상확대·총량축소·MSR 법제화 2026-04-29 시행)와 함께 H1 2026 KAU 급등. KAU과거가격 시트의 2025행(경매평균 9,956원)은 2025년 5월 기준 스냅샷 — 2026 시세와 구분."
+      }
+    ],
+    "정책패키지": [
+      {
+        "package_id": "P0",
+        "name_en": "No-policy counterfactual",
+        "name_kr": "무정책 반사실",
+        "msr_level": "L0",
+        "floor_id": "M0",
+        "auction_lever": "A_gov",
+        "cap_scenario": "base",
+        "lambda_regime": "hold",
+        "source": "MSR·하한 없음, base cap, λ=0.55 유지(hold), 유상=정부공표경로 A_gov — 모든 효과의 기준선",
+        "corridor_target_year": null,
+        "corridor_tech2": null,
+        "corridor_target_year2": null
+      },
+      {
+        "package_id": "P1",
+        "name_en": "Decree as drafted",
+        "name_kr": "시행령 초안대로",
+        "msr_level": "L3",
+        "floor_id": "M_mid",
+        "auction_lever": "A_gov",
+        "cap_scenario": "base",
+        "lambda_regime": "hold",
+        "source": "draft 수량규칙(L3: 초과분 흡수·20Mt/yr 방출·무취소) + 중위 하한(M_mid, 가정) + A_gov. 2026-08 가격범위 공고 전 예상 조합",
+        "corridor_target_year": null,
+        "corridor_tech2": null,
+        "corridor_target_year2": null
+      },
+      {
+        "package_id": "A",
+        "name_en": "Price-commitment operating rule",
+        "name_kr": "가격약속형",
+        "msr_level": "L_C",
+        "floor_id": "corridor",
+        "auction_lever": "A_gov",
+        "cap_scenario": "base",
+        "lambda_regime": "hold",
+        "source": "가격약속형 운영규칙: 경매보류가격=기술앵커 회랑(2026 관측가→2035 수소환원 문턱, 이후 문턱 추종), MSR 백스톱=carve-only(L_C, 수량흡수 없음), 미유찰 보류물량 무효화(1차 overlay), A_gov",
+        "corridor_target_year": 2035.0,
+        "corridor_tech2": null,
+        "corridor_target_year2": null
+      },
+      {
+        "package_id": "B",
+        "name_en": "Quantity-commitment operating rule",
+        "name_kr": "수량약속형",
+        "msr_level": "L_QB",
+        "floor_id": "M0",
+        "auction_lever": "A_gov",
+        "cap_scenario": "base",
+        "lambda_regime": "hold",
+        "source": "수량약속형 운영규칙(B8): 2035 개시 사전공표, 무조건 경매물량 50% 흡수·전량취소·방출 0, 하한 없음, A_gov. 변형 그리드는 러너 quantity_frontier",
+        "corridor_target_year": null,
+        "corridor_tech2": null,
+        "corridor_target_year2": null
+      },
+      {
+        "package_id": null,
+        "name_en": null,
+        "name_kr": null,
+        "msr_level": null,
+        "floor_id": null,
+        "auction_lever": null,
+        "cap_scenario": null,
+        "lambda_regime": null,
+        "source": null,
+        "corridor_target_year": null,
+        "corridor_tech2": null,
+        "corridor_target_year2": null
+      },
+      {
+        "package_id": "[주]",
+        "name_en": "K-MSR = legislated institution; packages = its OPERATING RULES. Auction unified = A_gov (economy-wide auction share from 무상할당비율 sheet: ~9.9% 2026 -> 23.9% 2030+, engine.auction_share_t). Gate waterfall: P0 -> +draft rule(P1) -> +corridor(=A) | branch: P0 -> +quantity-commitment(=B). Runner v1.0",
+        "name_kr": null,
+        "msr_level": null,
+        "floor_id": null,
+        "auction_lever": null,
+        "cap_scenario": null,
+        "lambda_regime": null,
+        "source": null,
+        "corridor_target_year": null,
+        "corridor_tech2": null,
+        "corridor_target_year2": null
+      }
+    ],
+    "수소가격시나리오": [
+      {
+        "scenario_id": "gov",
+        "year": 2026,
+        "h2_price_krw_per_kg": 7000,
+        "source": "2026: 수입 청정수소 인도가 ~$5/kg×1,400 (Transition Asia 2024; 2024 청정수소입찰 6,500GWh 중 750GWh만 낙찰=고가 방증). 2030: 3,500원/kg 그린수소 생산단가 목표(제1차 수소경제 이행 기본계획 2021). 2040: 3,000원/kg(수소경제 로드맵 2019; 기본계획 2050 2,500 보간 정합). 선형보간"
+      },
+      {
+        "scenario_id": "gov",
+        "year": 2027,
+        "h2_price_krw_per_kg": 6125,
+        "source": null
+      },
+      {
+        "scenario_id": "gov",
+        "year": 2028,
+        "h2_price_krw_per_kg": 5250,
+        "source": null
+      },
+      {
+        "scenario_id": "gov",
+        "year": 2029,
+        "h2_price_krw_per_kg": 4375,
+        "source": null
+      },
+      {
+        "scenario_id": "gov",
+        "year": 2030,
+        "h2_price_krw_per_kg": 3500,
+        "source": null
+      },
+      {
+        "scenario_id": "gov",
+        "year": 2031,
+        "h2_price_krw_per_kg": 3450,
+        "source": null
+      },
+      {
+        "scenario_id": "gov",
+        "year": 2032,
+        "h2_price_krw_per_kg": 3400,
+        "source": null
+      },
+      {
+        "scenario_id": "gov",
+        "year": 2033,
+        "h2_price_krw_per_kg": 3350,
+        "source": null
+      },
+      {
+        "scenario_id": "gov",
+        "year": 2034,
+        "h2_price_krw_per_kg": 3300,
+        "source": null
+      },
+      {
+        "scenario_id": "gov",
+        "year": 2035,
+        "h2_price_krw_per_kg": 3250,
+        "source": null
+      },
+      {
+        "scenario_id": "gov",
+        "year": 2036,
+        "h2_price_krw_per_kg": 3200,
+        "source": null
+      },
+      {
+        "scenario_id": "gov",
+        "year": 2037,
+        "h2_price_krw_per_kg": 3150,
+        "source": null
+      },
+      {
+        "scenario_id": "gov",
+        "year": 2038,
+        "h2_price_krw_per_kg": 3100,
+        "source": null
+      },
+      {
+        "scenario_id": "gov",
+        "year": 2039,
+        "h2_price_krw_per_kg": 3050,
+        "source": null
+      },
+      {
+        "scenario_id": "gov",
+        "year": 2040,
+        "h2_price_krw_per_kg": 3000,
+        "source": null
+      },
+      {
+        "scenario_id": "conservative",
+        "year": 2026,
+        "h2_price_krw_per_kg": 7000,
+        "source": "목표 지연 시나리오(민감도): 2030 5,000 → 2040 3,500. 2024 입찰 유찰이 시사하는 하방 리스크"
+      },
+      {
+        "scenario_id": "conservative",
+        "year": 2027,
+        "h2_price_krw_per_kg": 6500,
+        "source": null
+      },
+      {
+        "scenario_id": "conservative",
+        "year": 2028,
+        "h2_price_krw_per_kg": 6000,
+        "source": null
+      },
+      {
+        "scenario_id": "conservative",
+        "year": 2029,
+        "h2_price_krw_per_kg": 5500,
+        "source": null
+      },
+      {
+        "scenario_id": "conservative",
+        "year": 2030,
+        "h2_price_krw_per_kg": 5000,
+        "source": null
+      },
+      {
+        "scenario_id": "conservative",
+        "year": 2031,
+        "h2_price_krw_per_kg": 4850,
+        "source": null
+      },
+      {
+        "scenario_id": "conservative",
+        "year": 2032,
+        "h2_price_krw_per_kg": 4700,
+        "source": null
+      },
+      {
+        "scenario_id": "conservative",
+        "year": 2033,
+        "h2_price_krw_per_kg": 4550,
+        "source": null
+      },
+      {
+        "scenario_id": "conservative",
+        "year": 2034,
+        "h2_price_krw_per_kg": 4400,
+        "source": null
+      },
+      {
+        "scenario_id": "conservative",
+        "year": 2035,
+        "h2_price_krw_per_kg": 4250,
+        "source": null
+      },
+      {
+        "scenario_id": "conservative",
+        "year": 2036,
+        "h2_price_krw_per_kg": 4100,
+        "source": null
+      },
+      {
+        "scenario_id": "conservative",
+        "year": 2037,
+        "h2_price_krw_per_kg": 3950,
+        "source": null
+      },
+      {
+        "scenario_id": "conservative",
+        "year": 2038,
+        "h2_price_krw_per_kg": 3800,
+        "source": null
+      },
+      {
+        "scenario_id": "conservative",
+        "year": 2039,
+        "h2_price_krw_per_kg": 3650,
+        "source": null
+      },
+      {
+        "scenario_id": "conservative",
+        "year": 2040,
+        "h2_price_krw_per_kg": 3500,
+        "source": null
+      }
+    ],
+    "전력가격시나리오": [
+      {
+        "scenario_id": "gov_invest",
+        "year": 2026,
+        "elec_price_krw_per_kwh": 180,
+        "source": "2026: 태양광 기업PPA 175–185원/kWh(인더스트리뉴스 2025, 구조적 고점). 재생투자·보조 학습가속으로 2040 110원/kWh — Cattry&Vuppanapalli(2025) 보정구간 하단($75/MWh≈105원)을 하한으로 외삽 금지. 기존 90원 경로는 보정점 밖 외삽으로 폐기(2026-07-03 검토). 민감도: conservative"
+      },
+      {
+        "scenario_id": "gov_invest",
+        "year": 2027,
+        "elec_price_krw_per_kwh": 174,
+        "source": null
+      },
+      {
+        "scenario_id": "gov_invest",
+        "year": 2028,
+        "elec_price_krw_per_kwh": 168,
+        "source": null
+      },
+      {
+        "scenario_id": "gov_invest",
+        "year": 2029,
+        "elec_price_krw_per_kwh": 161,
+        "source": null
+      },
+      {
+        "scenario_id": "gov_invest",
+        "year": 2030,
+        "elec_price_krw_per_kwh": 155,
+        "source": null
+      },
+      {
+        "scenario_id": "gov_invest",
+        "year": 2031,
+        "elec_price_krw_per_kwh": 150,
+        "source": null
+      },
+      {
+        "scenario_id": "gov_invest",
+        "year": 2032,
+        "elec_price_krw_per_kwh": 145,
+        "source": null
+      },
+      {
+        "scenario_id": "gov_invest",
+        "year": 2033,
+        "elec_price_krw_per_kwh": 140,
+        "source": null
+      },
+      {
+        "scenario_id": "gov_invest",
+        "year": 2034,
+        "elec_price_krw_per_kwh": 135,
+        "source": null
+      },
+      {
+        "scenario_id": "gov_invest",
+        "year": 2035,
+        "elec_price_krw_per_kwh": 130,
+        "source": null
+      },
+      {
+        "scenario_id": "gov_invest",
+        "year": 2036,
+        "elec_price_krw_per_kwh": 126,
+        "source": null
+      },
+      {
+        "scenario_id": "gov_invest",
+        "year": 2037,
+        "elec_price_krw_per_kwh": 122,
+        "source": null
+      },
+      {
+        "scenario_id": "gov_invest",
+        "year": 2038,
+        "elec_price_krw_per_kwh": 118,
+        "source": null
+      },
+      {
+        "scenario_id": "gov_invest",
+        "year": 2039,
+        "elec_price_krw_per_kwh": 114,
+        "source": null
+      },
+      {
+        "scenario_id": "gov_invest",
+        "year": 2040,
+        "elec_price_krw_per_kwh": 110,
+        "source": null
+      },
+      {
+        "scenario_id": "conservative",
+        "year": 2026,
+        "elec_price_krw_per_kwh": 180,
+        "source": "구조적 고점 지속 시나리오(공급제약·인허가): 2030 170 → 2040 140원/kWh"
+      },
+      {
+        "scenario_id": "conservative",
+        "year": 2027,
+        "elec_price_krw_per_kwh": 178,
+        "source": null
+      },
+      {
+        "scenario_id": "conservative",
+        "year": 2028,
+        "elec_price_krw_per_kwh": 175,
+        "source": null
+      },
+      {
+        "scenario_id": "conservative",
+        "year": 2029,
+        "elec_price_krw_per_kwh": 172,
+        "source": null
+      },
+      {
+        "scenario_id": "conservative",
+        "year": 2030,
+        "elec_price_krw_per_kwh": 170,
+        "source": null
+      },
+      {
+        "scenario_id": "conservative",
+        "year": 2031,
+        "elec_price_krw_per_kwh": 167,
+        "source": null
+      },
+      {
+        "scenario_id": "conservative",
+        "year": 2032,
+        "elec_price_krw_per_kwh": 164,
+        "source": null
+      },
+      {
+        "scenario_id": "conservative",
+        "year": 2033,
+        "elec_price_krw_per_kwh": 161,
+        "source": null
+      },
+      {
+        "scenario_id": "conservative",
+        "year": 2034,
+        "elec_price_krw_per_kwh": 158,
+        "source": null
+      },
+      {
+        "scenario_id": "conservative",
+        "year": 2035,
+        "elec_price_krw_per_kwh": 155,
+        "source": null
+      },
+      {
+        "scenario_id": "conservative",
+        "year": 2036,
+        "elec_price_krw_per_kwh": 152,
+        "source": null
+      },
+      {
+        "scenario_id": "conservative",
+        "year": 2037,
+        "elec_price_krw_per_kwh": 149,
+        "source": null
+      },
+      {
+        "scenario_id": "conservative",
+        "year": 2038,
+        "elec_price_krw_per_kwh": 146,
+        "source": null
+      },
+      {
+        "scenario_id": "conservative",
+        "year": 2039,
+        "elec_price_krw_per_kwh": 143,
+        "source": null
+      },
+      {
+        "scenario_id": "conservative",
+        "year": 2040,
+        "elec_price_krw_per_kwh": 140,
+        "source": null
+      }
+    ]
+  }
+}

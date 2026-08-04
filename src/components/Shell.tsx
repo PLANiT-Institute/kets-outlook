@@ -6,8 +6,6 @@ const TOPBAR_LABELS: Record<string, string> = {
   overview: '홈',
   mechanism: '메커니즘',
   simulator: '시뮬레이터',
-  revenue: '재정',
-  gap: 'CBAM',
 };
 
 function NavIcon({ name, size = 16 }: { name: string; size?: number }) {
@@ -59,66 +57,9 @@ export function Topbar({ active = 'overview', onNavigate }: { active?: string; o
           );
         })}
       </nav>
-      <span className="ta-env-chip">Mock model</span>
+      <span className="ta-env-chip">Live engine · results v1.0</span>
       <div className="w-7 h-7 rounded-full bg-[#2553D6] text-white flex items-center justify-center text-[11px] font-semibold num">Pi</div>
     </header>
-  );
-}
-
-export function Sidebar({ active = 'overview', onNavigate }: { active?: string; onNavigate?: (id: string) => void }) {
-  return (
-    <aside className="w-[220px] flex-shrink-0 bg-white border-r border-[#E5E7EB] flex flex-col" style={{ padding: '20px 14px' }}>
-      <div className="px-2 pb-[22px]"><PlanitMark /></div>
-      <div className="text-[10px] font-semibold text-[#9CA3AF] tracking-[.12em] uppercase px-[10px] py-[6px] pb-2">분석 모듈</div>
-      <nav className="flex flex-col gap-[2px]">
-        {NAV_ITEMS.map((n) => {
-          const on = n.id === active;
-          return (
-            <button key={n.id} onClick={() => onNavigate?.(n.id)}
-              className={`flex items-center gap-[10px] py-[9px] px-[10px] rounded-[7px] cursor-pointer border-0 bg-transparent text-left w-full transition-colors hover:bg-[#F9FAFB] ${on ? 'bg-[#F3F4F6] text-[#111827]' : 'text-[#4B5563]'}`}>
-              <NavIcon name={n.icon} size={15} />
-              <div className="flex flex-col leading-[1.15]">
-                <span className={`text-[12.5px] ${on ? 'font-semibold' : 'font-medium'}`}>{n.ko}</span>
-                <span className="text-[9.5px] text-[#9CA3AF] tracking-[.02em]" style={{ fontFamily: 'Inter' }}>{n.en}</span>
-              </div>
-            </button>
-          );
-        })}
-      </nav>
-      <div className="mt-auto pt-3 px-[10px] border-t border-[#F3F4F6] text-[10.5px] text-[#9CA3AF] leading-[1.5]">
-        <div>Coase + Staircase MACC</div>
-        <div style={{ fontFamily: 'Inter' }}>Constrained Hotelling</div>
-        <div className="mt-1 text-[#D1D5DB]">v0.6 · 2026.05</div>
-      </div>
-    </aside>
-  );
-}
-
-export function PageHeader() {
-  return (
-    <div className="flex items-end justify-between gap-6 pb-[22px]">
-      <div>
-        <div className="text-[10.5px] tracking-[.16em] text-[#9CA3AF] uppercase mb-[6px]" style={{ fontFamily: 'Inter' }}>K-ETS Price Outlook · Overview</div>
-        <h1 className="text-[26px] font-bold text-[#111827] tracking-tight m-0">K-ETS 가격전망 및 정책 시나리오 분석</h1>
-        <div className="mt-2 text-[13px] text-[#6B7280] max-w-[720px] leading-[1.55]">
-          부분균형 MACC + Hotelling banking 동학 모형으로 도출한 3개 정책 시나리오의 KAU 가격 경로와 핵심 지표 비교.
-        </div>
-      </div>
-      <div className="flex items-center gap-2">
-        <PillBtn label="2026–2040" />
-        <PillBtn label="원/tCO₂" />
-        <PillBtn icon="download" label="CSV" />
-      </div>
-    </div>
-  );
-}
-
-function PillBtn({ label, icon }: { label: string; icon?: string }) {
-  return (
-    <div className="inline-flex items-center gap-[6px] px-[11px] py-[6px] border border-[#E5E7EB] rounded-full text-[11.5px] text-[#4B5563] bg-white" style={{ fontFamily: 'Inter' }}>
-      {icon && <NavIcon name={icon} size={12} />}
-      {label}
-    </div>
   );
 }
 
@@ -149,35 +90,11 @@ export function ChartCard({ title, en, hint, accent, actions, children, noPad }:
   );
 }
 
-export function ChartLegend() {
-  const items = [
-    { color: '#5B7BAA', label: '기준', en: 'Base', dashed: false },
-    { color: '#E8A33D', label: '중간', en: 'Middle', dashed: false },
-    { color: '#10A574', label: '이상', en: 'Ideal', dashed: false },
-    { color: '#94A3B8', label: 'EUA 참조', en: 'EU ETS reference', dashed: true },
-  ];
-  return (
-    <div className="flex gap-[18px] text-[11.5px] text-[var(--text-body)] flex-wrap">
-      {items.map((it, i) => (
-        <div key={i} className="flex items-center gap-[7px]">
-          {it.dashed
-            ? <span className="w-[18px]" style={{ borderTop: `1.5px dashed ${it.color}` }} />
-            : <span className="w-[18px] h-[2.5px] rounded-sm" style={{ background: it.color }} />}
-          <span>{it.label}</span>
-          <span className="text-[var(--text-muted)] text-[10px] num">{it.en}</span>
-        </div>
-      ))}
-    </div>
-  );
-}
-
 export function PageFooter() {
   return (
     <footer className="px-8 py-[18px] border-t border-[var(--border)] flex justify-between items-center text-[11px] text-[var(--text-muted)] bg-white">
-      <div>PLANiT Institute · Coase + Staircase MACC + Constrained Hotelling · 2026–2040</div>
-      <div className="num">v0.8 · K-MSR rule modes</div>
+      <div>PLANiT Institute · Staircase MACC + Constrained Hotelling + λ 레벨-브리지 · 2026–2040</div>
+      <div className="num">v1.0 · K-MSR 운영규칙 P0/P1/A/B</div>
     </footer>
   );
 }
-
-export { NavIcon };

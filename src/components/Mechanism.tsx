@@ -1,7 +1,8 @@
 'use client';
 
-import { SCEN, SCEN_LIST, fmtWon } from '@/lib/data';
-import { KETS_MSR_POLICY } from '@/lib/msr';
+import { SCEN_LIST, fmtWon, LATEST_KAU_QUOTE } from '@/lib/data';
+import { MSR_RESERVE_MT, KMSR_DRAFT_ASSUMPTIONS } from '@/lib/msr';
+import { PKG, PACKAGES, AUCTION_SHARE_GOV } from '@/lib/results';
 
 function Step({ num, title, children }: { num: number; title: string; children: React.ReactNode }) {
   return (
@@ -103,6 +104,11 @@ export function MechanismPanel() {
                 </div>
               ))}
             </div>
+            <p className="m-0 mt-2 text-[11.5px] text-[#6B7280]">
+              ※ 논문 v4의 운영규칙 비교(P0/P1/A/B)는 <strong>현행 base cap 공통</strong>으로 수행 —
+              cap을 바꾸지 않고 운영규칙만으로 무엇이 달라지는가가 질문입니다.
+              중간·이상 cap은 시뮬레이터의 커스텀 레버로 탐색할 수 있습니다.
+            </p>
           </Step>
 
           {/* Step 2 */}
@@ -115,11 +121,18 @@ export function MechanismPanel() {
               Effective supply<sub>t</sub> = Legal cap<sub>t</sub> + K-MSR 방출<sub>t</sub> − K-MSR 흡수<sub>t</sub><br/>
               Shortfall<sub>t</sub> = BAU<sub>t</sub> − Effective supply<sub>t</sub>
             </FormulaBox>
-            <Callout type="key" title="2026년 제도 업데이트">
-              제4차 할당계획은 시장안정화 용도 예비분을 <strong>{KETS_MSR_POLICY.phase4ReserveMt.toFixed(1)} Mt</strong>로 설정했습니다.
+            <Callout type="key" title="2026년 제도 업데이트 — K-MSR은 법제화 완료, 남은 것은 운영규칙">
+              K-MSR 시행령은 2026-04-29 시행되었고, 제4차 할당계획은 시장안정화 용도 예비분을{' '}
+              <strong>{MSR_RESERVE_MT.toFixed(1)} Mt</strong>로 설정했습니다.
               이 물량은 배출허용총량 안에 있는 버퍼이며, 가격 또는 수량 기준이 벗어나면 유상할당 계정과 예비분 계정 사이에서 이동합니다.
-              현재 시뮬레이터의 자동 모드는 최근 KAU25 가격 <strong>{fmtWon(KETS_MSR_POLICY.recentKau25Krw)}원</strong>과
-              감시선 <strong>{fmtWon(KETS_MSR_POLICY.lowPriceKrw)}~{fmtWon(KETS_MSR_POLICY.highPriceKrw)}원</strong>을 기준선으로 사용합니다.
+              최근 KAU 시세는 <strong>{fmtWon(LATEST_KAU_QUOTE.kau_krw)}원</strong>({LATEST_KAU_QUOTE.date})이며,
+              감시선 <strong>{fmtWon(KMSR_DRAFT_ASSUMPTIONS.lowPriceKrw)}~{fmtWon(KMSR_DRAFT_ASSUMPTIONS.highPriceKrw)}원</strong>은
+              가격범위 공고({KMSR_DRAFT_ASSUMPTIONS.announcementDue}) 전까지의 <strong>draft 가정</strong>입니다.
+              본 분석의 <strong style={{ color: PKG.A.color }}>A(가격약속형)</strong>와{' '}
+              <strong style={{ color: PKG.B.color }}>B(수량약속형)</strong>는 새로운 제도가 아니라,
+              이미 법제화된 K-MSR의 <strong>운영규칙</strong>입니다 —
+              A는 <strong>K-MSR 경매보류가격의 운영경로</strong>(기술앵커 회랑, 미유찰 물량 무효화),
+              B는 <strong>흡수·무효화 기능의 일정형 운영</strong>(2035 개시 사전공표)입니다.
             </Callout>
             <p className="m-0">
               Effective supply가 줄어들수록 → Shortfall 증가 → 더 많은 감축 필요 → <strong>더 비싼 기술까지 동원</strong> → 가격 상승.
@@ -220,27 +233,24 @@ export function MechanismPanel() {
             <Diagram>{
 `비용(원/tCO₂)
   │
-  │ ┌─ 풍력 178k                    ← 가격이 여기까지 오면 풍력 도입
+  │ ┌─ NCC 전기분해 (e-NCC)          ← 두 번째 헤드라인 문턱 (전력가격 연동)
   │ │
-  │ ├─ 태양광 90k                   ← ideal 시나리오에서 학습곡선으로 하락
+  │ ├─ 수소환원제철 (H₂-DRI)         ← 첫 번째 헤드라인 문턱 (수소가격 연동)
+  │ │                                   A의 회랑 앵커 = 이 문턱의 2035 학습조정 비용
+  │ ├─ 연료전환·전기화 기술군
   │ │
-  │ ├─ 석탄→LNG 55k                ← middle 시나리오 2030 균형가격 부근
-  │ │
-  │ ├─ 원자력 40k
-  │ │
-  │ ├─ 에너지효율 10k               ← 모든 시나리오에서 즉시 도입
-  │ │
-  0 ├─ 스크랩/EAF 414원
-  │ │
--12k├─ 에너지효율(철강)              ← 음의 비용 = 하면 돈이 절약됨
+  │ ├─ 에너지효율                    ← 낮은 가격에서 즉시 도입
+  0 ├─
+  │ ├─ 음(−)의 비용 기술              ← 하면 돈이 절약됨
   │
   └──────────────────────── 누적 감축량 (Mt)`
             }</Diagram>
 
-            <Callout type="info" title="학습곡선 (Learning Curve)">
-              재생에너지·수소·전기화 기술은 보급이 확대될수록 비용이 하락합니다.
-              정책이 적극적일수록(ideal) → 보급 가속 → 학습곡선 가속 → 같은 가격에서 더 많은 감축 가능 → 가격 상승 억제.
-              시뮬레이터 탭에서 학습률을 조절하여 효과를 확인할 수 있습니다.
+            <Callout type="info" title="기술 문턱은 상수가 아니라 경로 (Learning + 투입가격)">
+              헤드라인 기술의 문턱은 정적 공학 상수가 아니라 <strong>정부 수소·전력 가격 시나리오</strong>로
+              구동되는 학습조정 비용경로입니다. A(가격약속형)의 회랑 앵커는 이 문턱 자체이므로,
+              투입가격 시나리오가 어긋나면 <strong>앵커가 문턱과 함께 움직여 자기교정</strong>합니다 —
+              이것이 Overview의 &lsquo;결정적 분기&rsquo;가 보여주는 메커니즘입니다.
             </Callout>
           </Step>
 
@@ -270,30 +280,32 @@ export function MechanismPanel() {
           </Step>
 
           {/* Step 6 */}
-          <Step num={6} title="재정 흐름 — 유상할당이 결정하는 것">
+          <Step num={6} title="재정 흐름 — 유상할당은 정부 기발표 경로 (신규 요구 없음)">
             <p className="m-0">
               가격은 effective supply(Step 2)와 MACC(Step 4)로 결정되었습니다.
               유상할당 비율은 가격을 직접 바꾸지 않지만, <strong>돈이 어떻게 흐르는가</strong>를 결정합니다.
-              K-MSR은 실제 경매 판매량도 함께 바꾸므로 경매수입에는 가격과 물량 양쪽으로 영향을 줍니다.
+              본 분석의 유상할당은 4개 운영규칙 모두 <strong>정부 기발표 경로(A_gov)</strong> —
+              경제전체 유상 비율 <strong>{(AUCTION_SHARE_GOV.y2026 * 100).toFixed(1)}%(2026) →
+              {(AUCTION_SHARE_GOV.y2030 * 100).toFixed(1)}%(2030+)</strong> — 를 그대로 사용합니다.
+              어떤 운영규칙도 <strong>새로운 경매물량을 요구하지 않습니다</strong>.
             </p>
             <FormulaBox>
-              실제 경매 판매량 = Legal cap<sub>t</sub> × 유상비율<sub>t</sub> + K-MSR 방출<sub>t</sub> − K-MSR 흡수<sub>t</sub><br/>
+              실제 경매 판매량 = Legal cap<sub>t</sub> × a<sub>t</sub>(정부 기발표) − K-MSR 흡수·보류<sub>t</sub><br/>
               경매수입 = 실제 경매 판매량<sub>t</sub> × P*<sub>t</sub><br/>
-              기업 직접 부담 = 경매 구매비용 + 2차시장 구매비용<br/>
-              기업 기회비용 = 무상할당 × P* (무상으로 받았지만 팔 수 있었던 가치)
+              하한 방어요건 (A): W = A(P̄) − A(P<sub>realized</sub>) ≤ a<sub>t</sub>·Cap<sub>t</sub> — 기발표 경매물량 한도 내 방어
             </FormulaBox>
             <div className="grid grid-cols-3 gap-3 mt-3">
-              <div className="rounded-lg px-3 py-2.5 text-[11.5px]" style={{ background: SCEN.base.soft, borderLeft: `3px solid ${SCEN.base.color}` }}>
-                <div className="font-semibold" style={{ color: SCEN.base.color }}>기준: 무상 유지</div>
-                <div className="text-[#4B5563] mt-1">경매수입 적음<br/>기업 직접부담 낮음<br/>정부 재원 제한적</div>
+              <div className="rounded-lg px-3 py-2.5 text-[11.5px]" style={{ background: PKG.P0.soft, borderLeft: `3px solid ${PKG.P0.color}` }}>
+                <div className="font-semibold" style={{ color: '#6B7280' }}>P0 무정책</div>
+                <div className="text-[#4B5563] mt-1">누적 경매수입<br/><strong>{PACKAGES.P0.cum_auction_rev_trillion.toFixed(1)}조원</strong> (2026–2040)</div>
               </div>
-              <div className="rounded-lg px-3 py-2.5 text-[11.5px]" style={{ background: SCEN.middle.soft, borderLeft: `3px solid ${SCEN.middle.color}` }}>
-                <div className="font-semibold" style={{ color: SCEN.middle.color }}>중간: 점진적 유상</div>
-                <div className="text-[#4B5563] mt-1">경매수입 증가<br/>기업 비용 점진 전환<br/>정의로운 전환 재원</div>
+              <div className="rounded-lg px-3 py-2.5 text-[11.5px]" style={{ background: PKG.A.soft, borderLeft: `3px solid ${PKG.A.color}` }}>
+                <div className="font-semibold" style={{ color: PKG.A.color }}>A 가격약속형</div>
+                <div className="text-[#4B5563] mt-1">누적 경매수입<br/><strong>{PACKAGES.A.cum_auction_rev_trillion.toFixed(1)}조원</strong> · 무효화 없음, 가격이 수입을 늘림</div>
               </div>
-              <div className="rounded-lg px-3 py-2.5 text-[11.5px]" style={{ background: SCEN.ideal.soft, borderLeft: `3px solid ${SCEN.ideal.color}` }}>
-                <div className="font-semibold" style={{ color: SCEN.ideal.color }}>이상: 전량 유상</div>
-                <div className="text-[#4B5563] mt-1">경매수입 극대화<br/>CBAM 정합<br/>오염자부담 원칙</div>
+              <div className="rounded-lg px-3 py-2.5 text-[11.5px]" style={{ background: PKG.B.soft, borderLeft: `3px solid ${PKG.B.color}` }}>
+                <div className="font-semibold" style={{ color: PKG.B.color }}>B 수량약속형</div>
+                <div className="text-[#4B5563] mt-1">누적 경매수입<br/><strong>{PACKAGES.B.cum_auction_rev_trillion.toFixed(1)}조원</strong> · 물량 {PACKAGES.B.cum_intake_Mt.toFixed(0)}Mt 무효화의 대가</div>
               </div>
             </div>
           </Step>
@@ -306,17 +318,17 @@ export function MechanismPanel() {
         <div className="grid grid-cols-2 gap-6 text-[12px]">
           <div className="space-y-2.5">
             <div className="text-[#6B7280]"><strong className="text-[#111827]">모형 유형:</strong> 부분균형 (Partial Equilibrium)</div>
-            <div className="text-[#6B7280]"><strong className="text-[#111827]">MACC:</strong> Staircase (기술별 이산 비용곡선, 25개 기술)</div>
+            <div className="text-[#6B7280]"><strong className="text-[#111827]">MACC:</strong> Staircase (기술별 이산 비용곡선, bottom-up)</div>
             <div className="text-[#6B7280]"><strong className="text-[#111827]">동학:</strong> Hotelling banking + 비음(non-negativity) 제약</div>
-            <div className="text-[#6B7280]"><strong className="text-[#111827]">할인율:</strong> r = 5.5% (국고채 3년 3.5% + 리스크 2.0%)</div>
-            <div className="text-[#6B7280]"><strong className="text-[#111827]">학습곡선:</strong> 시나리오별 차등 (base 2% / middle 4% / ideal 6%)</div>
+            <div className="text-[#6B7280]"><strong className="text-[#111827]">가격 전달:</strong> λ 레벨-브리지 (정태 ↔ Hotelling, H1-2026 리프라이싱 역산 앵커)</div>
+            <div className="text-[#6B7280]"><strong className="text-[#111827]">기술 문턱:</strong> 정부 수소·전력 가격 시나리오 연동 학습조정 비용경로 (H₂-DRI · e-NCC)</div>
           </div>
           <div className="space-y-2.5">
             <div className="text-[#6B7280]"><strong className="text-[#111827]">부문:</strong> 6개 (발전·철강·석유화학·시멘트·정유·기타)</div>
-            <div className="text-[#6B7280]"><strong className="text-[#111827]">제외 기술:</strong> CCUS (저장소 부재), 원전 확대 (정치적 불확실성)</div>
             <div className="text-[#6B7280]"><strong className="text-[#111827]">기간:</strong> 2026–2040 (4차~6차 할당계획 기간)</div>
-            <div className="text-[#6B7280]"><strong className="text-[#111827]">Cap 기준:</strong> NDC 2030(-29%), 2035(-33~46%), 2040(-35~58%)</div>
-            <div className="text-[#6B7280]"><strong className="text-[#111827]">공급 보정:</strong> K-MSR 경매 공급량 조정 → effective supply 반영</div>
+            <div className="text-[#6B7280]"><strong className="text-[#111827]">비교 대상:</strong> K-MSR 운영규칙 4종 (P0 무정책 · P1 시행령 초안 · A 가격약속형 · B 수량약속형)</div>
+            <div className="text-[#6B7280]"><strong className="text-[#111827]">유상할당:</strong> 정부 기발표 경로(A_gov) 공통 — 신규 경매물량 요구 없음</div>
+            <div className="text-[#6B7280]"><strong className="text-[#111827]">공급 보정:</strong> K-MSR 흡수·보류·무효화 → effective supply 반영, 하한은 1차시장 overlay</div>
             <div className="text-[#6B7280]"><strong className="text-[#111827]">가격 결정:</strong> 단일시장 정리 — 유상할당 비율은 가격에 직접 무관, K-MSR은 공급을 통해 가격에 영향</div>
           </div>
         </div>

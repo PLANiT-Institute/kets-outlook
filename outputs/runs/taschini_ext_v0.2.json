@@ -1,0 +1,1475 @@
+{
+  "version": "taschini_ext_0.3 (msr v1.0 기반)",
+  "macc_mode": "step",
+  "params": {
+    "gamma": 2.0,
+    "sigma_bank": 0.3,
+    "kappa": 1.0,
+    "opt_rf": 0.035,
+    "opt_vol": 0.35,
+    "ccr_phi": 0.5,
+    "ccr_target_ratio": 0.5,
+    "ccr_max_adjust": 0.15
+  },
+  "uncertainty_band": [
+    {
+      "scenario": "base",
+      "msr_level": "L0",
+      "year": 2026,
+      "kau_central": 33188,
+      "premium_pct": 1.6,
+      "kau_lower": 32663,
+      "kau_upper": 33713,
+      "bank_Mt": 89.1
+    },
+    {
+      "scenario": "base",
+      "msr_level": "L0",
+      "year": 2027,
+      "kau_central": 35065,
+      "premium_pct": 2.0,
+      "kau_lower": 34371,
+      "kau_upper": 35759,
+      "bank_Mt": 107.5
+    },
+    {
+      "scenario": "base",
+      "msr_level": "L0",
+      "year": 2028,
+      "kau_central": 37047,
+      "premium_pct": 2.2,
+      "kau_lower": 36242,
+      "kau_upper": 37852,
+      "bank_Mt": 113.7
+    },
+    {
+      "scenario": "base",
+      "msr_level": "L0",
+      "year": 2029,
+      "kau_central": 39142,
+      "premium_pct": 2.3,
+      "kau_lower": 38255,
+      "kau_upper": 40029,
+      "bank_Mt": 114.0
+    },
+    {
+      "scenario": "base",
+      "msr_level": "L0",
+      "year": 2030,
+      "kau_central": 41355,
+      "premium_pct": 2.1,
+      "kau_lower": 40484,
+      "kau_upper": 42226,
+      "bank_Mt": 101.8
+    },
+    {
+      "scenario": "base",
+      "msr_level": "L0",
+      "year": 2031,
+      "kau_central": 43693,
+      "premium_pct": 1.8,
+      "kau_lower": 42896,
+      "kau_upper": 44490,
+      "bank_Mt": 86.4
+    },
+    {
+      "scenario": "base",
+      "msr_level": "L0",
+      "year": 2032,
+      "kau_central": 46164,
+      "premium_pct": 1.5,
+      "kau_lower": 45489,
+      "kau_upper": 46839,
+      "bank_Mt": 67.9
+    },
+    {
+      "scenario": "base",
+      "msr_level": "L0",
+      "year": 2033,
+      "kau_central": 48774,
+      "premium_pct": 1.0,
+      "kau_lower": 48279,
+      "kau_upper": 49269,
+      "bank_Mt": 46.2
+    },
+    {
+      "scenario": "base",
+      "msr_level": "L0",
+      "year": 2034,
+      "kau_central": 51532,
+      "premium_pct": 0.6,
+      "kau_lower": 51216,
+      "kau_upper": 51848,
+      "bank_Mt": 27.3
+    },
+    {
+      "scenario": "base",
+      "msr_level": "L0",
+      "year": 2035,
+      "kau_central": 54445,
+      "premium_pct": 0.4,
+      "kau_lower": 54232,
+      "kau_upper": 54658,
+      "bank_Mt": 17.1
+    },
+    {
+      "scenario": "base",
+      "msr_level": "L0",
+      "year": 2036,
+      "kau_central": 57524,
+      "premium_pct": 0.4,
+      "kau_lower": 57310,
+      "kau_upper": 57738,
+      "bank_Mt": 15.9
+    },
+    {
+      "scenario": "base",
+      "msr_level": "L0",
+      "year": 2037,
+      "kau_central": 60776,
+      "premium_pct": 0.3,
+      "kau_lower": 60605,
+      "kau_upper": 60947,
+      "bank_Mt": 11.8
+    },
+    {
+      "scenario": "base",
+      "msr_level": "L0",
+      "year": 2038,
+      "kau_central": 64212,
+      "premium_pct": 0.2,
+      "kau_lower": 64100,
+      "kau_upper": 64324,
+      "bank_Mt": 7.2
+    },
+    {
+      "scenario": "base",
+      "msr_level": "L0",
+      "year": 2039,
+      "kau_central": 67843,
+      "premium_pct": 0.0,
+      "kau_lower": 67843,
+      "kau_upper": 67843,
+      "bank_Mt": 0.0
+    },
+    {
+      "scenario": "base",
+      "msr_level": "L0",
+      "year": 2040,
+      "kau_central": 67461,
+      "premium_pct": 0.0,
+      "kau_lower": 67461,
+      "kau_upper": 67461,
+      "bank_Mt": 0.0
+    },
+    {
+      "scenario": "base",
+      "msr_level": "L3",
+      "year": 2026,
+      "kau_central": 34626,
+      "premium_pct": 1.3,
+      "kau_lower": 34189,
+      "kau_upper": 35063,
+      "bank_Mt": 71.1
+    },
+    {
+      "scenario": "base",
+      "msr_level": "L3",
+      "year": 2027,
+      "kau_central": 36584,
+      "premium_pct": 1.1,
+      "kau_lower": 36167,
+      "kau_upper": 37001,
+      "bank_Mt": 62.0
+    },
+    {
+      "scenario": "base",
+      "msr_level": "L3",
+      "year": 2028,
+      "kau_central": 38652,
+      "premium_pct": 0.9,
+      "kau_lower": 38294,
+      "kau_upper": 39010,
+      "bank_Mt": 48.5
+    },
+    {
+      "scenario": "base",
+      "msr_level": "L3",
+      "year": 2029,
+      "kau_central": 40838,
+      "premium_pct": 0.6,
+      "kau_lower": 40612,
+      "kau_upper": 41064,
+      "bank_Mt": 27.9
+    },
+    {
+      "scenario": "base",
+      "msr_level": "L3",
+      "year": 2030,
+      "kau_central": 43147,
+      "premium_pct": 0.0,
+      "kau_lower": 43147,
+      "kau_upper": 43147,
+      "bank_Mt": 0.0
+    },
+    {
+      "scenario": "base",
+      "msr_level": "L3",
+      "year": 2031,
+      "kau_central": 42167,
+      "premium_pct": 0.1,
+      "kau_lower": 42126,
+      "kau_upper": 42208,
+      "bank_Mt": 4.6
+    },
+    {
+      "scenario": "base",
+      "msr_level": "L3",
+      "year": 2032,
+      "kau_central": 44551,
+      "premium_pct": 0.1,
+      "kau_lower": 44492,
+      "kau_upper": 44610,
+      "bank_Mt": 6.1
+    },
+    {
+      "scenario": "base",
+      "msr_level": "L3",
+      "year": 2033,
+      "kau_central": 47070,
+      "premium_pct": 0.1,
+      "kau_lower": 47024,
+      "kau_upper": 47116,
+      "bank_Mt": 4.4
+    },
+    {
+      "scenario": "base",
+      "msr_level": "L3",
+      "year": 2034,
+      "kau_central": 49732,
+      "premium_pct": 0.1,
+      "kau_lower": 49704,
+      "kau_upper": 49760,
+      "bank_Mt": 2.5
+    },
+    {
+      "scenario": "base",
+      "msr_level": "L3",
+      "year": 2035,
+      "kau_central": 52544,
+      "premium_pct": 0.0,
+      "kau_lower": 52536,
+      "kau_upper": 52552,
+      "bank_Mt": 0.7
+    },
+    {
+      "scenario": "base",
+      "msr_level": "L3",
+      "year": 2036,
+      "kau_central": 55514,
+      "premium_pct": 0.4,
+      "kau_lower": 55303,
+      "kau_upper": 55725,
+      "bank_Mt": 16.3
+    },
+    {
+      "scenario": "base",
+      "msr_level": "L3",
+      "year": 2037,
+      "kau_central": 58653,
+      "premium_pct": 0.3,
+      "kau_lower": 58482,
+      "kau_upper": 58824,
+      "bank_Mt": 12.2
+    },
+    {
+      "scenario": "base",
+      "msr_level": "L3",
+      "year": 2038,
+      "kau_central": 61970,
+      "premium_pct": 0.2,
+      "kau_lower": 61860,
+      "kau_upper": 62080,
+      "bank_Mt": 7.3
+    },
+    {
+      "scenario": "base",
+      "msr_level": "L3",
+      "year": 2039,
+      "kau_central": 65473,
+      "premium_pct": 0.0,
+      "kau_lower": 65473,
+      "kau_upper": 65473,
+      "bank_Mt": 0.0
+    },
+    {
+      "scenario": "base",
+      "msr_level": "L3",
+      "year": 2040,
+      "kau_central": 67461,
+      "premium_pct": 0.0,
+      "kau_lower": 67461,
+      "kau_upper": 67461,
+      "bank_Mt": 0.0
+    },
+    {
+      "scenario": "middle",
+      "msr_level": "L0",
+      "year": 2026,
+      "kau_central": 41175,
+      "premium_pct": 1.9,
+      "kau_lower": 40394,
+      "kau_upper": 41956,
+      "bank_Mt": 106.8
+    },
+    {
+      "scenario": "middle",
+      "msr_level": "L0",
+      "year": 2027,
+      "kau_central": 43503,
+      "premium_pct": 2.4,
+      "kau_lower": 42462,
+      "kau_upper": 44544,
+      "bank_Mt": 129.5
+    },
+    {
+      "scenario": "middle",
+      "msr_level": "L0",
+      "year": 2028,
+      "kau_central": 45962,
+      "premium_pct": 2.7,
+      "kau_lower": 44739,
+      "kau_upper": 47185,
+      "bank_Mt": 138.1
+    },
+    {
+      "scenario": "middle",
+      "msr_level": "L0",
+      "year": 2029,
+      "kau_central": 48561,
+      "premium_pct": 2.7,
+      "kau_lower": 47261,
+      "kau_upper": 49861,
+      "bank_Mt": 133.3
+    },
+    {
+      "scenario": "middle",
+      "msr_level": "L0",
+      "year": 2030,
+      "kau_central": 51307,
+      "premium_pct": 2.5,
+      "kau_lower": 50006,
+      "kau_upper": 52608,
+      "bank_Mt": 120.9
+    },
+    {
+      "scenario": "middle",
+      "msr_level": "L0",
+      "year": 2031,
+      "kau_central": 54208,
+      "premium_pct": 2.3,
+      "kau_lower": 52946,
+      "kau_upper": 55470,
+      "bank_Mt": 107.6
+    },
+    {
+      "scenario": "middle",
+      "msr_level": "L0",
+      "year": 2032,
+      "kau_central": 57273,
+      "premium_pct": 2.3,
+      "kau_lower": 55948,
+      "kau_upper": 58598,
+      "bank_Mt": 103.6
+    },
+    {
+      "scenario": "middle",
+      "msr_level": "L0",
+      "year": 2033,
+      "kau_central": 60511,
+      "premium_pct": 2.1,
+      "kau_lower": 59218,
+      "kau_upper": 61804,
+      "bank_Mt": 92.8
+    },
+    {
+      "scenario": "middle",
+      "msr_level": "L0",
+      "year": 2034,
+      "kau_central": 63932,
+      "premium_pct": 1.9,
+      "kau_lower": 62707,
+      "kau_upper": 65157,
+      "bank_Mt": 80.7
+    },
+    {
+      "scenario": "middle",
+      "msr_level": "L0",
+      "year": 2035,
+      "kau_central": 67547,
+      "premium_pct": 1.8,
+      "kau_lower": 66353,
+      "kau_upper": 68741,
+      "bank_Mt": 72.1
+    },
+    {
+      "scenario": "middle",
+      "msr_level": "L0",
+      "year": 2036,
+      "kau_central": 71366,
+      "premium_pct": 1.5,
+      "kau_lower": 70280,
+      "kau_upper": 72452,
+      "bank_Mt": 60.2
+    },
+    {
+      "scenario": "middle",
+      "msr_level": "L0",
+      "year": 2037,
+      "kau_central": 75401,
+      "premium_pct": 1.1,
+      "kau_lower": 74547,
+      "kau_upper": 76255,
+      "bank_Mt": 43.4
+    },
+    {
+      "scenario": "middle",
+      "msr_level": "L0",
+      "year": 2038,
+      "kau_central": 79664,
+      "premium_pct": 0.5,
+      "kau_lower": 79226,
+      "kau_upper": 80102,
+      "bank_Mt": 20.4
+    },
+    {
+      "scenario": "middle",
+      "msr_level": "L0",
+      "year": 2039,
+      "kau_central": 84169,
+      "premium_pct": 0.2,
+      "kau_lower": 83991,
+      "kau_upper": 84347,
+      "bank_Mt": 7.6
+    },
+    {
+      "scenario": "middle",
+      "msr_level": "L0",
+      "year": 2040,
+      "kau_central": 88928,
+      "premium_pct": 0.0,
+      "kau_lower": 88928,
+      "kau_upper": 88928,
+      "bank_Mt": 0.0
+    },
+    {
+      "scenario": "middle",
+      "msr_level": "L3",
+      "year": 2026,
+      "kau_central": 42088,
+      "premium_pct": 1.4,
+      "kau_lower": 41500,
+      "kau_upper": 42676,
+      "bank_Mt": 78.7
+    },
+    {
+      "scenario": "middle",
+      "msr_level": "L3",
+      "year": 2027,
+      "kau_central": 44467,
+      "premium_pct": 1.3,
+      "kau_lower": 43875,
+      "kau_upper": 45059,
+      "bank_Mt": 72.0
+    },
+    {
+      "scenario": "middle",
+      "msr_level": "L3",
+      "year": 2028,
+      "kau_central": 46982,
+      "premium_pct": 1.0,
+      "kau_lower": 46498,
+      "kau_upper": 47466,
+      "bank_Mt": 53.4
+    },
+    {
+      "scenario": "middle",
+      "msr_level": "L3",
+      "year": 2029,
+      "kau_central": 49638,
+      "premium_pct": 0.6,
+      "kau_lower": 49348,
+      "kau_upper": 49928,
+      "bank_Mt": 29.1
+    },
+    {
+      "scenario": "middle",
+      "msr_level": "L3",
+      "year": 2030,
+      "kau_central": 52445,
+      "premium_pct": 0.0,
+      "kau_lower": 52435,
+      "kau_upper": 52455,
+      "bank_Mt": 0.9
+    },
+    {
+      "scenario": "middle",
+      "msr_level": "L3",
+      "year": 2031,
+      "kau_central": 55410,
+      "premium_pct": 0.5,
+      "kau_lower": 55116,
+      "kau_upper": 55704,
+      "bank_Mt": 24.5
+    },
+    {
+      "scenario": "middle",
+      "msr_level": "L3",
+      "year": 2032,
+      "kau_central": 58543,
+      "premium_pct": 0.6,
+      "kau_lower": 58211,
+      "kau_upper": 58875,
+      "bank_Mt": 25.4
+    },
+    {
+      "scenario": "middle",
+      "msr_level": "L3",
+      "year": 2033,
+      "kau_central": 61853,
+      "premium_pct": 0.5,
+      "kau_lower": 61548,
+      "kau_upper": 62158,
+      "bank_Mt": 21.4
+    },
+    {
+      "scenario": "middle",
+      "msr_level": "L3",
+      "year": 2034,
+      "kau_central": 65350,
+      "premium_pct": 0.6,
+      "kau_lower": 64965,
+      "kau_upper": 65735,
+      "bank_Mt": 24.8
+    },
+    {
+      "scenario": "middle",
+      "msr_level": "L3",
+      "year": 2035,
+      "kau_central": 69045,
+      "premium_pct": 0.5,
+      "kau_lower": 68671,
+      "kau_upper": 69419,
+      "bank_Mt": 22.1
+    },
+    {
+      "scenario": "middle",
+      "msr_level": "L3",
+      "year": 2036,
+      "kau_central": 72949,
+      "premium_pct": 0.5,
+      "kau_lower": 72610,
+      "kau_upper": 73288,
+      "bank_Mt": 18.4
+    },
+    {
+      "scenario": "middle",
+      "msr_level": "L3",
+      "year": 2037,
+      "kau_central": 77073,
+      "premium_pct": 0.3,
+      "kau_lower": 76856,
+      "kau_upper": 77290,
+      "bank_Mt": 10.8
+    },
+    {
+      "scenario": "middle",
+      "msr_level": "L3",
+      "year": 2038,
+      "kau_central": 81431,
+      "premium_pct": 0.0,
+      "kau_lower": 81431,
+      "kau_upper": 81431,
+      "bank_Mt": 0.0
+    },
+    {
+      "scenario": "middle",
+      "msr_level": "L3",
+      "year": 2039,
+      "kau_central": 83662,
+      "premium_pct": 0.0,
+      "kau_lower": 83662,
+      "kau_upper": 83662,
+      "bank_Mt": 0.0
+    },
+    {
+      "scenario": "middle",
+      "msr_level": "L3",
+      "year": 2040,
+      "kau_central": 88209,
+      "premium_pct": 0.0,
+      "kau_lower": 88209,
+      "kau_upper": 88209,
+      "bank_Mt": 0.0
+    },
+    {
+      "scenario": "ideal",
+      "msr_level": "L0",
+      "year": 2026,
+      "kau_central": 125773,
+      "premium_pct": 3.6,
+      "kau_lower": 121305,
+      "kau_upper": 130241,
+      "bank_Mt": 200.1
+    },
+    {
+      "scenario": "ideal",
+      "msr_level": "L0",
+      "year": 2027,
+      "kau_central": 132885,
+      "premium_pct": 5.6,
+      "kau_lower": 125476,
+      "kau_upper": 140294,
+      "bank_Mt": 295.5
+    },
+    {
+      "scenario": "ideal",
+      "msr_level": "L0",
+      "year": 2028,
+      "kau_central": 140398,
+      "premium_pct": 7.0,
+      "kau_lower": 130566,
+      "kau_upper": 150230,
+      "bank_Mt": 348.6
+    },
+    {
+      "scenario": "ideal",
+      "msr_level": "L0",
+      "year": 2029,
+      "kau_central": 148336,
+      "premium_pct": 7.8,
+      "kau_lower": 136730,
+      "kau_upper": 159942,
+      "bank_Mt": 363.4
+    },
+    {
+      "scenario": "ideal",
+      "msr_level": "L0",
+      "year": 2030,
+      "kau_central": 156723,
+      "premium_pct": 8.4,
+      "kau_lower": 143514,
+      "kau_upper": 169932,
+      "bank_Mt": 364.3
+    },
+    {
+      "scenario": "ideal",
+      "msr_level": "L0",
+      "year": 2031,
+      "kau_central": 165585,
+      "premium_pct": 8.6,
+      "kau_lower": 151282,
+      "kau_upper": 179888,
+      "bank_Mt": 355.1
+    },
+    {
+      "scenario": "ideal",
+      "msr_level": "L0",
+      "year": 2032,
+      "kau_central": 174947,
+      "premium_pct": 8.6,
+      "kau_lower": 159891,
+      "kau_upper": 190003,
+      "bank_Mt": 336.6
+    },
+    {
+      "scenario": "ideal",
+      "msr_level": "L0",
+      "year": 2033,
+      "kau_central": 184838,
+      "premium_pct": 8.4,
+      "kau_lower": 169393,
+      "kau_upper": 200283,
+      "bank_Mt": 310.1
+    },
+    {
+      "scenario": "ideal",
+      "msr_level": "L0",
+      "year": 2034,
+      "kau_central": 195289,
+      "premium_pct": 7.8,
+      "kau_lower": 179966,
+      "kau_upper": 210612,
+      "bank_Mt": 275.5
+    },
+    {
+      "scenario": "ideal",
+      "msr_level": "L0",
+      "year": 2035,
+      "kau_central": 206331,
+      "premium_pct": 7.0,
+      "kau_lower": 191817,
+      "kau_upper": 220845,
+      "bank_Mt": 233.7
+    },
+    {
+      "scenario": "ideal",
+      "msr_level": "L0",
+      "year": 2036,
+      "kau_central": 217997,
+      "premium_pct": 6.1,
+      "kau_lower": 204781,
+      "kau_upper": 231213,
+      "bank_Mt": 191.3
+    },
+    {
+      "scenario": "ideal",
+      "msr_level": "L0",
+      "year": 2037,
+      "kau_central": 230323,
+      "premium_pct": 4.8,
+      "kau_lower": 219175,
+      "kau_upper": 241471,
+      "bank_Mt": 145.2
+    },
+    {
+      "scenario": "ideal",
+      "msr_level": "L0",
+      "year": 2038,
+      "kau_central": 243345,
+      "premium_pct": 3.4,
+      "kau_lower": 234968,
+      "kau_upper": 251722,
+      "bank_Mt": 98.3
+    },
+    {
+      "scenario": "ideal",
+      "msr_level": "L0",
+      "year": 2039,
+      "kau_central": 257104,
+      "premium_pct": 1.8,
+      "kau_lower": 252372,
+      "kau_upper": 261836,
+      "bank_Mt": 49.9
+    },
+    {
+      "scenario": "ideal",
+      "msr_level": "L0",
+      "year": 2040,
+      "kau_central": 271641,
+      "premium_pct": 0.0,
+      "kau_lower": 271641,
+      "kau_upper": 271641,
+      "bank_Mt": 0.0
+    },
+    {
+      "scenario": "ideal",
+      "msr_level": "L3",
+      "year": 2026,
+      "kau_central": 191896,
+      "premium_pct": 3.4,
+      "kau_lower": 185359,
+      "kau_upper": 198433,
+      "bank_Mt": 191.9
+    },
+    {
+      "scenario": "ideal",
+      "msr_level": "L3",
+      "year": 2027,
+      "kau_central": 202746,
+      "premium_pct": 4.9,
+      "kau_lower": 192735,
+      "kau_upper": 212757,
+      "bank_Mt": 261.7
+    },
+    {
+      "scenario": "ideal",
+      "msr_level": "L3",
+      "year": 2028,
+      "kau_central": 214209,
+      "premium_pct": 5.9,
+      "kau_lower": 201613,
+      "kau_upper": 226805,
+      "bank_Mt": 292.7
+    },
+    {
+      "scenario": "ideal",
+      "msr_level": "L3",
+      "year": 2029,
+      "kau_central": 226321,
+      "premium_pct": 6.3,
+      "kau_lower": 212024,
+      "kau_upper": 240618,
+      "bank_Mt": 293.4
+    },
+    {
+      "scenario": "ideal",
+      "msr_level": "L3",
+      "year": 2030,
+      "kau_central": 239117,
+      "premium_pct": 6.4,
+      "kau_lower": 223842,
+      "kau_upper": 254392,
+      "bank_Mt": 276.1
+    },
+    {
+      "scenario": "ideal",
+      "msr_level": "L3",
+      "year": 2031,
+      "kau_central": 252637,
+      "premium_pct": 6.5,
+      "kau_lower": 236248,
+      "kau_upper": 269026,
+      "bank_Mt": 266.7
+    },
+    {
+      "scenario": "ideal",
+      "msr_level": "L3",
+      "year": 2032,
+      "kau_central": 266921,
+      "premium_pct": 6.4,
+      "kau_lower": 249764,
+      "kau_upper": 284078,
+      "bank_Mt": 251.4
+    },
+    {
+      "scenario": "ideal",
+      "msr_level": "L3",
+      "year": 2033,
+      "kau_central": 282013,
+      "premium_pct": 6.3,
+      "kau_lower": 264292,
+      "kau_upper": 299734,
+      "bank_Mt": 233.2
+    },
+    {
+      "scenario": "ideal",
+      "msr_level": "L3",
+      "year": 2034,
+      "kau_central": 297958,
+      "premium_pct": 6.0,
+      "kau_lower": 280069,
+      "kau_upper": 315847,
+      "bank_Mt": 210.8
+    },
+    {
+      "scenario": "ideal",
+      "msr_level": "L3",
+      "year": 2035,
+      "kau_central": 314805,
+      "premium_pct": 5.6,
+      "kau_lower": 297152,
+      "kau_upper": 332458,
+      "bank_Mt": 186.3
+    },
+    {
+      "scenario": "ideal",
+      "msr_level": "L3",
+      "year": 2036,
+      "kau_central": 332605,
+      "premium_pct": 5.2,
+      "kau_lower": 315414,
+      "kau_upper": 349796,
+      "bank_Mt": 163.1
+    },
+    {
+      "scenario": "ideal",
+      "msr_level": "L3",
+      "year": 2037,
+      "kau_central": 351410,
+      "premium_pct": 4.6,
+      "kau_lower": 335210,
+      "kau_upper": 367610,
+      "bank_Mt": 138.3
+    },
+    {
+      "scenario": "ideal",
+      "msr_level": "L3",
+      "year": 2038,
+      "kau_central": 371279,
+      "premium_pct": 3.5,
+      "kau_lower": 358381,
+      "kau_upper": 384177,
+      "bank_Mt": 99.2
+    },
+    {
+      "scenario": "ideal",
+      "msr_level": "L3",
+      "year": 2039,
+      "kau_central": 392271,
+      "premium_pct": 1.8,
+      "kau_lower": 385355,
+      "kau_upper": 399187,
+      "bank_Mt": 47.8
+    },
+    {
+      "scenario": "ideal",
+      "msr_level": "L3",
+      "year": 2040,
+      "kau_central": 414451,
+      "premium_pct": 0.0,
+      "kau_lower": 414451,
+      "kau_upper": 414451,
+      "bank_Mt": 0.0
+    }
+  ],
+  "floor_option_value": [
+    {
+      "floor_id": "M_mid",
+      "year": 2026,
+      "fundamental_kau": 33188,
+      "floor_kau": 15000,
+      "put_value_krw_per_t": 0,
+      "moneyness": "OTM",
+      "implied_defense_cost_trillion": 0.0
+    },
+    {
+      "floor_id": "M_mid",
+      "year": 2027,
+      "fundamental_kau": 35065,
+      "floor_kau": 17500,
+      "put_value_krw_per_t": 73,
+      "moneyness": "OTM",
+      "implied_defense_cost_trillion": 0.01
+    },
+    {
+      "floor_id": "M_mid",
+      "year": 2028,
+      "fundamental_kau": 37047,
+      "floor_kau": 20000,
+      "put_value_krw_per_t": 628,
+      "moneyness": "OTM",
+      "implied_defense_cost_trillion": 0.04
+    },
+    {
+      "floor_id": "M_mid",
+      "year": 2029,
+      "fundamental_kau": 39142,
+      "floor_kau": 22500,
+      "put_value_krw_per_t": 1543,
+      "moneyness": "OTM",
+      "implied_defense_cost_trillion": 0.1
+    },
+    {
+      "floor_id": "M_mid",
+      "year": 2030,
+      "fundamental_kau": 41355,
+      "floor_kau": 25000,
+      "put_value_krw_per_t": 2614,
+      "moneyness": "OTM",
+      "implied_defense_cost_trillion": 0.17
+    },
+    {
+      "floor_id": "M_mid",
+      "year": 2031,
+      "fundamental_kau": 43693,
+      "floor_kau": 27500,
+      "put_value_krw_per_t": 3738,
+      "moneyness": "OTM",
+      "implied_defense_cost_trillion": 0.24
+    },
+    {
+      "floor_id": "M_mid",
+      "year": 2032,
+      "fundamental_kau": 46164,
+      "floor_kau": 30000,
+      "put_value_krw_per_t": 4861,
+      "moneyness": "OTM",
+      "implied_defense_cost_trillion": 0.3
+    },
+    {
+      "floor_id": "M_mid",
+      "year": 2033,
+      "fundamental_kau": 48774,
+      "floor_kau": 32500,
+      "put_value_krw_per_t": 5956,
+      "moneyness": "OTM",
+      "implied_defense_cost_trillion": 0.37
+    },
+    {
+      "floor_id": "M_mid",
+      "year": 2034,
+      "fundamental_kau": 51532,
+      "floor_kau": 35000,
+      "put_value_krw_per_t": 7007,
+      "moneyness": "OTM",
+      "implied_defense_cost_trillion": 0.42
+    },
+    {
+      "floor_id": "M_mid",
+      "year": 2035,
+      "fundamental_kau": 54445,
+      "floor_kau": 37500,
+      "put_value_krw_per_t": 8004,
+      "moneyness": "OTM",
+      "implied_defense_cost_trillion": 0.47
+    },
+    {
+      "floor_id": "M_mid",
+      "year": 2036,
+      "fundamental_kau": 57524,
+      "floor_kau": 40000,
+      "put_value_krw_per_t": 8944,
+      "moneyness": "OTM",
+      "implied_defense_cost_trillion": 0.52
+    },
+    {
+      "floor_id": "M_mid",
+      "year": 2037,
+      "fundamental_kau": 60776,
+      "floor_kau": 42500,
+      "put_value_krw_per_t": 9824,
+      "moneyness": "OTM",
+      "implied_defense_cost_trillion": 0.56
+    },
+    {
+      "floor_id": "M_mid",
+      "year": 2038,
+      "fundamental_kau": 64212,
+      "floor_kau": 45000,
+      "put_value_krw_per_t": 10644,
+      "moneyness": "OTM",
+      "implied_defense_cost_trillion": 0.59
+    },
+    {
+      "floor_id": "M_mid",
+      "year": 2039,
+      "fundamental_kau": 67843,
+      "floor_kau": 47500,
+      "put_value_krw_per_t": 11405,
+      "moneyness": "OTM",
+      "implied_defense_cost_trillion": 0.62
+    },
+    {
+      "floor_id": "M_mid",
+      "year": 2040,
+      "fundamental_kau": 67461,
+      "floor_kau": 50000,
+      "put_value_krw_per_t": 12579,
+      "moneyness": "OTM",
+      "implied_defense_cost_trillion": 0.67
+    },
+    {
+      "floor_id": "M_high",
+      "year": 2026,
+      "fundamental_kau": 33188,
+      "floor_kau": 25000,
+      "put_value_krw_per_t": 0,
+      "moneyness": "OTM",
+      "implied_defense_cost_trillion": 0.0
+    },
+    {
+      "floor_id": "M_high",
+      "year": 2027,
+      "fundamental_kau": 35065,
+      "floor_kau": 29643,
+      "put_value_krw_per_t": 2206,
+      "moneyness": "OTM",
+      "implied_defense_cost_trillion": 0.16
+    },
+    {
+      "floor_id": "M_high",
+      "year": 2028,
+      "fundamental_kau": 37047,
+      "floor_kau": 34286,
+      "put_value_krw_per_t": 5291,
+      "moneyness": "OTM",
+      "implied_defense_cost_trillion": 0.37
+    },
+    {
+      "floor_id": "M_high",
+      "year": 2029,
+      "fundamental_kau": 39142,
+      "floor_kau": 38929,
+      "put_value_krw_per_t": 8275,
+      "moneyness": "OTM",
+      "implied_defense_cost_trillion": 0.56
+    },
+    {
+      "floor_id": "M_high",
+      "year": 2030,
+      "fundamental_kau": 41355,
+      "floor_kau": 43571,
+      "put_value_krw_per_t": 11093,
+      "moneyness": "ITM(방어필요)",
+      "implied_defense_cost_trillion": 0.72
+    },
+    {
+      "floor_id": "M_high",
+      "year": 2031,
+      "fundamental_kau": 43693,
+      "floor_kau": 48214,
+      "put_value_krw_per_t": 13730,
+      "moneyness": "ITM(방어필요)",
+      "implied_defense_cost_trillion": 0.88
+    },
+    {
+      "floor_id": "M_high",
+      "year": 2032,
+      "fundamental_kau": 46164,
+      "floor_kau": 52857,
+      "put_value_krw_per_t": 16185,
+      "moneyness": "ITM(방어필요)",
+      "implied_defense_cost_trillion": 1.01
+    },
+    {
+      "floor_id": "M_high",
+      "year": 2033,
+      "fundamental_kau": 48774,
+      "floor_kau": 57500,
+      "put_value_krw_per_t": 18465,
+      "moneyness": "ITM(방어필요)",
+      "implied_defense_cost_trillion": 1.13
+    },
+    {
+      "floor_id": "M_high",
+      "year": 2034,
+      "fundamental_kau": 51532,
+      "floor_kau": 62143,
+      "put_value_krw_per_t": 20573,
+      "moneyness": "ITM(방어필요)",
+      "implied_defense_cost_trillion": 1.24
+    },
+    {
+      "floor_id": "M_high",
+      "year": 2035,
+      "fundamental_kau": 54445,
+      "floor_kau": 66786,
+      "put_value_krw_per_t": 22519,
+      "moneyness": "ITM(방어필요)",
+      "implied_defense_cost_trillion": 1.33
+    },
+    {
+      "floor_id": "M_high",
+      "year": 2036,
+      "fundamental_kau": 57524,
+      "floor_kau": 71429,
+      "put_value_krw_per_t": 24309,
+      "moneyness": "ITM(방어필요)",
+      "implied_defense_cost_trillion": 1.41
+    },
+    {
+      "floor_id": "M_high",
+      "year": 2037,
+      "fundamental_kau": 60776,
+      "floor_kau": 76071,
+      "put_value_krw_per_t": 25951,
+      "moneyness": "ITM(방어필요)",
+      "implied_defense_cost_trillion": 1.47
+    },
+    {
+      "floor_id": "M_high",
+      "year": 2038,
+      "fundamental_kau": 64212,
+      "floor_kau": 80714,
+      "put_value_krw_per_t": 27453,
+      "moneyness": "ITM(방어필요)",
+      "implied_defense_cost_trillion": 1.52
+    },
+    {
+      "floor_id": "M_high",
+      "year": 2039,
+      "fundamental_kau": 67843,
+      "floor_kau": 85357,
+      "put_value_krw_per_t": 28821,
+      "moneyness": "ITM(방어필요)",
+      "implied_defense_cost_trillion": 1.57
+    },
+    {
+      "floor_id": "M_high",
+      "year": 2040,
+      "fundamental_kau": 67461,
+      "floor_kau": 90000,
+      "put_value_krw_per_t": 30899,
+      "moneyness": "ITM(방어필요)",
+      "implied_defense_cost_trillion": 1.65
+    },
+    {
+      "floor_id": "M_max",
+      "year": 2026,
+      "fundamental_kau": 33188,
+      "floor_kau": 40000,
+      "put_value_krw_per_t": 6812,
+      "moneyness": "ITM(방어필요)",
+      "implied_defense_cost_trillion": 0.52
+    },
+    {
+      "floor_id": "M_max",
+      "year": 2027,
+      "fundamental_kau": 35065,
+      "floor_kau": 47857,
+      "put_value_krw_per_t": 13759,
+      "moneyness": "ITM(방어필요)",
+      "implied_defense_cost_trillion": 1.01
+    },
+    {
+      "floor_id": "M_max",
+      "year": 2028,
+      "fundamental_kau": 37047,
+      "floor_kau": 55714,
+      "put_value_krw_per_t": 19776,
+      "moneyness": "ITM(방어필요)",
+      "implied_defense_cost_trillion": 1.4
+    },
+    {
+      "floor_id": "M_max",
+      "year": 2029,
+      "fundamental_kau": 39142,
+      "floor_kau": 63571,
+      "put_value_krw_per_t": 25180,
+      "moneyness": "ITM(방어필요)",
+      "implied_defense_cost_trillion": 1.71
+    },
+    {
+      "floor_id": "M_max",
+      "year": 2030,
+      "fundamental_kau": 41355,
+      "floor_kau": 71429,
+      "put_value_krw_per_t": 30113,
+      "moneyness": "ITM(방어필요)",
+      "implied_defense_cost_trillion": 1.96
+    },
+    {
+      "floor_id": "M_max",
+      "year": 2031,
+      "fundamental_kau": 43693,
+      "floor_kau": 79286,
+      "put_value_krw_per_t": 34636,
+      "moneyness": "ITM(방어필요)",
+      "implied_defense_cost_trillion": 2.21
+    },
+    {
+      "floor_id": "M_max",
+      "year": 2032,
+      "fundamental_kau": 46164,
+      "floor_kau": 87143,
+      "put_value_krw_per_t": 38787,
+      "moneyness": "ITM(방어필요)",
+      "implied_defense_cost_trillion": 2.43
+    },
+    {
+      "floor_id": "M_max",
+      "year": 2033,
+      "fundamental_kau": 48774,
+      "floor_kau": 95000,
+      "put_value_krw_per_t": 42594,
+      "moneyness": "ITM(방어필요)",
+      "implied_defense_cost_trillion": 2.62
+    },
+    {
+      "floor_id": "M_max",
+      "year": 2034,
+      "fundamental_kau": 51532,
+      "floor_kau": 102857,
+      "put_value_krw_per_t": 46079,
+      "moneyness": "ITM(방어필요)",
+      "implied_defense_cost_trillion": 2.77
+    },
+    {
+      "floor_id": "M_max",
+      "year": 2035,
+      "fundamental_kau": 54445,
+      "floor_kau": 110714,
+      "put_value_krw_per_t": 49265,
+      "moneyness": "ITM(방어필요)",
+      "implied_defense_cost_trillion": 2.91
+    },
+    {
+      "floor_id": "M_max",
+      "year": 2036,
+      "fundamental_kau": 57524,
+      "floor_kau": 118571,
+      "put_value_krw_per_t": 52168,
+      "moneyness": "ITM(방어필요)",
+      "implied_defense_cost_trillion": 3.02
+    },
+    {
+      "floor_id": "M_max",
+      "year": 2037,
+      "fundamental_kau": 60776,
+      "floor_kau": 126429,
+      "put_value_krw_per_t": 54807,
+      "moneyness": "ITM(방어필요)",
+      "implied_defense_cost_trillion": 3.1
+    },
+    {
+      "floor_id": "M_max",
+      "year": 2038,
+      "fundamental_kau": 64212,
+      "floor_kau": 134286,
+      "put_value_krw_per_t": 57196,
+      "moneyness": "ITM(방어필요)",
+      "implied_defense_cost_trillion": 3.18
+    },
+    {
+      "floor_id": "M_max",
+      "year": 2039,
+      "fundamental_kau": 67843,
+      "floor_kau": 142143,
+      "put_value_krw_per_t": 59350,
+      "moneyness": "ITM(방어필요)",
+      "implied_defense_cost_trillion": 3.23
+    },
+    {
+      "floor_id": "M_max",
+      "year": 2040,
+      "fundamental_kau": 67461,
+      "floor_kau": 150000,
+      "put_value_krw_per_t": 62505,
+      "moneyness": "ITM(방어필요)",
+      "implied_defense_cost_trillion": 3.33
+    }
+  ],
+  "ccr_vs_tnac": [
+    {
+      "year": 2026,
+      "kau": 33188,
+      "eua": 123000.0,
+      "ccr_target_kau": 61500,
+      "price_gap_pct": -46.0,
+      "ccr_supply_change_Mt": 76.0,
+      "tnac_Mt": 89.1,
+      "tnac_supply_change_Mt": -14.2
+    },
+    {
+      "year": 2027,
+      "kau": 35065,
+      "eua": 132000.0,
+      "ccr_target_kau": 66000,
+      "price_gap_pct": -46.9,
+      "ccr_supply_change_Mt": 73.3,
+      "tnac_Mt": 107.5,
+      "tnac_supply_change_Mt": -18.6
+    },
+    {
+      "year": 2028,
+      "kau": 37047,
+      "eua": 142500.0,
+      "ccr_target_kau": 71250,
+      "price_gap_pct": -48.0,
+      "ccr_supply_change_Mt": 70.7,
+      "tnac_Mt": 113.7,
+      "tnac_supply_change_Mt": -20.1
+    },
+    {
+      "year": 2029,
+      "kau": 39142,
+      "eua": 159000.0,
+      "ccr_target_kau": 79500,
+      "price_gap_pct": -50.8,
+      "ccr_supply_change_Mt": 68.0,
+      "tnac_Mt": 114.0,
+      "tnac_supply_change_Mt": -20.2
+    },
+    {
+      "year": 2030,
+      "kau": 41355,
+      "eua": 178500.0,
+      "ccr_target_kau": 89250,
+      "price_gap_pct": -53.7,
+      "ccr_supply_change_Mt": 65.2,
+      "tnac_Mt": 101.8,
+      "tnac_supply_change_Mt": -17.2
+    },
+    {
+      "year": 2031,
+      "kau": 43693,
+      "eua": 202500.0,
+      "ccr_target_kau": 101250,
+      "price_gap_pct": -56.8,
+      "ccr_supply_change_Mt": 63.9,
+      "tnac_Mt": 86.4,
+      "tnac_supply_change_Mt": -13.5
+    },
+    {
+      "year": 2032,
+      "kau": 46164,
+      "eua": 226500.0,
+      "ccr_target_kau": 113250,
+      "price_gap_pct": -59.2,
+      "ccr_supply_change_Mt": 62.7,
+      "tnac_Mt": 67.9,
+      "tnac_supply_change_Mt": -9.1
+    },
+    {
+      "year": 2033,
+      "kau": 48774,
+      "eua": 250500.0,
+      "ccr_target_kau": 125250,
+      "price_gap_pct": -61.1,
+      "ccr_supply_change_Mt": 61.4,
+      "tnac_Mt": 46.2,
+      "tnac_supply_change_Mt": -3.9
+    },
+    {
+      "year": 2034,
+      "kau": 51532,
+      "eua": 274500.0,
+      "ccr_target_kau": 137250,
+      "price_gap_pct": -62.5,
+      "ccr_supply_change_Mt": 60.2,
+      "tnac_Mt": 27.3,
+      "tnac_supply_change_Mt": -0.0
+    },
+    {
+      "year": 2035,
+      "kau": 54445,
+      "eua": 298500.0,
+      "ccr_target_kau": 149250,
+      "price_gap_pct": -63.5,
+      "ccr_supply_change_Mt": 59.0,
+      "tnac_Mt": 17.1,
+      "tnac_supply_change_Mt": -0.0
+    },
+    {
+      "year": 2036,
+      "kau": 57524,
+      "eua": 322500.0,
+      "ccr_target_kau": 161250,
+      "price_gap_pct": -64.3,
+      "ccr_supply_change_Mt": 57.8,
+      "tnac_Mt": 15.9,
+      "tnac_supply_change_Mt": -0.0
+    },
+    {
+      "year": 2037,
+      "kau": 60776,
+      "eua": 346500.0,
+      "ccr_target_kau": 173250,
+      "price_gap_pct": -64.9,
+      "ccr_supply_change_Mt": 56.6,
+      "tnac_Mt": 11.8,
+      "tnac_supply_change_Mt": -0.0
+    },
+    {
+      "year": 2038,
+      "kau": 64212,
+      "eua": 370500.0,
+      "ccr_target_kau": 185250,
+      "price_gap_pct": -65.3,
+      "ccr_supply_change_Mt": 55.5,
+      "tnac_Mt": 7.2,
+      "tnac_supply_change_Mt": -0.0
+    },
+    {
+      "year": 2039,
+      "kau": 67843,
+      "eua": 394500.0,
+      "ccr_target_kau": 197250,
+      "price_gap_pct": -65.6,
+      "ccr_supply_change_Mt": 54.4,
+      "tnac_Mt": 0.0,
+      "tnac_supply_change_Mt": -0.0
+    },
+    {
+      "year": 2040,
+      "kau": 67461,
+      "eua": 418500.0,
+      "ccr_target_kau": 209250,
+      "price_gap_pct": -67.8,
+      "ccr_supply_change_Mt": 53.3,
+      "tnac_Mt": 0.0,
+      "tnac_supply_change_Mt": -0.0
+    }
+  ]
+}

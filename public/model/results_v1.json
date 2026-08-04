@@ -1,0 +1,757 @@
+{
+ "_meta": {
+  "source": "outputs/runs/msr_results_v1.0.json",
+  "model_version": "1.0",
+  "note": "빌드타임 슬림 추출. 편집 금지 — scripts/export_web_data.py로 재생성."
+ },
+ "packages": {
+  "P0": {
+   "meta": {
+    "package_id": "P0",
+    "name_en": "No-policy counterfactual",
+    "name_kr": "무정책 반사실",
+    "msr_level": "L0",
+    "floor_id": "M0",
+    "auction_lever": "A_gov",
+    "cap_scenario": "base",
+    "lambda_regime": "hold"
+   },
+   "path": [
+    {
+     "year": 2026,
+     "kau": 22691,
+     "floor": 0,
+     "defended": true,
+     "headroom": 1.0,
+     "bank_Mt": 89.050662,
+     "auction_share": 0.099
+    },
+    {
+     "year": 2027,
+     "kau": 24669,
+     "floor": 0,
+     "defended": true,
+     "headroom": 1.0,
+     "bank_Mt": 107.479092,
+     "auction_share": 0.134
+    },
+    {
+     "year": 2028,
+     "kau": 35774,
+     "floor": 0,
+     "defended": true,
+     "headroom": 1.0,
+     "bank_Mt": 113.725693,
+     "auction_share": 0.169
+    },
+    {
+     "year": 2029,
+     "kau": 38717,
+     "floor": 0,
+     "defended": true,
+     "headroom": 1.0,
+     "bank_Mt": 113.97373,
+     "auction_share": 0.204
+    },
+    {
+     "year": 2030,
+     "kau": 47135,
+     "floor": 0,
+     "defended": true,
+     "headroom": 1.0,
+     "bank_Mt": 101.809269,
+     "auction_share": 0.239
+    },
+    {
+     "year": 2031,
+     "kau": 48489,
+     "floor": 0,
+     "defended": true,
+     "headroom": 1.0,
+     "bank_Mt": 86.421095,
+     "auction_share": 0.239
+    },
+    {
+     "year": 2032,
+     "kau": 49914,
+     "floor": 0,
+     "defended": true,
+     "headroom": 1.0,
+     "bank_Mt": 67.874656,
+     "auction_share": 0.239
+    },
+    {
+     "year": 2033,
+     "kau": 51414,
+     "floor": 0,
+     "defended": true,
+     "headroom": 1.0,
+     "bank_Mt": 46.234514,
+     "auction_share": 0.239
+    },
+    {
+     "year": 2034,
+     "kau": 52995,
+     "floor": 0,
+     "defended": true,
+     "headroom": 1.0,
+     "bank_Mt": 27.344342,
+     "auction_share": 0.239
+    },
+    {
+     "year": 2035,
+     "kau": 54660,
+     "floor": 0,
+     "defended": true,
+     "headroom": 1.0,
+     "bank_Mt": 17.145587791325212,
+     "auction_share": 0.239
+    },
+    {
+     "year": 2036,
+     "kau": 59333,
+     "floor": 0,
+     "defended": true,
+     "headroom": 1.0,
+     "bank_Mt": 15.90289079132521,
+     "auction_share": 0.239
+    },
+    {
+     "year": 2037,
+     "kau": 65295,
+     "floor": 0,
+     "defended": true,
+     "headroom": 1.0,
+     "bank_Mt": 11.815960791325212,
+     "auction_share": 0.239
+    },
+    {
+     "year": 2038,
+     "kau": 66676,
+     "floor": 0,
+     "defended": true,
+     "headroom": 1.0,
+     "bank_Mt": 7.195005791325212,
+     "auction_share": 0.239
+    },
+    {
+     "year": 2039,
+     "kau": 68170,
+     "floor": 0,
+     "defended": true,
+     "headroom": 1.0,
+     "bank_Mt": 0.0,
+     "auction_share": 0.239
+    },
+    {
+     "year": 2040,
+     "kau": 67461,
+     "floor": 0,
+     "defended": true,
+     "headroom": 1.0,
+     "bank_Mt": 0.0,
+     "auction_share": 0.239
+    }
+   ],
+   "activation_headline": {
+    "수소환원제철 (H₂-DRI-EAF)": null,
+    "NCC 전기분해로(e-cracker)": null
+   },
+   "defended_all": true,
+   "min_headroom": 1.0,
+   "max_drawdown": 0.01,
+   "cum_intake_Mt": 0.0,
+   "cum_auction_rev_trillion": 68.1
+  },
+  "P1": {
+   "meta": {
+    "package_id": "P1",
+    "name_en": "Decree as drafted",
+    "name_kr": "시행령 초안대로",
+    "msr_level": "L3",
+    "floor_id": "M_mid",
+    "auction_lever": "A_gov",
+    "cap_scenario": "base",
+    "lambda_regime": "hold"
+   },
+   "path": [
+    {
+     "year": 2026,
+     "kau": 34552,
+     "floor": 15000,
+     "defended": true,
+     "headroom": 1.0,
+     "bank_Mt": 71.12125768891653,
+     "auction_share": 0.099
+    },
+    {
+     "year": 2027,
+     "kau": 42510,
+     "floor": 17500,
+     "defended": true,
+     "headroom": 1.0,
+     "bank_Mt": 61.97207105232406,
+     "auction_share": 0.134
+    },
+    {
+     "year": 2028,
+     "kau": 45649,
+     "floor": 20000,
+     "defended": true,
+     "headroom": 1.0,
+     "bank_Mt": 48.51877381789933,
+     "auction_share": 0.169
+    },
+    {
+     "year": 2029,
+     "kau": 47028,
+     "floor": 22500,
+     "defended": true,
+     "headroom": 1.0,
+     "bank_Mt": 27.916840211331294,
+     "auction_share": 0.204
+    },
+    {
+     "year": 2030,
+     "kau": 48452,
+     "floor": 25000,
+     "defended": true,
+     "headroom": 1.0,
+     "bank_Mt": 0.0,
+     "auction_share": 0.239
+    },
+    {
+     "year": 2031,
+     "kau": 39638,
+     "floor": 27500,
+     "defended": true,
+     "headroom": 1.0,
+     "bank_Mt": 4.6117861635469195,
+     "auction_share": 0.239
+    },
+    {
+     "year": 2032,
+     "kau": 40867,
+     "floor": 30000,
+     "defended": true,
+     "headroom": 1.0,
+     "bank_Mt": 6.065309016574264,
+     "auction_share": 0.239
+    },
+    {
+     "year": 2033,
+     "kau": 48134,
+     "floor": 32500,
+     "defended": true,
+     "headroom": 1.0,
+     "bank_Mt": 4.425147943087936,
+     "auction_share": 0.239
+    },
+    {
+     "year": 2034,
+     "kau": 49937,
+     "floor": 35000,
+     "defended": true,
+     "headroom": 1.0,
+     "bank_Mt": 2.520926470382944,
+     "auction_share": 0.239
+    },
+    {
+     "year": 2035,
+     "kau": 53193,
+     "floor": 37500,
+     "defended": true,
+     "headroom": 1.0,
+     "bank_Mt": 0.6635103968966156,
+     "auction_share": 0.239
+    },
+    {
+     "year": 2036,
+     "kau": 54954,
+     "floor": 40000,
+     "defended": true,
+     "headroom": 1.0,
+     "bank_Mt": 16.289716228134782,
+     "auction_share": 0.239
+    },
+    {
+     "year": 2037,
+     "kau": 64127,
+     "floor": 42500,
+     "defended": true,
+     "headroom": 1.0,
+     "bank_Mt": 12.202848540596918,
+     "auction_share": 0.239
+    },
+    {
+     "year": 2038,
+     "kau": 65443,
+     "floor": 45000,
+     "defended": true,
+     "headroom": 1.0,
+     "bank_Mt": 7.345610948394433,
+     "auction_share": 0.239
+    },
+    {
+     "year": 2039,
+     "kau": 66866,
+     "floor": 47500,
+     "defended": true,
+     "headroom": 1.0,
+     "bank_Mt": 0.0,
+     "auction_share": 0.239
+    },
+    {
+     "year": 2040,
+     "kau": 67461,
+     "floor": 50000,
+     "defended": true,
+     "headroom": 1.0,
+     "bank_Mt": 0.0,
+     "auction_share": 0.239
+    }
+   ],
+   "activation_headline": {
+    "수소환원제철 (H₂-DRI-EAF)": null,
+    "NCC 전기분해로(e-cracker)": null
+   },
+   "defended_all": true,
+   "min_headroom": 1.0,
+   "max_drawdown": 0.182,
+   "cum_intake_Mt": 31.6,
+   "cum_auction_rev_trillion": 68.3
+  },
+  "A": {
+   "meta": {
+    "package_id": "A",
+    "name_en": "Price-commitment operating rule",
+    "name_kr": "가격약속형",
+    "msr_level": "L_C",
+    "floor_id": "corridor",
+    "auction_lever": "A_gov",
+    "cap_scenario": "base",
+    "lambda_regime": "hold"
+   },
+   "path": [
+    {
+     "year": 2026,
+     "kau": 31506,
+     "floor": 22750,
+     "defended": true,
+     "headroom": 1.0,
+     "bank_Mt": 82.13101868789809,
+     "auction_share": 0.099
+    },
+    {
+     "year": 2027,
+     "kau": 37115,
+     "floor": 31056,
+     "defended": true,
+     "headroom": 1.0,
+     "bank_Mt": 85.96381061267621,
+     "auction_share": 0.134
+    },
+    {
+     "year": 2028,
+     "kau": 46613,
+     "floor": 39361,
+     "defended": true,
+     "headroom": 1.0,
+     "bank_Mt": 81.45441161267622,
+     "auction_share": 0.169
+    },
+    {
+     "year": 2029,
+     "kau": 48418,
+     "floor": 47667,
+     "defended": true,
+     "headroom": 1.0,
+     "bank_Mt": 65.29827026872717,
+     "auction_share": 0.204
+    },
+    {
+     "year": 2030,
+     "kau": 55972,
+     "floor": 55972,
+     "defended": true,
+     "headroom": 0.755,
+     "bank_Mt": 37.381452580829084,
+     "auction_share": 0.239
+    },
+    {
+     "year": 2031,
+     "kau": 64278,
+     "floor": 64278,
+     "defended": true,
+     "headroom": 0.727,
+     "bank_Mt": 21.993278580829084,
+     "auction_share": 0.239
+    },
+    {
+     "year": 2032,
+     "kau": 72583,
+     "floor": 72583,
+     "defended": true,
+     "headroom": 0.742,
+     "bank_Mt": 8.386692530107506,
+     "auction_share": 0.239
+    },
+    {
+     "year": 2033,
+     "kau": 80889,
+     "floor": 80889,
+     "defended": true,
+     "headroom": 0.711,
+     "bank_Mt": 0.0,
+     "auction_share": 0.239
+    },
+    {
+     "year": 2034,
+     "kau": 89194,
+     "floor": 89194,
+     "defended": true,
+     "headroom": 0.77,
+     "bank_Mt": 4.629828,
+     "auction_share": 0.239
+    },
+    {
+     "year": 2035,
+     "kau": 97500,
+     "floor": 97500,
+     "defended": true,
+     "headroom": 0.612,
+     "bank_Mt": 6.292431,
+     "auction_share": 0.239
+    },
+    {
+     "year": 2036,
+     "kau": 96000,
+     "floor": 96000,
+     "defended": true,
+     "headroom": 0.579,
+     "bank_Mt": 6.457885069332376,
+     "auction_share": 0.239
+    },
+    {
+     "year": 2037,
+     "kau": 94500,
+     "floor": 94500,
+     "defended": true,
+     "headroom": 0.539,
+     "bank_Mt": 4.620955069332376,
+     "auction_share": 0.239
+    },
+    {
+     "year": 2038,
+     "kau": 93000,
+     "floor": 93000,
+     "defended": true,
+     "headroom": 0.487,
+     "bank_Mt": 0.0,
+     "auction_share": 0.239
+    },
+    {
+     "year": 2039,
+     "kau": 91500,
+     "floor": 91500,
+     "defended": true,
+     "headroom": 0.5,
+     "bank_Mt": 0.0,
+     "auction_share": 0.239
+    },
+    {
+     "year": 2040,
+     "kau": 90000,
+     "floor": 90000,
+     "defended": true,
+     "headroom": 0.475,
+     "bank_Mt": 0.0,
+     "auction_share": 0.239
+    }
+   ],
+   "activation_headline": {
+    "수소환원제철 (H₂-DRI-EAF)": 2035,
+    "NCC 전기분해로(e-cracker)": 2039
+   },
+   "defended_all": true,
+   "min_headroom": 0.475,
+   "max_drawdown": 0.077,
+   "cum_intake_Mt": 0.0,
+   "cum_auction_rev_trillion": 98.6
+  },
+  "B": {
+   "meta": {
+    "package_id": "B",
+    "name_en": "Quantity-commitment operating rule",
+    "name_kr": "수량약속형",
+    "msr_level": "L_QB",
+    "floor_id": "M0",
+    "auction_lever": "A_gov",
+    "cap_scenario": "base",
+    "lambda_regime": "hold"
+   },
+   "path": [
+    {
+     "year": 2026,
+     "kau": 35732,
+     "floor": 0,
+     "defended": true,
+     "headroom": 1.0,
+     "bank_Mt": 88.43101868789809,
+     "auction_share": 0.099
+    },
+    {
+     "year": 2027,
+     "kau": 41580,
+     "floor": 0,
+     "defended": true,
+     "headroom": 1.0,
+     "bank_Mt": 95.45162703184714,
+     "auction_share": 0.134
+    },
+    {
+     "year": 2028,
+     "kau": 51330,
+     "floor": 0,
+     "defended": true,
+     "headroom": 1.0,
+     "bank_Mt": 93.90319465487453,
+     "auction_share": 0.169
+    },
+    {
+     "year": 2029,
+     "kau": 53402,
+     "floor": 0,
+     "defended": true,
+     "headroom": 1.0,
+     "bank_Mt": 82.08730830160519,
+     "auction_share": 0.204
+    },
+    {
+     "year": 2030,
+     "kau": 55286,
+     "floor": 0,
+     "defended": true,
+     "headroom": 1.0,
+     "bank_Mt": 83.47049061370711,
+     "auction_share": 0.239
+    },
+    {
+     "year": 2031,
+     "kau": 56750,
+     "floor": 0,
+     "defended": true,
+     "headroom": 1.0,
+     "bank_Mt": 97.3823166137071,
+     "auction_share": 0.239
+    },
+    {
+     "year": 2032,
+     "kau": 58642,
+     "floor": 0,
+     "defended": true,
+     "headroom": 1.0,
+     "bank_Mt": 110.2660265902019,
+     "auction_share": 0.239
+    },
+    {
+     "year": 2033,
+     "kau": 60636,
+     "floor": 0,
+     "defended": true,
+     "headroom": 1.0,
+     "bank_Mt": 120.1758845902019,
+     "auction_share": 0.239
+    },
+    {
+     "year": 2034,
+     "kau": 62738,
+     "floor": 0,
+     "defended": true,
+     "headroom": 1.0,
+     "bank_Mt": 127.05571259020189,
+     "auction_share": 0.239
+    },
+    {
+     "year": 2035,
+     "kau": 109484,
+     "floor": 0,
+     "defended": true,
+     "headroom": 1.0,
+     "bank_Mt": 83.98096967114215,
+     "auction_share": 0.239
+    },
+    {
+     "year": 2036,
+     "kau": 110243,
+     "floor": 0,
+     "defended": true,
+     "headroom": 1.0,
+     "bank_Mt": 52.66067383746104,
+     "auction_share": 0.239
+    },
+    {
+     "year": 2037,
+     "kau": 109977,
+     "floor": 0,
+     "defended": true,
+     "headroom": 1.0,
+     "bank_Mt": 19.417096900954768,
+     "auction_share": 0.239
+    },
+    {
+     "year": 2038,
+     "kau": 97448,
+     "floor": 0,
+     "defended": true,
+     "headroom": 1.0,
+     "bank_Mt": 2.7320278676791636,
+     "auction_share": 0.239
+    },
+    {
+     "year": 2039,
+     "kau": 99538,
+     "floor": 0,
+     "defended": true,
+     "headroom": 1.0,
+     "bank_Mt": 0.0,
+     "auction_share": 0.239
+    },
+    {
+     "year": 2040,
+     "kau": 89767,
+     "floor": 0,
+     "defended": true,
+     "headroom": 1.0,
+     "bank_Mt": 0.0,
+     "auction_share": 0.239
+    }
+   ],
+   "activation_headline": {
+    "수소환원제철 (H₂-DRI-EAF)": 2035,
+    "NCC 전기분해로(e-cracker)": 2039
+   },
+   "defended_all": true,
+   "min_headroom": 1.0,
+   "max_drawdown": 0.186,
+   "cum_intake_Mt": 268.2,
+   "cum_auction_rev_trillion": 98.1
+  }
+ },
+ "sensitivity_h2_elec": {
+  "h2_gov|elec_gov_invest": {
+   "A": {
+    "h2_dri": 2035,
+    "e_ncc": 2039,
+    "defended_all": true,
+    "min_headroom": 0.475
+   },
+   "B": {
+    "h2_dri": 2035,
+    "e_ncc": 2039
+   }
+  },
+  "h2_gov|elec_conservative": {
+   "A": {
+    "h2_dri": 2035,
+    "e_ncc": null,
+    "defended_all": true,
+    "min_headroom": 0.487
+   },
+   "B": {
+    "h2_dri": 2035,
+    "e_ncc": null
+   }
+  },
+  "h2_conservative|elec_gov_invest": {
+   "A": {
+    "h2_dri": 2035,
+    "e_ncc": 2037,
+    "defended_all": true,
+    "min_headroom": 0.431
+   },
+   "B": {
+    "h2_dri": null,
+    "e_ncc": 2039
+   }
+  },
+  "h2_conservative|elec_conservative": {
+   "A": {
+    "h2_dri": 2035,
+    "e_ncc": null,
+    "defended_all": true,
+    "min_headroom": 0.446
+   },
+   "B": {
+    "h2_dri": null,
+    "e_ncc": null
+   }
+  }
+ },
+ "gate_waterfall": [
+  {
+   "step": "W0 baseline (P0)",
+   "branch": "main",
+   "package_id": "P0",
+   "kau_2030": 47135,
+   "kau_2040": 67461,
+   "activation_headline": {
+    "수소환원제철 (H₂-DRI-EAF)": null,
+    "NCC 전기분해로(e-cracker)": null
+   },
+   "defended_all": true,
+   "min_headroom": 1.0,
+   "max_drawdown": 0.01,
+   "cum_intake_Mt": 0.0,
+   "cum_auction_rev_trillion": 68.1
+  },
+  {
+   "step": "W1 +decree draft rule (=P1)",
+   "branch": "main",
+   "package_id": "P1",
+   "kau_2030": 48452,
+   "kau_2040": 67461,
+   "activation_headline": {
+    "수소환원제철 (H₂-DRI-EAF)": null,
+    "NCC 전기분해로(e-cracker)": null
+   },
+   "defended_all": true,
+   "min_headroom": 1.0,
+   "max_drawdown": 0.182,
+   "cum_intake_Mt": 31.6,
+   "cum_auction_rev_trillion": 68.3
+  },
+  {
+   "step": "W2 +price-commitment corridor (=A)",
+   "branch": "main",
+   "package_id": "A",
+   "kau_2030": 55972,
+   "kau_2040": 90000,
+   "activation_headline": {
+    "수소환원제철 (H₂-DRI-EAF)": 2035,
+    "NCC 전기분해로(e-cracker)": 2039
+   },
+   "defended_all": true,
+   "min_headroom": 0.475,
+   "max_drawdown": 0.077,
+   "cum_intake_Mt": 0.0,
+   "cum_auction_rev_trillion": 98.6
+  },
+  {
+   "step": "WB branch P0 +quantity-commitment (=B)",
+   "branch": "branch",
+   "package_id": "B",
+   "kau_2030": 55286,
+   "kau_2040": 89767,
+   "activation_headline": {
+    "수소환원제철 (H₂-DRI-EAF)": 2035,
+    "NCC 전기분해로(e-cracker)": 2039
+   },
+   "defended_all": true,
+   "min_headroom": 1.0,
+   "max_drawdown": 0.186,
+   "cum_intake_Mt": 268.2,
+   "cum_auction_rev_trillion": 98.1
+  }
+ ]
+}

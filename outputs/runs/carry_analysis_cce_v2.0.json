@@ -1,0 +1,168 @@
+{
+  "meta": {
+    "version": "CCE 2.0",
+    "benchmark_pct": 5.5,
+    "bootstrap_draws": 5000,
+    "bootstrap_seed": 20260801,
+    "interpretation": "The adjacent-vintage premium is descriptive. It is not a pure annualized financing return because convenience yield, transaction costs, compliance timing, risk, and stale closes are not separately identified."
+  },
+  "kau_vintage_day_quotes": 8513,
+  "all_quote_pairs": {
+    "n_pairs": 5693,
+    "n_dates": 2488,
+    "median_pct": 0.0,
+    "mean_pct": -3.246,
+    "sd_pct": 14.271,
+    "p10_pct": -20.492,
+    "p90_pct": 4.985,
+    "share_below_5_5_pct": 0.9066,
+    "volume_weighted_mean_pct": 3.135
+  },
+  "both_traded_pairs": {
+    "n_pairs": 253,
+    "n_dates": 252,
+    "median_pct": 0.176,
+    "mean_pct": 5.971,
+    "sd_pct": 15.613,
+    "p10_pct": -3.293,
+    "p90_pct": 26.822,
+    "share_below_5_5_pct": 0.751,
+    "volume_weighted_mean_pct": 3.631,
+    "date_cluster_bootstrap_mean_ci95_pct": [
+      4.147,
+      7.955
+    ],
+    "date_cluster_bootstrap_median_ci95_pct": [
+      0.0,
+      0.873
+    ]
+  },
+  "legacy_pm40pct_display_sample_n": 5444,
+  "annual_both_traded": [
+    {
+      "calendar_year": 2017,
+      "n_pairs": 29,
+      "n_dates": 29,
+      "median_pct": -0.952,
+      "mean_pct": -1.285,
+      "sd_pct": 1.621,
+      "p10_pct": -3.386,
+      "p90_pct": 0.0,
+      "share_below_5_5_pct": 1.0,
+      "volume_weighted_mean_pct": -0.196
+    },
+    {
+      "calendar_year": 2018,
+      "n_pairs": 4,
+      "n_dates": 4,
+      "median_pct": -0.878,
+      "mean_pct": -1.2,
+      "sd_pct": 6.286,
+      "p10_pct": -7.027,
+      "p90_pct": 4.37,
+      "share_below_5_5_pct": 0.75,
+      "volume_weighted_mean_pct": -0.61
+    },
+    {
+      "calendar_year": 2019,
+      "n_pairs": 74,
+      "n_dates": 73,
+      "median_pct": 0.0,
+      "mean_pct": -1.511,
+      "sd_pct": 4.764,
+      "p10_pct": -9.41,
+      "p90_pct": 1.449,
+      "share_below_5_5_pct": 0.973,
+      "volume_weighted_mean_pct": -0.329
+    },
+    {
+      "calendar_year": 2020,
+      "n_pairs": 57,
+      "n_dates": 57,
+      "median_pct": 2.5,
+      "mean_pct": 6.907,
+      "sd_pct": 10.363,
+      "p10_pct": -0.915,
+      "p90_pct": 23.392,
+      "share_below_5_5_pct": 0.6316,
+      "volume_weighted_mean_pct": 4.672
+    },
+    {
+      "calendar_year": 2021,
+      "n_pairs": 21,
+      "n_dates": 21,
+      "median_pct": 11.326,
+      "mean_pct": 11.24,
+      "sd_pct": 11.896,
+      "p10_pct": -3.62,
+      "p90_pct": 26.855,
+      "share_below_5_5_pct": 0.3333,
+      "volume_weighted_mean_pct": 17.788
+    },
+    {
+      "calendar_year": 2022,
+      "n_pairs": 21,
+      "n_dates": 21,
+      "median_pct": 43.59,
+      "mean_pct": 43.377,
+      "sd_pct": 23.339,
+      "p10_pct": 20.192,
+      "p90_pct": 72.414,
+      "share_below_5_5_pct": 0.0476,
+      "volume_weighted_mean_pct": 27.963
+    },
+    {
+      "calendar_year": 2023,
+      "n_pairs": 23,
+      "n_dates": 23,
+      "median_pct": 2.041,
+      "mean_pct": 6.461,
+      "sd_pct": 10.534,
+      "p10_pct": 0.167,
+      "p90_pct": 25.519,
+      "share_below_5_5_pct": 0.7826,
+      "volume_weighted_mean_pct": 5.299
+    },
+    {
+      "calendar_year": 2024,
+      "n_pairs": 8,
+      "n_dates": 8,
+      "median_pct": -0.891,
+      "mean_pct": -2.621,
+      "sd_pct": 3.689,
+      "p10_pct": -7.937,
+      "p90_pct": -0.236,
+      "share_below_5_5_pct": 1.0,
+      "volume_weighted_mean_pct": -1.921
+    },
+    {
+      "calendar_year": 2025,
+      "n_pairs": 16,
+      "n_dates": 16,
+      "median_pct": 0.294,
+      "mean_pct": -0.239,
+      "sd_pct": 3.669,
+      "p10_pct": -5.796,
+      "p90_pct": 3.866,
+      "share_below_5_5_pct": 1.0,
+      "volume_weighted_mean_pct": -0.655
+    }
+  ],
+  "years_with_median_below_5_5_pct": 7,
+  "years_observed": 9,
+  "banking_ratio": {
+    "2015": 0.032171,
+    "2016": 0.054966,
+    "2017": 0.064732,
+    "2018": 0.059113,
+    "2019": 0.02935,
+    "2020": 0.029729,
+    "2021": 0.029431,
+    "2022": 0.054124,
+    "2023": 0.114817,
+    "2024": 0.167565
+  },
+  "banking_ratio_2015_21_mean": 0.042784,
+  "bank_2024_Mt": 92.140327,
+  "verified_emissions_2024_Mt": 549.879405
+}

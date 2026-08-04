@@ -1,475 +1,578 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+/**
+ * 시나리오 시뮬레이터 — 라이브 K-ETS 엔진(/api/solve) 구동.
+ *
+ * 두 모드:
+ *   1. 패키지 모드 (기본) — 논문 v4 운영규칙 P0/P1/A/B 버튼 →
+ *      POST {"package_id"} → engine.solve_package (회랑 하한·방어·헤드라인 활성화 연도).
+ *   2. 커스텀 모드 — Cap 시나리오·MACC·MSR 물량규칙·유동성 λ 슬라이더 →
+ *      POST 커스텀 레버 → level_bridge_path.
+ *
+ * 모든 계산은 파이썬 엔진(web/api/solve.py → src/model/engine.py)이 수행. 하드코딩 없음.
+ * 로컬 개발: `python3 web/api/solve.py` (:8531) — next.config.ts가 /api를 프록시.
+ */
+
+import { useCallback, useEffect, useRef, useState } from 'react';
 import {
-  LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip,
-  ReferenceLine, ResponsiveContainer, AreaChart, Area,
+  ResponsiveContainer, LineChart, ComposedChart, Line, Area,
+  XAxis, YAxis, CartesianGrid, Tooltip, Legend, ReferenceLine,
 } from 'recharts';
-import { BANKING_PATH, MACC_ALL, SECTOR_INFO, SUPPLY_DEMAND, fmtWon, fmtWonK, type MaccTech } from '@/lib/data';
-import {
-  KETS_MSR_POLICY,
-  MSR_MODE_LABELS,
-  calculateMsrAction,
-  clampManualMsrAdjustment,
-  type MsrMode,
-} from '@/lib/msr';
+import { SCEN, EUA_COLOR, fmtWon, fmtWonK, LATEST_KAU_QUOTE, type ScenarioId } from '@/lib/data';
+import { MSR_RESERVE_MT, KMSR_DRAFT_ASSUMPTIONS } from '@/lib/msr';
+import { PKG, PKG_LIST, type PackageId } from '@/lib/results';
 
-// ─── 브라우저 내 균형가격 솔버 ───────────────────────────────
-// Staircase MACC: 비용 ≤ P인 기술의 잠재량 합 = 감축량
-function solveEquilibrium(
-  techs: MaccTech[],
-  shortfallMt: number,
-  learningAdj: (cost: number, tech: string, year: number) => number,
-  year: number,
-): number {
-  const sfTco2 = shortfallMt * 1e6;
-  // 이진탐색: 감축량 = shortfall이 되는 가격
-  let lo = 0, hi = 1000000;
-  for (let iter = 0; iter < 50; iter++) {
-    const mid = (lo + hi) / 2;
-    const abate = techs.reduce((s, t) => {
-      const adjCost = learningAdj(t.cost, t.tech, year);
-      return s + (adjCost <= mid ? t.potential * 1e6 : 0);
-    }, 0);
-    if (abate < sfTco2) lo = mid;
-    else hi = mid;
-  }
-  return Math.round((lo + hi) / 2);
-}
+const API = process.env.NEXT_PUBLIC_API_BASE ?? '';
+const DEBOUNCE_MS = 400;
+const CUSTOM_SEED_PRESET = 'L3';   // 커스텀 슬라이더 초기값 = 시행령 draft 수량규칙 (엔진 SSOT)
 
-// ─── 학습곡선 ────────────────────────────────────────────────
-const RE_KEYWORDS = ['태양광', '풍력', '수소', 'H₂', '전기크래킹', '전기가열', '열펌프', '암모니아'];
+// ─── API 계약 타입 ──────────────────────────────────────────
+type PathRow = {
+  year: number;
+  static: number;          // 정태 anchor (λ=0)
+  hotelling: number;       // Hotelling anchor (λ=1)
+  kau_realized: number;    // 실현 가격 (레벨-브리지)
+  lambda: number;
+  intake_Mt: number;
+  release_Mt: number;
+  bank_Mt: number;
+  eua: number;
+};
 
-function makeLearningFn(ratePerYear: number) {
-  return (baseCost: number, techName: string, year: number) => {
-    const isRE = RE_KEYWORDS.some(k => techName.includes(k));
-    if (!isRE || baseCost < 0) return baseCost;
-    const t = year - 2026;
-    return baseCost * Math.pow(1 - ratePerYear, t);
+type PkgPathRow = {
+  year: number;
+  kau: number;             // 실현 가격 (하한 overlay 반영)
+  kau_prefloor: number;
+  floor: number;
+  defended: boolean;
+  headroom: number;
+  static: number;
+  hotelling: number;
+  lambda: number;
+  intake_Mt: number;
+  release_Mt: number;
+  bank_Mt: number;
+};
+
+type PkgResponse = {
+  meta: { package: { id: string; name_kr: string }; years: number[] };
+  activation_headline: Record<string, number | null>;
+  defended_all: boolean;
+  min_headroom: number;
+  max_drawdown: number;
+  cum_intake_Mt: number;
+  path: PkgPathRow[];
+};
+
+type MsrPreset = {
+  name: string; rho: number;
+  theta_plus_Mt: number; theta_minus_Mt: number;
+  release_Mt: number; cancel: number;
+};
+
+type SolveMeta = {
+  scenarios: string[];
+  macc_modes: string[];
+  years: number[];
+  packages: { id: string; name_kr: string; name_en: string }[];
+  liquidity_defaults: {
+    lambda_0: number;
+    lambda_terminal_default: number;
+    ramp_years_default: number;
   };
-}
+  presets: Record<string, MsrPreset>;
+};
 
-// ─── 타입 ────────────────────────────────────────────────────
-type CapPreset = 'base' | 'middle' | 'ideal';
-const CAP_LABELS: Record<CapPreset, string> = { base: '기준 (-35%)', middle: '중간 (-43%)', ideal: '이상 (-58%)' };
-const CAP_COLORS: Record<CapPreset, string> = { base: '#5B7BAA', middle: '#E8A33D', ideal: '#10A574' };
+// 패키지 설명 (v4 명명 규율: A·B는 신규 제도가 아니라 법제화된 K-MSR의 운영규칙)
+const PKG_DESC: Record<PackageId, string> = {
+  P0: '무정책 반사실 — MSR·하한 없음. 모든 운영규칙 효과의 기준선.',
+  P1: '시행령 초안대로 — draft 수량규칙(초과분 흡수·20Mt/yr 방출·무취소) + 중위 하한 가정. 방출규칙이 2031년 가격붕락(waterbed)을 만든다.',
+  A: 'K-MSR 경매보류가격의 운영경로(신규 제도 아님) — 기술앵커 회랑: 2026 관측가에서 2035 수소환원(H₂-DRI) 문턱까지, 미유찰 보류물량은 무효화.',
+  B: 'K-MSR 흡수·무효화 기능의 일정형 운영 — 2035년 개시 사전공표, 경매물량 50% 무조건 흡수·전량 무효화.',
+};
 
-function buildPricePathSim({
-  activeTechs,
-  capPreset,
-  learningFn,
-  auctionRate2040,
-  msrMode,
-  manualMsrAdjustmentMt,
-}: {
-  activeTechs: MaccTech[];
-  capPreset: CapPreset;
-  learningFn: ReturnType<typeof makeLearningFn>;
-  auctionRate2040: number;
-  msrMode: MsrMode;
-  manualMsrAdjustmentMt: number;
-}) {
-  let previousPriceKrw: number = KETS_MSR_POLICY.recentKau25Krw;
-  let previousSurplusRatio: number = 0;
-  let reserveStockMt: number = KETS_MSR_POLICY.phase4ReserveMt;
+const MACC_MODE_LABELS: Record<string, string> = {
+  step: 'Step · bottom-up 기술',
+  exponential: 'Exponential · 레거시',
+};
 
-  return SUPPLY_DEMAND.map((row, index) => {
-    const cap = row[`cap_${capPreset}` as keyof typeof row] as number;
-    const bankingPoint = BANKING_PATH.find(point => point.year === row.year);
-    const bankingStockMt = bankingPoint?.[capPreset] ?? 0;
-    const currentSurplusRatio = cap > 0 ? Math.max(bankingStockMt / cap, 0) : 0;
+const TOOLTIP_STYLE = {
+  fontSize: 11, borderRadius: 8,
+  border: '1px solid #E5E7EB',
+  boxShadow: '0 4px 16px rgba(0,0,0,.06)',
+  fontFamily: "'Pretendard', 'Inter', sans-serif",
+};
+const TICK = { fontSize: 10.5, fontFamily: 'Inter', fill: '#9CA3AF' };
 
-    if (index === 0) previousSurplusRatio = currentSurplusRatio;
-
-    const msrAction = calculateMsrAction({
-      mode: msrMode,
-      manualAdjustmentMt: manualMsrAdjustmentMt,
-      previousPriceKrw,
-      previousSurplusRatio,
-      reserveStockStartMt: reserveStockMt,
-    });
-    const effectiveSupply = Math.max(cap + msrAction.adjustmentMt, 0);
-    const shortfall = Math.max(row.bau - effectiveSupply, 0);
-    const price = shortfall > 0
-      ? solveEquilibrium(activeTechs, shortfall, learningFn, row.year)
-      : 0;
-    const auctionRatio = auctionRate2040 / 100 * ((row.year - 2026) / 14);
-    const baseAuctionVolumeMt = cap * Math.min(auctionRatio, auctionRate2040 / 100);
-    const auctionVolumeMt = Math.max(baseAuctionVolumeMt + msrAction.adjustmentMt, 0);
-    const revenue = auctionVolumeMt * 1e6 * price / 1e12;
-
-    const output = {
-      year: row.year,
-      bau: row.bau,
-      cap,
-      effectiveSupply: Math.round(effectiveSupply * 10) / 10,
-      msrAdjustment: msrAction.adjustmentMt,
-      msrIntake: msrAction.intakeMt,
-      msrRelease: msrAction.releaseMt,
-      msrReserveStock: msrAction.reserveStockEndMt,
-      msrTrigger: msrAction.triggerLabel,
-      surplusRatio: Math.round(currentSurplusRatio * 1000) / 10,
-      auctionVolume: Math.round(auctionVolumeMt * 10) / 10,
-      shortfall: Math.round(shortfall * 10) / 10,
-      price,
-      revenue: Math.round(revenue * 100) / 100,
-      activeTechCount: activeTechs.filter(t => learningFn(t.cost, t.tech, row.year) <= price).length,
-    };
-
-    previousPriceKrw = price;
-    previousSurplusRatio = currentSurplusRatio;
-    reserveStockMt = msrAction.reserveStockEndMt;
-
-    return output;
-  });
-}
+type Mode = PackageId | 'custom';
 
 // ─── 메인 컴포넌트 ──────────────────────────────────────────
 export function SimulatorPanel() {
-  // 기술 ON/OFF 상태
-  const [enabledTechs, setEnabledTechs] = useState<Set<string>>(
-    () => new Set(MACC_ALL.map(t => t.tech))
-  );
+  const [meta, setMeta] = useState<SolveMeta | null>(null);
+  const [mode, setMode] = useState<Mode>('A');
+  const [rows, setRows] = useState<PathRow[]>([]);
+  const [pkg, setPkg] = useState<PkgResponse | null>(null);
+  const [err, setErr] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  // Cap 경로 선택
-  const [capPreset, setCapPreset] = useState<CapPreset>('middle');
+  // 커스텀 정책 레버
+  const [scenario, setScenario] = useState<ScenarioId>('base');
+  const [maccMode, setMaccMode] = useState('step');
+  const [rho, setRho] = useState(0);
+  const [thetaPlus, setThetaPlus] = useState(0);
+  const [thetaMinus, setThetaMinus] = useState(0);
+  const [release, setRelease] = useState(0);
+  const [cancel, setCancel] = useState(0);
+  const [lam0, setLam0] = useState(0);
+  const [lamTerminal, setLamTerminal] = useState(0);
+  const [rampYears, setRampYears] = useState(0);
 
-  // 학습곡선 속도 (연간 %)
-  const [learningRate, setLearningRate] = useState(4);
+  // 초기 메타 로드: 커스텀 슬라이더를 엔진 SSOT 기본값으로 시드
+  useEffect(() => {
+    fetch(`${API}/api/solve`)
+      .then(r => {
+        if (!r.ok) throw new Error(`HTTP ${r.status}`);
+        return r.json();
+      })
+      .then((mt: SolveMeta) => {
+        setMeta(mt);
+        const ld = mt.liquidity_defaults;
+        if (ld) {
+          setLam0(ld.lambda_0 ?? 0);
+          setLamTerminal(ld.lambda_terminal_default ?? 0);
+          setRampYears(ld.ramp_years_default ?? 0);
+        }
+        const p = mt.presets?.[CUSTOM_SEED_PRESET] ?? Object.values(mt.presets ?? {})[0];
+        if (p) {
+          setRho(p.rho);
+          setThetaPlus(p.theta_plus_Mt);
+          setThetaMinus(p.theta_minus_Mt);
+          setRelease(p.release_Mt);
+          setCancel(p.cancel);
+        }
+      })
+      .catch(e => {
+        setErr(e instanceof Error ? e.message : String(e));
+        setLoading(false);
+      });
+  }, []);
 
-  // 유상할당 비율 (2040 기준)
-  const [auctionRate2040, setAuctionRate2040] = useState(50);
+  // 라이브 엔진 호출 (out-of-order 응답 무시)
+  const seqRef = useRef(0);
+  const solve = useCallback(async () => {
+    const seq = ++seqRef.current;
+    setLoading(true);
+    setErr(null);
+    try {
+      const body = mode === 'custom'
+        ? {
+            scenario,
+            macc_mode: maccMode,
+            msr: { rho, theta_plus_Mt: thetaPlus, theta_minus_Mt: thetaMinus, release_Mt: release, cancel },
+            liquidity: { lam_0: lam0, lam_terminal: lamTerminal, ramp_years: rampYears },
+          }
+        : { package_id: mode };
+      const res = await fetch(`${API}/api/solve`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const d = await res.json();
+      if (d.error) throw new Error(d.error);
+      if (seq === seqRef.current) {
+        if (mode === 'custom') {
+          setRows(d.path);
+          setPkg(null);
+        } else {
+          setPkg(d as PkgResponse);
+          setRows([]);
+        }
+      }
+    } catch (e) {
+      if (seq === seqRef.current) setErr(e instanceof Error ? e.message : String(e));
+    } finally {
+      if (seq === seqRef.current) setLoading(false);
+    }
+  }, [mode, scenario, maccMode, rho, thetaPlus, thetaMinus, release, cancel, lam0, lamTerminal, rampYears]);
 
-  // K-MSR 경매 공급 조정: 음수는 경매 축소/예비분 적립, 양수는 예비분 방출/추가 경매
-  const [msrMode, setMsrMode] = useState<MsrMode>('manual');
-  const [manualMsrAdjustmentMt, setManualMsrAdjustmentMt] = useState(0);
+  // 레버 변경 시 디바운스 후 재계산 (메타 로드 후에만)
+  useEffect(() => {
+    if (!meta) return;
+    const t = setTimeout(solve, DEBOUNCE_MS);
+    return () => clearTimeout(t);
+  }, [meta, solve]);
 
-  // 활성화된 기술만 필터
-  const activeTechs = useMemo(
-    () => MACC_ALL.filter(t => enabledTechs.has(t.tech)),
-    [enabledTechs]
-  );
-
-  const learningFn = useMemo(() => makeLearningFn(learningRate / 100), [learningRate]);
-
-  // 연도별 균형가격 계산
-  const pricePathSim = useMemo(
-    () => buildPricePathSim({
-      activeTechs,
-      capPreset,
-      learningFn,
-      auctionRate2040,
-      msrMode,
-      manualMsrAdjustmentMt,
-    }),
-    [activeTechs, capPreset, learningFn, auctionRate2040, msrMode, manualMsrAdjustmentMt],
-  );
-
-  const toggleTech = (tech: string) => {
-    setEnabledTechs(prev => {
-      const next = new Set(prev);
-      if (next.has(tech)) next.delete(tech);
-      else next.add(tech);
-      return next;
-    });
-  };
-
-  const toggleSector = (sector: string) => {
-    const sectorTechs = MACC_ALL.filter(t => t.sector === sector);
-    const allOn = sectorTechs.every(t => enabledTechs.has(t.tech));
-    setEnabledTechs(prev => {
-      const next = new Set(prev);
-      sectorTechs.forEach(t => allOn ? next.delete(t.tech) : next.add(t.tech));
-      return next;
-    });
-  };
-
-  const p2030 = pricePathSim.find(r => r.year === 2030)?.price ?? 0;
-  const p2040 = pricePathSim.find(r => r.year === 2040)?.price ?? 0;
-  const cumRevenue = pricePathSim.reduce((s, r) => s + r.revenue, 0);
-  const totalPotential = activeTechs.reduce((s, t) => s + t.potential, 0);
-  const supply2030 = pricePathSim.find(r => r.year === 2030);
-  const msrAdjustment2030 = supply2030?.msrAdjustment ?? 0;
-  const msrLabel = msrAdjustment2030 === 0
-    ? '중립'
-    : msrAdjustment2030 < 0
-      ? `${Math.abs(msrAdjustment2030)} Mt 경매 축소`
-      : `${msrAdjustment2030} Mt 추가 경매`;
-  const handleMsrAdjustmentChange = (value: string) => {
-    const parsed = Number(value);
-    if (!Number.isFinite(parsed)) return;
-    setManualMsrAdjustmentMt(clampManualMsrAdjustment(parsed));
-  };
-
-  const TOOLTIP_STYLE = { fontSize: 11, borderRadius: 8, border: '1px solid #E5E7EB', boxShadow: '0 4px 16px rgba(0,0,0,.06)' };
+  const isPkg = mode !== 'custom';
+  const pkgInfo = isPkg ? PKG[mode] : null;
 
   return (
     <div className="space-y-5">
-      {/* ── 컨트롤 패널 ── */}
-      <div className="grid grid-cols-[1fr_320px] gap-5">
-        {/* 왼쪽: 가격 경로 차트 */}
-        <div className="bg-white border border-[#E5E7EB] rounded-[10px] p-4">
-          <div className="flex items-baseline justify-between mb-3">
-            <div>
-              <h3 className="text-[14px] font-semibold text-[#111827] m-0">시뮬레이션 결과</h3>
-              <div className="text-[10.5px] text-[#9CA3AF] mt-1" style={{ fontFamily: 'Inter' }}>
-                Custom scenario · {activeTechs.length}/{MACC_ALL.length} techs · Effective supply = Cap + K-MSR
-              </div>
-            </div>
-            <div className="flex gap-4 text-[12px]" style={{ fontFamily: 'Inter' }}>
-              <div><span className="text-[#9CA3AF]">2030:</span> <strong className="text-[#111827]">{fmtWon(p2030)}</strong><span className="text-[#9CA3AF]"> 원</span></div>
-              <div><span className="text-[#9CA3AF]">2040:</span> <strong className="text-[#111827]">{fmtWon(p2040)}</strong><span className="text-[#9CA3AF]"> 원</span></div>
-            </div>
-          </div>
-
-          <ResponsiveContainer width="100%" height={280}>
-            <LineChart data={pricePathSim} margin={{ top: 10, right: 12, left: 0, bottom: 0 }}>
-              <CartesianGrid stroke="#EEF0F2" vertical={false} />
-              <XAxis dataKey="year" stroke="#9CA3AF" tick={{ fontSize: 10.5, fontFamily: 'Inter' }} tickLine={false} />
-              <YAxis stroke="#9CA3AF" tick={{ fontSize: 10.5, fontFamily: 'Inter' }} tickLine={false} axisLine={false}
-                     tickFormatter={fmtWonK} />
-              <Tooltip contentStyle={TOOLTIP_STYLE}
-                       formatter={(v: unknown) => fmtWon(Number(v ?? 0)) + ' 원'} labelFormatter={(l) => l + '년'} />
-              <Line type="monotone" dataKey="price" stroke={CAP_COLORS[capPreset]} strokeWidth={2.5} dot={false} name="균형가격" />
-              {/* 기술 임계가격 참조선 (상위 5개) */}
-              {activeTechs
-                .filter(t => t.cost > 0 && t.potential >= 3)
-                .sort((a, b) => a.cost - b.cost)
-                .slice(0, 6)
-                .map((t, i) => (
-                  <ReferenceLine key={i} y={t.cost} stroke="#E5E7EB" strokeDasharray="2 3"
-                    label={{ value: `${t.tech} ${fmtWonK(t.cost)}`, fontSize: 8.5, fill: '#9CA3AF', position: 'right' }} />
-                ))}
-            </LineChart>
-          </ResponsiveContainer>
-
-          {/* 수급 미니 차트 */}
-          <div className="mt-3 pt-3 border-t border-[#F3F4F6]">
-            <div className="flex items-center justify-between mb-1">
-              <div className="text-[11px] text-[#6B7280]">수급 구조 (BAU vs Effective supply)</div>
-              <div className="text-[10.5px] text-[#9CA3AF]" style={{ fontFamily: 'Inter' }}>
-                K-MSR {MSR_MODE_LABELS[msrMode].en} · 2030 {msrAdjustment2030 > 0 ? '+' : ''}{msrAdjustment2030} Mt
-              </div>
-            </div>
-            <ResponsiveContainer width="100%" height={120}>
-              <AreaChart data={pricePathSim} margin={{ top: 4, right: 12, left: 0, bottom: 0 }}>
-                <XAxis dataKey="year" stroke="#9CA3AF" tick={{ fontSize: 9, fontFamily: 'Inter' }} tickLine={false} />
-                <YAxis stroke="#9CA3AF" tick={{ fontSize: 9, fontFamily: 'Inter' }} tickLine={false} axisLine={false} unit=" Mt" />
-                <Line type="monotone" dataKey="bau" stroke="#111827" strokeWidth={2} dot={false} name="BAU" />
-                <Line type="monotone" dataKey="cap" stroke="#9CA3AF" strokeWidth={1.2} strokeDasharray="4 4" dot={false} name="Legal cap" />
-                <Area type="monotone" dataKey="effectiveSupply" stroke={CAP_COLORS[capPreset]} fill={CAP_COLORS[capPreset]}
-                      strokeWidth={1.8} fillOpacity={0.12} dot={false} name="Effective supply" />
-              </AreaChart>
-            </ResponsiveContainer>
+      {/* ── API 오류 ── */}
+      {err && (
+        <div className="bg-[#FEF2F2] border border-[#FCA5A5] rounded-[10px] p-4 text-[12px] text-[#991B1B]">
+          <div className="font-semibold mb-1">엔진 API 오류: {err}</div>
+          <div className="text-[11px] leading-[1.6]">
+            로컬 개발 환경이라면 파이썬 API 서버를 먼저 띄우세요:{' '}
+            <code className="bg-white border border-[#FCA5A5] rounded px-1.5 py-0.5">python3 web/api/solve.py</code>
+            {' '}(포트 8531 — next dev가 /api를 자동 프록시)
           </div>
         </div>
+      )}
 
-        {/* 오른쪽: 설정 패널 */}
-        <div className="space-y-3">
-          {/* Cap 경로 */}
-          <div className="bg-white border border-[#E5E7EB] rounded-[10px] p-4">
-            <div className="text-[12px] font-semibold text-[#111827] mb-2">Cap 경로 (NDC 기반)</div>
-            <div className="space-y-1.5">
-              {(Object.keys(CAP_LABELS) as CapPreset[]).map(k => (
-                <button key={k} onClick={() => setCapPreset(k)}
-                  className={`w-full text-left px-3 py-2 rounded-md text-[11.5px] border transition-all ${
-                    capPreset === k ? 'border-current font-semibold' : 'border-[#E5E7EB] text-[#6B7280]'
-                  }`}
-                  style={capPreset === k ? { color: CAP_COLORS[k], borderColor: CAP_COLORS[k], background: '#FAFAFA' } : {}}>
-                  {CAP_LABELS[k]}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* K-MSR */}
-          <div className="bg-white border border-[#E5E7EB] rounded-[10px] p-4">
-            <div className="flex items-center justify-between gap-2 mb-1">
-              <div>
-                <div className="text-[12px] font-semibold text-[#111827]">K-MSR 경매 공급 조정</div>
-                <div className="text-[10px] text-[#9CA3AF] mt-0.5">
-                  4기 예비분 {KETS_MSR_POLICY.phase4ReserveMt.toFixed(1)} Mt · 세부 운영 {KETS_MSR_POLICY.ruleFinalization}
-                </div>
-              </div>
-              <div className="flex items-center gap-1" style={{ fontFamily: 'Inter' }}>
-                <input type="number" min={-30} max={30} step={1} value={manualMsrAdjustmentMt}
-                  aria-label="K-MSR 조정량"
-                  data-testid="kmsr-adjustment-input"
-                  disabled={msrMode !== 'manual'}
-                  onChange={e => handleMsrAdjustmentChange(e.target.value)}
-                  className={`w-[58px] rounded border border-[#E5E7EB] px-1.5 py-1 text-right text-[11px] font-semibold text-[#111827] outline-none focus:border-[#5B7BAA] ${msrMode !== 'manual' ? 'opacity-50' : ''}`} />
-                <span className="text-[10px] text-[#9CA3AF]">Mt</span>
-              </div>
-            </div>
-            <div className="grid grid-cols-4 gap-1.5 my-2">
-              {(Object.keys(MSR_MODE_LABELS) as MsrMode[]).map(mode => (
-                <button
-                  key={mode}
-                  type="button"
-                  aria-pressed={msrMode === mode}
-                  onClick={() => setMsrMode(mode)}
-                  className={`rounded border px-2 py-1.5 text-[10.5px] transition-all ${
-                    msrMode === mode
-                      ? 'border-[#111827] bg-[#111827] text-white'
-                      : 'border-[#E5E7EB] text-[#6B7280] hover:bg-[#F9FAFB]'
-                  }`}
-                >
-                  {MSR_MODE_LABELS[mode].ko}
-                </button>
-              ))}
-            </div>
-            <div className="text-[10px] text-[#9CA3AF] mb-2">
-              수동 음수: 예비분 적립 · 수동 양수: 예비분 방출 · 자동 모드는 전년도 신호로 조정
-            </div>
-            <input type="range" min={-30} max={30} step={1} value={manualMsrAdjustmentMt}
-              aria-label="K-MSR 경매 공급 조정량"
-              data-testid="kmsr-adjustment-slider"
-              disabled={msrMode !== 'manual'}
-              onInput={e => handleMsrAdjustmentChange(e.currentTarget.value)}
-              onChange={e => handleMsrAdjustmentChange(e.target.value)}
-              className={`w-full accent-[#5B7BAA] ${msrMode !== 'manual' ? 'opacity-50' : ''}`} />
-            <div className="flex justify-between text-[10px] text-[#9CA3AF] mt-1" style={{ fontFamily: 'Inter' }}>
-              <span>-30 Mt</span>
-              <span className="font-semibold text-[#111827]">2030 {msrLabel}</span>
-              <span>+30 Mt</span>
-            </div>
-            <div className="mt-2 grid grid-cols-2 gap-2 text-[10.5px]" style={{ fontFamily: 'Inter' }}>
-              <div className="rounded bg-[#F9FAFB] px-2 py-1.5">
-                <div className="text-[#9CA3AF]">2030 Effective supply</div>
-                <div className="font-semibold text-[#111827]">{supply2030?.effectiveSupply.toFixed(1) ?? '-'} Mt</div>
-              </div>
-              <div className="rounded bg-[#F9FAFB] px-2 py-1.5">
-                <div className="text-[#9CA3AF]">2030 Shortfall</div>
-                <div className="font-semibold text-[#111827]">{supply2030?.shortfall.toFixed(1) ?? '-'} Mt</div>
-              </div>
-              <div className="rounded bg-[#F9FAFB] px-2 py-1.5">
-                <div className="text-[#9CA3AF]">2030 Trigger</div>
-                <div className="font-semibold text-[#111827]">{supply2030?.msrTrigger ?? '-'}</div>
-              </div>
-              <div className="rounded bg-[#F9FAFB] px-2 py-1.5">
-                <div className="text-[#9CA3AF]">2030 Reserve stock</div>
-                <div className="font-semibold text-[#111827]">{supply2030?.msrReserveStock.toFixed(1) ?? '-'} Mt</div>
-              </div>
-            </div>
-            <div className="mt-2 rounded border border-[#E5E7EB] bg-[#FAFAFA] px-2.5 py-2 text-[10.5px] leading-[1.55] text-[#6B7280]" style={{ fontFamily: 'Inter' }}>
-              최근 KAU25 {fmtWon(KETS_MSR_POLICY.recentKau25Krw)}원 · 5월 경매 {fmtWon(KETS_MSR_POLICY.mayAuctionClearingKrw)}원 ·
-              감시선 {fmtWon(KETS_MSR_POLICY.lowPriceKrw)}~{fmtWon(KETS_MSR_POLICY.highPriceKrw)}원 ·
-              잉여비율 {Math.round(KETS_MSR_POLICY.lowerSurplusRatio * 100)}~{Math.round(KETS_MSR_POLICY.upperSurplusRatio * 100)}%
-            </div>
-          </div>
-
-          {/* 학습곡선 */}
-          <div className="bg-white border border-[#E5E7EB] rounded-[10px] p-4">
-            <div className="text-[12px] font-semibold text-[#111827] mb-1">재생에너지 학습곡선</div>
-            <div className="text-[10px] text-[#9CA3AF] mb-2">태양광·풍력·수소 연간 비용 하락률</div>
-            <input type="range" min={0} max={10} step={0.5} value={learningRate}
-              onChange={e => setLearningRate(Number(e.target.value))}
-              className="w-full accent-[#10A574]" />
-            <div className="flex justify-between text-[10px] text-[#9CA3AF] mt-1" style={{ fontFamily: 'Inter' }}>
-              <span>0% (보수)</span>
-              <span className="font-semibold text-[#111827]">{learningRate}%/yr</span>
-              <span>10% (낙관)</span>
-            </div>
-          </div>
-
-          {/* 유상할당 */}
-          <div className="bg-white border border-[#E5E7EB] rounded-[10px] p-4">
-            <div className="text-[12px] font-semibold text-[#111827] mb-1">유상할당 비율 (2040 목표)</div>
-            <div className="text-[10px] text-[#9CA3AF] mb-2">가격에 영향 없음 · 경매수입에만 영향</div>
-            <input type="range" min={0} max={100} step={5} value={auctionRate2040}
-              onChange={e => setAuctionRate2040(Number(e.target.value))}
-              className="w-full accent-[#E8A33D]" />
-            <div className="flex justify-between text-[10px] text-[#9CA3AF] mt-1" style={{ fontFamily: 'Inter' }}>
-              <span>0% (전량 무상)</span>
-              <span className="font-semibold text-[#111827]">{auctionRate2040}%</span>
-              <span>100% (전량 유상)</span>
-            </div>
-            <div className="mt-2 text-[11px] text-[#6B7280]" style={{ fontFamily: 'Inter' }}>
-              추정 누적 경매수입: <strong className="text-[#111827]">{cumRevenue.toFixed(1)}조원</strong>
-            </div>
-          </div>
-
-          {/* KPI 요약 */}
-          <div className="bg-[#F9FAFB] border border-[#E5E7EB] rounded-[10px] p-4">
-            <div className="text-[12px] font-semibold text-[#111827] mb-2">시뮬레이션 요약</div>
-            <div className="space-y-1 text-[11px]" style={{ fontFamily: 'Inter' }}>
-              <div className="flex justify-between"><span className="text-[#6B7280]">활성 기술</span><span className="text-[#111827] font-semibold">{activeTechs.length}/{MACC_ALL.length}</span></div>
-              <div className="flex justify-between"><span className="text-[#6B7280]">감축잠재량</span><span className="text-[#111827] font-semibold">{totalPotential.toFixed(1)} Mt/yr</span></div>
-              <div className="flex justify-between"><span className="text-[#6B7280]">K-MSR 모드</span><span className="text-[#111827] font-semibold">{MSR_MODE_LABELS[msrMode].ko}</span></div>
-              <div className="flex justify-between"><span className="text-[#6B7280]">2030 K-MSR</span><span className="text-[#111827] font-semibold">{msrAdjustment2030 > 0 ? '+' : ''}{msrAdjustment2030} Mt</span></div>
-              <div className="flex justify-between"><span className="text-[#6B7280]">2030 가격</span><span className="text-[#111827] font-semibold">{fmtWon(p2030)} 원</span></div>
-              <div className="flex justify-between"><span className="text-[#6B7280]">2040 가격</span><span className="text-[#111827] font-semibold">{fmtWon(p2040)} 원</span></div>
-              <div className="flex justify-between"><span className="text-[#6B7280]">2030 경매량</span><span className="text-[#111827] font-semibold">{supply2030?.auctionVolume.toFixed(1) ?? '-'} Mt</span></div>
-              <div className="flex justify-between"><span className="text-[#6B7280]">2030 잉여비율</span><span className="text-[#111827] font-semibold">{supply2030?.surplusRatio.toFixed(1) ?? '-'}%</span></div>
-              <div className="flex justify-between"><span className="text-[#6B7280]">2040 활성기술</span><span className="text-[#111827] font-semibold">{pricePathSim.find(r => r.year === 2040)?.activeTechCount ?? 0}개</span></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* ── 기술 ON/OFF 매트릭스 ── */}
+      {/* ── 모드 선택: 운영규칙 패키지 + 커스텀 ── */}
       <div className="bg-white border border-[#E5E7EB] rounded-[10px] p-4">
-        <div className="flex items-baseline justify-between mb-3">
-          <div>
-            <h3 className="text-[14px] font-semibold text-[#111827] m-0">감축기술 선택</h3>
-            <div className="text-[10.5px] text-[#9CA3AF] mt-1">기술을 클릭하여 ON/OFF. 비활성화된 기술은 시장에서 제외됩니다.</div>
-          </div>
-          <div className="flex gap-2">
-            <button onClick={() => setEnabledTechs(new Set(MACC_ALL.map(t => t.tech)))}
-              className="px-2.5 py-1 rounded text-[10.5px] border border-[#E5E7EB] text-[#6B7280] hover:bg-[#F9FAFB]">
-              전체 ON
-            </button>
-            <button onClick={() => setEnabledTechs(new Set())}
-              className="px-2.5 py-1 rounded text-[10.5px] border border-[#E5E7EB] text-[#6B7280] hover:bg-[#F9FAFB]">
-              전체 OFF
-            </button>
-          </div>
+        <div className="text-[12px] font-semibold text-[#111827] mb-0.5">K-MSR 운영규칙 (논문 v4 패키지)</div>
+        <div className="text-[10.5px] text-[#9CA3AF] mb-2.5">
+          K-MSR은 법제화된 제도 — 아래는 그 운영규칙 4종 · 유상할당은 모두 정부 기발표 경로(A_gov) 공통
         </div>
-
-        <div className="grid grid-cols-3 gap-4">
-          {Object.entries(SECTOR_INFO).map(([secId, info]) => {
-            const secTechs = MACC_ALL.filter(t => t.sector === secId).sort((a, b) => a.cost - b.cost);
-            if (secTechs.length === 0) return null;
-            const allOn = secTechs.every(t => enabledTechs.has(t.tech));
+        <div className="flex flex-wrap gap-1.5">
+          {PKG_LIST.map(p => {
+            const active = mode === p.id;
             return (
-              <div key={secId}>
-                <button onClick={() => toggleSector(secId)}
-                  className="flex items-center gap-2 mb-2 text-[12px] font-semibold hover:opacity-80 border-0 bg-transparent cursor-pointer p-0">
-                  <span className="w-2.5 h-2.5 rounded-sm" style={{ background: info.color }} />
-                  <span style={{ color: info.color }}>{info.ko}</span>
-                  <span className="text-[9.5px] text-[#9CA3AF] font-normal" style={{ fontFamily: 'Inter' }}>{info.en}</span>
-                  <span className="text-[9px] text-[#9CA3AF]">{allOn ? '(전체 ON)' : ''}</span>
-                </button>
-                <div className="space-y-1">
-                  {secTechs.map(t => {
-                    const on = enabledTechs.has(t.tech);
-                    const viable2030 = t.cost <= p2030;
-                    return (
-                      <button key={t.tech} onClick={() => toggleTech(t.tech)}
-                        className={`w-full text-left flex items-center gap-2 px-2 py-1.5 rounded text-[11px] border transition-all ${
-                          on ? 'border-[#D1D5DB] bg-white' : 'border-[#F3F4F6] bg-[#F9FAFB] opacity-50'
-                        }`}>
-                        <span className={`w-3.5 h-3.5 rounded border flex items-center justify-center text-[9px] font-bold ${
-                          on ? 'border-current text-white' : 'border-[#D1D5DB] text-transparent'
-                        }`} style={on ? { background: info.color, borderColor: info.color } : {}}>
-                          ✓
-                        </span>
-                        <span className="flex-1 truncate">{t.tech}</span>
-                        <span className="text-[9.5px] tabular-nums" style={{ fontFamily: 'Inter', color: t.cost < 0 ? '#10A574' : '#6B7280' }}>
-                          {fmtWonK(t.cost)}
-                        </span>
-                        {on && viable2030 && (
-                          <span className="w-1.5 h-1.5 rounded-full bg-[#10A574]" title="2030 경제성 확보" />
-                        )}
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
+              <button key={p.id} onClick={() => setMode(p.id)} aria-pressed={active}
+                className={`px-3 py-2 rounded-md text-[11.5px] border transition-all ${
+                  active ? 'font-semibold' : 'border-[#E5E7EB] text-[#6B7280] hover:bg-[#F9FAFB]'
+                }`}
+                style={active ? { color: p.color, borderColor: p.color, background: p.soft } : {}}>
+                {p.id} · {p.ko}
+              </button>
             );
           })}
+          <button onClick={() => setMode('custom')} aria-pressed={mode === 'custom'}
+            className={`px-3 py-2 rounded-md text-[11.5px] border transition-all ${
+              mode === 'custom'
+                ? 'border-[#111827] bg-[#111827] text-white font-semibold'
+                : 'border-[#E5E7EB] text-[#6B7280] hover:bg-[#F9FAFB]'
+            }`}>
+            커스텀 · 레버 직접 조절
+          </button>
         </div>
+        {isPkg && (
+          <p className="text-[11px] text-[#6B7280] leading-[1.6] mt-2.5 mb-0">
+            <strong style={{ color: pkgInfo?.color }}>{mode} {pkgInfo?.ko}</strong> — {PKG_DESC[mode]}
+          </p>
+        )}
+      </div>
+
+      <div className={`grid gap-5 ${isPkg ? 'grid-cols-1' : 'grid-cols-[1fr_320px]'}`}>
+        {/* ── 왼쪽: 결과 ── */}
+        <div className="space-y-4">
+          {isPkg ? <PackageResult pkg={pkg} mode={mode} loading={loading} />
+                 : <CustomResult rows={rows} loading={loading} scenario={scenario} maccMode={maccMode} />}
+        </div>
+
+        {/* ── 오른쪽: 커스텀 레버 ── */}
+        {!isPkg && (
+          <div className="space-y-3">
+            {/* Cap 시나리오 · MACC 방식 */}
+            <div className="bg-white border border-[#E5E7EB] rounded-[10px] p-4">
+              <div className="text-[12px] font-semibold text-[#111827] mb-2">Cap 시나리오 (NDC 기반)</div>
+              <div className="space-y-1.5">
+                {(meta?.scenarios ?? ['base', 'middle', 'ideal']).map(id => {
+                  const s = SCEN[id as ScenarioId];
+                  const active = scenario === id;
+                  return (
+                    <button key={id} onClick={() => setScenario(id as ScenarioId)}
+                      className={`w-full text-left px-3 py-2 rounded-md text-[11.5px] border transition-all ${
+                        active ? 'border-current font-semibold' : 'border-[#E5E7EB] text-[#6B7280]'
+                      }`}
+                      style={active ? { color: s?.color, borderColor: s?.color, background: '#FAFAFA' } : {}}>
+                      {s ? `${s.ko} (${s.en})` : id}
+                    </button>
+                  );
+                })}
+              </div>
+              <div className="text-[12px] font-semibold text-[#111827] mt-3 mb-2">MACC 방식</div>
+              <div className="grid grid-cols-2 gap-1.5">
+                {(meta?.macc_modes ?? ['step', 'exponential']).map(m => (
+                  <button key={m} onClick={() => setMaccMode(m)}
+                    aria-pressed={maccMode === m}
+                    className={`rounded border px-2 py-1.5 text-[10.5px] transition-all ${
+                      maccMode === m
+                        ? 'border-[#111827] bg-[#111827] text-white'
+                        : 'border-[#E5E7EB] text-[#6B7280] hover:bg-[#F9FAFB]'
+                    }`}>
+                    {MACC_MODE_LABELS[m] ?? m}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* K-MSR 물량규칙 */}
+            <div className="bg-white border border-[#E5E7EB] rounded-[10px] p-4">
+              <div className="text-[12px] font-semibold text-[#111827]">K-MSR 물량규칙</div>
+              <div className="text-[10px] text-[#9CA3AF] mt-0.5 mb-2">
+                초기값 = 시행령 draft 규칙 (엔진 SSOT) · 4기 예비분 {MSR_RESERVE_MT.toFixed(1)} Mt ·
+                가격범위 {KMSR_DRAFT_ASSUMPTIONS.announcementDue} 공고 예정
+              </div>
+              <Slider label="흡수율 ρ" display={rho.toFixed(2)} min={0} max={0.5} step={0.01}
+                      value={rho} onChange={setRho} />
+              <Slider label="흡수 임계 θ⁺" display={`${thetaPlus.toFixed(0)} Mt`} min={0} max={150} step={1}
+                      value={thetaPlus} onChange={setThetaPlus} />
+              <Slider label="방출 임계 θ⁻" display={`${thetaMinus.toFixed(0)} Mt`} min={0} max={50} step={1}
+                      value={thetaMinus} onChange={setThetaMinus} />
+              <Slider label="연간 방출량" display={`${release.toFixed(0)} Mt`} min={0} max={40} step={1}
+                      value={release} onChange={setRelease} />
+              <Slider label="영구취소율" display={`${(cancel * 100).toFixed(0)}%`} min={0} max={1} step={0.05}
+                      value={cancel} onChange={setCancel} />
+            </div>
+
+            {/* 유동성 (레벨-브리지) */}
+            <div className="bg-white border border-[#E5E7EB] rounded-[10px] p-4">
+              <div className="text-[12px] font-semibold text-[#111827]">유동성 λ (레벨-브리지)</div>
+              <div className="text-[10px] text-[#9CA3AF] mt-0.5 mb-2">
+                λ=0 정태 ↔ λ=1 Hotelling · 기본값은 엔진 SSOT (H1-2026 리프라이싱 역산)
+              </div>
+              <Slider label="초기 λ₀" display={lam0.toFixed(2)} min={0} max={1} step={0.05}
+                      value={lam0} onChange={setLam0} accent="#10A574" />
+              <Slider label="목표 λ" display={lamTerminal.toFixed(2)} min={0} max={1} step={0.05}
+                      value={lamTerminal} onChange={setLamTerminal} accent="#10A574" />
+              <Slider label="램프 기간" display={`${rampYears.toFixed(0)}년`} min={0} max={15} step={1}
+                      value={rampYears} onChange={setRampYears} accent="#10A574" />
+            </div>
+
+            {/* 시세 참고 */}
+            <div className="bg-[#F9FAFB] border border-[#E5E7EB] rounded-[10px] p-4 text-[10.5px] leading-[1.6] text-[#6B7280]" style={{ fontFamily: 'Inter' }}>
+              최근 KAU 시세 <strong className="text-[#111827]">{fmtWon(LATEST_KAU_QUOTE.kau_krw)}원</strong> ({LATEST_KAU_QUOTE.date}) ·
+              감시선 {fmtWon(KMSR_DRAFT_ASSUMPTIONS.lowPriceKrw)}~{fmtWon(KMSR_DRAFT_ASSUMPTIONS.highPriceKrw)}원 및
+              잉여비율 {Math.round(KMSR_DRAFT_ASSUMPTIONS.lowerSurplusRatio * 100)}~{Math.round(KMSR_DRAFT_ASSUMPTIONS.upperSurplusRatio * 100)}%는
+              공고({KMSR_DRAFT_ASSUMPTIONS.announcementDue}) 전 draft 가정
+            </div>
+          </div>
+        )}
       </div>
     </div>
+  );
+}
+
+// ─── 패키지 모드 결과 ───────────────────────────────────────
+function PackageResult({ pkg, mode, loading }: { pkg: PkgResponse | null; mode: PackageId; loading: boolean }) {
+  const info = PKG[mode];
+  const at = (y: number) => pkg?.path.find(r => r.year === y);
+  const p30 = at(2030);
+  const p35 = at(2035);
+  const hasFloor = (pkg?.path ?? []).some(r => r.floor > 0);
+  const h2Entry = pkg ? Object.entries(pkg.activation_headline).find(([k]) => k.includes('H₂-DRI')) : null;
+  const enccEntry = pkg ? Object.entries(pkg.activation_headline).find(([k]) => k.includes('e-cracker')) : null;
+  const h2 = h2Entry?.[1] ?? null;
+  const encc = enccEntry?.[1] ?? null;
+
+  return (
+    <>
+      {/* KPI */}
+      <div className="grid grid-cols-4 gap-3">
+        <Kpi label="2030 실현가격" value={p30 ? `${fmtWon(Math.round(p30.kau))}원` : '—'}
+             sub={p30 && p30.floor > p30.kau_prefloor ? '회랑 하한이 구속' : '펀더멘털 경로'} feature />
+        <Kpi label="2035 실현가격" value={p35 ? `${fmtWon(Math.round(p35.kau))}원` : '—'}
+             sub={mode === 'A' ? 'H₂-DRI 문턱 앵커' : '실현경로 (λ hold)'} />
+        <Kpi label="수소환원제철 (H₂-DRI)" value={h2 ? `${h2}년` : '미달성'}
+             sub={h2 ? '학습조정 문턱 도달' : '2040년까지 문턱 미달'} />
+        <Kpi label="NCC 전기분해 (e-NCC)" value={encc ? `${encc}년` : '미달성'}
+             sub={encc ? '학습조정 문턱 도달' : '2040년까지 문턱 미달'} />
+      </div>
+
+      {/* 규칙별 방어·낙폭 배지 */}
+      {pkg && (
+        <div className="flex flex-wrap gap-2">
+          {hasFloor && (
+            <span className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] border ${
+              pkg.defended_all ? 'border-[#10A574] text-[#065F46] bg-[#F0FDF4]' : 'border-[#DC2626] text-[#991B1B] bg-[#FEF2F2]'
+            }`}>
+              {pkg.defended_all ? '✓ 전 연도 하한 방어' : '✗ 방어 실패 연도 존재'} ·
+              방어여유 최소 {(pkg.min_headroom * 100).toFixed(1)}%
+            </span>
+          )}
+          {mode === 'B' && (
+            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] border border-[#E8A33D] text-[#92400E] bg-[#FEF3C7]">
+              무효화 {pkg.cum_intake_Mt.toFixed(0)} Mt · 최대 낙폭 {(pkg.max_drawdown * 100).toFixed(1)}% — 수량일정의 변동성 비용
+            </span>
+          )}
+          {mode === 'P1' && (
+            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] border border-[#DC2626] text-[#991B1B] bg-[#FEF2F2]">
+              최대 낙폭 {(pkg.max_drawdown * 100).toFixed(1)}% — 2031 방출전환 waterbed
+            </span>
+          )}
+        </div>
+      )}
+
+      {/* 가격경로 차트 */}
+      <div className="bg-white border border-[#E5E7EB] rounded-[10px] p-4">
+        <div className="flex items-baseline justify-between mb-2">
+          <div>
+            <h3 className="text-[14px] font-semibold text-[#111827] m-0">KAU 가격경로 (원/tCO₂)</h3>
+            <div className="text-[10.5px] text-[#9CA3AF] mt-1" style={{ fontFamily: 'Inter' }}>
+              Live engine · POST /api/solve · package {mode}
+            </div>
+          </div>
+          {loading && <span className="text-[11px] text-[#9CA3AF]" style={{ fontFamily: 'Inter' }}>계산 중…</span>}
+        </div>
+        <ResponsiveContainer width="100%" height={320}>
+          <LineChart data={pkg?.path ?? []} margin={{ top: 8, right: 14, left: 0, bottom: 0 }}>
+            <CartesianGrid stroke="#EEF0F2" vertical={false} />
+            <XAxis dataKey="year" stroke="#9CA3AF" tick={TICK} tickLine={false} />
+            <YAxis stroke="#9CA3AF" tick={TICK} tickLine={false} axisLine={false} tickFormatter={fmtWonK} />
+            <Tooltip contentStyle={TOOLTIP_STYLE}
+                     formatter={(v: unknown) => fmtWon(Math.round(Number(v ?? 0))) + ' 원'}
+                     labelFormatter={(l) => l + '년'} />
+            <Legend wrapperStyle={{ fontSize: 11 }} />
+            {h2 && (
+              <ReferenceLine x={h2} stroke="#D1D5DB" strokeDasharray="2 4"
+                label={{ value: `H₂-DRI ${h2}`, fontSize: 9.5, fill: '#9CA3AF', position: 'insideTopLeft' }} />
+            )}
+            {encc && (
+              <ReferenceLine x={encc} stroke="#D1D5DB" strokeDasharray="2 4"
+                label={{ value: `e-NCC ${encc}`, fontSize: 9.5, fill: '#9CA3AF', position: 'insideTopRight' }} />
+            )}
+            <Line dataKey="static" name="정태 (λ=0)" stroke="#D1D5DB" strokeWidth={1.2} strokeDasharray="5 3" dot={false} />
+            <Line dataKey="hotelling" name="Hotelling (λ=1)" stroke="#AEB9CC" strokeWidth={1.2} dot={false} />
+            {hasFloor && (
+              <Line dataKey="floor" name="경매보류가격 (회랑 하한)" stroke={info.color}
+                    strokeWidth={1.4} strokeDasharray="4 3" dot={false} />
+            )}
+            <Line dataKey="kau" name={`실현 (${mode} ${info.ko})`} stroke={info.color} strokeWidth={2.6} dot={false} />
+          </LineChart>
+        </ResponsiveContainer>
+        <p className="text-[10.5px] text-[#6B7280] leading-[1.6] mt-2 mb-0">
+          <strong>실현</strong>(굵은선) = λ 레벨-브리지 + {hasFloor ? '경매보류가격 overlay (하한이 구속하면 하한이 가격)' : '수량규칙 흡수 반영'} ·
+          방어요건 W ≤ a·Cap은 기발표 경매물량 한도 내에서 판정.
+        </p>
+      </div>
+
+      {/* Banking · 흡수 보조 차트 */}
+      <div className="bg-white border border-[#E5E7EB] rounded-[10px] p-4">
+        <div className="flex items-baseline justify-between mb-2">
+          <h3 className="text-[13px] font-semibold text-[#111827] m-0">Banking 잔고 · MSR 흡수</h3>
+          <div className="text-[10px] text-[#9CA3AF]" style={{ fontFamily: 'Inter' }}>
+            bank_Mt (좌) · intake_Mt (우)
+          </div>
+        </div>
+        <ResponsiveContainer width="100%" height={150}>
+          <ComposedChart data={pkg?.path ?? []} margin={{ top: 4, right: 6, left: 0, bottom: 0 }}>
+            <CartesianGrid stroke="#EEF0F2" vertical={false} />
+            <XAxis dataKey="year" stroke="#9CA3AF" tick={{ ...TICK, fontSize: 9.5 }} tickLine={false} />
+            <YAxis yAxisId="bank" stroke="#9CA3AF" tick={{ ...TICK, fontSize: 9.5 }} tickLine={false} axisLine={false} unit=" Mt" />
+            <YAxis yAxisId="intake" orientation="right"
+                   stroke="#9CA3AF" tick={{ ...TICK, fontSize: 9.5 }} tickLine={false} axisLine={false} unit=" Mt" />
+            <Tooltip contentStyle={{ ...TOOLTIP_STYLE, fontSize: 10.5 }}
+                     formatter={(v: unknown) => `${Number(v ?? 0).toFixed(1)} Mt`}
+                     labelFormatter={(l) => l + '년'} />
+            <Area yAxisId="bank" dataKey="bank_Mt" name="Banking 잔고" stroke="#5B7BAA" fill="#E3EAF4"
+                  strokeWidth={1.6} fillOpacity={0.6} dot={false} />
+            <Line yAxisId="intake" dataKey="intake_Mt" name="MSR 흡수(무효화)" stroke={PKG.B.color} strokeWidth={2} dot={false} />
+          </ComposedChart>
+        </ResponsiveContainer>
+      </div>
+    </>
+  );
+}
+
+// ─── 커스텀 모드 결과 ───────────────────────────────────────
+function CustomResult({ rows, loading, scenario, maccMode }: {
+  rows: PathRow[]; loading: boolean; scenario: string; maccMode: string;
+}) {
+  const p30 = rows.find(r => r.year === 2030);
+  const net30 = p30 ? p30.kau_realized - p30.static : 0;
+  return (
+    <>
+      {/* KPI */}
+      <div className="grid grid-cols-3 gap-3">
+        <Kpi label="2030 실현가격" value={p30 ? `${fmtWon(Math.round(p30.kau_realized))}원` : '—'}
+             sub={p30 ? `${net30 >= 0 ? '+' : ''}${fmtWon(Math.round(net30))} vs 정태` : '계산 대기'} feature />
+        <Kpi label="2030 정태 (λ=0)" value={p30 ? `${fmtWon(Math.round(p30.static))}원` : '—'} sub="현 얇은시장 anchor" />
+        <Kpi label="2030 Hotelling (λ=1)" value={p30 ? `${fmtWon(Math.round(p30.hotelling))}원` : '—'} sub="완전차익거래 anchor" />
+      </div>
+
+      {/* 가격경로 차트 */}
+      <div className="bg-white border border-[#E5E7EB] rounded-[10px] p-4">
+        <div className="flex items-baseline justify-between mb-2">
+          <div>
+            <h3 className="text-[14px] font-semibold text-[#111827] m-0">KAU 가격경로 (원/tCO₂)</h3>
+            <div className="text-[10.5px] text-[#9CA3AF] mt-1" style={{ fontFamily: 'Inter' }}>
+              Live engine · POST /api/solve · {scenario} / {maccMode} / custom
+            </div>
+          </div>
+          {loading && <span className="text-[11px] text-[#9CA3AF]" style={{ fontFamily: 'Inter' }}>계산 중…</span>}
+        </div>
+        <ResponsiveContainer width="100%" height={300}>
+          <LineChart data={rows} margin={{ top: 8, right: 14, left: 0, bottom: 0 }}>
+            <CartesianGrid stroke="#EEF0F2" vertical={false} />
+            <XAxis dataKey="year" stroke="#9CA3AF" tick={TICK} tickLine={false} />
+            <YAxis stroke="#9CA3AF" tick={TICK} tickLine={false} axisLine={false} tickFormatter={fmtWonK} />
+            <Tooltip contentStyle={TOOLTIP_STYLE}
+                     formatter={(v: unknown) => fmtWon(Math.round(Number(v ?? 0))) + ' 원'}
+                     labelFormatter={(l) => l + '년'} />
+            <Legend wrapperStyle={{ fontSize: 11 }} />
+            <Line dataKey="eua" name="EUA 참조" stroke={EUA_COLOR} strokeWidth={1.3} strokeDasharray="2 3" dot={false} />
+            <Line dataKey="static" name="정태 (λ=0)" stroke="#9CA3AF" strokeWidth={1.6} strokeDasharray="5 3" dot={false} />
+            <Line dataKey="hotelling" name="Hotelling (λ=1)" stroke="#5B7BAA" strokeWidth={1.8} dot={false} />
+            <Line dataKey="kau_realized" name="실현 (유동성 반영)" stroke="#111827" strokeWidth={2.5} dot={false} />
+          </LineChart>
+        </ResponsiveContainer>
+        <p className="text-[10.5px] text-[#6B7280] leading-[1.6] mt-2 mb-0">
+          <strong>정태</strong>(회색점선) = 차익거래 없는 현 얇은시장, <strong>Hotelling</strong>(파랑) = 완전차익거래 펀더멘털,{' '}
+          <strong>실현</strong>(검정) = λ로 두 anchor를 보간한 레벨-브리지 가격.
+        </p>
+      </div>
+
+      {/* λ · Banking 보조 차트 */}
+      <div className="bg-white border border-[#E5E7EB] rounded-[10px] p-4">
+        <div className="flex items-baseline justify-between mb-2">
+          <h3 className="text-[13px] font-semibold text-[#111827] m-0">λ 경로 · Banking 잔고</h3>
+          <div className="text-[10px] text-[#9CA3AF]" style={{ fontFamily: 'Inter' }}>
+            bank_Mt (좌) · λ (우, 0–1)
+          </div>
+        </div>
+        <ResponsiveContainer width="100%" height={150}>
+          <ComposedChart data={rows} margin={{ top: 4, right: 6, left: 0, bottom: 0 }}>
+            <CartesianGrid stroke="#EEF0F2" vertical={false} />
+            <XAxis dataKey="year" stroke="#9CA3AF" tick={{ ...TICK, fontSize: 9.5 }} tickLine={false} />
+            <YAxis yAxisId="mt" stroke="#9CA3AF" tick={{ ...TICK, fontSize: 9.5 }} tickLine={false} axisLine={false} unit=" Mt" />
+            <YAxis yAxisId="lam" orientation="right" domain={[0, 1]} ticks={[0, 0.5, 1]}
+                   stroke="#9CA3AF" tick={{ ...TICK, fontSize: 9.5 }} tickLine={false} axisLine={false} />
+            <Tooltip contentStyle={{ ...TOOLTIP_STYLE, fontSize: 10.5 }}
+                     formatter={(v: unknown, name) =>
+                       name === 'λ (유동성)' ? Number(v ?? 0).toFixed(2) : `${Number(v ?? 0).toFixed(1)} Mt`}
+                     labelFormatter={(l) => l + '년'} />
+            <Area yAxisId="mt" dataKey="bank_Mt" name="Banking 잔고" stroke="#5B7BAA" fill="#E3EAF4"
+                  strokeWidth={1.6} fillOpacity={0.6} dot={false} />
+            <Line yAxisId="lam" dataKey="lambda" name="λ (유동성)" stroke="#10A574" strokeWidth={2} dot={false} />
+          </ComposedChart>
+        </ResponsiveContainer>
+      </div>
+    </>
+  );
+}
+
+// ─── 소품 컴포넌트 ──────────────────────────────────────────
+function Kpi({ label, value, sub, feature }: { label: string; value: string; sub: string; feature?: boolean }) {
+  return (
+    <div className={`border rounded-[10px] px-4 py-3 ${feature ? 'bg-[#111827] border-[#111827]' : 'bg-white border-[#E5E7EB]'}`}>
+      <div className="text-[10.5px] text-[#9CA3AF]">{label}</div>
+      <div className={`text-[19px] font-bold tracking-[-0.02em] my-0.5 ${feature ? 'text-white' : 'text-[#111827]'}`}
+           style={{ fontFamily: 'Inter' }}>
+        {value}
+      </div>
+      <div className={`text-[10px] ${feature ? 'text-[#AEB9CC]' : 'text-[#6B7280]'}`} style={{ fontFamily: 'Inter' }}>{sub}</div>
+    </div>
+  );
+}
+
+function Slider({ label, display, min, max, step, value, onChange, accent = '#5B7BAA' }: {
+  label: string; display: string;
+  min: number; max: number; step: number;
+  value: number; onChange: (v: number) => void;
+  accent?: string;
+}) {
+  return (
+    <label className="block mb-2.5 last:mb-0">
+      <span className="flex justify-between text-[10.5px] mb-0.5">
+        <span className="text-[#6B7280]">{label}</span>
+        <span className="font-semibold text-[#111827]" style={{ fontFamily: 'Inter' }}>{display}</span>
+      </span>
+      <input type="range" min={min} max={max} step={step} value={value}
+        onChange={e => onChange(parseFloat(e.target.value))}
+        className="w-full" style={{ accentColor: accent }} />
+    </label>
   );
 }

@@ -1,0 +1,4965 @@
+{
+  "model_version": "0.7",
+  "description": "유효공급+K-MSR 내생화; B0 명시; Hotelling banking; 정책그리드(유상할당×가격하한)",
+  "policy_grid": {
+    "A_cur|M0": {
+      "auction": 0.15,
+      "floor_id": "M0",
+      "path": [
+        {
+          "year": 2026,
+          "kau": 8582,
+          "floor": 0,
+          "defended": true,
+          "abate_Mt": 21.5,
+          "cbam_cost_trillion": 1.749
+        },
+        {
+          "year": 2027,
+          "kau": 9068,
+          "floor": 0,
+          "defended": true,
+          "abate_Mt": 28.1,
+          "cbam_cost_trillion": 1.879
+        },
+        {
+          "year": 2028,
+          "kau": 9580,
+          "floor": 0,
+          "defended": true,
+          "abate_Mt": 34.6,
+          "cbam_cost_trillion": 2.031
+        },
+        {
+          "year": 2029,
+          "kau": 10122,
+          "floor": 0,
+          "defended": true,
+          "abate_Mt": 41.1,
+          "cbam_cost_trillion": 2.275
+        },
+        {
+          "year": 2030,
+          "kau": 10694,
+          "floor": 0,
+          "defended": true,
+          "abate_Mt": 48.2,
+          "cbam_cost_trillion": 2.565
+        },
+        {
+          "year": 2031,
+          "kau": 14092,
+          "floor": 0,
+          "defended": true,
+          "abate_Mt": 76.5,
+          "cbam_cost_trillion": 2.879
+        },
+        {
+          "year": 2032,
+          "kau": 14284,
+          "floor": 0,
+          "defended": true,
+          "abate_Mt": 79.7,
+          "cbam_cost_trillion": 3.243
+        },
+        {
+          "year": 2033,
+          "kau": 14469,
+          "floor": 0,
+          "defended": true,
+          "abate_Mt": 82.8,
+          "cbam_cost_trillion": 3.607
+        },
+        {
+          "year": 2034,
+          "kau": 14647,
+          "floor": 0,
+          "defended": true,
+          "abate_Mt": 85.8,
+          "cbam_cost_trillion": 3.971
+        },
+        {
+          "year": 2035,
+          "kau": 14818,
+          "floor": 0,
+          "defended": true,
+          "abate_Mt": 88.8,
+          "cbam_cost_trillion": 4.335
+        },
+        {
+          "year": 2036,
+          "kau": 14981,
+          "floor": 0,
+          "defended": true,
+          "abate_Mt": 91.7,
+          "cbam_cost_trillion": 4.7
+        },
+        {
+          "year": 2037,
+          "kau": 15135,
+          "floor": 0,
+          "defended": true,
+          "abate_Mt": 94.5,
+          "cbam_cost_trillion": 5.064
+        },
+        {
+          "year": 2038,
+          "kau": 15282,
+          "floor": 0,
+          "defended": true,
+          "abate_Mt": 97.3,
+          "cbam_cost_trillion": 5.429
+        },
+        {
+          "year": 2039,
+          "kau": 15421,
+          "floor": 0,
+          "defended": true,
+          "abate_Mt": 100.0,
+          "cbam_cost_trillion": 5.793
+        },
+        {
+          "year": 2040,
+          "kau": 15552,
+          "floor": 0,
+          "defended": true,
+          "abate_Mt": 102.7,
+          "cbam_cost_trillion": 6.158
+        }
+      ],
+      "cum_abate_Mt": 1073.0,
+      "cum_auction_rev_trillion": 12.1,
+      "cum_cbam_cost_trillion": 55.7
+    },
+    "A_cur|M_mid": {
+      "auction": 0.15,
+      "floor_id": "M_mid",
+      "path": [
+        {
+          "year": 2026,
+          "kau": 15000,
+          "floor": 15000,
+          "defended": true,
+          "abate_Mt": 73.2,
+          "cbam_cost_trillion": 1.651
+        },
+        {
+          "year": 2027,
+          "kau": 17500,
+          "floor": 17500,
+          "defended": true,
+          "abate_Mt": 89.9,
+          "cbam_cost_trillion": 1.75
+        },
+        {
+          "year": 2028,
+          "kau": 20000,
+          "floor": 20000,
+          "defended": true,
+          "abate_Mt": 104.5,
+          "cbam_cost_trillion": 1.872
+        },
+        {
+          "year": 2029,
+          "kau": 20563,
+          "floor": 22500,
+          "defended": false,
+          "abate_Mt": 109.1,
+          "cbam_cost_trillion": 2.116
+        },
+        {
+          "year": 2030,
+          "kau": 21114,
+          "floor": 25000,
+          "defended": false,
+          "abate_Mt": 113.4,
+          "cbam_cost_trillion": 2.405
+        },
+        {
+          "year": 2031,
+          "kau": 27447,
+          "floor": 27500,
+          "defended": false,
+          "abate_Mt": 140.5,
+          "cbam_cost_trillion": 2.675
+        },
+        {
+          "year": 2032,
+          "kau": 27453,
+          "floor": 30000,
+          "defended": false,
+          "abate_Mt": 142.3,
+          "cbam_cost_trillion": 3.042
+        },
+        {
+          "year": 2033,
+          "kau": 27447,
+          "floor": 32500,
+          "defended": false,
+          "abate_Mt": 144.2,
+          "cbam_cost_trillion": 3.409
+        },
+        {
+          "year": 2034,
+          "kau": 27431,
+          "floor": 35000,
+          "defended": false,
+          "abate_Mt": 146.0,
+          "cbam_cost_trillion": 3.776
+        },
+        {
+          "year": 2035,
+          "kau": 27406,
+          "floor": 37500,
+          "defended": false,
+          "abate_Mt": 147.7,
+          "cbam_cost_trillion": 4.143
+        },
+        {
+          "year": 2036,
+          "kau": 27368,
+          "floor": 40000,
+          "defended": false,
+          "abate_Mt": 149.5,
+          "cbam_cost_trillion": 4.51
+        },
+        {
+          "year": 2037,
+          "kau": 27319,
+          "floor": 42500,
+          "defended": false,
+          "abate_Mt": 151.2,
+          "cbam_cost_trillion": 4.878
+        },
+        {
+          "year": 2038,
+          "kau": 27260,
+          "floor": 45000,
+          "defended": false,
+          "abate_Mt": 152.8,
+          "cbam_cost_trillion": 5.246
+        },
+        {
+          "year": 2039,
+          "kau": 27191,
+          "floor": 47500,
+          "defended": false,
+          "abate_Mt": 154.4,
+          "cbam_cost_trillion": 5.613
+        },
+        {
+          "year": 2040,
+          "kau": 27113,
+          "floor": 50000,
+          "defended": false,
+          "abate_Mt": 156.0,
+          "cbam_cost_trillion": 5.981
+        }
+      ],
+      "cum_abate_Mt": 1975.0,
+      "cum_auction_rev_trillion": 22.6,
+      "cum_cbam_cost_trillion": 53.1
+    },
+    "A_cur|M_high": {
+      "auction": 0.15,
+      "floor_id": "M_high",
+      "path": [
+        {
+          "year": 2026,
+          "kau": 19339,
+          "floor": 25000,
+          "defended": false,
+          "abate_Mt": 97.6,
+          "cbam_cost_trillion": 1.584
+        },
+        {
+          "year": 2027,
+          "kau": 19740,
+          "floor": 29643,
+          "defended": false,
+          "abate_Mt": 101.4,
+          "cbam_cost_trillion": 1.716
+        },
+        {
+          "year": 2028,
+          "kau": 20146,
+          "floor": 34286,
+          "defended": false,
+          "abate_Mt": 105.2,
+          "cbam_cost_trillion": 1.87
+        },
+        {
+          "year": 2029,
+          "kau": 20563,
+          "floor": 38929,
+          "defended": false,
+          "abate_Mt": 109.1,
+          "cbam_cost_trillion": 2.116
+        },
+        {
+          "year": 2030,
+          "kau": 21114,
+          "floor": 43571,
+          "defended": false,
+          "abate_Mt": 113.4,
+          "cbam_cost_trillion": 2.405
+        },
+        {
+          "year": 2031,
+          "kau": 27447,
+          "floor": 48214,
+          "defended": false,
+          "abate_Mt": 140.5,
+          "cbam_cost_trillion": 2.675
+        },
+        {
+          "year": 2032,
+          "kau": 27453,
+          "floor": 52857,
+          "defended": false,
+          "abate_Mt": 142.3,
+          "cbam_cost_trillion": 3.042
+        },
+        {
+          "year": 2033,
+          "kau": 27447,
+          "floor": 57500,
+          "defended": false,
+          "abate_Mt": 144.2,
+          "cbam_cost_trillion": 3.409
+        },
+        {
+          "year": 2034,
+          "kau": 27431,
+          "floor": 62143,
+          "defended": false,
+          "abate_Mt": 146.0,
+          "cbam_cost_trillion": 3.776
+        },
+        {
+          "year": 2035,
+          "kau": 27406,
+          "floor": 66786,
+          "defended": false,
+          "abate_Mt": 147.7,
+          "cbam_cost_trillion": 4.143
+        },
+        {
+          "year": 2036,
+          "kau": 27368,
+          "floor": 71429,
+          "defended": false,
+          "abate_Mt": 149.5,
+          "cbam_cost_trillion": 4.51
+        },
+        {
+          "year": 2037,
+          "kau": 27319,
+          "floor": 76071,
+          "defended": false,
+          "abate_Mt": 151.2,
+          "cbam_cost_trillion": 4.878
+        },
+        {
+          "year": 2038,
+          "kau": 27260,
+          "floor": 80714,
+          "defended": false,
+          "abate_Mt": 152.8,
+          "cbam_cost_trillion": 5.246
+        },
+        {
+          "year": 2039,
+          "kau": 27191,
+          "floor": 85357,
+          "defended": false,
+          "abate_Mt": 154.4,
+          "cbam_cost_trillion": 5.613
+        },
+        {
+          "year": 2040,
+          "kau": 27113,
+          "floor": 90000,
+          "defended": false,
+          "abate_Mt": 156.0,
+          "cbam_cost_trillion": 5.981
+        }
+      ],
+      "cum_abate_Mt": 2011.0,
+      "cum_auction_rev_trillion": 23.1,
+      "cum_cbam_cost_trillion": 53.0
+    },
+    "A_cur|M_max": {
+      "auction": 0.15,
+      "floor_id": "M_max",
+      "path": [
+        {
+          "year": 2026,
+          "kau": 19339,
+          "floor": 40000,
+          "defended": false,
+          "abate_Mt": 97.6,
+          "cbam_cost_trillion": 1.584
+        },
+        {
+          "year": 2027,
+          "kau": 19740,
+          "floor": 47857,
+          "defended": false,
+          "abate_Mt": 101.4,
+          "cbam_cost_trillion": 1.716
+        },
+        {
+          "year": 2028,
+          "kau": 20146,
+          "floor": 55714,
+          "defended": false,
+          "abate_Mt": 105.2,
+          "cbam_cost_trillion": 1.87
+        },
+        {
+          "year": 2029,
+          "kau": 20563,
+          "floor": 63571,
+          "defended": false,
+          "abate_Mt": 109.1,
+          "cbam_cost_trillion": 2.116
+        },
+        {
+          "year": 2030,
+          "kau": 21114,
+          "floor": 71429,
+          "defended": false,
+          "abate_Mt": 113.4,
+          "cbam_cost_trillion": 2.405
+        },
+        {
+          "year": 2031,
+          "kau": 27447,
+          "floor": 79286,
+          "defended": false,
+          "abate_Mt": 140.5,
+          "cbam_cost_trillion": 2.675
+        },
+        {
+          "year": 2032,
+          "kau": 27453,
+          "floor": 87143,
+          "defended": false,
+          "abate_Mt": 142.3,
+          "cbam_cost_trillion": 3.042
+        },
+        {
+          "year": 2033,
+          "kau": 27447,
+          "floor": 95000,
+          "defended": false,
+          "abate_Mt": 144.2,
+          "cbam_cost_trillion": 3.409
+        },
+        {
+          "year": 2034,
+          "kau": 27431,
+          "floor": 102857,
+          "defended": false,
+          "abate_Mt": 146.0,
+          "cbam_cost_trillion": 3.776
+        },
+        {
+          "year": 2035,
+          "kau": 27406,
+          "floor": 110714,
+          "defended": false,
+          "abate_Mt": 147.7,
+          "cbam_cost_trillion": 4.143
+        },
+        {
+          "year": 2036,
+          "kau": 27368,
+          "floor": 118571,
+          "defended": false,
+          "abate_Mt": 149.5,
+          "cbam_cost_trillion": 4.51
+        },
+        {
+          "year": 2037,
+          "kau": 27319,
+          "floor": 126429,
+          "defended": false,
+          "abate_Mt": 151.2,
+          "cbam_cost_trillion": 4.878
+        },
+        {
+          "year": 2038,
+          "kau": 27260,
+          "floor": 134286,
+          "defended": false,
+          "abate_Mt": 152.8,
+          "cbam_cost_trillion": 5.246
+        },
+        {
+          "year": 2039,
+          "kau": 27191,
+          "floor": 142143,
+          "defended": false,
+          "abate_Mt": 154.4,
+          "cbam_cost_trillion": 5.613
+        },
+        {
+          "year": 2040,
+          "kau": 27113,
+          "floor": 150000,
+          "defended": false,
+          "abate_Mt": 156.0,
+          "cbam_cost_trillion": 5.981
+        }
+      ],
+      "cum_abate_Mt": 2011.0,
+      "cum_auction_rev_trillion": 23.1,
+      "cum_cbam_cost_trillion": 53.0
+    },
+    "A30|M0": {
+      "auction": 0.3,
+      "floor_id": "M0",
+      "path": [
+        {
+          "year": 2026,
+          "kau": 8582,
+          "floor": 0,
+          "defended": true,
+          "abate_Mt": 21.5,
+          "cbam_cost_trillion": 1.749
+        },
+        {
+          "year": 2027,
+          "kau": 9068,
+          "floor": 0,
+          "defended": true,
+          "abate_Mt": 28.1,
+          "cbam_cost_trillion": 1.879
+        },
+        {
+          "year": 2028,
+          "kau": 9580,
+          "floor": 0,
+          "defended": true,
+          "abate_Mt": 34.6,
+          "cbam_cost_trillion": 2.031
+        },
+        {
+          "year": 2029,
+          "kau": 10122,
+          "floor": 0,
+          "defended": true,
+          "abate_Mt": 41.1,
+          "cbam_cost_trillion": 2.275
+        },
+        {
+          "year": 2030,
+          "kau": 10694,
+          "floor": 0,
+          "defended": true,
+          "abate_Mt": 48.2,
+          "cbam_cost_trillion": 2.565
+        },
+        {
+          "year": 2031,
+          "kau": 14092,
+          "floor": 0,
+          "defended": true,
+          "abate_Mt": 76.5,
+          "cbam_cost_trillion": 2.879
+        },
+        {
+          "year": 2032,
+          "kau": 14284,
+          "floor": 0,
+          "defended": true,
+          "abate_Mt": 79.7,
+          "cbam_cost_trillion": 3.243
+        },
+        {
+          "year": 2033,
+          "kau": 14469,
+          "floor": 0,
+          "defended": true,
+          "abate_Mt": 82.8,
+          "cbam_cost_trillion": 3.607
+        },
+        {
+          "year": 2034,
+          "kau": 14647,
+          "floor": 0,
+          "defended": true,
+          "abate_Mt": 85.8,
+          "cbam_cost_trillion": 3.971
+        },
+        {
+          "year": 2035,
+          "kau": 14818,
+          "floor": 0,
+          "defended": true,
+          "abate_Mt": 88.8,
+          "cbam_cost_trillion": 4.335
+        },
+        {
+          "year": 2036,
+          "kau": 14981,
+          "floor": 0,
+          "defended": true,
+          "abate_Mt": 91.7,
+          "cbam_cost_trillion": 4.7
+        },
+        {
+          "year": 2037,
+          "kau": 15135,
+          "floor": 0,
+          "defended": true,
+          "abate_Mt": 94.5,
+          "cbam_cost_trillion": 5.064
+        },
+        {
+          "year": 2038,
+          "kau": 15282,
+          "floor": 0,
+          "defended": true,
+          "abate_Mt": 97.3,
+          "cbam_cost_trillion": 5.429
+        },
+        {
+          "year": 2039,
+          "kau": 15421,
+          "floor": 0,
+          "defended": true,
+          "abate_Mt": 100.0,
+          "cbam_cost_trillion": 5.793
+        },
+        {
+          "year": 2040,
+          "kau": 15552,
+          "floor": 0,
+          "defended": true,
+          "abate_Mt": 102.7,
+          "cbam_cost_trillion": 6.158
+        }
+      ],
+      "cum_abate_Mt": 1073.0,
+      "cum_auction_rev_trillion": 24.1,
+      "cum_cbam_cost_trillion": 55.7
+    },
+    "A30|M_mid": {
+      "auction": 0.3,
+      "floor_id": "M_mid",
+      "path": [
+        {
+          "year": 2026,
+          "kau": 15000,
+          "floor": 15000,
+          "defended": true,
+          "abate_Mt": 73.2,
+          "cbam_cost_trillion": 1.651
+        },
+        {
+          "year": 2027,
+          "kau": 17500,
+          "floor": 17500,
+          "defended": true,
+          "abate_Mt": 89.9,
+          "cbam_cost_trillion": 1.75
+        },
+        {
+          "year": 2028,
+          "kau": 20000,
+          "floor": 20000,
+          "defended": true,
+          "abate_Mt": 104.5,
+          "cbam_cost_trillion": 1.872
+        },
+        {
+          "year": 2029,
+          "kau": 22500,
+          "floor": 22500,
+          "defended": true,
+          "abate_Mt": 117.7,
+          "cbam_cost_trillion": 2.086
+        },
+        {
+          "year": 2030,
+          "kau": 25000,
+          "floor": 25000,
+          "defended": true,
+          "abate_Mt": 129.6,
+          "cbam_cost_trillion": 2.346
+        },
+        {
+          "year": 2031,
+          "kau": 27500,
+          "floor": 27500,
+          "defended": true,
+          "abate_Mt": 140.6,
+          "cbam_cost_trillion": 2.674
+        },
+        {
+          "year": 2032,
+          "kau": 30000,
+          "floor": 30000,
+          "defended": true,
+          "abate_Mt": 150.9,
+          "cbam_cost_trillion": 3.003
+        },
+        {
+          "year": 2033,
+          "kau": 32500,
+          "floor": 32500,
+          "defended": true,
+          "abate_Mt": 160.4,
+          "cbam_cost_trillion": 3.332
+        },
+        {
+          "year": 2034,
+          "kau": 35000,
+          "floor": 35000,
+          "defended": true,
+          "abate_Mt": 169.4,
+          "cbam_cost_trillion": 3.66
+        },
+        {
+          "year": 2035,
+          "kau": 37500,
+          "floor": 37500,
+          "defended": true,
+          "abate_Mt": 177.8,
+          "cbam_cost_trillion": 3.989
+        },
+        {
+          "year": 2036,
+          "kau": 40000,
+          "floor": 40000,
+          "defended": true,
+          "abate_Mt": 185.9,
+          "cbam_cost_trillion": 4.317
+        },
+        {
+          "year": 2037,
+          "kau": 42500,
+          "floor": 42500,
+          "defended": true,
+          "abate_Mt": 193.5,
+          "cbam_cost_trillion": 4.646
+        },
+        {
+          "year": 2038,
+          "kau": 45000,
+          "floor": 45000,
+          "defended": true,
+          "abate_Mt": 200.9,
+          "cbam_cost_trillion": 4.974
+        },
+        {
+          "year": 2039,
+          "kau": 47500,
+          "floor": 47500,
+          "defended": true,
+          "abate_Mt": 207.2,
+          "cbam_cost_trillion": 5.303
+        },
+        {
+          "year": 2040,
+          "kau": 50000,
+          "floor": 50000,
+          "defended": true,
+          "abate_Mt": 208.2,
+          "cbam_cost_trillion": 5.632
+        }
+      ],
+      "cum_abate_Mt": 2310.0,
+      "cum_auction_rev_trillion": 58.8,
+      "cum_cbam_cost_trillion": 51.2
+    },
+    "A30|M_high": {
+      "auction": 0.3,
+      "floor_id": "M_high",
+      "path": [
+        {
+          "year": 2026,
+          "kau": 25000,
+          "floor": 25000,
+          "defended": true,
+          "abate_Mt": 122.2,
+          "cbam_cost_trillion": 1.498
+        },
+        {
+          "year": 2027,
+          "kau": 29643,
+          "floor": 29643,
+          "defended": true,
+          "abate_Mt": 140.4,
+          "cbam_cost_trillion": 1.564
+        },
+        {
+          "year": 2028,
+          "kau": 34286,
+          "floor": 34286,
+          "defended": true,
+          "abate_Mt": 156.2,
+          "cbam_cost_trillion": 1.654
+        },
+        {
+          "year": 2029,
+          "kau": 38929,
+          "floor": 38929,
+          "defended": true,
+          "abate_Mt": 170.3,
+          "cbam_cost_trillion": 1.835
+        },
+        {
+          "year": 2030,
+          "kau": 41688,
+          "floor": 43571,
+          "defended": false,
+          "abate_Mt": 178.7,
+          "cbam_cost_trillion": 2.091
+        },
+        {
+          "year": 2031,
+          "kau": 48214,
+          "floor": 48214,
+          "defended": true,
+          "abate_Mt": 194.5,
+          "cbam_cost_trillion": 2.358
+        },
+        {
+          "year": 2032,
+          "kau": 52857,
+          "floor": 52857,
+          "defended": true,
+          "abate_Mt": 204.4,
+          "cbam_cost_trillion": 2.654
+        },
+        {
+          "year": 2033,
+          "kau": 52455,
+          "floor": 57500,
+          "defended": false,
+          "abate_Mt": 205.6,
+          "cbam_cost_trillion": 3.027
+        },
+        {
+          "year": 2034,
+          "kau": 51677,
+          "floor": 62143,
+          "defended": false,
+          "abate_Mt": 206.2,
+          "cbam_cost_trillion": 3.405
+        },
+        {
+          "year": 2035,
+          "kau": 50925,
+          "floor": 66786,
+          "defended": false,
+          "abate_Mt": 206.7,
+          "cbam_cost_trillion": 3.784
+        },
+        {
+          "year": 2036,
+          "kau": 50350,
+          "floor": 71429,
+          "defended": false,
+          "abate_Mt": 207.3,
+          "cbam_cost_trillion": 4.159
+        },
+        {
+          "year": 2037,
+          "kau": 50270,
+          "floor": 76071,
+          "defended": false,
+          "abate_Mt": 207.8,
+          "cbam_cost_trillion": 4.527
+        },
+        {
+          "year": 2038,
+          "kau": 51487,
+          "floor": 80714,
+          "defended": false,
+          "abate_Mt": 208.3,
+          "cbam_cost_trillion": 4.875
+        },
+        {
+          "year": 2039,
+          "kau": 53095,
+          "floor": 85357,
+          "defended": false,
+          "abate_Mt": 208.8,
+          "cbam_cost_trillion": 5.218
+        },
+        {
+          "year": 2040,
+          "kau": 55263,
+          "floor": 90000,
+          "defended": false,
+          "abate_Mt": 209.3,
+          "cbam_cost_trillion": 5.551
+        }
+      ],
+      "cum_abate_Mt": 2827.0,
+      "cum_auction_rev_trillion": 84.1,
+      "cum_cbam_cost_trillion": 48.2
+    },
+    "A30|M_max": {
+      "auction": 0.3,
+      "floor_id": "M_max",
+      "path": [
+        {
+          "year": 2026,
+          "kau": 40000,
+          "floor": 40000,
+          "defended": true,
+          "abate_Mt": 167.3,
+          "cbam_cost_trillion": 1.268
+        },
+        {
+          "year": 2027,
+          "kau": 42409,
+          "floor": 47857,
+          "defended": false,
+          "abate_Mt": 174.8,
+          "cbam_cost_trillion": 1.369
+        },
+        {
+          "year": 2028,
+          "kau": 42080,
+          "floor": 55714,
+          "defended": false,
+          "abate_Mt": 175.9,
+          "cbam_cost_trillion": 1.535
+        },
+        {
+          "year": 2029,
+          "kau": 41758,
+          "floor": 63571,
+          "defended": false,
+          "abate_Mt": 177.0,
+          "cbam_cost_trillion": 1.792
+        },
+        {
+          "year": 2030,
+          "kau": 41688,
+          "floor": 71429,
+          "defended": false,
+          "abate_Mt": 178.7,
+          "cbam_cost_trillion": 2.091
+        },
+        {
+          "year": 2031,
+          "kau": 54108,
+          "floor": 79286,
+          "defended": false,
+          "abate_Mt": 204.4,
+          "cbam_cost_trillion": 2.268
+        },
+        {
+          "year": 2032,
+          "kau": 53279,
+          "floor": 87143,
+          "defended": false,
+          "abate_Mt": 205.0,
+          "cbam_cost_trillion": 2.647
+        },
+        {
+          "year": 2033,
+          "kau": 52455,
+          "floor": 95000,
+          "defended": false,
+          "abate_Mt": 205.6,
+          "cbam_cost_trillion": 3.027
+        },
+        {
+          "year": 2034,
+          "kau": 51677,
+          "floor": 102857,
+          "defended": false,
+          "abate_Mt": 206.2,
+          "cbam_cost_trillion": 3.405
+        },
+        {
+          "year": 2035,
+          "kau": 50925,
+          "floor": 110714,
+          "defended": false,
+          "abate_Mt": 206.7,
+          "cbam_cost_trillion": 3.784
+        },
+        {
+          "year": 2036,
+          "kau": 50350,
+          "floor": 118571,
+          "defended": false,
+          "abate_Mt": 207.3,
+          "cbam_cost_trillion": 4.159
+        },
+        {
+          "year": 2037,
+          "kau": 50270,
+          "floor": 126429,
+          "defended": false,
+          "abate_Mt": 207.8,
+          "cbam_cost_trillion": 4.527
+        },
+        {
+          "year": 2038,
+          "kau": 51487,
+          "floor": 134286,
+          "defended": false,
+          "abate_Mt": 208.3,
+          "cbam_cost_trillion": 4.875
+        },
+        {
+          "year": 2039,
+          "kau": 53095,
+          "floor": 142143,
+          "defended": false,
+          "abate_Mt": 208.8,
+          "cbam_cost_trillion": 5.218
+        },
+        {
+          "year": 2040,
+          "kau": 55263,
+          "floor": 150000,
+          "defended": false,
+          "abate_Mt": 209.3,
+          "cbam_cost_trillion": 5.551
+        }
+      ],
+      "cum_abate_Mt": 2943.0,
+      "cum_auction_rev_trillion": 90.5,
+      "cum_cbam_cost_trillion": 47.5
+    },
+    "A50|M0": {
+      "auction": 0.5,
+      "floor_id": "M0",
+      "path": [
+        {
+          "year": 2026,
+          "kau": 8582,
+          "floor": 0,
+          "defended": true,
+          "abate_Mt": 21.5,
+          "cbam_cost_trillion": 1.749
+        },
+        {
+          "year": 2027,
+          "kau": 9068,
+          "floor": 0,
+          "defended": true,
+          "abate_Mt": 28.1,
+          "cbam_cost_trillion": 1.879
+        },
+        {
+          "year": 2028,
+          "kau": 9580,
+          "floor": 0,
+          "defended": true,
+          "abate_Mt": 34.6,
+          "cbam_cost_trillion": 2.031
+        },
+        {
+          "year": 2029,
+          "kau": 10122,
+          "floor": 0,
+          "defended": true,
+          "abate_Mt": 41.1,
+          "cbam_cost_trillion": 2.275
+        },
+        {
+          "year": 2030,
+          "kau": 10694,
+          "floor": 0,
+          "defended": true,
+          "abate_Mt": 48.2,
+          "cbam_cost_trillion": 2.565
+        },
+        {
+          "year": 2031,
+          "kau": 14092,
+          "floor": 0,
+          "defended": true,
+          "abate_Mt": 76.5,
+          "cbam_cost_trillion": 2.879
+        },
+        {
+          "year": 2032,
+          "kau": 14284,
+          "floor": 0,
+          "defended": true,
+          "abate_Mt": 79.7,
+          "cbam_cost_trillion": 3.243
+        },
+        {
+          "year": 2033,
+          "kau": 14469,
+          "floor": 0,
+          "defended": true,
+          "abate_Mt": 82.8,
+          "cbam_cost_trillion": 3.607
+        },
+        {
+          "year": 2034,
+          "kau": 14647,
+          "floor": 0,
+          "defended": true,
+          "abate_Mt": 85.8,
+          "cbam_cost_trillion": 3.971
+        },
+        {
+          "year": 2035,
+          "kau": 14818,
+          "floor": 0,
+          "defended": true,
+          "abate_Mt": 88.8,
+          "cbam_cost_trillion": 4.335
+        },
+        {
+          "year": 2036,
+          "kau": 14981,
+          "floor": 0,
+          "defended": true,
+          "abate_Mt": 91.7,
+          "cbam_cost_trillion": 4.7
+        },
+        {
+          "year": 2037,
+          "kau": 15135,
+          "floor": 0,
+          "defended": true,
+          "abate_Mt": 94.5,
+          "cbam_cost_trillion": 5.064
+        },
+        {
+          "year": 2038,
+          "kau": 15282,
+          "floor": 0,
+          "defended": true,
+          "abate_Mt": 97.3,
+          "cbam_cost_trillion": 5.429
+        },
+        {
+          "year": 2039,
+          "kau": 15421,
+          "floor": 0,
+          "defended": true,
+          "abate_Mt": 100.0,
+          "cbam_cost_trillion": 5.793
+        },
+        {
+          "year": 2040,
+          "kau": 15552,
+          "floor": 0,
+          "defended": true,
+          "abate_Mt": 102.7,
+          "cbam_cost_trillion": 6.158
+        }
+      ],
+      "cum_abate_Mt": 1073.0,
+      "cum_auction_rev_trillion": 40.2,
+      "cum_cbam_cost_trillion": 55.7
+    },
+    "A50|M_mid": {
+      "auction": 0.5,
+      "floor_id": "M_mid",
+      "path": [
+        {
+          "year": 2026,
+          "kau": 15000,
+          "floor": 15000,
+          "defended": true,
+          "abate_Mt": 73.2,
+          "cbam_cost_trillion": 1.651
+        },
+        {
+          "year": 2027,
+          "kau": 17500,
+          "floor": 17500,
+          "defended": true,
+          "abate_Mt": 89.9,
+          "cbam_cost_trillion": 1.75
+        },
+        {
+          "year": 2028,
+          "kau": 20000,
+          "floor": 20000,
+          "defended": true,
+          "abate_Mt": 104.5,
+          "cbam_cost_trillion": 1.872
+        },
+        {
+          "year": 2029,
+          "kau": 22500,
+          "floor": 22500,
+          "defended": true,
+          "abate_Mt": 117.7,
+          "cbam_cost_trillion": 2.086
+        },
+        {
+          "year": 2030,
+          "kau": 25000,
+          "floor": 25000,
+          "defended": true,
+          "abate_Mt": 129.6,
+          "cbam_cost_trillion": 2.346
+        },
+        {
+          "year": 2031,
+          "kau": 27500,
+          "floor": 27500,
+          "defended": true,
+          "abate_Mt": 140.6,
+          "cbam_cost_trillion": 2.674
+        },
+        {
+          "year": 2032,
+          "kau": 30000,
+          "floor": 30000,
+          "defended": true,
+          "abate_Mt": 150.9,
+          "cbam_cost_trillion": 3.003
+        },
+        {
+          "year": 2033,
+          "kau": 32500,
+          "floor": 32500,
+          "defended": true,
+          "abate_Mt": 160.4,
+          "cbam_cost_trillion": 3.332
+        },
+        {
+          "year": 2034,
+          "kau": 35000,
+          "floor": 35000,
+          "defended": true,
+          "abate_Mt": 169.4,
+          "cbam_cost_trillion": 3.66
+        },
+        {
+          "year": 2035,
+          "kau": 37500,
+          "floor": 37500,
+          "defended": true,
+          "abate_Mt": 177.8,
+          "cbam_cost_trillion": 3.989
+        },
+        {
+          "year": 2036,
+          "kau": 40000,
+          "floor": 40000,
+          "defended": true,
+          "abate_Mt": 185.9,
+          "cbam_cost_trillion": 4.317
+        },
+        {
+          "year": 2037,
+          "kau": 42500,
+          "floor": 42500,
+          "defended": true,
+          "abate_Mt": 193.5,
+          "cbam_cost_trillion": 4.646
+        },
+        {
+          "year": 2038,
+          "kau": 45000,
+          "floor": 45000,
+          "defended": true,
+          "abate_Mt": 200.9,
+          "cbam_cost_trillion": 4.974
+        },
+        {
+          "year": 2039,
+          "kau": 47500,
+          "floor": 47500,
+          "defended": true,
+          "abate_Mt": 207.2,
+          "cbam_cost_trillion": 5.303
+        },
+        {
+          "year": 2040,
+          "kau": 50000,
+          "floor": 50000,
+          "defended": true,
+          "abate_Mt": 208.2,
+          "cbam_cost_trillion": 5.632
+        }
+      ],
+      "cum_abate_Mt": 2310.0,
+      "cum_auction_rev_trillion": 98.1,
+      "cum_cbam_cost_trillion": 51.2
+    },
+    "A50|M_high": {
+      "auction": 0.5,
+      "floor_id": "M_high",
+      "path": [
+        {
+          "year": 2026,
+          "kau": 25000,
+          "floor": 25000,
+          "defended": true,
+          "abate_Mt": 122.2,
+          "cbam_cost_trillion": 1.498
+        },
+        {
+          "year": 2027,
+          "kau": 29643,
+          "floor": 29643,
+          "defended": true,
+          "abate_Mt": 140.4,
+          "cbam_cost_trillion": 1.564
+        },
+        {
+          "year": 2028,
+          "kau": 34286,
+          "floor": 34286,
+          "defended": true,
+          "abate_Mt": 156.2,
+          "cbam_cost_trillion": 1.654
+        },
+        {
+          "year": 2029,
+          "kau": 38929,
+          "floor": 38929,
+          "defended": true,
+          "abate_Mt": 170.3,
+          "cbam_cost_trillion": 1.835
+        },
+        {
+          "year": 2030,
+          "kau": 43571,
+          "floor": 43571,
+          "defended": true,
+          "abate_Mt": 182.9,
+          "cbam_cost_trillion": 2.062
+        },
+        {
+          "year": 2031,
+          "kau": 48214,
+          "floor": 48214,
+          "defended": true,
+          "abate_Mt": 194.5,
+          "cbam_cost_trillion": 2.358
+        },
+        {
+          "year": 2032,
+          "kau": 52857,
+          "floor": 52857,
+          "defended": true,
+          "abate_Mt": 204.4,
+          "cbam_cost_trillion": 2.654
+        },
+        {
+          "year": 2033,
+          "kau": 57500,
+          "floor": 57500,
+          "defended": true,
+          "abate_Mt": 208.5,
+          "cbam_cost_trillion": 2.95
+        },
+        {
+          "year": 2034,
+          "kau": 62143,
+          "floor": 62143,
+          "defended": true,
+          "abate_Mt": 209.3,
+          "cbam_cost_trillion": 3.245
+        },
+        {
+          "year": 2035,
+          "kau": 66786,
+          "floor": 66786,
+          "defended": true,
+          "abate_Mt": 209.4,
+          "cbam_cost_trillion": 3.541
+        },
+        {
+          "year": 2036,
+          "kau": 71429,
+          "floor": 71429,
+          "defended": true,
+          "abate_Mt": 209.4,
+          "cbam_cost_trillion": 3.837
+        },
+        {
+          "year": 2037,
+          "kau": 76071,
+          "floor": 76071,
+          "defended": true,
+          "abate_Mt": 209.4,
+          "cbam_cost_trillion": 4.133
+        },
+        {
+          "year": 2038,
+          "kau": 80714,
+          "floor": 80714,
+          "defended": true,
+          "abate_Mt": 209.4,
+          "cbam_cost_trillion": 4.429
+        },
+        {
+          "year": 2039,
+          "kau": 85357,
+          "floor": 85357,
+          "defended": true,
+          "abate_Mt": 209.4,
+          "cbam_cost_trillion": 4.725
+        },
+        {
+          "year": 2040,
+          "kau": 90000,
+          "floor": 90000,
+          "defended": true,
+          "abate_Mt": 209.4,
+          "cbam_cost_trillion": 5.02
+        }
+      ],
+      "cum_abate_Mt": 2845.0,
+      "cum_auction_rev_trillion": 173.2,
+      "cum_cbam_cost_trillion": 45.5
+    },
+    "A50|M_max": {
+      "auction": 0.5,
+      "floor_id": "M_max",
+      "path": [
+        {
+          "year": 2026,
+          "kau": 40000,
+          "floor": 40000,
+          "defended": true,
+          "abate_Mt": 167.3,
+          "cbam_cost_trillion": 1.268
+        },
+        {
+          "year": 2027,
+          "kau": 47857,
+          "floor": 47857,
+          "defended": true,
+          "abate_Mt": 186.4,
+          "cbam_cost_trillion": 1.286
+        },
+        {
+          "year": 2028,
+          "kau": 55714,
+          "floor": 55714,
+          "defended": true,
+          "abate_Mt": 201.2,
+          "cbam_cost_trillion": 1.326
+        },
+        {
+          "year": 2029,
+          "kau": 63571,
+          "floor": 63571,
+          "defended": true,
+          "abate_Mt": 208.6,
+          "cbam_cost_trillion": 1.458
+        },
+        {
+          "year": 2030,
+          "kau": 71429,
+          "floor": 71429,
+          "defended": true,
+          "abate_Mt": 209.4,
+          "cbam_cost_trillion": 1.636
+        },
+        {
+          "year": 2031,
+          "kau": 79286,
+          "floor": 79286,
+          "defended": true,
+          "abate_Mt": 209.4,
+          "cbam_cost_trillion": 1.883
+        },
+        {
+          "year": 2032,
+          "kau": 87143,
+          "floor": 87143,
+          "defended": true,
+          "abate_Mt": 209.4,
+          "cbam_cost_trillion": 2.13
+        },
+        {
+          "year": 2033,
+          "kau": 95000,
+          "floor": 95000,
+          "defended": true,
+          "abate_Mt": 209.4,
+          "cbam_cost_trillion": 2.376
+        },
+        {
+          "year": 2034,
+          "kau": 102857,
+          "floor": 102857,
+          "defended": true,
+          "abate_Mt": 209.4,
+          "cbam_cost_trillion": 2.623
+        },
+        {
+          "year": 2035,
+          "kau": 110714,
+          "floor": 110714,
+          "defended": true,
+          "abate_Mt": 209.4,
+          "cbam_cost_trillion": 2.87
+        },
+        {
+          "year": 2036,
+          "kau": 118571,
+          "floor": 118571,
+          "defended": true,
+          "abate_Mt": 209.4,
+          "cbam_cost_trillion": 3.117
+        },
+        {
+          "year": 2037,
+          "kau": 126429,
+          "floor": 126429,
+          "defended": true,
+          "abate_Mt": 209.4,
+          "cbam_cost_trillion": 3.363
+        },
+        {
+          "year": 2038,
+          "kau": 134286,
+          "floor": 134286,
+          "defended": true,
+          "abate_Mt": 209.4,
+          "cbam_cost_trillion": 3.61
+        },
+        {
+          "year": 2039,
+          "kau": 142143,
+          "floor": 142143,
+          "defended": true,
+          "abate_Mt": 209.4,
+          "cbam_cost_trillion": 3.857
+        },
+        {
+          "year": 2040,
+          "kau": 150000,
+          "floor": 150000,
+          "defended": true,
+          "abate_Mt": 209.4,
+          "cbam_cost_trillion": 4.103
+        }
+      ],
+      "cum_abate_Mt": 3067.0,
+      "cum_auction_rev_trillion": 285.8,
+      "cum_cbam_cost_trillion": 36.9
+    },
+    "A70|M0": {
+      "auction": 0.7,
+      "floor_id": "M0",
+      "path": [
+        {
+          "year": 2026,
+          "kau": 8582,
+          "floor": 0,
+          "defended": true,
+          "abate_Mt": 21.5,
+          "cbam_cost_trillion": 1.749
+        },
+        {
+          "year": 2027,
+          "kau": 9068,
+          "floor": 0,
+          "defended": true,
+          "abate_Mt": 28.1,
+          "cbam_cost_trillion": 1.879
+        },
+        {
+          "year": 2028,
+          "kau": 9580,
+          "floor": 0,
+          "defended": true,
+          "abate_Mt": 34.6,
+          "cbam_cost_trillion": 2.031
+        },
+        {
+          "year": 2029,
+          "kau": 10122,
+          "floor": 0,
+          "defended": true,
+          "abate_Mt": 41.1,
+          "cbam_cost_trillion": 2.275
+        },
+        {
+          "year": 2030,
+          "kau": 10694,
+          "floor": 0,
+          "defended": true,
+          "abate_Mt": 48.2,
+          "cbam_cost_trillion": 2.565
+        },
+        {
+          "year": 2031,
+          "kau": 14092,
+          "floor": 0,
+          "defended": true,
+          "abate_Mt": 76.5,
+          "cbam_cost_trillion": 2.879
+        },
+        {
+          "year": 2032,
+          "kau": 14284,
+          "floor": 0,
+          "defended": true,
+          "abate_Mt": 79.7,
+          "cbam_cost_trillion": 3.243
+        },
+        {
+          "year": 2033,
+          "kau": 14469,
+          "floor": 0,
+          "defended": true,
+          "abate_Mt": 82.8,
+          "cbam_cost_trillion": 3.607
+        },
+        {
+          "year": 2034,
+          "kau": 14647,
+          "floor": 0,
+          "defended": true,
+          "abate_Mt": 85.8,
+          "cbam_cost_trillion": 3.971
+        },
+        {
+          "year": 2035,
+          "kau": 14818,
+          "floor": 0,
+          "defended": true,
+          "abate_Mt": 88.8,
+          "cbam_cost_trillion": 4.335
+        },
+        {
+          "year": 2036,
+          "kau": 14981,
+          "floor": 0,
+          "defended": true,
+          "abate_Mt": 91.7,
+          "cbam_cost_trillion": 4.7
+        },
+        {
+          "year": 2037,
+          "kau": 15135,
+          "floor": 0,
+          "defended": true,
+          "abate_Mt": 94.5,
+          "cbam_cost_trillion": 5.064
+        },
+        {
+          "year": 2038,
+          "kau": 15282,
+          "floor": 0,
+          "defended": true,
+          "abate_Mt": 97.3,
+          "cbam_cost_trillion": 5.429
+        },
+        {
+          "year": 2039,
+          "kau": 15421,
+          "floor": 0,
+          "defended": true,
+          "abate_Mt": 100.0,
+          "cbam_cost_trillion": 5.793
+        },
+        {
+          "year": 2040,
+          "kau": 15552,
+          "floor": 0,
+          "defended": true,
+          "abate_Mt": 102.7,
+          "cbam_cost_trillion": 6.158
+        }
+      ],
+      "cum_abate_Mt": 1073.0,
+      "cum_auction_rev_trillion": 56.3,
+      "cum_cbam_cost_trillion": 55.7
+    },
+    "A70|M_mid": {
+      "auction": 0.7,
+      "floor_id": "M_mid",
+      "path": [
+        {
+          "year": 2026,
+          "kau": 15000,
+          "floor": 15000,
+          "defended": true,
+          "abate_Mt": 73.2,
+          "cbam_cost_trillion": 1.651
+        },
+        {
+          "year": 2027,
+          "kau": 17500,
+          "floor": 17500,
+          "defended": true,
+          "abate_Mt": 89.9,
+          "cbam_cost_trillion": 1.75
+        },
+        {
+          "year": 2028,
+          "kau": 20000,
+          "floor": 20000,
+          "defended": true,
+          "abate_Mt": 104.5,
+          "cbam_cost_trillion": 1.872
+        },
+        {
+          "year": 2029,
+          "kau": 22500,
+          "floor": 22500,
+          "defended": true,
+          "abate_Mt": 117.7,
+          "cbam_cost_trillion": 2.086
+        },
+        {
+          "year": 2030,
+          "kau": 25000,
+          "floor": 25000,
+          "defended": true,
+          "abate_Mt": 129.6,
+          "cbam_cost_trillion": 2.346
+        },
+        {
+          "year": 2031,
+          "kau": 27500,
+          "floor": 27500,
+          "defended": true,
+          "abate_Mt": 140.6,
+          "cbam_cost_trillion": 2.674
+        },
+        {
+          "year": 2032,
+          "kau": 30000,
+          "floor": 30000,
+          "defended": true,
+          "abate_Mt": 150.9,
+          "cbam_cost_trillion": 3.003
+        },
+        {
+          "year": 2033,
+          "kau": 32500,
+          "floor": 32500,
+          "defended": true,
+          "abate_Mt": 160.4,
+          "cbam_cost_trillion": 3.332
+        },
+        {
+          "year": 2034,
+          "kau": 35000,
+          "floor": 35000,
+          "defended": true,
+          "abate_Mt": 169.4,
+          "cbam_cost_trillion": 3.66
+        },
+        {
+          "year": 2035,
+          "kau": 37500,
+          "floor": 37500,
+          "defended": true,
+          "abate_Mt": 177.8,
+          "cbam_cost_trillion": 3.989
+        },
+        {
+          "year": 2036,
+          "kau": 40000,
+          "floor": 40000,
+          "defended": true,
+          "abate_Mt": 185.9,
+          "cbam_cost_trillion": 4.317
+        },
+        {
+          "year": 2037,
+          "kau": 42500,
+          "floor": 42500,
+          "defended": true,
+          "abate_Mt": 193.5,
+          "cbam_cost_trillion": 4.646
+        },
+        {
+          "year": 2038,
+          "kau": 45000,
+          "floor": 45000,
+          "defended": true,
+          "abate_Mt": 200.9,
+          "cbam_cost_trillion": 4.974
+        },
+        {
+          "year": 2039,
+          "kau": 47500,
+          "floor": 47500,
+          "defended": true,
+          "abate_Mt": 207.2,
+          "cbam_cost_trillion": 5.303
+        },
+        {
+          "year": 2040,
+          "kau": 50000,
+          "floor": 50000,
+          "defended": true,
+          "abate_Mt": 208.2,
+          "cbam_cost_trillion": 5.632
+        }
+      ],
+      "cum_abate_Mt": 2310.0,
+      "cum_auction_rev_trillion": 137.3,
+      "cum_cbam_cost_trillion": 51.2
+    },
+    "A70|M_high": {
+      "auction": 0.7,
+      "floor_id": "M_high",
+      "path": [
+        {
+          "year": 2026,
+          "kau": 25000,
+          "floor": 25000,
+          "defended": true,
+          "abate_Mt": 122.2,
+          "cbam_cost_trillion": 1.498
+        },
+        {
+          "year": 2027,
+          "kau": 29643,
+          "floor": 29643,
+          "defended": true,
+          "abate_Mt": 140.4,
+          "cbam_cost_trillion": 1.564
+        },
+        {
+          "year": 2028,
+          "kau": 34286,
+          "floor": 34286,
+          "defended": true,
+          "abate_Mt": 156.2,
+          "cbam_cost_trillion": 1.654
+        },
+        {
+          "year": 2029,
+          "kau": 38929,
+          "floor": 38929,
+          "defended": true,
+          "abate_Mt": 170.3,
+          "cbam_cost_trillion": 1.835
+        },
+        {
+          "year": 2030,
+          "kau": 43571,
+          "floor": 43571,
+          "defended": true,
+          "abate_Mt": 182.9,
+          "cbam_cost_trillion": 2.062
+        },
+        {
+          "year": 2031,
+          "kau": 48214,
+          "floor": 48214,
+          "defended": true,
+          "abate_Mt": 194.5,
+          "cbam_cost_trillion": 2.358
+        },
+        {
+          "year": 2032,
+          "kau": 52857,
+          "floor": 52857,
+          "defended": true,
+          "abate_Mt": 204.4,
+          "cbam_cost_trillion": 2.654
+        },
+        {
+          "year": 2033,
+          "kau": 57500,
+          "floor": 57500,
+          "defended": true,
+          "abate_Mt": 208.5,
+          "cbam_cost_trillion": 2.95
+        },
+        {
+          "year": 2034,
+          "kau": 62143,
+          "floor": 62143,
+          "defended": true,
+          "abate_Mt": 209.3,
+          "cbam_cost_trillion": 3.245
+        },
+        {
+          "year": 2035,
+          "kau": 66786,
+          "floor": 66786,
+          "defended": true,
+          "abate_Mt": 209.4,
+          "cbam_cost_trillion": 3.541
+        },
+        {
+          "year": 2036,
+          "kau": 71429,
+          "floor": 71429,
+          "defended": true,
+          "abate_Mt": 209.4,
+          "cbam_cost_trillion": 3.837
+        },
+        {
+          "year": 2037,
+          "kau": 76071,
+          "floor": 76071,
+          "defended": true,
+          "abate_Mt": 209.4,
+          "cbam_cost_trillion": 4.133
+        },
+        {
+          "year": 2038,
+          "kau": 80714,
+          "floor": 80714,
+          "defended": true,
+          "abate_Mt": 209.4,
+          "cbam_cost_trillion": 4.429
+        },
+        {
+          "year": 2039,
+          "kau": 85357,
+          "floor": 85357,
+          "defended": true,
+          "abate_Mt": 209.4,
+          "cbam_cost_trillion": 4.725
+        },
+        {
+          "year": 2040,
+          "kau": 90000,
+          "floor": 90000,
+          "defended": true,
+          "abate_Mt": 209.4,
+          "cbam_cost_trillion": 5.02
+        }
+      ],
+      "cum_abate_Mt": 2845.0,
+      "cum_auction_rev_trillion": 242.4,
+      "cum_cbam_cost_trillion": 45.5
+    },
+    "A70|M_max": {
+      "auction": 0.7,
+      "floor_id": "M_max",
+      "path": [
+        {
+          "year": 2026,
+          "kau": 40000,
+          "floor": 40000,
+          "defended": true,
+          "abate_Mt": 167.3,
+          "cbam_cost_trillion": 1.268
+        },
+        {
+          "year": 2027,
+          "kau": 47857,
+          "floor": 47857,
+          "defended": true,
+          "abate_Mt": 186.4,
+          "cbam_cost_trillion": 1.286
+        },
+        {
+          "year": 2028,
+          "kau": 55714,
+          "floor": 55714,
+          "defended": true,
+          "abate_Mt": 201.2,
+          "cbam_cost_trillion": 1.326
+        },
+        {
+          "year": 2029,
+          "kau": 63571,
+          "floor": 63571,
+          "defended": true,
+          "abate_Mt": 208.6,
+          "cbam_cost_trillion": 1.458
+        },
+        {
+          "year": 2030,
+          "kau": 71429,
+          "floor": 71429,
+          "defended": true,
+          "abate_Mt": 209.4,
+          "cbam_cost_trillion": 1.636
+        },
+        {
+          "year": 2031,
+          "kau": 79286,
+          "floor": 79286,
+          "defended": true,
+          "abate_Mt": 209.4,
+          "cbam_cost_trillion": 1.883
+        },
+        {
+          "year": 2032,
+          "kau": 87143,
+          "floor": 87143,
+          "defended": true,
+          "abate_Mt": 209.4,
+          "cbam_cost_trillion": 2.13
+        },
+        {
+          "year": 2033,
+          "kau": 95000,
+          "floor": 95000,
+          "defended": true,
+          "abate_Mt": 209.4,
+          "cbam_cost_trillion": 2.376
+        },
+        {
+          "year": 2034,
+          "kau": 102857,
+          "floor": 102857,
+          "defended": true,
+          "abate_Mt": 209.4,
+          "cbam_cost_trillion": 2.623
+        },
+        {
+          "year": 2035,
+          "kau": 110714,
+          "floor": 110714,
+          "defended": true,
+          "abate_Mt": 209.4,
+          "cbam_cost_trillion": 2.87
+        },
+        {
+          "year": 2036,
+          "kau": 118571,
+          "floor": 118571,
+          "defended": true,
+          "abate_Mt": 209.4,
+          "cbam_cost_trillion": 3.117
+        },
+        {
+          "year": 2037,
+          "kau": 126429,
+          "floor": 126429,
+          "defended": true,
+          "abate_Mt": 209.4,
+          "cbam_cost_trillion": 3.363
+        },
+        {
+          "year": 2038,
+          "kau": 134286,
+          "floor": 134286,
+          "defended": true,
+          "abate_Mt": 209.4,
+          "cbam_cost_trillion": 3.61
+        },
+        {
+          "year": 2039,
+          "kau": 142143,
+          "floor": 142143,
+          "defended": true,
+          "abate_Mt": 209.4,
+          "cbam_cost_trillion": 3.857
+        },
+        {
+          "year": 2040,
+          "kau": 150000,
+          "floor": 150000,
+          "defended": true,
+          "abate_Mt": 209.4,
+          "cbam_cost_trillion": 4.103
+        }
+      ],
+      "cum_abate_Mt": 3067.0,
+      "cum_auction_rev_trillion": 400.2,
+      "cum_cbam_cost_trillion": 36.9
+    }
+  },
+  "params": {
+    "r": 0.05500000000000001,
+    "B0_Mt": 70.0,
+    "reserve_Mt": 85.28
+  },
+  "msr_levels": [
+    {
+      "id": "L0",
+      "name": "MSR 미도입",
+      "rho": 0.0,
+      "theta_plus": 999.0,
+      "theta_minus": 0.0,
+      "release": 0.0,
+      "cancel": 0.0
+    },
+    {
+      "id": "L1",
+      "name": "최소",
+      "rho": 0.12,
+      "theta_plus": 50.0,
+      "theta_minus": 15.0,
+      "release": 20.0,
+      "cancel": 0.0
+    },
+    {
+      "id": "L2",
+      "name": "보통",
+      "rho": 0.18,
+      "theta_plus": 40.0,
+      "theta_minus": 15.0,
+      "release": 20.0,
+      "cancel": 0.0
+    },
+    {
+      "id": "L3",
+      "name": "적극",
+      "rho": 0.24,
+      "theta_plus": 30.0,
+      "theta_minus": 15.0,
+      "release": 20.0,
+      "cancel": 0.0
+    },
+    {
+      "id": "L4",
+      "name": "강력",
+      "rho": 0.24,
+      "theta_plus": 25.0,
+      "theta_minus": 15.0,
+      "release": 20.0,
+      "cancel": 0.5
+    }
+  ],
+  "results": {
+    "base": {
+      "L0": {
+        "p0": 8582.49986611642,
+        "terminal_bank_Mt": 9.026074714958667e-05,
+        "min_bank_Mt": 0.0,
+        "cum_auction_rev_trillion": 17.7,
+        "cum_cbam_cost_trillion": 55.7,
+        "path": [
+          {
+            "year": 2026,
+            "kau": 8582,
+            "abate_Mt": 21.5,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 67.2,
+            "eua": 123000,
+            "gap": 114418,
+            "auction_rev_trillion": 0.431,
+            "cbam_cost_trillion": 1.749
+          },
+          {
+            "year": 2027,
+            "kau": 9068,
+            "abate_Mt": 28.1,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 58.9,
+            "eua": 132000,
+            "gap": 122932,
+            "auction_rev_trillion": 0.594,
+            "cbam_cost_trillion": 1.879
+          },
+          {
+            "year": 2028,
+            "kau": 9580,
+            "abate_Mt": 34.6,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 44.9,
+            "eua": 142500,
+            "gap": 132920,
+            "auction_rev_trillion": 0.763,
+            "cbam_cost_trillion": 2.031
+          },
+          {
+            "year": 2029,
+            "kau": 10122,
+            "abate_Mt": 41.1,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 25.1,
+            "eua": 159000,
+            "gap": 148878,
+            "auction_rev_trillion": 0.935,
+            "cbam_cost_trillion": 2.275
+          },
+          {
+            "year": 2030,
+            "kau": 10694,
+            "abate_Mt": 48.2,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 0.0,
+            "eua": 178500,
+            "gap": 167806,
+            "auction_rev_trillion": 1.112,
+            "cbam_cost_trillion": 2.565
+          },
+          {
+            "year": 2031,
+            "kau": 14092,
+            "abate_Mt": 76.5,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 0.0,
+            "eua": 202500,
+            "gap": 188408,
+            "auction_rev_trillion": 1.436,
+            "cbam_cost_trillion": 2.879
+          },
+          {
+            "year": 2032,
+            "kau": 14284,
+            "abate_Mt": 79.7,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 0.0,
+            "eua": 226500,
+            "gap": 212216,
+            "auction_rev_trillion": 1.426,
+            "cbam_cost_trillion": 3.243
+          },
+          {
+            "year": 2033,
+            "kau": 14469,
+            "abate_Mt": 82.8,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 0.0,
+            "eua": 250500,
+            "gap": 236031,
+            "auction_rev_trillion": 1.416,
+            "cbam_cost_trillion": 3.607
+          },
+          {
+            "year": 2034,
+            "kau": 14647,
+            "abate_Mt": 85.8,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 0.0,
+            "eua": 274500,
+            "gap": 259853,
+            "auction_rev_trillion": 1.405,
+            "cbam_cost_trillion": 3.971
+          },
+          {
+            "year": 2035,
+            "kau": 14818,
+            "abate_Mt": 88.8,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 0.0,
+            "eua": 298500,
+            "gap": 283682,
+            "auction_rev_trillion": 1.393,
+            "cbam_cost_trillion": 4.335
+          },
+          {
+            "year": 2036,
+            "kau": 14981,
+            "abate_Mt": 91.7,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 0.0,
+            "eua": 322500,
+            "gap": 307519,
+            "auction_rev_trillion": 1.38,
+            "cbam_cost_trillion": 4.7
+          },
+          {
+            "year": 2037,
+            "kau": 15135,
+            "abate_Mt": 94.5,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 0.0,
+            "eua": 346500,
+            "gap": 331365,
+            "auction_rev_trillion": 1.366,
+            "cbam_cost_trillion": 5.064
+          },
+          {
+            "year": 2038,
+            "kau": 15282,
+            "abate_Mt": 97.3,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 0.0,
+            "eua": 370500,
+            "gap": 355218,
+            "auction_rev_trillion": 1.352,
+            "cbam_cost_trillion": 5.429
+          },
+          {
+            "year": 2039,
+            "kau": 15421,
+            "abate_Mt": 100.0,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 0.0,
+            "eua": 394500,
+            "gap": 379079,
+            "auction_rev_trillion": 1.337,
+            "cbam_cost_trillion": 5.793
+          },
+          {
+            "year": 2040,
+            "kau": 15552,
+            "abate_Mt": 102.7,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 0.0,
+            "eua": 418500,
+            "gap": 402948,
+            "auction_rev_trillion": 1.321,
+            "cbam_cost_trillion": 6.158
+          }
+        ]
+      },
+      "L1": {
+        "p0": 8071.024738516648,
+        "terminal_bank_Mt": 0.0,
+        "min_bank_Mt": 0.0,
+        "cum_auction_rev_trillion": 16.6,
+        "cum_cbam_cost_trillion": 55.8,
+        "path": [
+          {
+            "year": 2026,
+            "kau": 8071,
+            "abate_Mt": 16.2,
+            "intake_Mt": 2.4,
+            "release_Mt": 0.0,
+            "bank_Mt": 59.4,
+            "eua": 123000,
+            "gap": 114929,
+            "auction_rev_trillion": 0.405,
+            "cbam_cost_trillion": 1.756
+          },
+          {
+            "year": 2027,
+            "kau": 8527,
+            "abate_Mt": 22.7,
+            "intake_Mt": 1.13,
+            "release_Mt": 0.0,
+            "bank_Mt": 44.6,
+            "eua": 132000,
+            "gap": 123473,
+            "auction_rev_trillion": 0.559,
+            "cbam_cost_trillion": 1.887
+          },
+          {
+            "year": 2028,
+            "kau": 9010,
+            "abate_Mt": 29.2,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 25.2,
+            "eua": 142500,
+            "gap": 133490,
+            "auction_rev_trillion": 0.717,
+            "cbam_cost_trillion": 2.04
+          },
+          {
+            "year": 2029,
+            "kau": 9519,
+            "abate_Mt": 35.7,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 0.0,
+            "eua": 159000,
+            "gap": 149481,
+            "auction_rev_trillion": 0.88,
+            "cbam_cost_trillion": 2.284
+          },
+          {
+            "year": 2030,
+            "kau": 11278,
+            "abate_Mt": 53.3,
+            "intake_Mt": 0.0,
+            "release_Mt": 20.0,
+            "bank_Mt": 0.0,
+            "eua": 178500,
+            "gap": 167222,
+            "auction_rev_trillion": 1.172,
+            "cbam_cost_trillion": 2.556
+          },
+          {
+            "year": 2031,
+            "kau": 11440,
+            "abate_Mt": 56.5,
+            "intake_Mt": 0.0,
+            "release_Mt": 20.0,
+            "bank_Mt": 0.0,
+            "eua": 202500,
+            "gap": 191060,
+            "auction_rev_trillion": 1.166,
+            "cbam_cost_trillion": 2.92
+          },
+          {
+            "year": 2032,
+            "kau": 11596,
+            "abate_Mt": 59.7,
+            "intake_Mt": 0.0,
+            "release_Mt": 20.0,
+            "bank_Mt": 0.0,
+            "eua": 226500,
+            "gap": 214904,
+            "auction_rev_trillion": 1.158,
+            "cbam_cost_trillion": 3.284
+          },
+          {
+            "year": 2033,
+            "kau": 11746,
+            "abate_Mt": 62.8,
+            "intake_Mt": 0.0,
+            "release_Mt": 20.0,
+            "bank_Mt": 0.0,
+            "eua": 250500,
+            "gap": 238754,
+            "auction_rev_trillion": 1.149,
+            "cbam_cost_trillion": 3.649
+          },
+          {
+            "year": 2034,
+            "kau": 13362,
+            "abate_Mt": 77.0,
+            "intake_Mt": 0.0,
+            "release_Mt": 8.81,
+            "bank_Mt": 0.0,
+            "eua": 274500,
+            "gap": 261138,
+            "auction_rev_trillion": 1.281,
+            "cbam_cost_trillion": 3.991
+          },
+          {
+            "year": 2035,
+            "kau": 14818,
+            "abate_Mt": 88.8,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 0.0,
+            "eua": 298500,
+            "gap": 283682,
+            "auction_rev_trillion": 1.393,
+            "cbam_cost_trillion": 4.335
+          },
+          {
+            "year": 2036,
+            "kau": 14981,
+            "abate_Mt": 91.7,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 0.0,
+            "eua": 322500,
+            "gap": 307519,
+            "auction_rev_trillion": 1.38,
+            "cbam_cost_trillion": 4.7
+          },
+          {
+            "year": 2037,
+            "kau": 15135,
+            "abate_Mt": 94.5,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 0.0,
+            "eua": 346500,
+            "gap": 331365,
+            "auction_rev_trillion": 1.366,
+            "cbam_cost_trillion": 5.064
+          },
+          {
+            "year": 2038,
+            "kau": 15282,
+            "abate_Mt": 97.3,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 0.0,
+            "eua": 370500,
+            "gap": 355218,
+            "auction_rev_trillion": 1.352,
+            "cbam_cost_trillion": 5.429
+          },
+          {
+            "year": 2039,
+            "kau": 15421,
+            "abate_Mt": 100.0,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 0.0,
+            "eua": 394500,
+            "gap": 379079,
+            "auction_rev_trillion": 1.337,
+            "cbam_cost_trillion": 5.793
+          },
+          {
+            "year": 2040,
+            "kau": 15552,
+            "abate_Mt": 102.7,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 0.0,
+            "eua": 418500,
+            "gap": 402948,
+            "auction_rev_trillion": 1.321,
+            "cbam_cost_trillion": 6.158
+          }
+        ]
+      },
+      "L2": {
+        "p0": 8197.854557920527,
+        "terminal_bank_Mt": 0.0,
+        "min_bank_Mt": 0.0,
+        "cum_auction_rev_trillion": 16.6,
+        "cum_cbam_cost_trillion": 55.8,
+        "path": [
+          {
+            "year": 2026,
+            "kau": 8198,
+            "abate_Mt": 17.5,
+            "intake_Mt": 5.4,
+            "release_Mt": 0.0,
+            "bank_Mt": 57.8,
+            "eua": 123000,
+            "gap": 114802,
+            "auction_rev_trillion": 0.411,
+            "cbam_cost_trillion": 1.754
+          },
+          {
+            "year": 2027,
+            "kau": 8661,
+            "abate_Mt": 24.0,
+            "intake_Mt": 3.2,
+            "release_Mt": 0.0,
+            "bank_Mt": 42.2,
+            "eua": 132000,
+            "gap": 123339,
+            "auction_rev_trillion": 0.568,
+            "cbam_cost_trillion": 1.885
+          },
+          {
+            "year": 2028,
+            "kau": 9151,
+            "abate_Mt": 30.6,
+            "intake_Mt": 0.4,
+            "release_Mt": 0.0,
+            "bank_Mt": 23.8,
+            "eua": 142500,
+            "gap": 133349,
+            "auction_rev_trillion": 0.728,
+            "cbam_cost_trillion": 2.038
+          },
+          {
+            "year": 2029,
+            "kau": 9668,
+            "abate_Mt": 37.1,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 0.0,
+            "eua": 159000,
+            "gap": 149332,
+            "auction_rev_trillion": 0.893,
+            "cbam_cost_trillion": 2.282
+          },
+          {
+            "year": 2030,
+            "kau": 11278,
+            "abate_Mt": 53.3,
+            "intake_Mt": 0.0,
+            "release_Mt": 20.0,
+            "bank_Mt": 0.0,
+            "eua": 178500,
+            "gap": 167222,
+            "auction_rev_trillion": 1.172,
+            "cbam_cost_trillion": 2.556
+          },
+          {
+            "year": 2031,
+            "kau": 11440,
+            "abate_Mt": 56.5,
+            "intake_Mt": 0.0,
+            "release_Mt": 20.0,
+            "bank_Mt": 0.0,
+            "eua": 202500,
+            "gap": 191060,
+            "auction_rev_trillion": 1.166,
+            "cbam_cost_trillion": 2.92
+          },
+          {
+            "year": 2032,
+            "kau": 11596,
+            "abate_Mt": 59.7,
+            "intake_Mt": 0.0,
+            "release_Mt": 20.0,
+            "bank_Mt": 0.0,
+            "eua": 226500,
+            "gap": 214904,
+            "auction_rev_trillion": 1.158,
+            "cbam_cost_trillion": 3.284
+          },
+          {
+            "year": 2033,
+            "kau": 11845,
+            "abate_Mt": 63.6,
+            "intake_Mt": 0.0,
+            "release_Mt": 20.0,
+            "bank_Mt": 0.8,
+            "eua": 250500,
+            "gap": 238655,
+            "auction_rev_trillion": 1.159,
+            "cbam_cost_trillion": 3.647
+          },
+          {
+            "year": 2034,
+            "kau": 12515,
+            "abate_Mt": 70.7,
+            "intake_Mt": 0.0,
+            "release_Mt": 14.28,
+            "bank_Mt": 0.0,
+            "eua": 274500,
+            "gap": 261985,
+            "auction_rev_trillion": 1.2,
+            "cbam_cost_trillion": 4.004
+          },
+          {
+            "year": 2035,
+            "kau": 14818,
+            "abate_Mt": 88.8,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 0.0,
+            "eua": 298500,
+            "gap": 283682,
+            "auction_rev_trillion": 1.393,
+            "cbam_cost_trillion": 4.335
+          },
+          {
+            "year": 2036,
+            "kau": 14981,
+            "abate_Mt": 91.7,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 0.0,
+            "eua": 322500,
+            "gap": 307519,
+            "auction_rev_trillion": 1.38,
+            "cbam_cost_trillion": 4.7
+          },
+          {
+            "year": 2037,
+            "kau": 15135,
+            "abate_Mt": 94.5,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 0.0,
+            "eua": 346500,
+            "gap": 331365,
+            "auction_rev_trillion": 1.366,
+            "cbam_cost_trillion": 5.064
+          },
+          {
+            "year": 2038,
+            "kau": 15282,
+            "abate_Mt": 97.3,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 0.0,
+            "eua": 370500,
+            "gap": 355218,
+            "auction_rev_trillion": 1.352,
+            "cbam_cost_trillion": 5.429
+          },
+          {
+            "year": 2039,
+            "kau": 15421,
+            "abate_Mt": 100.0,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 0.0,
+            "eua": 394500,
+            "gap": 379079,
+            "auction_rev_trillion": 1.337,
+            "cbam_cost_trillion": 5.793
+          },
+          {
+            "year": 2040,
+            "kau": 15552,
+            "abate_Mt": 102.7,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 0.0,
+            "eua": 418500,
+            "gap": 402948,
+            "auction_rev_trillion": 1.321,
+            "cbam_cost_trillion": 6.158
+          }
+        ]
+      },
+      "L3": {
+        "p0": 7717.126592994818,
+        "terminal_bank_Mt": 0.0,
+        "min_bank_Mt": 0.0,
+        "cum_auction_rev_trillion": 16.7,
+        "cum_cbam_cost_trillion": 55.8,
+        "path": [
+          {
+            "year": 2026,
+            "kau": 7717,
+            "abate_Mt": 12.2,
+            "intake_Mt": 9.6,
+            "release_Mt": 0.0,
+            "bank_Mt": 48.3,
+            "eua": 123000,
+            "gap": 115283,
+            "auction_rev_trillion": 0.387,
+            "cbam_cost_trillion": 1.762
+          },
+          {
+            "year": 2027,
+            "kau": 8153,
+            "abate_Mt": 18.7,
+            "intake_Mt": 4.39,
+            "release_Mt": 0.0,
+            "bank_Mt": 25.0,
+            "eua": 132000,
+            "gap": 123847,
+            "auction_rev_trillion": 0.534,
+            "cbam_cost_trillion": 1.893
+          },
+          {
+            "year": 2028,
+            "kau": 8614,
+            "abate_Mt": 25.3,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 0.0,
+            "eua": 142500,
+            "gap": 133886,
+            "auction_rev_trillion": 0.686,
+            "cbam_cost_trillion": 2.046
+          },
+          {
+            "year": 2029,
+            "kau": 12445,
+            "abate_Mt": 60.9,
+            "intake_Mt": 0.0,
+            "release_Mt": 20.0,
+            "bank_Mt": 0.0,
+            "eua": 159000,
+            "gap": 146555,
+            "auction_rev_trillion": 1.15,
+            "cbam_cost_trillion": 2.24
+          },
+          {
+            "year": 2030,
+            "kau": 11278,
+            "abate_Mt": 53.3,
+            "intake_Mt": 0.0,
+            "release_Mt": 20.0,
+            "bank_Mt": 0.0,
+            "eua": 178500,
+            "gap": 167222,
+            "auction_rev_trillion": 1.172,
+            "cbam_cost_trillion": 2.556
+          },
+          {
+            "year": 2031,
+            "kau": 11440,
+            "abate_Mt": 56.5,
+            "intake_Mt": 0.0,
+            "release_Mt": 20.0,
+            "bank_Mt": 0.0,
+            "eua": 202500,
+            "gap": 191060,
+            "auction_rev_trillion": 1.166,
+            "cbam_cost_trillion": 2.92
+          },
+          {
+            "year": 2032,
+            "kau": 11596,
+            "abate_Mt": 59.7,
+            "intake_Mt": 0.0,
+            "release_Mt": 20.0,
+            "bank_Mt": 0.0,
+            "eua": 226500,
+            "gap": 214904,
+            "auction_rev_trillion": 1.158,
+            "cbam_cost_trillion": 3.284
+          },
+          {
+            "year": 2033,
+            "kau": 11746,
+            "abate_Mt": 62.8,
+            "intake_Mt": 0.0,
+            "release_Mt": 19.27,
+            "bank_Mt": 0.0,
+            "eua": 250500,
+            "gap": 238754,
+            "auction_rev_trillion": 1.149,
+            "cbam_cost_trillion": 3.649
+          },
+          {
+            "year": 2034,
+            "kau": 11891,
+            "abate_Mt": 65.8,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 0.0,
+            "eua": 274500,
+            "gap": 262609,
+            "auction_rev_trillion": 1.14,
+            "cbam_cost_trillion": 4.013
+          },
+          {
+            "year": 2035,
+            "kau": 14485,
+            "abate_Mt": 86.6,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 0.0,
+            "eua": 298500,
+            "gap": 284015,
+            "auction_rev_trillion": 1.361,
+            "cbam_cost_trillion": 4.34
+          },
+          {
+            "year": 2036,
+            "kau": 14981,
+            "abate_Mt": 91.7,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 0.0,
+            "eua": 322500,
+            "gap": 307519,
+            "auction_rev_trillion": 1.38,
+            "cbam_cost_trillion": 4.7
+          },
+          {
+            "year": 2037,
+            "kau": 15135,
+            "abate_Mt": 94.5,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 0.0,
+            "eua": 346500,
+            "gap": 331365,
+            "auction_rev_trillion": 1.366,
+            "cbam_cost_trillion": 5.064
+          },
+          {
+            "year": 2038,
+            "kau": 15282,
+            "abate_Mt": 97.3,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 0.0,
+            "eua": 370500,
+            "gap": 355218,
+            "auction_rev_trillion": 1.352,
+            "cbam_cost_trillion": 5.429
+          },
+          {
+            "year": 2039,
+            "kau": 15421,
+            "abate_Mt": 100.0,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 0.0,
+            "eua": 394500,
+            "gap": 379079,
+            "auction_rev_trillion": 1.337,
+            "cbam_cost_trillion": 5.793
+          },
+          {
+            "year": 2040,
+            "kau": 15552,
+            "abate_Mt": 102.7,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 0.0,
+            "eua": 418500,
+            "gap": 402948,
+            "auction_rev_trillion": 1.321,
+            "cbam_cost_trillion": 6.158
+          }
+        ]
+      },
+      "L4": {
+        "p0": 7809.925070090685,
+        "terminal_bank_Mt": 0.0,
+        "min_bank_Mt": 0.0,
+        "cum_auction_rev_trillion": 16.8,
+        "cum_cbam_cost_trillion": 55.8,
+        "path": [
+          {
+            "year": 2026,
+            "kau": 7810,
+            "abate_Mt": 13.3,
+            "intake_Mt": 10.8,
+            "release_Mt": 0.0,
+            "bank_Mt": 48.1,
+            "eua": 123000,
+            "gap": 115190,
+            "auction_rev_trillion": 0.392,
+            "cbam_cost_trillion": 1.76
+          },
+          {
+            "year": 2027,
+            "kau": 8252,
+            "abate_Mt": 19.8,
+            "intake_Mt": 5.55,
+            "release_Mt": 0.0,
+            "bank_Mt": 24.8,
+            "eua": 132000,
+            "gap": 123748,
+            "auction_rev_trillion": 0.541,
+            "cbam_cost_trillion": 1.891
+          },
+          {
+            "year": 2028,
+            "kau": 8718,
+            "abate_Mt": 26.3,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 0.0,
+            "eua": 142500,
+            "gap": 133782,
+            "auction_rev_trillion": 0.694,
+            "cbam_cost_trillion": 2.045
+          },
+          {
+            "year": 2029,
+            "kau": 12445,
+            "abate_Mt": 60.9,
+            "intake_Mt": 0.0,
+            "release_Mt": 20.0,
+            "bank_Mt": 0.0,
+            "eua": 159000,
+            "gap": 146555,
+            "auction_rev_trillion": 1.15,
+            "cbam_cost_trillion": 2.24
+          },
+          {
+            "year": 2030,
+            "kau": 11278,
+            "abate_Mt": 53.3,
+            "intake_Mt": 0.0,
+            "release_Mt": 20.0,
+            "bank_Mt": 0.0,
+            "eua": 178500,
+            "gap": 167222,
+            "auction_rev_trillion": 1.172,
+            "cbam_cost_trillion": 2.556
+          },
+          {
+            "year": 2031,
+            "kau": 11440,
+            "abate_Mt": 56.5,
+            "intake_Mt": 0.0,
+            "release_Mt": 20.0,
+            "bank_Mt": 0.0,
+            "eua": 202500,
+            "gap": 191060,
+            "auction_rev_trillion": 1.166,
+            "cbam_cost_trillion": 2.92
+          },
+          {
+            "year": 2032,
+            "kau": 11596,
+            "abate_Mt": 59.7,
+            "intake_Mt": 0.0,
+            "release_Mt": 20.0,
+            "bank_Mt": 0.0,
+            "eua": 226500,
+            "gap": 214904,
+            "auction_rev_trillion": 1.158,
+            "cbam_cost_trillion": 3.284
+          },
+          {
+            "year": 2033,
+            "kau": 11783,
+            "abate_Mt": 63.1,
+            "intake_Mt": 0.0,
+            "release_Mt": 13.46,
+            "bank_Mt": 0.3,
+            "eua": 250500,
+            "gap": 238717,
+            "auction_rev_trillion": 1.153,
+            "cbam_cost_trillion": 3.648
+          },
+          {
+            "year": 2034,
+            "kau": 12449,
+            "abate_Mt": 70.2,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 0.0,
+            "eua": 274500,
+            "gap": 262051,
+            "auction_rev_trillion": 1.194,
+            "cbam_cost_trillion": 4.005
+          },
+          {
+            "year": 2035,
+            "kau": 14818,
+            "abate_Mt": 88.8,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 0.0,
+            "eua": 298500,
+            "gap": 283682,
+            "auction_rev_trillion": 1.393,
+            "cbam_cost_trillion": 4.335
+          },
+          {
+            "year": 2036,
+            "kau": 14981,
+            "abate_Mt": 91.7,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 0.0,
+            "eua": 322500,
+            "gap": 307519,
+            "auction_rev_trillion": 1.38,
+            "cbam_cost_trillion": 4.7
+          },
+          {
+            "year": 2037,
+            "kau": 15135,
+            "abate_Mt": 94.5,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 0.0,
+            "eua": 346500,
+            "gap": 331365,
+            "auction_rev_trillion": 1.366,
+            "cbam_cost_trillion": 5.064
+          },
+          {
+            "year": 2038,
+            "kau": 15282,
+            "abate_Mt": 97.3,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 0.0,
+            "eua": 370500,
+            "gap": 355218,
+            "auction_rev_trillion": 1.352,
+            "cbam_cost_trillion": 5.429
+          },
+          {
+            "year": 2039,
+            "kau": 15421,
+            "abate_Mt": 100.0,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 0.0,
+            "eua": 394500,
+            "gap": 379079,
+            "auction_rev_trillion": 1.337,
+            "cbam_cost_trillion": 5.793
+          },
+          {
+            "year": 2040,
+            "kau": 15552,
+            "abate_Mt": 102.7,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 0.0,
+            "eua": 418500,
+            "gap": 402948,
+            "auction_rev_trillion": 1.321,
+            "cbam_cost_trillion": 6.158
+          }
+        ]
+      }
+    },
+    "middle": {
+      "L0": {
+        "p0": 9590.985288502994,
+        "terminal_bank_Mt": 4.290522933006287e-06,
+        "min_bank_Mt": 0.0,
+        "cum_auction_rev_trillion": 26.0,
+        "cum_cbam_cost_trillion": 55.3,
+        "path": [
+          {
+            "year": 2026,
+            "kau": 9591,
+            "abate_Mt": 31.3,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 77.0,
+            "eua": 123000,
+            "gap": 113409,
+            "auction_rev_trillion": 0.481,
+            "cbam_cost_trillion": 1.733
+          },
+          {
+            "year": 2027,
+            "kau": 10133,
+            "abate_Mt": 39.1,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 77.7,
+            "eua": 132000,
+            "gap": 121867,
+            "auction_rev_trillion": 0.703,
+            "cbam_cost_trillion": 1.862
+          },
+          {
+            "year": 2028,
+            "kau": 10706,
+            "abate_Mt": 47.4,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 72.5,
+            "eua": 142500,
+            "gap": 131794,
+            "auction_rev_trillion": 0.93,
+            "cbam_cost_trillion": 2.014
+          },
+          {
+            "year": 2029,
+            "kau": 11312,
+            "abate_Mt": 55.9,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 62.5,
+            "eua": 159000,
+            "gap": 147688,
+            "auction_rev_trillion": 1.163,
+            "cbam_cost_trillion": 2.257
+          },
+          {
+            "year": 2030,
+            "kau": 11951,
+            "abate_Mt": 64.4,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 47.6,
+            "eua": 178500,
+            "gap": 166549,
+            "auction_rev_trillion": 1.4,
+            "cbam_cost_trillion": 2.545
+          },
+          {
+            "year": 2031,
+            "kau": 12627,
+            "abate_Mt": 72.9,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 33.7,
+            "eua": 202500,
+            "gap": 189873,
+            "auction_rev_trillion": 1.523,
+            "cbam_cost_trillion": 2.902
+          },
+          {
+            "year": 2032,
+            "kau": 13341,
+            "abate_Mt": 81.5,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 20.7,
+            "eua": 226500,
+            "gap": 213159,
+            "auction_rev_trillion": 1.651,
+            "cbam_cost_trillion": 3.258
+          },
+          {
+            "year": 2033,
+            "kau": 14095,
+            "abate_Mt": 90.0,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 9.5,
+            "eua": 250500,
+            "gap": 236405,
+            "auction_rev_trillion": 1.786,
+            "cbam_cost_trillion": 3.613
+          },
+          {
+            "year": 2034,
+            "kau": 14892,
+            "abate_Mt": 98.5,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 0.0,
+            "eua": 274500,
+            "gap": 259608,
+            "auction_rev_trillion": 1.925,
+            "cbam_cost_trillion": 3.967
+          },
+          {
+            "year": 2035,
+            "kau": 17092,
+            "abate_Mt": 115.0,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 0.0,
+            "eua": 298500,
+            "gap": 281408,
+            "auction_rev_trillion": 2.246,
+            "cbam_cost_trillion": 4.301
+          },
+          {
+            "year": 2036,
+            "kau": 17597,
+            "abate_Mt": 121.0,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 0.0,
+            "eua": 322500,
+            "gap": 304903,
+            "auction_rev_trillion": 2.349,
+            "cbam_cost_trillion": 4.66
+          },
+          {
+            "year": 2037,
+            "kau": 18136,
+            "abate_Mt": 127.2,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 0.0,
+            "eua": 346500,
+            "gap": 328364,
+            "auction_rev_trillion": 2.399,
+            "cbam_cost_trillion": 5.018
+          },
+          {
+            "year": 2038,
+            "kau": 18709,
+            "abate_Mt": 133.4,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 0.0,
+            "eua": 370500,
+            "gap": 351791,
+            "auction_rev_trillion": 2.45,
+            "cbam_cost_trillion": 5.376
+          },
+          {
+            "year": 2039,
+            "kau": 19318,
+            "abate_Mt": 139.7,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 0.0,
+            "eua": 394500,
+            "gap": 375182,
+            "auction_rev_trillion": 2.499,
+            "cbam_cost_trillion": 5.734
+          },
+          {
+            "year": 2040,
+            "kau": 19759,
+            "abate_Mt": 145.1,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 0.0,
+            "eua": 418500,
+            "gap": 398741,
+            "auction_rev_trillion": 2.53,
+            "cbam_cost_trillion": 6.094
+          }
+        ]
+      },
+      "L1": {
+        "p0": 8779.258262766254,
+        "terminal_bank_Mt": 0.0,
+        "min_bank_Mt": 0.0,
+        "cum_auction_rev_trillion": 24.6,
+        "cum_cbam_cost_trillion": 55.5,
+        "path": [
+          {
+            "year": 2026,
+            "kau": 8779,
+            "abate_Mt": 23.5,
+            "intake_Mt": 2.4,
+            "release_Mt": 0.0,
+            "bank_Mt": 66.8,
+            "eua": 123000,
+            "gap": 114221,
+            "auction_rev_trillion": 0.441,
+            "cbam_cost_trillion": 1.746
+          },
+          {
+            "year": 2027,
+            "kau": 9276,
+            "abate_Mt": 31.4,
+            "intake_Mt": 2.02,
+            "release_Mt": 0.0,
+            "bank_Mt": 57.3,
+            "eua": 132000,
+            "gap": 122724,
+            "auction_rev_trillion": 0.644,
+            "cbam_cost_trillion": 1.876
+          },
+          {
+            "year": 2028,
+            "kau": 9800,
+            "abate_Mt": 39.2,
+            "intake_Mt": 0.88,
+            "release_Mt": 0.0,
+            "bank_Mt": 42.2,
+            "eua": 142500,
+            "gap": 132700,
+            "auction_rev_trillion": 0.851,
+            "cbam_cost_trillion": 2.028
+          },
+          {
+            "year": 2029,
+            "kau": 10354,
+            "abate_Mt": 47.4,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 23.4,
+            "eua": 159000,
+            "gap": 148646,
+            "auction_rev_trillion": 1.065,
+            "cbam_cost_trillion": 2.272
+          },
+          {
+            "year": 2030,
+            "kau": 10940,
+            "abate_Mt": 55.9,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 0.0,
+            "eua": 178500,
+            "gap": 167560,
+            "auction_rev_trillion": 1.281,
+            "cbam_cost_trillion": 2.561
+          },
+          {
+            "year": 2031,
+            "kau": 14593,
+            "abate_Mt": 86.8,
+            "intake_Mt": 0.0,
+            "release_Mt": 20.0,
+            "bank_Mt": 0.0,
+            "eua": 202500,
+            "gap": 187907,
+            "auction_rev_trillion": 1.76,
+            "cbam_cost_trillion": 2.872
+          },
+          {
+            "year": 2032,
+            "kau": 12631,
+            "abate_Mt": 76.2,
+            "intake_Mt": 0.0,
+            "release_Mt": 20.0,
+            "bank_Mt": 1.8,
+            "eua": 226500,
+            "gap": 213869,
+            "auction_rev_trillion": 1.563,
+            "cbam_cost_trillion": 3.268
+          },
+          {
+            "year": 2033,
+            "kau": 13346,
+            "abate_Mt": 84.7,
+            "intake_Mt": 0.0,
+            "release_Mt": 20.0,
+            "bank_Mt": 5.3,
+            "eua": 250500,
+            "gap": 237154,
+            "auction_rev_trillion": 1.691,
+            "cbam_cost_trillion": 3.624
+          },
+          {
+            "year": 2034,
+            "kau": 14100,
+            "abate_Mt": 93.3,
+            "intake_Mt": 0.0,
+            "release_Mt": 20.0,
+            "bank_Mt": 10.6,
+            "eua": 274500,
+            "gap": 260400,
+            "auction_rev_trillion": 1.822,
+            "cbam_cost_trillion": 3.98
+          },
+          {
+            "year": 2035,
+            "kau": 14897,
+            "abate_Mt": 101.8,
+            "intake_Mt": 0.0,
+            "release_Mt": 10.57,
+            "bank_Mt": 17.4,
+            "eua": 298500,
+            "gap": 283603,
+            "auction_rev_trillion": 1.957,
+            "cbam_cost_trillion": 4.334
+          },
+          {
+            "year": 2036,
+            "kau": 15740,
+            "abate_Mt": 110.3,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 18.9,
+            "eua": 322500,
+            "gap": 306760,
+            "auction_rev_trillion": 2.101,
+            "cbam_cost_trillion": 4.688
+          },
+          {
+            "year": 2037,
+            "kau": 16630,
+            "abate_Mt": 118.8,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 10.6,
+            "eua": 346500,
+            "gap": 329870,
+            "auction_rev_trillion": 2.2,
+            "cbam_cost_trillion": 5.041
+          },
+          {
+            "year": 2038,
+            "kau": 17570,
+            "abate_Mt": 127.4,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 4.5,
+            "eua": 370500,
+            "gap": 352930,
+            "auction_rev_trillion": 2.3,
+            "cbam_cost_trillion": 5.394
+          },
+          {
+            "year": 2039,
+            "kau": 18563,
+            "abate_Mt": 135.9,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 0.7,
+            "eua": 394500,
+            "gap": 375937,
+            "auction_rev_trillion": 2.401,
+            "cbam_cost_trillion": 5.745
+          },
+          {
+            "year": 2040,
+            "kau": 19613,
+            "abate_Mt": 144.4,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 0.0,
+            "eua": 418500,
+            "gap": 398887,
+            "auction_rev_trillion": 2.511,
+            "cbam_cost_trillion": 6.096
+          }
+        ]
+      },
+      "L2": {
+        "p0": 9105.03370550359,
+        "terminal_bank_Mt": 0.0,
+        "min_bank_Mt": 0.0,
+        "cum_auction_rev_trillion": 24.5,
+        "cum_cbam_cost_trillion": 55.5,
+        "path": [
+          {
+            "year": 2026,
+            "kau": 9105,
+            "abate_Mt": 26.7,
+            "intake_Mt": 5.4,
+            "release_Mt": 0.0,
+            "bank_Mt": 67.0,
+            "eua": 123000,
+            "gap": 113895,
+            "auction_rev_trillion": 0.457,
+            "cbam_cost_trillion": 1.741
+          },
+          {
+            "year": 2027,
+            "kau": 9620,
+            "abate_Mt": 34.6,
+            "intake_Mt": 4.86,
+            "release_Mt": 0.0,
+            "bank_Mt": 58.3,
+            "eua": 132000,
+            "gap": 122380,
+            "auction_rev_trillion": 0.668,
+            "cbam_cost_trillion": 1.87
+          },
+          {
+            "year": 2028,
+            "kau": 10164,
+            "abate_Mt": 42.4,
+            "intake_Mt": 3.3,
+            "release_Mt": 0.0,
+            "bank_Mt": 44.9,
+            "eua": 142500,
+            "gap": 132336,
+            "auction_rev_trillion": 0.883,
+            "cbam_cost_trillion": 2.022
+          },
+          {
+            "year": 2029,
+            "kau": 10738,
+            "abate_Mt": 50.9,
+            "intake_Mt": 0.88,
+            "release_Mt": 0.0,
+            "bank_Mt": 29.1,
+            "eua": 159000,
+            "gap": 148262,
+            "auction_rev_trillion": 1.104,
+            "cbam_cost_trillion": 2.266
+          },
+          {
+            "year": 2030,
+            "kau": 11346,
+            "abate_Mt": 59.4,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 9.3,
+            "eua": 178500,
+            "gap": 167154,
+            "auction_rev_trillion": 1.329,
+            "cbam_cost_trillion": 2.555
+          },
+          {
+            "year": 2031,
+            "kau": 11987,
+            "abate_Mt": 68.0,
+            "intake_Mt": 0.0,
+            "release_Mt": 20.0,
+            "bank_Mt": 10.4,
+            "eua": 202500,
+            "gap": 190513,
+            "auction_rev_trillion": 1.446,
+            "cbam_cost_trillion": 2.912
+          },
+          {
+            "year": 2032,
+            "kau": 12665,
+            "abate_Mt": 76.5,
+            "intake_Mt": 0.0,
+            "release_Mt": 20.0,
+            "bank_Mt": 12.4,
+            "eua": 226500,
+            "gap": 213835,
+            "auction_rev_trillion": 1.567,
+            "cbam_cost_trillion": 3.268
+          },
+          {
+            "year": 2033,
+            "kau": 13381,
+            "abate_Mt": 85.0,
+            "intake_Mt": 0.0,
+            "release_Mt": 20.0,
+            "bank_Mt": 16.2,
+            "eua": 250500,
+            "gap": 237119,
+            "auction_rev_trillion": 1.695,
+            "cbam_cost_trillion": 3.624
+          },
+          {
+            "year": 2034,
+            "kau": 14137,
+            "abate_Mt": 93.5,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 21.7,
+            "eua": 274500,
+            "gap": 260363,
+            "auction_rev_trillion": 1.827,
+            "cbam_cost_trillion": 3.979
+          },
+          {
+            "year": 2035,
+            "kau": 14937,
+            "abate_Mt": 102.0,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 28.3,
+            "eua": 298500,
+            "gap": 283563,
+            "auction_rev_trillion": 1.962,
+            "cbam_cost_trillion": 4.334
+          },
+          {
+            "year": 2036,
+            "kau": 15781,
+            "abate_Mt": 110.6,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 17.9,
+            "eua": 322500,
+            "gap": 306719,
+            "auction_rev_trillion": 2.107,
+            "cbam_cost_trillion": 4.687
+          },
+          {
+            "year": 2037,
+            "kau": 16674,
+            "abate_Mt": 119.1,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 9.8,
+            "eua": 346500,
+            "gap": 329826,
+            "auction_rev_trillion": 2.206,
+            "cbam_cost_trillion": 5.041
+          },
+          {
+            "year": 2038,
+            "kau": 17616,
+            "abate_Mt": 127.6,
+            "intake_Mt": 0.0,
+            "release_Mt": 20.0,
+            "bank_Mt": 4.0,
+            "eua": 370500,
+            "gap": 352884,
+            "auction_rev_trillion": 2.306,
+            "cbam_cost_trillion": 5.393
+          },
+          {
+            "year": 2039,
+            "kau": 18612,
+            "abate_Mt": 136.1,
+            "intake_Mt": 0.0,
+            "release_Mt": 19.71,
+            "bank_Mt": 0.5,
+            "eua": 394500,
+            "gap": 375888,
+            "auction_rev_trillion": 2.408,
+            "cbam_cost_trillion": 5.745
+          },
+          {
+            "year": 2040,
+            "kau": 19665,
+            "abate_Mt": 144.7,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 0.0,
+            "eua": 418500,
+            "gap": 398835,
+            "auction_rev_trillion": 2.517,
+            "cbam_cost_trillion": 6.095
+          }
+        ]
+      },
+      "L3": {
+        "p0": 8735.784104255394,
+        "terminal_bank_Mt": 0.0,
+        "min_bank_Mt": 0.0,
+        "cum_auction_rev_trillion": 24.5,
+        "cum_cbam_cost_trillion": 55.5,
+        "path": [
+          {
+            "year": 2026,
+            "kau": 8736,
+            "abate_Mt": 23.1,
+            "intake_Mt": 9.6,
+            "release_Mt": 0.0,
+            "bank_Mt": 59.2,
+            "eua": 123000,
+            "gap": 114264,
+            "auction_rev_trillion": 0.438,
+            "cbam_cost_trillion": 1.746
+          },
+          {
+            "year": 2027,
+            "kau": 9230,
+            "abate_Mt": 30.9,
+            "intake_Mt": 7.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 43.1,
+            "eua": 132000,
+            "gap": 122770,
+            "auction_rev_trillion": 0.641,
+            "cbam_cost_trillion": 1.876
+          },
+          {
+            "year": 2028,
+            "kau": 9752,
+            "abate_Mt": 38.7,
+            "intake_Mt": 3.13,
+            "release_Mt": 0.0,
+            "bank_Mt": 22.6,
+            "eua": 142500,
+            "gap": 132748,
+            "auction_rev_trillion": 0.847,
+            "cbam_cost_trillion": 2.029
+          },
+          {
+            "year": 2029,
+            "kau": 10303,
+            "abate_Mt": 46.9,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 0.0,
+            "eua": 159000,
+            "gap": 148697,
+            "auction_rev_trillion": 1.059,
+            "cbam_cost_trillion": 2.272
+          },
+          {
+            "year": 2030,
+            "kau": 14020,
+            "abate_Mt": 79.7,
+            "intake_Mt": 0.0,
+            "release_Mt": 20.0,
+            "bank_Mt": 0.0,
+            "eua": 178500,
+            "gap": 164480,
+            "auction_rev_trillion": 1.642,
+            "cbam_cost_trillion": 2.514
+          },
+          {
+            "year": 2031,
+            "kau": 14593,
+            "abate_Mt": 86.8,
+            "intake_Mt": 0.0,
+            "release_Mt": 20.0,
+            "bank_Mt": 0.0,
+            "eua": 202500,
+            "gap": 187907,
+            "auction_rev_trillion": 1.76,
+            "cbam_cost_trillion": 2.872
+          },
+          {
+            "year": 2032,
+            "kau": 12400,
+            "abate_Mt": 74.5,
+            "intake_Mt": 0.0,
+            "release_Mt": 20.0,
+            "bank_Mt": 0.0,
+            "eua": 226500,
+            "gap": 214100,
+            "auction_rev_trillion": 1.534,
+            "cbam_cost_trillion": 3.272
+          },
+          {
+            "year": 2033,
+            "kau": 12998,
+            "abate_Mt": 82.2,
+            "intake_Mt": 0.0,
+            "release_Mt": 20.0,
+            "bank_Mt": 1.0,
+            "eua": 250500,
+            "gap": 237502,
+            "auction_rev_trillion": 1.647,
+            "cbam_cost_trillion": 3.63
+          },
+          {
+            "year": 2034,
+            "kau": 13733,
+            "abate_Mt": 90.7,
+            "intake_Mt": 0.0,
+            "release_Mt": 20.0,
+            "bank_Mt": 3.7,
+            "eua": 274500,
+            "gap": 260767,
+            "auction_rev_trillion": 1.775,
+            "cbam_cost_trillion": 3.985
+          },
+          {
+            "year": 2035,
+            "kau": 14509,
+            "abate_Mt": 99.3,
+            "intake_Mt": 0.0,
+            "release_Mt": 5.01,
+            "bank_Mt": 8.0,
+            "eua": 298500,
+            "gap": 283991,
+            "auction_rev_trillion": 1.906,
+            "cbam_cost_trillion": 4.34
+          },
+          {
+            "year": 2036,
+            "kau": 15330,
+            "abate_Mt": 107.8,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 14.8,
+            "eua": 322500,
+            "gap": 307170,
+            "auction_rev_trillion": 2.047,
+            "cbam_cost_trillion": 4.694
+          },
+          {
+            "year": 2037,
+            "kau": 16197,
+            "abate_Mt": 116.3,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 18.2,
+            "eua": 346500,
+            "gap": 330303,
+            "auction_rev_trillion": 2.143,
+            "cbam_cost_trillion": 5.048
+          },
+          {
+            "year": 2038,
+            "kau": 17112,
+            "abate_Mt": 124.8,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 9.6,
+            "eua": 370500,
+            "gap": 353388,
+            "auction_rev_trillion": 2.24,
+            "cbam_cost_trillion": 5.401
+          },
+          {
+            "year": 2039,
+            "kau": 18080,
+            "abate_Mt": 133.4,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 3.2,
+            "eua": 394500,
+            "gap": 376420,
+            "auction_rev_trillion": 2.339,
+            "cbam_cost_trillion": 5.753
+          },
+          {
+            "year": 2040,
+            "kau": 19102,
+            "abate_Mt": 141.9,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 0.0,
+            "eua": 418500,
+            "gap": 399398,
+            "auction_rev_trillion": 2.445,
+            "cbam_cost_trillion": 6.104
+          }
+        ]
+      },
+      "L4": {
+        "p0": 8737.481146971762,
+        "terminal_bank_Mt": 3.1960502564907075e-06,
+        "min_bank_Mt": 0.0,
+        "cum_auction_rev_trillion": 24.9,
+        "cum_cbam_cost_trillion": 55.5,
+        "path": [
+          {
+            "year": 2026,
+            "kau": 8737,
+            "abate_Mt": 23.1,
+            "intake_Mt": 10.8,
+            "release_Mt": 0.0,
+            "bank_Mt": 58.0,
+            "eua": 123000,
+            "gap": 114263,
+            "auction_rev_trillion": 0.439,
+            "cbam_cost_trillion": 1.746
+          },
+          {
+            "year": 2027,
+            "kau": 9232,
+            "abate_Mt": 30.9,
+            "intake_Mt": 7.92,
+            "release_Mt": 0.0,
+            "bank_Mt": 41.5,
+            "eua": 132000,
+            "gap": 122768,
+            "auction_rev_trillion": 0.641,
+            "cbam_cost_trillion": 1.876
+          },
+          {
+            "year": 2028,
+            "kau": 9753,
+            "abate_Mt": 38.8,
+            "intake_Mt": 3.96,
+            "release_Mt": 0.0,
+            "bank_Mt": 21.5,
+            "eua": 142500,
+            "gap": 132747,
+            "auction_rev_trillion": 0.847,
+            "cbam_cost_trillion": 2.029
+          },
+          {
+            "year": 2029,
+            "kau": 10305,
+            "abate_Mt": 47.0,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 0.0,
+            "eua": 159000,
+            "gap": 148695,
+            "auction_rev_trillion": 1.06,
+            "cbam_cost_trillion": 2.272
+          },
+          {
+            "year": 2030,
+            "kau": 13956,
+            "abate_Mt": 79.3,
+            "intake_Mt": 0.0,
+            "release_Mt": 20.0,
+            "bank_Mt": 0.0,
+            "eua": 178500,
+            "gap": 164544,
+            "auction_rev_trillion": 1.635,
+            "cbam_cost_trillion": 2.515
+          },
+          {
+            "year": 2031,
+            "kau": 12068,
+            "abate_Mt": 68.6,
+            "intake_Mt": 0.0,
+            "release_Mt": 20.0,
+            "bank_Mt": 1.8,
+            "eua": 202500,
+            "gap": 190432,
+            "auction_rev_trillion": 1.456,
+            "cbam_cost_trillion": 2.91
+          },
+          {
+            "year": 2032,
+            "kau": 12751,
+            "abate_Mt": 77.1,
+            "intake_Mt": 0.0,
+            "release_Mt": 20.0,
+            "bank_Mt": 4.5,
+            "eua": 226500,
+            "gap": 213749,
+            "auction_rev_trillion": 1.578,
+            "cbam_cost_trillion": 3.267
+          },
+          {
+            "year": 2033,
+            "kau": 13472,
+            "abate_Mt": 85.6,
+            "intake_Mt": 0.0,
+            "release_Mt": 20.0,
+            "bank_Mt": 8.9,
+            "eua": 250500,
+            "gap": 237028,
+            "auction_rev_trillion": 1.707,
+            "cbam_cost_trillion": 3.622
+          },
+          {
+            "year": 2034,
+            "kau": 14233,
+            "abate_Mt": 94.2,
+            "intake_Mt": 0.0,
+            "release_Mt": 16.62,
+            "bank_Mt": 15.1,
+            "eua": 274500,
+            "gap": 260267,
+            "auction_rev_trillion": 1.84,
+            "cbam_cost_trillion": 3.978
+          },
+          {
+            "year": 2035,
+            "kau": 15038,
+            "abate_Mt": 102.7,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 22.3,
+            "eua": 298500,
+            "gap": 283462,
+            "auction_rev_trillion": 1.976,
+            "cbam_cost_trillion": 4.332
+          },
+          {
+            "year": 2036,
+            "kau": 15888,
+            "abate_Mt": 111.2,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 12.5,
+            "eua": 322500,
+            "gap": 306612,
+            "auction_rev_trillion": 2.121,
+            "cbam_cost_trillion": 4.686
+          },
+          {
+            "year": 2037,
+            "kau": 16787,
+            "abate_Mt": 119.7,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 5.1,
+            "eua": 346500,
+            "gap": 329713,
+            "auction_rev_trillion": 2.221,
+            "cbam_cost_trillion": 5.039
+          },
+          {
+            "year": 2038,
+            "kau": 17736,
+            "abate_Mt": 128.3,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 0.0,
+            "eua": 370500,
+            "gap": 352764,
+            "auction_rev_trillion": 2.322,
+            "cbam_cost_trillion": 5.391
+          },
+          {
+            "year": 2039,
+            "kau": 19318,
+            "abate_Mt": 139.7,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 0.0,
+            "eua": 394500,
+            "gap": 375182,
+            "auction_rev_trillion": 2.499,
+            "cbam_cost_trillion": 5.734
+          },
+          {
+            "year": 2040,
+            "kau": 19759,
+            "abate_Mt": 145.1,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 0.0,
+            "eua": 418500,
+            "gap": 398741,
+            "auction_rev_trillion": 2.53,
+            "cbam_cost_trillion": 6.094
+          }
+        ]
+      }
+    },
+    "ideal": {
+      "L0": {
+        "p0": 15087.045048841399,
+        "terminal_bank_Mt": 0.0010944147587716579,
+        "min_bank_Mt": 0.0010944147587716579,
+        "cum_auction_rev_trillion": 75.1,
+        "cum_cbam_cost_trillion": 53.5,
+        "path": [
+          {
+            "year": 2026,
+            "kau": 15087,
+            "abate_Mt": 73.8,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 119.4,
+            "eua": 123000,
+            "gap": 107913,
+            "auction_rev_trillion": 0.191,
+            "cbam_cost_trillion": 1.649
+          },
+          {
+            "year": 2027,
+            "kau": 15940,
+            "abate_Mt": 83.7,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 154.7,
+            "eua": 132000,
+            "gap": 116060,
+            "auction_rev_trillion": 0.38,
+            "cbam_cost_trillion": 1.774
+          },
+          {
+            "year": 2028,
+            "kau": 16841,
+            "abate_Mt": 93.6,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 176.7,
+            "eua": 142500,
+            "gap": 125659,
+            "auction_rev_trillion": 0.754,
+            "cbam_cost_trillion": 1.92
+          },
+          {
+            "year": 2029,
+            "kau": 17794,
+            "abate_Mt": 103.5,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 184.3,
+            "eua": 159000,
+            "gap": 141206,
+            "auction_rev_trillion": 1.673,
+            "cbam_cost_trillion": 2.158
+          },
+          {
+            "year": 2030,
+            "kau": 18800,
+            "abate_Mt": 113.4,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 178.3,
+            "eua": 178500,
+            "gap": 159700,
+            "auction_rev_trillion": 3.547,
+            "cbam_cost_trillion": 2.441
+          },
+          {
+            "year": 2031,
+            "kau": 19863,
+            "abate_Mt": 123.3,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 168.8,
+            "eua": 202500,
+            "gap": 182637,
+            "auction_rev_trillion": 4.483,
+            "cbam_cost_trillion": 2.791
+          },
+          {
+            "year": 2032,
+            "kau": 20986,
+            "abate_Mt": 133.1,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 156.5,
+            "eua": 226500,
+            "gap": 205514,
+            "auction_rev_trillion": 5.429,
+            "cbam_cost_trillion": 3.141
+          },
+          {
+            "year": 2033,
+            "kau": 22172,
+            "abate_Mt": 143.0,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 141.3,
+            "eua": 250500,
+            "gap": 228328,
+            "auction_rev_trillion": 6.369,
+            "cbam_cost_trillion": 3.489
+          },
+          {
+            "year": 2034,
+            "kau": 23426,
+            "abate_Mt": 152.9,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 123.2,
+            "eua": 274500,
+            "gap": 251074,
+            "auction_rev_trillion": 7.403,
+            "cbam_cost_trillion": 3.837
+          },
+          {
+            "year": 2035,
+            "kau": 24750,
+            "abate_Mt": 162.8,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 103.1,
+            "eua": 298500,
+            "gap": 273750,
+            "auction_rev_trillion": 7.4,
+            "cbam_cost_trillion": 4.184
+          },
+          {
+            "year": 2036,
+            "kau": 26150,
+            "abate_Mt": 172.7,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 82.8,
+            "eua": 322500,
+            "gap": 296350,
+            "auction_rev_trillion": 7.427,
+            "cbam_cost_trillion": 4.529
+          },
+          {
+            "year": 2037,
+            "kau": 27628,
+            "abate_Mt": 182.6,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 63.3,
+            "eua": 346500,
+            "gap": 318872,
+            "auction_rev_trillion": 7.46,
+            "cbam_cost_trillion": 4.873
+          },
+          {
+            "year": 2038,
+            "kau": 29190,
+            "abate_Mt": 192.5,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 45.4,
+            "eua": 370500,
+            "gap": 341310,
+            "auction_rev_trillion": 7.502,
+            "cbam_cost_trillion": 5.216
+          },
+          {
+            "year": 2039,
+            "kau": 30841,
+            "abate_Mt": 198.1,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 24.9,
+            "eua": 394500,
+            "gap": 363659,
+            "auction_rev_trillion": 7.525,
+            "cbam_cost_trillion": 5.558
+          },
+          {
+            "year": 2040,
+            "kau": 32584,
+            "abate_Mt": 201.3,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 0.0,
+            "eua": 418500,
+            "gap": 385916,
+            "auction_rev_trillion": 7.56,
+            "cbam_cost_trillion": 5.898
+          }
+        ]
+      },
+      "L1": {
+        "p0": 16455.181909368104,
+        "terminal_bank_Mt": 0.0003820572494566441,
+        "min_bank_Mt": 0.0003820572494566441,
+        "cum_auction_rev_trillion": 81.9,
+        "cum_cbam_cost_trillion": 53.0,
+        "path": [
+          {
+            "year": 2026,
+            "kau": 16455,
+            "abate_Mt": 82.1,
+            "intake_Mt": 2.4,
+            "release_Mt": 0.0,
+            "bank_Mt": 125.4,
+            "eua": 123000,
+            "gap": 106545,
+            "auction_rev_trillion": 0.209,
+            "cbam_cost_trillion": 1.628
+          },
+          {
+            "year": 2027,
+            "kau": 17386,
+            "abate_Mt": 92.0,
+            "intake_Mt": 9.04,
+            "release_Mt": 0.0,
+            "bank_Mt": 159.9,
+            "eua": 132000,
+            "gap": 114614,
+            "auction_rev_trillion": 0.415,
+            "cbam_cost_trillion": 1.752
+          },
+          {
+            "year": 2028,
+            "kau": 18369,
+            "abate_Mt": 101.9,
+            "intake_Mt": 13.19,
+            "release_Mt": 0.0,
+            "bank_Mt": 177.0,
+            "eua": 142500,
+            "gap": 124131,
+            "auction_rev_trillion": 0.823,
+            "cbam_cost_trillion": 1.897
+          },
+          {
+            "year": 2029,
+            "kau": 19407,
+            "abate_Mt": 111.8,
+            "intake_Mt": 15.24,
+            "release_Mt": 0.0,
+            "bank_Mt": 177.7,
+            "eua": 159000,
+            "gap": 139593,
+            "auction_rev_trillion": 1.825,
+            "cbam_cost_trillion": 2.133
+          },
+          {
+            "year": 2030,
+            "kau": 20504,
+            "abate_Mt": 121.7,
+            "intake_Mt": 15.32,
+            "release_Mt": 0.0,
+            "bank_Mt": 164.8,
+            "eua": 178500,
+            "gap": 157996,
+            "auction_rev_trillion": 3.868,
+            "cbam_cost_trillion": 2.415
+          },
+          {
+            "year": 2031,
+            "kau": 21664,
+            "abate_Mt": 131.6,
+            "intake_Mt": 13.77,
+            "release_Mt": 0.0,
+            "bank_Mt": 149.8,
+            "eua": 202500,
+            "gap": 180836,
+            "auction_rev_trillion": 4.89,
+            "cbam_cost_trillion": 2.764
+          },
+          {
+            "year": 2032,
+            "kau": 22889,
+            "abate_Mt": 141.5,
+            "intake_Mt": 11.97,
+            "release_Mt": 0.0,
+            "bank_Mt": 133.8,
+            "eua": 226500,
+            "gap": 203611,
+            "auction_rev_trillion": 5.922,
+            "cbam_cost_trillion": 3.112
+          },
+          {
+            "year": 2033,
+            "kau": 24183,
+            "abate_Mt": 151.4,
+            "intake_Mt": 10.06,
+            "release_Mt": 0.0,
+            "bank_Mt": 116.9,
+            "eua": 250500,
+            "gap": 226317,
+            "auction_rev_trillion": 6.946,
+            "cbam_cost_trillion": 3.459
+          },
+          {
+            "year": 2034,
+            "kau": 25550,
+            "abate_Mt": 161.3,
+            "intake_Mt": 8.03,
+            "release_Mt": 0.0,
+            "bank_Mt": 99.1,
+            "eua": 274500,
+            "gap": 248950,
+            "auction_rev_trillion": 8.074,
+            "cbam_cost_trillion": 3.805
+          },
+          {
+            "year": 2035,
+            "kau": 26995,
+            "abate_Mt": 171.2,
+            "intake_Mt": 5.9,
+            "release_Mt": 0.0,
+            "bank_Mt": 81.4,
+            "eua": 298500,
+            "gap": 271505,
+            "auction_rev_trillion": 8.071,
+            "cbam_cost_trillion": 4.149
+          },
+          {
+            "year": 2036,
+            "kau": 28521,
+            "abate_Mt": 181.1,
+            "intake_Mt": 3.77,
+            "release_Mt": 0.0,
+            "bank_Mt": 65.7,
+            "eua": 322500,
+            "gap": 293979,
+            "auction_rev_trillion": 8.1,
+            "cbam_cost_trillion": 4.493
+          },
+          {
+            "year": 2037,
+            "kau": 30134,
+            "abate_Mt": 191.0,
+            "intake_Mt": 1.88,
+            "release_Mt": 0.0,
+            "bank_Mt": 52.6,
+            "eua": 346500,
+            "gap": 316366,
+            "auction_rev_trillion": 8.136,
+            "cbam_cost_trillion": 4.835
+          },
+          {
+            "year": 2038,
+            "kau": 31837,
+            "abate_Mt": 198.0,
+            "intake_Mt": 0.31,
+            "release_Mt": 0.0,
+            "bank_Mt": 40.0,
+            "eua": 370500,
+            "gap": 338663,
+            "auction_rev_trillion": 8.182,
+            "cbam_cost_trillion": 5.176
+          },
+          {
+            "year": 2039,
+            "kau": 33637,
+            "abate_Mt": 201.6,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 22.9,
+            "eua": 394500,
+            "gap": 360863,
+            "auction_rev_trillion": 8.208,
+            "cbam_cost_trillion": 5.515
+          },
+          {
+            "year": 2040,
+            "kau": 35539,
+            "abate_Mt": 203.2,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 0.0,
+            "eua": 418500,
+            "gap": 382961,
+            "auction_rev_trillion": 8.245,
+            "cbam_cost_trillion": 5.853
+          }
+        ]
+      },
+      "L2": {
+        "p0": 17308.117190404828,
+        "terminal_bank_Mt": 2.3330867290496825e-06,
+        "min_bank_Mt": 2.3330867290496825e-06,
+        "cum_auction_rev_trillion": 86.2,
+        "cum_cbam_cost_trillion": 52.7,
+        "path": [
+          {
+            "year": 2026,
+            "kau": 17308,
+            "abate_Mt": 87.0,
+            "intake_Mt": 5.4,
+            "release_Mt": 0.0,
+            "bank_Mt": 127.2,
+            "eua": 123000,
+            "gap": 105692,
+            "auction_rev_trillion": 0.219,
+            "cbam_cost_trillion": 1.615
+          },
+          {
+            "year": 2027,
+            "kau": 18287,
+            "abate_Mt": 96.8,
+            "intake_Mt": 15.7,
+            "release_Mt": 0.0,
+            "bank_Mt": 160.0,
+            "eua": 132000,
+            "gap": 113713,
+            "auction_rev_trillion": 0.436,
+            "cbam_cost_trillion": 1.738
+          },
+          {
+            "year": 2028,
+            "kau": 19321,
+            "abate_Mt": 106.7,
+            "intake_Mt": 21.59,
+            "release_Mt": 0.0,
+            "bank_Mt": 173.5,
+            "eua": 142500,
+            "gap": 123179,
+            "auction_rev_trillion": 0.866,
+            "cbam_cost_trillion": 1.883
+          },
+          {
+            "year": 2029,
+            "kau": 20413,
+            "abate_Mt": 116.6,
+            "intake_Mt": 24.03,
+            "release_Mt": 0.0,
+            "bank_Mt": 170.2,
+            "eua": 159000,
+            "gap": 138587,
+            "auction_rev_trillion": 1.92,
+            "cbam_cost_trillion": 2.118
+          },
+          {
+            "year": 2030,
+            "kau": 21567,
+            "abate_Mt": 126.5,
+            "intake_Mt": 23.44,
+            "release_Mt": 0.0,
+            "bank_Mt": 154.0,
+            "eua": 178500,
+            "gap": 156933,
+            "auction_rev_trillion": 4.069,
+            "cbam_cost_trillion": 2.398
+          },
+          {
+            "year": 2031,
+            "kau": 22787,
+            "abate_Mt": 136.4,
+            "intake_Mt": 20.52,
+            "release_Mt": 0.0,
+            "bank_Mt": 137.1,
+            "eua": 202500,
+            "gap": 179713,
+            "auction_rev_trillion": 5.143,
+            "cbam_cost_trillion": 2.746
+          },
+          {
+            "year": 2032,
+            "kau": 24075,
+            "abate_Mt": 146.3,
+            "intake_Mt": 17.47,
+            "release_Mt": 0.0,
+            "bank_Mt": 120.4,
+            "eua": 226500,
+            "gap": 202425,
+            "auction_rev_trillion": 6.229,
+            "cbam_cost_trillion": 3.094
+          },
+          {
+            "year": 2033,
+            "kau": 25436,
+            "abate_Mt": 156.2,
+            "intake_Mt": 14.48,
+            "release_Mt": 0.0,
+            "bank_Mt": 104.0,
+            "eua": 250500,
+            "gap": 225064,
+            "auction_rev_trillion": 7.306,
+            "cbam_cost_trillion": 3.44
+          },
+          {
+            "year": 2034,
+            "kau": 26874,
+            "abate_Mt": 166.1,
+            "intake_Mt": 11.52,
+            "release_Mt": 0.0,
+            "bank_Mt": 87.5,
+            "eua": 274500,
+            "gap": 247626,
+            "auction_rev_trillion": 8.492,
+            "cbam_cost_trillion": 3.784
+          },
+          {
+            "year": 2035,
+            "kau": 28394,
+            "abate_Mt": 176.0,
+            "intake_Mt": 8.56,
+            "release_Mt": 0.0,
+            "bank_Mt": 72.0,
+            "eua": 298500,
+            "gap": 270106,
+            "auction_rev_trillion": 8.49,
+            "cbam_cost_trillion": 4.128
+          },
+          {
+            "year": 2036,
+            "kau": 29999,
+            "abate_Mt": 185.9,
+            "intake_Mt": 5.76,
+            "release_Mt": 0.0,
+            "bank_Mt": 59.1,
+            "eua": 322500,
+            "gap": 292501,
+            "auction_rev_trillion": 8.52,
+            "cbam_cost_trillion": 4.47
+          },
+          {
+            "year": 2037,
+            "kau": 31696,
+            "abate_Mt": 195.8,
+            "intake_Mt": 3.44,
+            "release_Mt": 0.0,
+            "bank_Mt": 49.3,
+            "eua": 346500,
+            "gap": 314804,
+            "auction_rev_trillion": 8.558,
+            "cbam_cost_trillion": 4.811
+          },
+          {
+            "year": 2038,
+            "kau": 33488,
+            "abate_Mt": 200.4,
+            "intake_Mt": 1.68,
+            "release_Mt": 0.0,
+            "bank_Mt": 37.7,
+            "eua": 370500,
+            "gap": 337012,
+            "auction_rev_trillion": 8.606,
+            "cbam_cost_trillion": 5.15
+          },
+          {
+            "year": 2039,
+            "kau": 35381,
+            "abate_Mt": 202.8,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 21.8,
+            "eua": 394500,
+            "gap": 359119,
+            "auction_rev_trillion": 8.633,
+            "cbam_cost_trillion": 5.488
+          },
+          {
+            "year": 2040,
+            "kau": 37381,
+            "abate_Mt": 204.4,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 0.0,
+            "eua": 418500,
+            "gap": 381119,
+            "auction_rev_trillion": 8.673,
+            "cbam_cost_trillion": 5.824
+          }
+        ]
+      },
+      "L3": {
+        "p0": 17325.927862477874,
+        "terminal_bank_Mt": 2.147218883037567e-06,
+        "min_bank_Mt": 2.147218883037567e-06,
+        "cum_auction_rev_trillion": 86.2,
+        "cum_cbam_cost_trillion": 52.7,
+        "path": [
+          {
+            "year": 2026,
+            "kau": 17326,
+            "abate_Mt": 87.0,
+            "intake_Mt": 9.6,
+            "release_Mt": 0.0,
+            "bank_Mt": 123.1,
+            "eua": 123000,
+            "gap": 105674,
+            "auction_rev_trillion": 0.22,
+            "cbam_cost_trillion": 1.615
+          },
+          {
+            "year": 2027,
+            "kau": 18306,
+            "abate_Mt": 96.9,
+            "intake_Mt": 22.35,
+            "release_Mt": 0.0,
+            "bank_Mt": 149.2,
+            "eua": 132000,
+            "gap": 113694,
+            "auction_rev_trillion": 0.437,
+            "cbam_cost_trillion": 1.738
+          },
+          {
+            "year": 2028,
+            "kau": 19341,
+            "abate_Mt": 106.8,
+            "intake_Mt": 28.62,
+            "release_Mt": 0.0,
+            "bank_Mt": 155.8,
+            "eua": 142500,
+            "gap": 123159,
+            "auction_rev_trillion": 0.866,
+            "cbam_cost_trillion": 1.882
+          },
+          {
+            "year": 2029,
+            "kau": 20434,
+            "abate_Mt": 116.7,
+            "intake_Mt": 30.19,
+            "release_Mt": 0.0,
+            "bank_Mt": 146.4,
+            "eua": 159000,
+            "gap": 138566,
+            "auction_rev_trillion": 1.922,
+            "cbam_cost_trillion": 2.118
+          },
+          {
+            "year": 2030,
+            "kau": 21589,
+            "abate_Mt": 126.6,
+            "intake_Mt": 27.94,
+            "release_Mt": 0.0,
+            "bank_Mt": 125.9,
+            "eua": 178500,
+            "gap": 156911,
+            "auction_rev_trillion": 4.073,
+            "cbam_cost_trillion": 2.398
+          },
+          {
+            "year": 2031,
+            "kau": 22810,
+            "abate_Mt": 136.5,
+            "intake_Mt": 23.01,
+            "release_Mt": 0.0,
+            "bank_Mt": 106.7,
+            "eua": 202500,
+            "gap": 179690,
+            "auction_rev_trillion": 5.148,
+            "cbam_cost_trillion": 2.746
+          },
+          {
+            "year": 2032,
+            "kau": 24100,
+            "abate_Mt": 146.4,
+            "intake_Mt": 18.41,
+            "release_Mt": 0.0,
+            "bank_Mt": 89.5,
+            "eua": 226500,
+            "gap": 202400,
+            "auction_rev_trillion": 6.235,
+            "cbam_cost_trillion": 3.093
+          },
+          {
+            "year": 2033,
+            "kau": 25462,
+            "abate_Mt": 156.3,
+            "intake_Mt": 14.27,
+            "release_Mt": 0.0,
+            "bank_Mt": 73.6,
+            "eua": 250500,
+            "gap": 225038,
+            "auction_rev_trillion": 7.314,
+            "cbam_cost_trillion": 3.439
+          },
+          {
+            "year": 2034,
+            "kau": 26902,
+            "abate_Mt": 166.2,
+            "intake_Mt": 10.46,
+            "release_Mt": 0.0,
+            "bank_Mt": 58.6,
+            "eua": 274500,
+            "gap": 247598,
+            "auction_rev_trillion": 8.501,
+            "cbam_cost_trillion": 3.784
+          },
+          {
+            "year": 2035,
+            "kau": 28423,
+            "abate_Mt": 176.1,
+            "intake_Mt": 6.87,
+            "release_Mt": 0.0,
+            "bank_Mt": 45.2,
+            "eua": 298500,
+            "gap": 270077,
+            "auction_rev_trillion": 8.499,
+            "cbam_cost_trillion": 4.127
+          },
+          {
+            "year": 2036,
+            "kau": 30030,
+            "abate_Mt": 186.0,
+            "intake_Mt": 3.64,
+            "release_Mt": 0.0,
+            "bank_Mt": 34.8,
+            "eua": 322500,
+            "gap": 292470,
+            "auction_rev_trillion": 8.529,
+            "cbam_cost_trillion": 4.47
+          },
+          {
+            "year": 2037,
+            "kau": 31728,
+            "abate_Mt": 195.9,
+            "intake_Mt": 1.15,
+            "release_Mt": 0.0,
+            "bank_Mt": 27.6,
+            "eua": 346500,
+            "gap": 314772,
+            "auction_rev_trillion": 8.567,
+            "cbam_cost_trillion": 4.811
+          },
+          {
+            "year": 2038,
+            "kau": 33522,
+            "abate_Mt": 200.5,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 17.6,
+            "eua": 370500,
+            "gap": 336978,
+            "auction_rev_trillion": 8.615,
+            "cbam_cost_trillion": 5.15
+          },
+          {
+            "year": 2039,
+            "kau": 35417,
+            "abate_Mt": 202.8,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 1.7,
+            "eua": 394500,
+            "gap": 359083,
+            "auction_rev_trillion": 8.642,
+            "cbam_cost_trillion": 5.488
+          },
+          {
+            "year": 2040,
+            "kau": 37420,
+            "abate_Mt": 204.4,
+            "intake_Mt": 0.0,
+            "release_Mt": 20.0,
+            "bank_Mt": 0.0,
+            "eua": 418500,
+            "gap": 381080,
+            "auction_rev_trillion": 8.681,
+            "cbam_cost_trillion": 5.824
+          }
+        ]
+      },
+      "L4": {
+        "p0": 18831.706786620667,
+        "terminal_bank_Mt": 2.7107868194580078e-06,
+        "min_bank_Mt": 2.7107868194580078e-06,
+        "cum_auction_rev_trillion": 93.7,
+        "cum_cbam_cost_trillion": 52.2,
+        "path": [
+          {
+            "year": 2026,
+            "kau": 18832,
+            "abate_Mt": 95.0,
+            "intake_Mt": 10.8,
+            "release_Mt": 0.0,
+            "bank_Mt": 129.9,
+            "eua": 123000,
+            "gap": 104168,
+            "auction_rev_trillion": 0.239,
+            "cbam_cost_trillion": 1.592
+          },
+          {
+            "year": 2027,
+            "kau": 19896,
+            "abate_Mt": 104.9,
+            "intake_Mt": 25.18,
+            "release_Mt": 0.0,
+            "bank_Mt": 161.3,
+            "eua": 132000,
+            "gap": 112104,
+            "auction_rev_trillion": 0.475,
+            "cbam_cost_trillion": 1.713
+          },
+          {
+            "year": 2028,
+            "kau": 21021,
+            "abate_Mt": 114.8,
+            "intake_Mt": 32.7,
+            "release_Mt": 0.0,
+            "bank_Mt": 171.8,
+            "eua": 142500,
+            "gap": 121479,
+            "auction_rev_trillion": 0.942,
+            "cbam_cost_trillion": 1.857
+          },
+          {
+            "year": 2029,
+            "kau": 22210,
+            "abate_Mt": 124.7,
+            "intake_Mt": 35.22,
+            "release_Mt": 0.0,
+            "bank_Mt": 165.3,
+            "eua": 159000,
+            "gap": 136790,
+            "auction_rev_trillion": 2.089,
+            "cbam_cost_trillion": 2.091
+          },
+          {
+            "year": 2030,
+            "kau": 23466,
+            "abate_Mt": 134.6,
+            "intake_Mt": 33.68,
+            "release_Mt": 0.0,
+            "bank_Mt": 146.9,
+            "eua": 178500,
+            "gap": 155034,
+            "auction_rev_trillion": 4.427,
+            "cbam_cost_trillion": 2.369
+          },
+          {
+            "year": 2031,
+            "kau": 24793,
+            "abate_Mt": 144.5,
+            "intake_Mt": 29.25,
+            "release_Mt": 0.0,
+            "bank_Mt": 129.2,
+            "eua": 202500,
+            "gap": 177707,
+            "auction_rev_trillion": 5.596,
+            "cbam_cost_trillion": 2.716
+          },
+          {
+            "year": 2032,
+            "kau": 26194,
+            "abate_Mt": 154.4,
+            "intake_Mt": 25.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 113.0,
+            "eua": 226500,
+            "gap": 200306,
+            "auction_rev_trillion": 6.777,
+            "cbam_cost_trillion": 3.061
+          },
+          {
+            "year": 2033,
+            "kau": 27675,
+            "abate_Mt": 164.3,
+            "intake_Mt": 21.12,
+            "release_Mt": 0.0,
+            "bank_Mt": 97.9,
+            "eua": 250500,
+            "gap": 222825,
+            "auction_rev_trillion": 7.949,
+            "cbam_cost_trillion": 3.405
+          },
+          {
+            "year": 2034,
+            "kau": 29240,
+            "abate_Mt": 174.2,
+            "intake_Mt": 17.49,
+            "release_Mt": 0.0,
+            "bank_Mt": 83.4,
+            "eua": 274500,
+            "gap": 245260,
+            "auction_rev_trillion": 9.24,
+            "cbam_cost_trillion": 3.748
+          },
+          {
+            "year": 2035,
+            "kau": 30893,
+            "abate_Mt": 184.1,
+            "intake_Mt": 14.03,
+            "release_Mt": 0.0,
+            "bank_Mt": 70.5,
+            "eua": 298500,
+            "gap": 267607,
+            "auction_rev_trillion": 9.237,
+            "cbam_cost_trillion": 4.09
+          },
+          {
+            "year": 2036,
+            "kau": 32640,
+            "abate_Mt": 194.0,
+            "intake_Mt": 10.91,
+            "release_Mt": 0.0,
+            "bank_Mt": 60.5,
+            "eua": 322500,
+            "gap": 289860,
+            "auction_rev_trillion": 9.27,
+            "cbam_cost_trillion": 4.43
+          },
+          {
+            "year": 2037,
+            "kau": 34486,
+            "abate_Mt": 200.2,
+            "intake_Mt": 8.52,
+            "release_Mt": 0.0,
+            "bank_Mt": 50.0,
+            "eua": 346500,
+            "gap": 312014,
+            "auction_rev_trillion": 9.311,
+            "cbam_cost_trillion": 4.768
+          },
+          {
+            "year": 2038,
+            "kau": 36435,
+            "abate_Mt": 203.1,
+            "intake_Mt": 6.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 36.7,
+            "eua": 370500,
+            "gap": 334065,
+            "auction_rev_trillion": 9.364,
+            "cbam_cost_trillion": 5.105
+          },
+          {
+            "year": 2039,
+            "kau": 38496,
+            "abate_Mt": 204.7,
+            "intake_Mt": 2.81,
+            "release_Mt": 0.0,
+            "bank_Mt": 19.9,
+            "eua": 394500,
+            "gap": 356004,
+            "auction_rev_trillion": 9.393,
+            "cbam_cost_trillion": 5.441
+          },
+          {
+            "year": 2040,
+            "kau": 40672,
+            "abate_Mt": 206.3,
+            "intake_Mt": 0.0,
+            "release_Mt": 0.0,
+            "bank_Mt": 0.0,
+            "eua": 418500,
+            "gap": 377828,
+            "auction_rev_trillion": 9.436,
+            "cbam_cost_trillion": 5.774
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,5 +1,5 @@
 {
-  "name": "web",
+  "name": "kets-outlook",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -23,5 +23,6 @@
     "eslint-config-next": "16.2.6",
     "tailwindcss": "^4",
     "typescript": "^5"
-  }
+  },
+  "description": "K-ETS 배출권 가격전망 대시보드 · Coase + Staircase MACC + Constrained Hotelling"
 }
