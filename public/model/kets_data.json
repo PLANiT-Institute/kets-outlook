@@ -57,7 +57,7 @@
       "petrochem_embed_tCO2": 1.8
     }
   },
-  "banking_initial_bank_Mt": 70.0,
+  "banking_initial_bank_Mt": 92.140327,
   "msr_reserve_Mt": 85.28,
   "liquidity_defaults": {
     "lambda_0": 0.0,
@@ -66,7 +66,7 @@
     "psi_low": -0.5,
     "psi_high": 0.0,
     "psi_default": -0.25,
-    "lambda_2026_implied": 0.55,
+    "lambda_2026_implied": 0.575,
     "regime_relapse_years": 3.0,
     "regime_consolidate_terminal": 0.9,
     "regime_consolidate_years": 8.0
@@ -436,10 +436,10 @@
       {
         "category": "Banking",
         "parameter": "initial_bank_Mt",
-        "value": 70,
+        "value": 92.140327,
         "unit": "MtCO2",
-        "description": "2025년말 누적 시중잉여(banking overhang) 초기스톡 B0. 2023말 70Mt 기준(2024·2025 외삽 전 보수적 적용)",
-        "source": "park2025; 4차 기본계획 2024.12; 시장잉여추정 시트"
+        "description": "2024년 관측 이월잔고 (모형 시작 은행잔고 B0)",
+        "source": "data/ets_data.xlsx '배출권이월량' 2024 등록부 실측 (이월+상쇄이월 합계). 구 70Mt 가정(park2025·4차 기본계획)은 실측으로 대체 — tests/test_data_integrity.py가 대조."
       },
       {
         "category": "Banking",
@@ -5592,10 +5592,10 @@
       {
         "category": "Liquidity",
         "parameter": "lambda_2026_implied",
-        "value": 0.55,
+        "value": 0.575,
         "unit": "-",
         "description": "캘리브레이션: (P_obs−P_static)/(P_hotel−P_static)=(22,750−9,862)/(33,188−9,862)=0.553. P_obs=KAU2026시세 2026-06, 앵커=base/L0 level_bridge. 중심(Hold) λ. lambda_0=0.0은 2023–25 역사적 레짐",
-        "source": "2026-07-02 v2 재구성 (three gates)"
+        "source": "가격 웨지 역산: λ=(P_obs−P_static)/(P_hotel−P_static). P_obs=22,750원(KAU2026시세 2026-06), P_static=9,862 / P_hotel=32,275(엔진 step MACC, B0=92.14Mt). scripts/calibrate_liquidity.py가 재계산·대조(불일치 시 실패). 구 0.55는 B0=70Mt 기준."
       },
       {
         "category": "Liquidity",

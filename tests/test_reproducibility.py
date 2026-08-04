@@ -31,14 +31,18 @@ def _load(name):
 def test_p0_equilibrium_prices():
     path = _load("msr_results_v1.0.json")["packages"]["P0"]["path"]
     kau = {r["year"]: round(r["kau"]) for r in path}
-    assert (kau[2026], kau[2030], kau[2040]) == (22_691, 47_135, 67_461)
+    assert (kau[2026], kau[2030], kau[2040]) == (22_749, 46_159, 67_461)
 
 
 def test_lambda_regime_is_calibrated_not_zero():
-    """λ=0.55는 2026 관측가에서 역산한 값 — 0으로 되돌아가면 전달채널이 죽은 것."""
+    """λ=0.575는 2026 관측가(22,750원)에서 역산한 값 — 0으로 돌아가면 전달채널이 죽은 것."""
     row = _load("msr_results_v1.0.json")["packages"]["P0"]["path"][0]
-    assert row["lambda"] == pytest.approx(0.55, abs=1e-9)
+    assert row["lambda"] == pytest.approx(0.575, abs=1e-9)
     assert row["static"] < row["kau"] < row["hotelling"], "실현가는 정태와 Hotelling 사이"
+    # λ를 관측가에서 역산했으므로 레벨-브리지가 되돌아가야 한다
+    # (JSON은 원 단위 반올림 저장 → 허용오차 1e-3)
+    implied = (row["kau"] - row["static"]) / (row["hotelling"] - row["static"])
+    assert implied == pytest.approx(row["lambda"], abs=1e-3)
 
 
 # ─── 경매 최저가격 에스컬레이션 (docs/report.md §4, Table 1) ───
@@ -69,6 +73,19 @@ def test_carry_sample_sizes():
     assert c["kau_vintage_day_quotes"] == 8_513
     assert c["all_quote_pairs"]["n_pairs"] == 5_693
     assert c["both_traded_pairs"]["n_pairs"] == 253
+
+
+def test_initial_bank_matches_registry():
+    """모형 B0(마스터 엑셀)와 등록부 실측 이월잔고가 같아야 한다.
+
+    과거에 이 둘이 갈렸다(시트 70Mt vs 등록부 92.14Mt) — 러너마다 다른 기준선을
+    쓰면 같은 보고서 안에서 숫자가 어긋난다. 이 테스트가 그 재발을 막는다.
+    """
+    b0 = _load("msr_results_v1.0.json")["params"]["B0_Mt"]
+    registry = _load("carry_analysis_cce_v2.0.json")["bank_2024_Mt"]
+    floor_run = _load("escalator_floor_cce_v2.0.json")["meta"]["initial_bank_Mt"]
+    assert b0 == pytest.approx(registry, abs=1e-6)
+    assert floor_run == pytest.approx(registry, abs=1e-6)
 
 
 def test_observed_bank_2024():

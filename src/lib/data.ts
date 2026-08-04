@@ -49,4 +49,5 @@ export const NAV_ITEMS = [
   { id: 'overview',   ko: '대시보드 홈',        en: 'Overview',  icon: 'home' },
   { id: 'mechanism',  ko: '가격 결정 메커니즘',  en: 'Mechanism', icon: 'gauge' },
   { id: 'simulator',  ko: '시나리오 시뮬레이터', en: 'Simulator', icon: 'bars' },
+  { id: 'report',     ko: '보고서 요약',         en: 'Report',    icon: 'gap' },
 ];

@@ -7,6 +7,7 @@ import {
 } from '@/components/PackageResults';
 import { MechanismPanel } from '@/components/Mechanism';
 import { SimulatorPanel } from '@/components/Simulator';
+import { ReportPanel } from '@/components/ReportPanel';
 import { PKG, RESULTS_META, AUCTION_SHARE_GOV } from '@/lib/results';
 import { LATEST_KAU_QUOTE, fmtWon } from '@/lib/data';
 import { MSR_RESERVE_MT, KMSR_DRAFT_ASSUMPTIONS } from '@/lib/msr';
@@ -91,6 +92,7 @@ function AssumptionsPanel() {
 const TAB_HEADERS: Record<string, { title: string; subtitle: string }> = {
   overview:  { title: 'K-MSR 운영규칙 비교 — 가격약속형 vs 수량약속형', subtitle: '법제화된 K-MSR을 어떻게 운영할 것인가. 무정책(P0)·시행령 초안(P1)·가격약속형(A)·수량약속형(B)의 KAU 가격경로와 기술 활성화·방어여유·재정 비교 (논문 v4).' },
   mechanism: { title: '가격 결정 메커니즘', subtitle: '배출권 가격이 어떻게 결정되고, K-MSR 운영규칙이 어느 지점에 작용하는지 단계별로 설명합니다.' },
+  report:    { title: '보고서 요약 — 진단·원인·처방', subtitle: '전체 논증 사슬을 한 화면에. 모든 수치는 문서·MCP와 같은 산출물(results_v1.json)에서 읽습니다. 전문은 docs/report.md.' },
   simulator: { title: '시나리오 시뮬레이터', subtitle: '운영규칙 패키지(P0/P1/A/B) 또는 커스텀 레버를 선택하면 파이썬 모형 엔진(/api/solve)이 실시간으로 가격경로를 재계산합니다.' },
 };
 
@@ -125,6 +127,7 @@ export default function DashboardPage() {
           {activeTab === 'overview' && <OverviewTab />}
           {activeTab === 'mechanism' && <MechanismPanel />}
           {activeTab === 'simulator' && <SimulatorPanel />}
+          {activeTab === 'report' && <ReportPanel />}
 
           <div className="h-6" />
         </main>

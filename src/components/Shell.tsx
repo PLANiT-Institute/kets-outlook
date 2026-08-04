@@ -6,6 +6,7 @@ const TOPBAR_LABELS: Record<string, string> = {
   overview: '홈',
   mechanism: '메커니즘',
   simulator: '시뮬레이터',
+  report: '보고서',
 };
 
 function NavIcon({ name, size = 16 }: { name: string; size?: number }) {

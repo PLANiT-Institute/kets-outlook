@@ -8,7 +8,7 @@
 ## 1. 데이터 계약 — 숫자는 코드에 없다
 
 ```
-data/K-ETS_마스터데이터.xlsx   (SSOT, 20개 시트)
+data/K-ETS_마스터데이터.xlsx   (SSOT, 26개 시트)
         │
         ├─ kets/config.py         시트 → DataFrame (pandas, lru_cache)
         ├─ kets/excel_source.py   시트 → 엔진 dict (데이터 계약)
@@ -19,8 +19,15 @@ data/K-ETS_마스터데이터.xlsx   (SSOT, 20개 시트)
 ```
 
 로컬 엑셀 경로와 프로덕션 JSON 경로가 **같은 dict 구조**를 만든다. 따라서 웹에서
-본 숫자와 CLI에서 돌린 숫자가 갈라질 수 없다. 엔진(`kets/engine.py`)에는 데이터
-상수가 없다 — 유일한 하드코딩 상수는 이분법 탐색 상한 `PRICE_CEIL = 5e7`이다.
+본 숫자와 CLI에서 돌린 숫자가 갈라질 수 없다.
+
+**엔진의 하드코딩 상수는 둘뿐이며 둘 다 경제 가정이 아니라 수치 안전경계다:**
+이분법 탐색 구간의 하한 `100.0`원과 상한 `PRICE_CEIL = 5e7`원(`kets/engine.py`).
+보고된 어떤 실행에서도 두 경계가 구속되지 않는다 — 실제 해는 9,862 ~ 128,927원
+범위에 있다. 마스터 엑셀의 `모형파라미터 · Solver` 행(`price_lower_bound` 5,000 /
+`price_upper_bound` 300,000 / `tolerance` / `method`)은 **엔진이 읽지 않는 레거시**이며,
+같은 이유로 `Banking · initial_bank_low_Mt` / `initial_bank_high_Mt`,
+`MSR · msr_enabled`도 현재 참조되지 않는다. 남겨둔 것은 이력 보존 목적이다.
 
 주요 시트:
 
@@ -110,7 +117,8 @@ P_realized(t) = P_static(t) + λ(t) · [ P_hotelling(t) − P_static(t) ]
 `kets/liquidity.py` · `KETSModel.level_bridge_path()`
 
 - λ는 **역산값**이다: `λ_implied = (P_obs − P_static) / (P_hotelling − P_static)`.
-  2026년 관측가 기준 λ ≈ 0.55 (`scripts/calibrate_liquidity.py`).
+  2026년 6월 관측가 22,750원 기준 λ ≈ **0.575**. `scripts/calibrate_liquidity.py`가
+  이 값을 재계산해 `유동성모수` 시트와 대조하고, 어긋나면 실패한다(시트 stale 방지).
 - `lambda_ramp(λ₀, λ_terminal, ramp_years)` 로 시간 경로를 준다.
 - 레짐 3종: `relapse`(다시 0으로) · `hold`(유지) · `consolidate`(1로 수렴).
   §7 민감도의 축 하나가 이것이다.

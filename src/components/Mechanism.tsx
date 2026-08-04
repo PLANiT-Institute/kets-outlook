@@ -3,6 +3,7 @@
 import { SCEN_LIST, fmtWon, LATEST_KAU_QUOTE } from '@/lib/data';
 import { MSR_RESERVE_MT, KMSR_DRAFT_ASSUMPTIONS } from '@/lib/msr';
 import { PKG, PACKAGES, AUCTION_SHARE_GOV } from '@/lib/results';
+import { FlowDiagram, LambdaBridge } from '@/components/MechanismDiagram';
 
 function Step({ num, title, children }: { num: number; title: string; children: React.ReactNode }) {
   return (
@@ -61,24 +62,12 @@ export function MechanismPanel() {
         <p className="text-[13.5px] text-[#6B7280] m-0 mb-5 leading-[1.65] max-w-[800px]">
           배출권 가격은 법정 총량(Legal cap), 실제 시장 공급량(Effective supply), 기업의 배출 수요(BAU) 사이의 갭을
           감축기술(MACC)이 해소하는 과정에서 결정됩니다.
-          아래 6단계를 통해 이 메커니즘이 어떻게 작동하는지 설명합니다.
+          아래 도형이 전체 흐름이고, 이어지는 6단계가 각 지점을 풀어 설명합니다.
         </p>
 
-        <Diagram>{
-`┌─────────┐     ┌─────────┐     ┌─────────┐     ┌─────────┐
-│  정부    │     │  시장    │     │  기업    │     │  가격    │
-│ Cap/MSR │ ──→ │ 단일시장 │ ←── │ 감축/구매│ ──→ │ P* 결정 │
-│ 공급조정│     │ (경매=2차)│     │ (MACC)  │     │         │
-└─────────┘     └─────────┘     └─────────┘     └─────────┘
-     │                │                               │
-     │           무상/유상은                      Banking으로
-     │           비용분담 변수                    미래→현재 전파
-     │           K-MSR은 공급변수                  (Hotelling)
-     ▼                                                │
-  시간이 지나면                                        ▼
-  Cap ↓ → 가격 ↑                              학습곡선으로
-                                              기술비용 ↓ → 가격 억제`
-        }</Diagram>
+        <FlowDiagram />
+
+        <LambdaBridge year={2026} />
 
         <div className="space-y-0">
 

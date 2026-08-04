@@ -64,8 +64,9 @@ npm run dev              # http://localhost:3000
 python3 api/solve.py     # http://localhost:8531 (라이브 solve API, 별도 터미널)
 ```
 
-Overview 탭은 확정 결과(정적 JSON), Simulator 탭은 `POST /api/solve`로 실제 엔진을
-재solve한다.
+탭 4종 — **홈**(운영규칙 비교) · **메커니즘**(가격 결정 도형 + λ 브리지) ·
+**시뮬레이터**(`POST /api/solve` 라이브 재solve) · **보고서**(논증 사슬 요약).
+보고서 탭은 `docs/report.md`와 같은 산출물을 읽으므로 문서와 화면이 갈라지지 않는다.
 
 ---
 
@@ -103,9 +104,10 @@ src/, public/   Next.js 대시보드
 
 | 항목 | 상태 |
 |---|---|
-| 테스트 | 40 passed |
-| 엔진 커버리지 | 89% (`kets/engine.py`) |
-| 재현성 | 마스터 엑셀에서 재실행 시 `msr_results_v1.0.json` · `escalator_floor_cce_v2.0.json` · `carry_analysis_cce_v2.0.json` 바이트 동일 |
+| 테스트 | 41 passed |
+| 엔진 커버리지 | 89% (`kets/engine.py`) · 전체 83% |
+| 재현성 | `bash scripts/reproduce_all.sh` 로 마스터 엑셀에서 전 산출물 재생성 |
+| 기준선 정합 | 모형 B0 = 등록부 실측 이월잔고 92.140 Mt — 러너 간 일치를 테스트가 강제 |
 
 ---
 

@@ -20,6 +20,12 @@ export type PackagePathRow = {
   headroom: number;
   bank_Mt: number;
   auction_share: number;
+  /** 정태(λ=0) 균형가격 — 그 해 수급만으로 청산 */
+  static: number;
+  /** 제약 Hotelling(λ=1) 가격 — 미래 희소성 완전 반영 */
+  hotelling: number;
+  /** 유동성 전달계수 λ ∈ [0,1] */
+  lambda: number;
 };
 
 export type PackageRecord = {
@@ -47,12 +53,32 @@ const results = resultsV1 as unknown as {
   packages: Record<PackageId, PackageRecord>;
   sensitivity_h2_elec: Record<string, SensitivityCell>;
   gate_waterfall: unknown[];
+  escalator_floor: EscalatorFloor | null;
+};
+
+/** 경매 최저가격 격자 (outputs/runs/escalator_floor_cce_v2.0.json 슬림 추출) */
+export type EscalatorFloor = {
+  meta: { version: string; baseline_package: string; initial_bank_Mt: number; interpretation: string };
+  cases: Record<string, {
+    floor_2040: number;
+    steel_threshold_year: number | null;
+    ncc_threshold_year: number | null;
+    cum_required_withholding_Mt: number;
+    max_annual_required_withholding_Mt: number;
+    min_headroom: number;
+    defended_all: boolean;
+  }>;
+  /** 기술비용 ±20% 격자 — 출발가격별 실현가능성 */
+  cost_sensitivity_pm20: {
+    f0: number; cost_scale: number; cum_required_withholding_Mt: number; defended_all: boolean;
+  }[];
 };
 
 // ─── 결과 export ────────────────────────────────────────────
 export const RESULTS_META = results._meta;
 export const PACKAGES = results.packages;
 export const SENSITIVITY = results.sensitivity_h2_elec;
+export const FLOOR = results.escalator_floor;
 
 /** 패키지 표시 순서·라벨·색 (디자인 상수 — 수치 아님) */
 export const PKG = {

@@ -8,6 +8,12 @@
         λ_implied = (P_obs − P_static) / (P_Hotelling − P_static)
     P_static·P_Hotelling은 엔진(스텝 MACC)이 산출.
 
+방법 1b — H1-2026 리프라이싱 λ (현행 모형이 실제 쓰는 값):
+    4차 계획기간 개시·MSR 법제화로 KAU가 2026 상반기에 급등했다. 같은 웨지 식을
+    2026 관측가에 적용하면 λ₂₀₂₆가 나오며, 이 값이 유동성모수 시트의
+    `lambda_2026_implied`(엔진 lambda_regime_path의 앵커)와 일치해야 한다.
+    불일치하면 시트가 stale이라는 뜻이므로 이 스크립트가 실패한다.
+
 방법 2 — λ 회전율 교차검증 (보조):
     turnover = 연간 거래량 / 유통물량(전년 carryover).  거래량은 3개 연도만 존재.
 
@@ -51,6 +57,25 @@ def main():
         print(f"  관측 {y} = {p:>7,.0f}원  →  λ_implied = {lam:+.3f}")
     avg_lam = sum((p - p_static_2026) / (p_hotel_2026 - p_static_2026) for p in recent.values()) / len(recent)
     print(f"  → λ₀ ≈ {avg_lam:.3f}  (관측 ≈ 정태 → 기간간 차익거래 사실상 부재)")
+
+    # ── 방법 1b: H1-2026 리프라이싱 λ (모형이 실제 쓰는 앵커) ──
+    q2026 = get_sheet("KAU2026시세")
+    quotes = [(str(r["date"]), float(r["kau_krw"])) for _, r in q2026.iterrows()
+              if r["kau_krw"] == r["kau_krw"]]
+    print("\n═══ 방법 1b: H1-2026 리프라이싱 λ (모형 앵커) ═══")
+    for d, p in quotes:
+        lam = (p - p_static_2026) / (p_hotel_2026 - p_static_2026)
+        print(f"  {d:>12} = {p:>7,.0f}원  →  λ_implied = {lam:+.3f}")
+    latest_date, latest_px = quotes[-1]
+    lam_2026 = (latest_px - p_static_2026) / (p_hotel_2026 - p_static_2026)
+    sheet_lam = float({r["parameter"]: r["value"]
+                       for _, r in get_sheet("유동성모수").iterrows()}["lambda_2026_implied"])
+    print(f"  최신 관측 {latest_date} {latest_px:,.0f}원 → λ₂₀₂₆ = {lam_2026:.4f}")
+    print(f"  유동성모수 시트 lambda_2026_implied = {sheet_lam}")
+    assert abs(lam_2026 - sheet_lam) < 0.01, (
+        f"시트 λ({sheet_lam})와 관측 역산 λ({lam_2026:.4f})가 어긋난다 — "
+        "KAU2026시세 갱신 후 유동성모수 시트를 맞추거나, 그 반대를 확인하라.")
+    print(f"  ✅ 일치 (허용오차 0.01) — 보고서 λ={sheet_lam}의 재현 근거")
 
     # ── 방법 2: 회전율 λ 교차검증 ──
     surplus = get_sheet("시장잉여추정")

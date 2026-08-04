@@ -19,129 +19,171 @@
    "path": [
     {
      "year": 2026,
-     "kau": 22691,
+     "kau": 22749,
      "floor": 0,
      "defended": true,
      "headroom": 1.0,
-     "bank_Mt": 89.050662,
-     "auction_share": 0.099
+     "bank_Mt": 111.190989,
+     "auction_share": 0.099,
+     "static": 9862,
+     "hotelling": 32275,
+     "lambda": 0.575
     },
     {
      "year": 2027,
-     "kau": 24669,
+     "kau": 24692,
      "floor": 0,
      "defended": true,
      "headroom": 1.0,
-     "bank_Mt": 107.479092,
-     "auction_share": 0.134
+     "bank_Mt": 121.87740072779539,
+     "auction_share": 0.134,
+     "static": 11964,
+     "hotelling": 34100,
+     "lambda": 0.575
     },
     {
      "year": 2028,
-     "kau": 35774,
+     "kau": 35258,
      "floor": 0,
      "defended": true,
      "headroom": 1.0,
-     "bank_Mt": 113.725693,
-     "auction_share": 0.169
+     "bank_Mt": 128.1240017277954,
+     "auction_share": 0.169,
+     "static": 34217,
+     "hotelling": 36028,
+     "lambda": 0.575
     },
     {
      "year": 2029,
-     "kau": 38717,
+     "kau": 38121,
      "floor": 0,
      "defended": true,
      "headroom": 1.0,
-     "bank_Mt": 113.97373,
-     "auction_share": 0.204
+     "bank_Mt": 127.03849309531725,
+     "auction_share": 0.204,
+     "static": 38197,
+     "hotelling": 38065,
+     "lambda": 0.575
     },
     {
      "year": 2030,
-     "kau": 47135,
+     "kau": 46159,
      "floor": 0,
      "defended": true,
      "headroom": 1.0,
-     "bank_Mt": 101.809269,
-     "auction_share": 0.239
+     "bank_Mt": 114.87403209531725,
+     "auction_share": 0.239,
+     "static": 54199,
+     "hotelling": 40217,
+     "lambda": 0.575
     },
     {
      "year": 2031,
-     "kau": 48489,
+     "kau": 47531,
      "floor": 0,
      "defended": true,
      "headroom": 1.0,
-     "bank_Mt": 86.421095,
-     "auction_share": 0.239
+     "bank_Mt": 99.48585809531724,
+     "auction_share": 0.239,
+     "static": 54349,
+     "hotelling": 42491,
+     "lambda": 0.575
     },
     {
      "year": 2032,
-     "kau": 49914,
+     "kau": 48975,
      "floor": 0,
      "defended": true,
      "headroom": 1.0,
-     "bank_Mt": 67.874656,
-     "auction_share": 0.239
+     "bank_Mt": 80.93941909531725,
+     "auction_share": 0.239,
+     "static": 54497,
+     "hotelling": 44894,
+     "lambda": 0.575
     },
     {
      "year": 2033,
-     "kau": 51414,
+     "kau": 50496,
      "floor": 0,
      "defended": true,
      "headroom": 1.0,
-     "bank_Mt": 46.234514,
-     "auction_share": 0.239
+     "bank_Mt": 59.299277095317244,
+     "auction_share": 0.239,
+     "static": 54642,
+     "hotelling": 47432,
+     "lambda": 0.575
     },
     {
      "year": 2034,
-     "kau": 52995,
+     "kau": 52098,
      "floor": 0,
      "defended": true,
      "headroom": 1.0,
-     "bank_Mt": 27.344342,
-     "auction_share": 0.239
+     "bank_Mt": 39.15361077320449,
+     "auction_share": 0.239,
+     "static": 54783,
+     "hotelling": 50114,
+     "lambda": 0.575
     },
     {
      "year": 2035,
-     "kau": 54660,
+     "kau": 53787,
      "floor": 0,
      "defended": true,
      "headroom": 1.0,
-     "bank_Mt": 17.145587791325212,
-     "auction_share": 0.239
+     "bank_Mt": 17.296213773204492,
+     "auction_share": 0.239,
+     "static": 54922,
+     "hotelling": 52947,
+     "lambda": 0.575
     },
     {
      "year": 2036,
-     "kau": 59333,
+     "kau": 58322,
      "floor": 0,
      "defended": true,
      "headroom": 1.0,
-     "bank_Mt": 15.90289079132521,
-     "auction_share": 0.239
+     "bank_Mt": 16.05351677320449,
+     "auction_share": 0.239,
+     "static": 61544,
+     "hotelling": 55941,
+     "lambda": 0.575
     },
     {
      "year": 2037,
-     "kau": 65295,
+     "kau": 64082,
      "floor": 0,
      "defended": true,
      "headroom": 1.0,
-     "bank_Mt": 11.815960791325212,
-     "auction_share": 0.239
+     "bank_Mt": 11.96658677320449,
+     "auction_share": 0.239,
+     "static": 70817,
+     "hotelling": 59104,
+     "lambda": 0.575
     },
     {
      "year": 2038,
-     "kau": 66676,
+     "kau": 65524,
      "floor": 0,
      "defended": true,
      "headroom": 1.0,
-     "bank_Mt": 7.195005791325212,
-     "auction_share": 0.239
+     "bank_Mt": 7.345631773204491,
+     "auction_share": 0.239,
+     "static": 69688,
+     "hotelling": 62446,
+     "lambda": 0.575
     },
     {
      "year": 2039,
-     "kau": 68170,
+     "kau": 67078,
      "floor": 0,
      "defended": true,
      "headroom": 1.0,
      "bank_Mt": 0.0,
-     "auction_share": 0.239
+     "auction_share": 0.239,
+     "static": 68569,
+     "hotelling": 65976,
+     "lambda": 0.575
     },
     {
      "year": 2040,
@@ -150,7 +192,10 @@
      "defended": true,
      "headroom": 1.0,
      "bank_Mt": 0.0,
-     "auction_share": 0.239
+     "auction_share": 0.239,
+     "static": 67461,
+     "hotelling": 67461,
+     "lambda": 0.575
     }
    ],
    "activation_headline": {
@@ -159,9 +204,9 @@
    },
    "defended_all": true,
    "min_headroom": 1.0,
-   "max_drawdown": 0.01,
+   "max_drawdown": 0.0,
    "cum_intake_Mt": 0.0,
-   "cum_auction_rev_trillion": 68.1
+   "cum_auction_rev_trillion": 67.1
   },
   "P1": {
    "meta": {
@@ -177,129 +222,171 @@
    "path": [
     {
      "year": 2026,
-     "kau": 34552,
+     "kau": 36337,
      "floor": 15000,
      "defended": true,
      "headroom": 1.0,
-     "bank_Mt": 71.12125768891653,
-     "auction_share": 0.099
+     "bank_Mt": 79.8312258893727,
+     "auction_share": 0.099,
+     "static": 39553,
+     "hotelling": 33960,
+     "lambda": 0.575
     },
     {
      "year": 2027,
-     "kau": 42510,
+     "kau": 43542,
      "floor": 17500,
      "defended": true,
      "headroom": 1.0,
-     "bank_Mt": 61.97207105232406,
-     "auction_share": 0.134
+     "bank_Mt": 68.58943599338328,
+     "auction_share": 0.134,
+     "static": 53907,
+     "hotelling": 35880,
+     "lambda": 0.575
     },
     {
      "year": 2028,
-     "kau": 45649,
+     "kau": 44864,
      "floor": 20000,
      "defended": true,
      "headroom": 1.0,
-     "bank_Mt": 48.51877381789933,
-     "auction_share": 0.169
+     "bank_Mt": 48.51747759584011,
+     "auction_share": 0.169,
+     "static": 54274,
+     "hotelling": 37909,
+     "lambda": 0.575
     },
     {
      "year": 2029,
-     "kau": 47028,
+     "kau": 46232,
      "floor": 22500,
      "defended": true,
      "headroom": 1.0,
-     "bank_Mt": 27.916840211331294,
-     "auction_share": 0.204
+     "bank_Mt": 27.916818824717744,
+     "auction_share": 0.204,
+     "static": 54593,
+     "hotelling": 40052,
+     "lambda": 0.575
     },
     {
      "year": 2030,
-     "kau": 48452,
+     "kau": 47680,
      "floor": 25000,
      "defended": true,
      "headroom": 1.0,
      "bank_Mt": 0.0,
-     "auction_share": 0.239
+     "auction_share": 0.239,
+     "static": 54935,
+     "hotelling": 42317,
+     "lambda": 0.575
     },
     {
      "year": 2031,
-     "kau": 39638,
+     "kau": 39692,
      "floor": 27500,
      "defended": true,
      "headroom": 1.0,
-     "bank_Mt": 4.6117861635469195,
-     "auction_share": 0.239
+     "bank_Mt": 4.611823426918059,
+     "auction_share": 0.239,
+     "static": 36546,
+     "hotelling": 42018,
+     "lambda": 0.575
     },
     {
      "year": 2032,
-     "kau": 40867,
+     "kau": 40981,
      "floor": 30000,
      "defended": true,
      "headroom": 1.0,
-     "bank_Mt": 6.065309016574264,
-     "auction_share": 0.239
+     "bank_Mt": 6.065383155993804,
+     "auction_share": 0.239,
+     "static": 36364,
+     "hotelling": 44394,
+     "lambda": 0.575
     },
     {
      "year": 2033,
-     "kau": 48134,
+     "kau": 47979,
      "floor": 32500,
      "defended": true,
      "headroom": 1.0,
-     "bank_Mt": 4.425147943087936,
-     "auction_share": 0.239
+     "bank_Mt": 4.425239963900909,
+     "auction_share": 0.239,
+     "static": 49434,
+     "hotelling": 46904,
+     "lambda": 0.575
     },
     {
      "year": 2034,
-     "kau": 49937,
+     "kau": 49825,
      "floor": 35000,
      "defended": true,
      "headroom": 1.0,
-     "bank_Mt": 2.520926470382944,
-     "auction_share": 0.239
+     "bank_Mt": 1.8573973892498985,
+     "auction_share": 0.239,
+     "static": 50188,
+     "hotelling": 49556,
+     "lambda": 0.575
     },
     {
      "year": 2035,
-     "kau": 53193,
+     "kau": 53050,
      "floor": 37500,
      "defended": true,
      "headroom": 1.0,
-     "bank_Mt": 0.6635103968966156,
-     "auction_share": 0.239
+     "bank_Mt": 0.0,
+     "auction_share": 0.239,
+     "static": 53987,
+     "hotelling": 52358,
+     "lambda": 0.575
     },
     {
      "year": 2036,
-     "kau": 54954,
+     "kau": 54448,
      "floor": 40000,
      "defended": true,
      "headroom": 1.0,
-     "bank_Mt": 16.289716228134782,
-     "auction_share": 0.239
+     "bank_Mt": 12.09692369597204,
+     "auction_share": 0.239,
+     "static": 54123,
+     "hotelling": 54689,
+     "lambda": 0.575
     },
     {
      "year": 2037,
-     "kau": 64127,
+     "kau": 56564,
      "floor": 42500,
      "defended": true,
      "headroom": 1.0,
-     "bank_Mt": 12.202848540596918,
-     "auction_share": 0.239
+     "bank_Mt": 13.873148149693206,
+     "auction_share": 0.239,
+     "static": 54917,
+     "hotelling": 57781,
+     "lambda": 0.575
     },
     {
      "year": 2038,
-     "kau": 65443,
+     "kau": 64720,
      "floor": 45000,
      "defended": true,
      "headroom": 1.0,
-     "bank_Mt": 7.345610948394433,
-     "auction_share": 0.239
+     "bank_Mt": 7.345630680284754,
+     "auction_share": 0.239,
+     "static": 69688,
+     "hotelling": 61048,
+     "lambda": 0.575
     },
     {
      "year": 2039,
-     "kau": 66866,
+     "kau": 66229,
      "floor": 47500,
      "defended": true,
      "headroom": 1.0,
      "bank_Mt": 0.0,
-     "auction_share": 0.239
+     "auction_share": 0.239,
+     "static": 68569,
+     "hotelling": 64499,
+     "lambda": 0.575
     },
     {
      "year": 2040,
@@ -308,7 +395,10 @@
      "defended": true,
      "headroom": 1.0,
      "bank_Mt": 0.0,
-     "auction_share": 0.239
+     "auction_share": 0.239,
+     "static": 67461,
+     "hotelling": 67461,
+     "lambda": 0.575
     }
    ],
    "activation_headline": {
@@ -317,9 +407,9 @@
    },
    "defended_all": true,
    "min_headroom": 1.0,
-   "max_drawdown": 0.182,
-   "cum_intake_Mt": 31.6,
-   "cum_auction_rev_trillion": 68.3
+   "max_drawdown": 0.168,
+   "cum_intake_Mt": 40.6,
+   "cum_auction_rev_trillion": 67.4
   },
   "A": {
    "meta": {
@@ -335,84 +425,111 @@
    "path": [
     {
      "year": 2026,
-     "kau": 31506,
+     "kau": 30849,
      "floor": 22750,
      "defended": true,
      "headroom": 1.0,
-     "bank_Mt": 82.13101868789809,
-     "auction_share": 0.099
+     "bank_Mt": 104.27134568789809,
+     "auction_share": 0.099,
+     "static": 24895,
+     "hotelling": 35249,
+     "lambda": 0.575
     },
     {
      "year": 2027,
-     "kau": 37115,
+     "kau": 36208,
      "floor": 31056,
      "defended": true,
      "headroom": 1.0,
-     "bank_Mt": 85.96381061267621,
-     "auction_share": 0.134
+     "bank_Mt": 104.99195403184713,
+     "auction_share": 0.134,
+     "static": 34809,
+     "hotelling": 37242,
+     "lambda": 0.575
     },
     {
      "year": 2028,
-     "kau": 46613,
+     "kau": 45244,
      "floor": 39361,
      "defended": true,
      "headroom": 1.0,
-     "bank_Mt": 81.45441161267622,
-     "auction_share": 0.169
+     "bank_Mt": 100.48255503184713,
+     "auction_share": 0.169,
+     "static": 53221,
+     "hotelling": 39347,
+     "lambda": 0.575
     },
     {
      "year": 2029,
-     "kau": 48418,
+     "kau": 47667,
      "floor": 47667,
      "defended": true,
      "headroom": 1.0,
-     "bank_Mt": 65.29827026872717,
-     "auction_share": 0.204
+     "bank_Mt": 84.32641368789808,
+     "auction_share": 0.204,
+     "static": 54385,
+     "hotelling": 41572,
+     "lambda": 0.575
     },
     {
      "year": 2030,
      "kau": 55972,
      "floor": 55972,
      "defended": true,
-     "headroom": 0.755,
-     "bank_Mt": 37.381452580829084,
-     "auction_share": 0.239
+     "headroom": 0.718,
+     "bank_Mt": 56.409596,
+     "auction_share": 0.239,
+     "static": 54935,
+     "hotelling": 43923,
+     "lambda": 0.575
     },
     {
      "year": 2031,
      "kau": 64278,
      "floor": 64278,
      "defended": true,
-     "headroom": 0.727,
-     "bank_Mt": 21.993278580829084,
-     "auction_share": 0.239
+     "headroom": 0.719,
+     "bank_Mt": 41.021422,
+     "auction_share": 0.239,
+     "static": 54349,
+     "hotelling": 46406,
+     "lambda": 0.575
     },
     {
      "year": 2032,
      "kau": 72583,
      "floor": 72583,
      "defended": true,
-     "headroom": 0.742,
-     "bank_Mt": 8.386692530107506,
-     "auction_share": 0.239
+     "headroom": 0.734,
+     "bank_Mt": 22.58833007189267,
+     "auction_share": 0.239,
+     "static": 54497,
+     "hotelling": 49030,
+     "lambda": 0.575
     },
     {
      "year": 2033,
      "kau": 80889,
      "floor": 80889,
      "defended": true,
-     "headroom": 0.711,
-     "bank_Mt": 0.0,
-     "auction_share": 0.239
+     "headroom": 0.596,
+     "bank_Mt": 6.728188071892672,
+     "auction_share": 0.239,
+     "static": 54642,
+     "hotelling": 51802,
+     "lambda": 0.575
     },
     {
      "year": 2034,
      "kau": 89194,
      "floor": 89194,
      "defended": true,
-     "headroom": 0.77,
-     "bank_Mt": 4.629828,
-     "auction_share": 0.239
+     "headroom": 0.715,
+     "bank_Mt": 5.6084059124396815,
+     "auction_share": 0.239,
+     "static": 54783,
+     "hotelling": 54731,
+     "lambda": 0.575
     },
     {
      "year": 2035,
@@ -420,17 +537,23 @@
      "floor": 97500,
      "defended": true,
      "headroom": 0.612,
-     "bank_Mt": 6.292431,
-     "auction_share": 0.239
+     "bank_Mt": 7.271008912439681,
+     "auction_share": 0.239,
+     "static": 54922,
+     "hotelling": 57826,
+     "lambda": 0.575
     },
     {
      "year": 2036,
      "kau": 96000,
      "floor": 96000,
      "defended": true,
-     "headroom": 0.579,
-     "bank_Mt": 6.457885069332376,
-     "auction_share": 0.239
+     "headroom": 0.572,
+     "bank_Mt": 6.457885559092722,
+     "auction_share": 0.239,
+     "static": 61544,
+     "hotelling": 61095,
+     "lambda": 0.575
     },
     {
      "year": 2037,
@@ -438,8 +561,11 @@
      "floor": 94500,
      "defended": true,
      "headroom": 0.539,
-     "bank_Mt": 4.620955069332376,
-     "auction_share": 0.239
+     "bank_Mt": 4.620955559092723,
+     "auction_share": 0.239,
+     "static": 70817,
+     "hotelling": 64549,
+     "lambda": 0.575
     },
     {
      "year": 2038,
@@ -448,7 +574,10 @@
      "defended": true,
      "headroom": 0.487,
      "bank_Mt": 0.0,
-     "auction_share": 0.239
+     "auction_share": 0.239,
+     "static": 69688,
+     "hotelling": 68199,
+     "lambda": 0.575
     },
     {
      "year": 2039,
@@ -457,7 +586,10 @@
      "defended": true,
      "headroom": 0.5,
      "bank_Mt": 0.0,
-     "auction_share": 0.239
+     "auction_share": 0.239,
+     "static": 68569,
+     "hotelling": 68569,
+     "lambda": 0.575
     },
     {
      "year": 2040,
@@ -466,7 +598,10 @@
      "defended": true,
      "headroom": 0.475,
      "bank_Mt": 0.0,
-     "auction_share": 0.239
+     "auction_share": 0.239,
+     "static": 67461,
+     "hotelling": 67461,
+     "lambda": 0.575
     }
    ],
    "activation_headline": {
@@ -477,7 +612,7 @@
    "min_headroom": 0.475,
    "max_drawdown": 0.077,
    "cum_intake_Mt": 0.0,
-   "cum_auction_rev_trillion": 98.6
+   "cum_auction_rev_trillion": 98.3
   },
   "B": {
    "meta": {
@@ -493,129 +628,171 @@
    "path": [
     {
      "year": 2026,
-     "kau": 35732,
+     "kau": 35835,
      "floor": 0,
      "defended": true,
      "headroom": 1.0,
-     "bank_Mt": 88.43101868789809,
-     "auction_share": 0.099
+     "bank_Mt": 110.57134568789809,
+     "auction_share": 0.099,
+     "static": 24895,
+     "hotelling": 43921,
+     "lambda": 0.575
     },
     {
      "year": 2027,
-     "kau": 41580,
+     "kau": 41476,
      "floor": 0,
      "defended": true,
      "headroom": 1.0,
-     "bank_Mt": 95.45162703184714,
-     "auction_share": 0.134
+     "bank_Mt": 117.59195403184714,
+     "auction_share": 0.134,
+     "static": 34809,
+     "hotelling": 46404,
+     "lambda": 0.575
     },
     {
      "year": 2028,
-     "kau": 51330,
+     "kau": 50810,
      "floor": 0,
      "defended": true,
      "headroom": 1.0,
-     "bank_Mt": 93.90319465487453,
-     "auction_share": 0.169
+     "bank_Mt": 113.18851061347542,
+     "auction_share": 0.169,
+     "static": 53221,
+     "hotelling": 49028,
+     "lambda": 0.575
     },
     {
      "year": 2029,
-     "kau": 53402,
+     "kau": 52899,
      "floor": 0,
      "defended": true,
      "headroom": 1.0,
-     "bank_Mt": 82.08730830160519,
-     "auction_share": 0.204
+     "bank_Mt": 100.81236926952636,
+     "auction_share": 0.204,
+     "static": 54385,
+     "hotelling": 51800,
+     "lambda": 0.575
     },
     {
      "year": 2030,
-     "kau": 55286,
+     "kau": 54817,
      "floor": 0,
      "defended": true,
      "headroom": 1.0,
-     "bank_Mt": 83.47049061370711,
-     "auction_share": 0.239
+     "bank_Mt": 96.399269333746,
+     "auction_share": 0.239,
+     "static": 54935,
+     "hotelling": 54729,
+     "lambda": 0.575
     },
     {
      "year": 2031,
-     "kau": 56750,
+     "kau": 56347,
      "floor": 0,
      "defended": true,
      "headroom": 1.0,
-     "bank_Mt": 97.3823166137071,
-     "auction_share": 0.239
+     "bank_Mt": 110.311095333746,
+     "auction_share": 0.239,
+     "static": 54349,
+     "hotelling": 57823,
+     "lambda": 0.575
     },
     {
      "year": 2032,
-     "kau": 58642,
+     "kau": 58290,
      "floor": 0,
      "defended": true,
      "headroom": 1.0,
-     "bank_Mt": 110.2660265902019,
-     "auction_share": 0.239
+     "bank_Mt": 121.4898158422852,
+     "auction_share": 0.239,
+     "static": 54497,
+     "hotelling": 61093,
+     "lambda": 0.575
     },
     {
      "year": 2033,
-     "kau": 60636,
+     "kau": 60337,
      "floor": 0,
      "defended": true,
      "headroom": 1.0,
-     "bank_Mt": 120.1758845902019,
-     "auction_share": 0.239
+     "bank_Mt": 131.3996738422852,
+     "auction_share": 0.239,
+     "static": 54642,
+     "hotelling": 64547,
+     "lambda": 0.575
     },
     {
      "year": 2034,
-     "kau": 62738,
+     "kau": 62496,
      "floor": 0,
      "defended": true,
      "headroom": 1.0,
-     "bank_Mt": 127.05571259020189,
-     "auction_share": 0.239
+     "bank_Mt": 138.2795018422852,
+     "auction_share": 0.239,
+     "static": 54783,
+     "hotelling": 68196,
+     "lambda": 0.575
     },
     {
      "year": 2035,
-     "kau": 109484,
+     "kau": 106827,
      "floor": 0,
      "defended": true,
      "headroom": 1.0,
-     "bank_Mt": 83.98096967114215,
-     "auction_share": 0.239
+     "bank_Mt": 95.20475892322547,
+     "auction_share": 0.239,
+     "static": 153876,
+     "hotelling": 72052,
+     "lambda": 0.575
     },
     {
      "year": 2036,
-     "kau": 110243,
+     "kau": 107738,
      "floor": 0,
      "defended": true,
      "headroom": 1.0,
-     "bank_Mt": 52.66067383746104,
-     "auction_share": 0.239
+     "bank_Mt": 63.884463089544354,
+     "auction_share": 0.239,
+     "static": 150507,
+     "hotelling": 76126,
+     "lambda": 0.575
     },
     {
      "year": 2037,
-     "kau": 109977,
+     "kau": 107691,
      "floor": 0,
      "defended": true,
      "headroom": 1.0,
-     "bank_Mt": 19.417096900954768,
-     "auction_share": 0.239
+     "bank_Mt": 30.640886153038085,
+     "auction_share": 0.239,
+     "static": 144574,
+     "hotelling": 80430,
+     "lambda": 0.575
     },
     {
      "year": 2038,
-     "kau": 97448,
+     "kau": 96075,
      "floor": 0,
      "defended": true,
      "headroom": 1.0,
-     "bank_Mt": 2.7320278676791636,
-     "auction_share": 0.239
+     "bank_Mt": 13.95581711976248,
+     "auction_share": 0.239,
+     "static": 111088,
+     "hotelling": 84978,
+     "lambda": 0.575
     },
     {
      "year": 2039,
-     "kau": 99538,
+     "kau": 98278,
      "floor": 0,
      "defended": true,
      "headroom": 1.0,
      "bank_Mt": 0.0,
-     "auction_share": 0.239
+     "auction_share": 0.239,
+     "static": 109771,
+     "hotelling": 89783,
+     "lambda": 0.575
     },
     {
      "year": 2040,
@@ -624,7 +801,10 @@
      "defended": true,
      "headroom": 1.0,
      "bank_Mt": 0.0,
-     "auction_share": 0.239
+     "auction_share": 0.239,
+     "static": 89767,
+     "hotelling": 89767,
+     "lambda": 0.575
     }
    ],
    "activation_headline": {
@@ -633,9 +813,9 @@
    },
    "defended_all": true,
    "min_headroom": 1.0,
-   "max_drawdown": 0.186,
+   "max_drawdown": 0.167,
    "cum_intake_Mt": 268.2,
-   "cum_auction_rev_trillion": 98.1
+   "cum_auction_rev_trillion": 96.9
   }
  },
  "sensitivity_h2_elec": {
@@ -693,7 +873,7 @@
    "step": "W0 baseline (P0)",
    "branch": "main",
    "package_id": "P0",
-   "kau_2030": 47135,
+   "kau_2030": 46159,
    "kau_2040": 67461,
    "activation_headline": {
     "수소환원제철 (H₂-DRI-EAF)": null,
@@ -701,15 +881,15 @@
    },
    "defended_all": true,
    "min_headroom": 1.0,
-   "max_drawdown": 0.01,
+   "max_drawdown": 0.0,
    "cum_intake_Mt": 0.0,
-   "cum_auction_rev_trillion": 68.1
+   "cum_auction_rev_trillion": 67.1
   },
   {
    "step": "W1 +decree draft rule (=P1)",
    "branch": "main",
    "package_id": "P1",
-   "kau_2030": 48452,
+   "kau_2030": 47680,
    "kau_2040": 67461,
    "activation_headline": {
     "수소환원제철 (H₂-DRI-EAF)": null,
@@ -717,9 +897,9 @@
    },
    "defended_all": true,
    "min_headroom": 1.0,
-   "max_drawdown": 0.182,
-   "cum_intake_Mt": 31.6,
-   "cum_auction_rev_trillion": 68.3
+   "max_drawdown": 0.168,
+   "cum_intake_Mt": 40.6,
+   "cum_auction_rev_trillion": 67.4
   },
   {
    "step": "W2 +price-commitment corridor (=A)",
@@ -735,13 +915,13 @@
    "min_headroom": 0.475,
    "max_drawdown": 0.077,
    "cum_intake_Mt": 0.0,
-   "cum_auction_rev_trillion": 98.6
+   "cum_auction_rev_trillion": 98.3
   },
   {
    "step": "WB branch P0 +quantity-commitment (=B)",
    "branch": "branch",
    "package_id": "B",
-   "kau_2030": 55286,
+   "kau_2030": 54817,
    "kau_2040": 89767,
    "activation_headline": {
     "수소환원제철 (H₂-DRI-EAF)": 2035,
@@ -749,9 +929,120 @@
    },
    "defended_all": true,
    "min_headroom": 1.0,
-   "max_drawdown": 0.186,
+   "max_drawdown": 0.167,
    "cum_intake_Mt": 268.2,
-   "cum_auction_rev_trillion": 98.1
+   "cum_auction_rev_trillion": 96.9
   }
- ]
+ ],
+ "escalator_floor": {
+  "meta": {
+   "version": "CCE 2.0",
+   "baseline_package": "P0/L0 (no reserve carve-out)",
+   "initial_bank_Mt": 92.140327,
+   "interpretation": "Required withholding is the model-implied static supply adjustment needed to support the conditional price path. It is not an estimate of auction non-sales because the model does not contain an auction-demand curve."
+  },
+  "cases": {
+   "40k_7pct": {
+    "floor_2040": 103141,
+    "steel_threshold_year": 2039,
+    "ncc_threshold_year": 2039,
+    "cum_required_withholding_Mt": 360.1,
+    "max_annual_required_withholding_Mt": 50.7,
+    "min_headroom": 0.415,
+    "defended_all": true
+   },
+   "45k_7pct": {
+    "floor_2040": 116034,
+    "steel_threshold_year": 2037,
+    "ncc_threshold_year": 2038,
+    "cum_required_withholding_Mt": 500.1,
+    "max_annual_required_withholding_Mt": 50.7,
+    "min_headroom": 0.415,
+    "defended_all": true
+   },
+   "50k_7pct": {
+    "floor_2040": 128927,
+    "steel_threshold_year": 2036,
+    "ncc_threshold_year": 2038,
+    "cum_required_withholding_Mt": 584.0,
+    "max_annual_required_withholding_Mt": 54.7,
+    "min_headroom": 0.369,
+    "defended_all": true
+   },
+   "45k_5.5pct": {
+    "floor_2040": 95224,
+    "steel_threshold_year": 2040,
+    "ncc_threshold_year": 2039,
+    "cum_required_withholding_Mt": 372.5,
+    "max_annual_required_withholding_Mt": 44.6,
+    "min_headroom": 0.475,
+    "defended_all": true
+   },
+   "50k_5.5pct": {
+    "floor_2040": 105805,
+    "steel_threshold_year": 2038,
+    "ncc_threshold_year": 2039,
+    "cum_required_withholding_Mt": 511.7,
+    "max_annual_required_withholding_Mt": 50.7,
+    "min_headroom": 0.415,
+    "defended_all": true
+   }
+  },
+  "cost_sensitivity_pm20": [
+   {
+    "f0": 40000,
+    "cost_scale": 0.8,
+    "cum_required_withholding_Mt": 549.6,
+    "defended_all": true
+   },
+   {
+    "f0": 40000,
+    "cost_scale": 1.0,
+    "cum_required_withholding_Mt": 360.1,
+    "defended_all": true
+   },
+   {
+    "f0": 40000,
+    "cost_scale": 1.2,
+    "cum_required_withholding_Mt": 130.7,
+    "defended_all": true
+   },
+   {
+    "f0": 45000,
+    "cost_scale": 0.8,
+    "cum_required_withholding_Mt": 671.2,
+    "defended_all": false
+   },
+   {
+    "f0": 45000,
+    "cost_scale": 1.0,
+    "cum_required_withholding_Mt": 500.1,
+    "defended_all": true
+   },
+   {
+    "f0": 45000,
+    "cost_scale": 1.2,
+    "cum_required_withholding_Mt": 276.3,
+    "defended_all": true
+   },
+   {
+    "f0": 50000,
+    "cost_scale": 0.8,
+    "cum_required_withholding_Mt": 724.1,
+    "defended_all": false
+   },
+   {
+    "f0": 50000,
+    "cost_scale": 1.0,
+    "cum_required_withholding_Mt": 584.0,
+    "defended_all": true
+   },
+   {
+    "f0": 50000,
+    "cost_scale": 1.2,
+    "cum_required_withholding_Mt": 365.0,
+    "defended_all": true
+   }
+  ]
+ }
 }

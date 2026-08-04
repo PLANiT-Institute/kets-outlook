@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """보고서 그림 5종 재생성 — 전 그림이 outputs/runs JSON·supplementary CSV에서 재현되도록.
 
-입력: outputs/runs/msr_results_v1.0.json, escalator_floor_v1.0.json, carry_analysis_v1.0.json,
-      outputs/supplementary/carry_pairs_cce.csv
+입력: outputs/runs/msr_results_v1.0.json, escalator_floor_cce_v2.0.json,
+      carry_analysis_cce_v2.0.json, outputs/supplementary/carry_pairs_cce.csv
 출력: docs/figures/fig{1..5}_*.png (300dpi, 흑백에서도 선종·마커로 구분)
 실행: PYTHONPATH=. python3 scripts/build_figures.py
 스타일: 기존 게재본(docx 추출본)과 시각 동등. 문턱 = 보고서 점추정 2035:97,500 / 2037:94,500
@@ -22,8 +22,8 @@ RED = "#c0392b"
 GREY = "#808080"
 
 MSR = json.load(open("outputs/runs/msr_results_v1.0.json"))
-ESC = json.load(open("outputs/runs/escalator_floor_v1.0.json"))
-CAR = json.load(open("outputs/runs/carry_analysis_v1.0.json"))
+ESC = json.load(open("outputs/runs/escalator_floor_cce_v2.0.json"))
+CAR = json.load(open("outputs/runs/carry_analysis_cce_v2.0.json"))
 
 P0 = {r["year"]: r["kau"] for r in MSR["packages"]["P0"]["path"]}
 # 게재본 관례: 균형가격은 3앵커(2026/2030/2040) 보간으로 표시 (fig5 범례에 명시)
@@ -93,8 +93,8 @@ for key, lab, col, ls in combos:
     fl = {int(y): v for y, v in ESC[key]["floor"].items()}
     ax.plot(YEARS, [fl[y] for y in YEARS], ls=ls, color=col, lw=3 if ls == "-" else 2, zorder=3)
     labels.append([fl[2040], lab, col])
-    if "7pct" in key and ESC[key]["steel_year"]:
-        sy = int(ESC[key]["steel_year"])
+    if "7pct" in key and ESC[key]["steel_threshold_year"]:
+        sy = int(ESC[key]["steel_threshold_year"])
         ax.plot(sy, fl[sy], marker="v", color=col, ms=11, zorder=6)
 # 우측 라벨 겹침 방지: 위에서부터 최소 9,000원 간격 강제
 labels.sort(reverse=True)
@@ -120,10 +120,10 @@ fig.tight_layout()
 fig.savefig("docs/figures/fig2_floorpaths.png")
 plt.close(fig)
 
-# ── Figure 3: 출발가격별 누적 취소량 ────────────────────────────────────
+# ── Figure 3: 출발가격별 누적 필요보류량 ────────────────────────────────────
 fig, ax = plt.subplots(figsize=(5.6, 3.8), dpi=300)
 keys = ["40k_7pct", "45k_7pct", "50k_7pct"]
-vals = [round(ESC[k]["cum_cancel_Mt"]) for k in keys]
+vals = [round(ESC[k]["cum_required_withholding_Mt"]) for k in keys]
 cols = [BLUE_Light, BLUE_MID, NAVY]
 bars = ax.bar(range(3), vals, width=0.55, color=cols)
 for i, (b, v) in enumerate(zip(bars, vals)):
@@ -131,7 +131,7 @@ for i, (b, v) in enumerate(zip(bars, vals)):
             fontsize=13, fontweight="bold", color=cols[i])
 ax.set_xticks(range(3))
 ax.set_xticklabels(["40,000\nKRW", "45,000\nKRW", "50,000\nKRW"], fontsize=11)
-ax.set_title("Higher starting price → more unsold volume cancelled", loc="left", fontsize=11)
+ax.set_title("Higher starting price → more supply must be withheld", loc="left", fontsize=11)
 ax.set_xlabel("2026 starting reserve price (real, +7%/yr)", fontsize=11)
 ax.set_ylabel("Cumulative cancellation\n2026–2040 (Mt CO$_2$)", fontsize=11)
 ax.set_ylim(0, 560)

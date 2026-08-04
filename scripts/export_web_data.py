@@ -25,11 +25,37 @@ from kets.excel_source import load_data_from_excel, SHEETS
 OUT = _ROOT / "public" / "model" / "kets_data.json"
 RESULTS_SRC = _ROOT / "outputs" / "runs" / "msr_results_v1.0.json"
 RESULTS_OUT = _ROOT / "public" / "model" / "results_v1.json"
+FLOOR_SRC = _ROOT / "outputs" / "runs" / "escalator_floor_cce_v2.0.json"
 
 # Overview에 필요한 경로 필드만 추출 (풀 결과는 outputs/runs에 유지)
-PATH_FIELDS = ("year", "kau", "floor", "defended", "headroom", "bank_Mt", "auction_share")
+PATH_FIELDS = ("year", "kau", "floor", "defended", "headroom", "bank_Mt", "auction_share",
+               "static", "hotelling", "lambda")   # static·hotelling·λ: 메커니즘 탭의 전달 분해용
 PKG_HEADLINE_FIELDS = ("activation_headline", "defended_all", "min_headroom",
                        "max_drawdown", "cum_intake_Mt", "cum_auction_rev_trillion")
+
+
+def _slim_floor() -> dict:
+    """escalator_floor_cce_v2.0.json → 보고서 탭이 쓰는 격자·민감도만 추출.
+
+    없으면 None을 돌려 프런트가 해당 섹션을 숨긴다(빌드 실패시키지 않는다).
+    """
+    if not FLOOR_SRC.exists():
+        print(f"경고: {FLOOR_SRC.name} 없음 — 보고서 탭의 최저가격 격자를 생략한다.")
+        return None
+    with open(FLOOR_SRC, encoding="utf-8") as f:
+        esc = json.load(f)
+    cases = {k: v for k, v in esc.items() if k not in ("meta", "cost_sensitivity_pm20")}
+    return {
+        "meta": esc["meta"],
+        "cases": {k: {"floor_2040": v["floor"]["2040"],
+                      "steel_threshold_year": v["steel_threshold_year"],
+                      "ncc_threshold_year": v["ncc_threshold_year"],
+                      "cum_required_withholding_Mt": v["cum_required_withholding_Mt"],
+                      "max_annual_required_withholding_Mt": v["max_annual_required_withholding_Mt"],
+                      "min_headroom": v["min_headroom"],
+                      "defended_all": v["defended_all"]} for k, v in cases.items()},
+        "cost_sensitivity_pm20": esc["cost_sensitivity_pm20"]["grid"],
+    }
 
 
 def export_results_v1():
@@ -52,6 +78,7 @@ def export_results_v1():
         "packages": {},
         "sensitivity_h2_elec": full["sensitivity_h2_elec"],
         "gate_waterfall": full["gate_waterfall"],
+        "escalator_floor": _slim_floor(),
     }
     for pid, rec in full["packages"].items():
         slim["packages"][pid] = {
@@ -62,8 +89,10 @@ def export_results_v1():
     with open(RESULTS_OUT, "w", encoding="utf-8") as f:
         json.dump(slim, f, ensure_ascii=False, indent=1)
     print(f"저장: {RESULTS_OUT}  ({RESULTS_OUT.stat().st_size / 1024:.0f} KB)")
+    fl = slim.get("escalator_floor")
     print(f"  packages: {list(slim['packages'])} · sensitivity {len(slim['sensitivity_h2_elec'])} cells"
-          f" · waterfall {len(slim['gate_waterfall'])} steps")
+          f" · waterfall {len(slim['gate_waterfall'])} steps"
+          f" · floor {len(fl['cases']) if fl else 0} cases / {len(fl['cost_sensitivity_pm20']) if fl else 0} ±20% 셀")
 
 
 def main():
