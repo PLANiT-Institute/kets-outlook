@@ -1,0 +1,43 @@
+name: tests
+
+# 남의 기계에서도 도는지가 공개 저장소의 유일한 증거다.
+# 로컬 캐시(.pytest_cache, __pycache__, 이미 열린 엑셀) 없이 맨 체크아웃에서 돈다.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  pytest:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12", "3.13"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+
+      - name: Install
+        run: pip install -r requirements-dev.txt
+
+      - name: Data contract
+        # 엑셀이 소리 없이 바뀌었는지 먼저 본다 — 여기서 깨지면 아래 수치는 볼 필요가 없다.
+        run: python -m pytest tests/test_data_integrity.py -q
+
+      - name: Tests
+        run: python -m pytest tests -q
+
+      - name: MCP handshake from a clean checkout
+        # 남이 clone 해서 바로 붙일 수 있는지 — README 등록 절차와 같은 명령.
+        run: |
+          echo '{"jsonrpc":"2.0","id":1,"method":"tools/list"}' \
+            | python mcp/server.py \
+            | python -c "import json,sys; t=json.loads(sys.stdin.readline())['result']['tools']; print(len(t),'tools'); assert len(t)==8"

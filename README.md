@@ -3,6 +3,49 @@
 **K-ETS 배출권 가격전망 모형 · K-MSR 운영규칙 분석**
 Coase 정태균형 + 계단형 MACC + 제약 Hotelling + 유동성 전달(λ)
 
+<details>
+<summary><b>In English</b> — what this is and how to run it</summary>
+
+A calibrated equilibrium model of the Korean ETS. It projects KAU allowance
+prices for 2026–2040 and asks **which operating rule** for the Korean Market
+Stability Reserve (legislated April 2026) gets the price high enough, soon
+enough, for hydrogen steelmaking and electrified crackers to clear their cost
+thresholds.
+
+Four layers: a static Coase equilibrium, a step MAC curve built bottom-up from
+technology data (no fitted functional form), constrained Hotelling arbitrage,
+and a liquidity transmission parameter λ inverted from the observed price wedge
+(λ ≈ 0.575 in 2026 — Korea's forward vintages are effectively untraded, so the
+intertemporal channel is damped rather than complete).
+
+**Headline.** The cap alone leaves KAU at ~₩67k in 2040, short of the ~₩95k
+hydrogen-steel threshold. A pre-announced auction reserve price starting at
+₩40,000 in 2026 and escalating 7% in real terms, combined with permanent
+cancellation of unsold volume, reaches the threshold in 2039 — and is the only
+starting price that survives the full ±20% technology cost range.
+
+```bash
+pip install -r requirements-dev.txt
+bash scripts/reproduce_all.sh      # regenerates every output from the master workbook
+python3 -m pytest tests -q         # locks the numbers printed in the report
+```
+
+Register the MCP server and ask the model directly:
+
+```json
+{"mcpServers": {"kets": {"command": "python3",
+                         "args": ["/abs/path/kets-outlook/mcp/server.py"]}}}
+```
+
+Scenario levers — cap path, MSR design, auction reserve price, hydrogen and
+electricity price trajectories, technology learning rates, abatement capital
+cost — are all reachable from the MCP tools. See [mcp/README.md](mcp/README.md)
+for the lever table and [docs/methodology.md](docs/methodology.md) for the
+equations. Code is MIT; the redistributed market and registry data are not —
+see [LICENSE](LICENSE).
+
+</details>
+
 한국 배출권거래제(K-ETS)의 2026–2040 KAU 가격경로를 계산하고, 2026년 4월 법제화된
 K-MSR(시장안정화 예비분)을 **어떤 규칙으로 운영해야** 철강·석유화학의 전환기술이
 경제성을 갖는 시점에 도달하는지 평가한다.

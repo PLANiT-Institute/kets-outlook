@@ -1,0 +1,28 @@
+cff-version: 1.2.0
+title: "kets-outlook: K-ETS allowance price outlook and K-MSR operating-rule model"
+message: "If you use this model or its outputs, please cite it."
+type: software
+authors:
+  - name: "PLANiT Institute"
+    website: "https://planit.institute"
+repository-code: "https://github.com/PLANiT-Institute/kets-outlook"
+license: MIT
+version: "1.0.0"
+abstract: >-
+  A calibrated equilibrium model of the Korean Emissions Trading Scheme (K-ETS)
+  that projects KAU allowance prices for 2026-2040 and evaluates operating rules
+  for the Korean Market Stability Reserve (K-MSR) legislated in April 2026.
+  Combines a static Coase equilibrium, a step marginal abatement cost curve built
+  bottom-up from technology data, constrained Hotelling intertemporal arbitrage,
+  and a liquidity transmission parameter (lambda) estimated from the observed
+  price wedge. Scenario levers cover the cap path, MSR design, auction reserve
+  price, hydrogen and electricity price trajectories, technology learning rates,
+  and abatement capital cost. Exposed as a CLI, a web API, and an MCP server.
+keywords:
+  - emissions trading
+  - carbon pricing
+  - market stability reserve
+  - Korea
+  - K-ETS
+  - marginal abatement cost
+  - Hotelling

@@ -18,6 +18,7 @@ v4 프레임(2026-07-03 확정): K-MSR은 법제화된 제도이고, 패키지�
   4. quantity_frontier— B 변형 그리드(ρ×θ×개시연도, EU-literal 무효화 변형 포함)
   5. sensitivity_h2_elec — 수소×전력 2×2에서 A·B 도입연도(보수수소 하 B의 H2-DRI 미도입이 핵심)
   6. modes            — MACC step/exponential × 3 cap × 전 MSR강도 하이퍼큐브(부록)
+  7. tech_thresholds  — 헤드라인 전환기술(H₂-DRI·e-cracker)의 연도별 문턱비용(보고서 §1)
 
 모든 입력은 마스터 엑셀에서 로드(코드 하드코딩 없음). 유동성 모수는 유동성모수 시트.
 산출: outputs/runs/msr_results_v1.0.json + outputs/csv/*.csv
@@ -489,6 +490,15 @@ for sid in ["base", "ideal"]:
 # ═══════════════════════════════════════════════════════════════
 # 5. 저장: JSON + CSV
 # ═══════════════════════════════════════════════════════════════
+# 전환기술 문턱 비용경로 — docs/report.md §1이 인쇄하는 값(H₂-DRI 2035·2037,
+# e-cracker 2035). 엔진은 계산했지만 어디에도 남지 않아 골든 테스트가 잠글 수
+# 없었다. 회랑 하한(패키지 A)의 기술앵커도 같은 경로다.
+tech_thresholds = {
+    t["tech"]: {"sector": t["sector"],
+                "cost_krw_by_year": {yr: round(m_step._tech_cost(t, yr, POLICY_CAP))
+                                     for yr in m_step.years}}
+    for t in m_step.techs if t.get("headline")}
+
 out = {"model_version": "1.0",
        "description": "정책패키지 v4: K-MSR=법제화 제도, 패키지=운영규칙(P0/P1/A 가격약속형/B 수량약속형); "
                       "유상=A_gov(정부공표경로) 일원화; 수량프런티어(ρ×θ×개시연도); 수소×전력 2×2 민감도; "
@@ -499,6 +509,7 @@ out = {"model_version": "1.0",
        "msr_levels": [{**{k: (v / 1e6 if k in ("theta_plus", "theta_minus", "release") else v)
                           for k, v in p.items()}} for p in presets_ref.values()],
        "parity_v07": parity,
+       "tech_thresholds": tech_thresholds,
        "packages": packages,
        "gate_waterfall": waterfall,
        "a_lambda_regimes": a_regime_sens,

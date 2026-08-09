@@ -38,7 +38,7 @@ def test_initialize_and_tools_list():
     assert "tools" in init["capabilities"]
 
     names = {t["name"] for t in out[1]["result"]["tools"]}
-    assert names == {"list_packages", "solve_package", "solve_custom",
+    assert names == {"list_packages", "solve_package", "solve_custom", "scenario_grid",
                      "list_data_sheets", "get_data_sheet", "list_runs", "get_run"}
     for tool in out[1]["result"]["tools"]:
         assert tool["description"] and tool["inputSchema"]["type"] == "object"
@@ -58,6 +58,57 @@ def test_solve_package_matches_engine():
     direct = {r["year"]: round(r["kau"], 3) for r in model.solve_package(pkg)}
 
     assert path == direct
+
+
+def test_scenario_levers_are_declared_in_tool_schema():
+    """레버가 스키마에 열거돼야 클라이언트(Claude)가 존재를 안다.
+
+    설명문에만 적어두면 모델이 키를 지어내거나 아예 안 쓴다.
+    """
+    out = _rpc({"jsonrpc": "2.0", "id": 1, "method": "tools/list"})
+    tools = {t["name"]: t for t in out[0]["result"]["tools"]}
+    for name in ("solve_package", "solve_custom"):
+        props = tools[name]["inputSchema"]["properties"]["overrides"]["properties"]
+        assert {"h2_scenario", "elec_scenario", "tech_scenario",
+                "cost_multiplier"} <= set(props), name
+        assert props["h2_scenario"]["enum"] == ["gov", "conservative"], name
+
+
+def test_scenario_lever_changes_the_answer_over_mcp():
+    """전송 계층까지 태운 레버가 실제로 결과를 바꾼다 — 조용히 무시되지 않는다."""
+    def activation(overrides):
+        out = _rpc({"jsonrpc": "2.0", "id": 1, "method": "tools/call",
+                    "params": {"name": "solve_package",
+                               "arguments": {"package_id": "B", "overrides": overrides}}})
+        payload = json.loads(out[0]["result"]["content"][0]["text"])
+        return payload["activation_headline"]["수소환원제철 (H₂-DRI-EAF)"]
+
+    assert activation({}) == 2035
+    assert activation({"h2_scenario": "conservative"}) is None
+
+
+def test_scenario_grid_spans_the_axes_and_agrees_with_single_solves():
+    """격자의 각 칸이 개별 solve와 같은 답을 낸다 — 격자가 지름길로 근사하지 않는다."""
+    out = _rpc({"jsonrpc": "2.0", "id": 1, "method": "tools/call",
+                "params": {"name": "scenario_grid",
+                           "arguments": {"packages": ["A", "B"],
+                                         "h2_scenarios": ["gov", "conservative"],
+                                         "elec_scenarios": ["gov_invest"]}}})
+    grid = json.loads(out[0]["result"]["content"][0]["text"])
+    assert grid["n_runs"] == 4
+    cell = next(r for r in grid["rows"]
+                if r["package_id"] == "B" and r["h2_scenario"] == "conservative")
+    assert cell["activation"]["수소환원제철 (H₂-DRI-EAF)"] is None
+    assert cell["all_headline_techs_activate"] is False
+
+
+def test_scenario_grid_refuses_to_explode():
+    """상한 없는 데카르트 곱은 클라이언트 타임아웃으로 나타난다 — 미리 거절한다."""
+    out = _rpc({"jsonrpc": "2.0", "id": 1, "method": "tools/call",
+                "params": {"name": "scenario_grid",
+                           "arguments": {"tech_scenarios": ["base", "middle", "ideal"],
+                                         "cost_multipliers": [0.8, 0.9, 1.0, 1.1, 1.2]}}})
+    assert out[0]["result"]["isError"] is True
 
 
 def test_tool_error_is_result_not_protocol_error():

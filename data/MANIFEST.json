@@ -1,0 +1,481 @@
+{
+  "generated_from": "data/K-ETS_마스터데이터.xlsx",
+  "note": "엑셀 수정 후 `python3 scripts/build_manifest.py` 재실행 필수.",
+  "provenance_exempt": [
+    "시나리오정의"
+  ],
+  "sheets": {
+    "시나리오정의": {
+      "rows": 3,
+      "columns": [
+        "scenario_id",
+        "name_kr",
+        "name_en",
+        "policy_direction",
+        "description"
+      ],
+      "provenance_col": null,
+      "group_col": "scenario_id",
+      "digest": "ef49500cb99ea1fe4d0a1e10d292b470edb15fca7e430285f186b8394b0d4658"
+    },
+    "업종분류": {
+      "rows": 6,
+      "columns": [
+        "sector_code",
+        "name_kr",
+        "name_en",
+        "allocation_category",
+        "is_modeled",
+        "cbam_covered",
+        "kets_sector_code",
+        "emissions_2023_MtCO2",
+        "note"
+      ],
+      "provenance_col": "note",
+      "group_col": null,
+      "digest": "04b786d10c5f5fb2207b872b73e2524f14764d8d49ac95a147162b856a083a63"
+    },
+    "모형파라미터": {
+      "rows": 58,
+      "columns": [
+        "category",
+        "parameter",
+        "value",
+        "unit",
+        "description",
+        "source"
+      ],
+      "provenance_col": "source",
+      "group_col": "category",
+      "digest": "42eb2f48c3f1d564d5d2e417d099f63179ab7f90217902cf7fccfa2c0a094bad"
+    },
+    "KAU과거가격": {
+      "rows": 11,
+      "columns": [
+        "year",
+        "kau_avg_krw",
+        "kau_yearend_krw",
+        "trading_volume_Mt",
+        "trading_value_billion_krw",
+        "entities",
+        "source"
+      ],
+      "provenance_col": "source",
+      "group_col": null,
+      "digest": "f373684f1c9ed4edc483f113d2d5d431cccd695fd46cc1f0d550f329f20265f7"
+    },
+    "K-ETS시장총괄": {
+      "rows": 4,
+      "columns": [
+        "period",
+        "total_cap_Mt",
+        "annual_caps",
+        "entities",
+        "free_alloc_pct",
+        "auction_pct",
+        "national_coverage_pct",
+        "source"
+      ],
+      "provenance_col": "source",
+      "group_col": null,
+      "digest": "cc9999b4d9ee46c2f05f5641f6243672f89f6f5c6a2284bafda5c342a3252280"
+    },
+    "무상할당비율": {
+      "rows": 135,
+      "columns": [
+        "scenario_id",
+        "allocation_category",
+        "year",
+        "free_ratio",
+        "auction_ratio",
+        "source"
+      ],
+      "provenance_col": "source",
+      "group_col": "scenario_id",
+      "digest": "6bc2b55b8059456d67f46ad32c9f269f7e0497bd6e2b57a0651ad163b2a16f1d"
+    },
+    "EUA가격전망": {
+      "rows": 15,
+      "columns": [
+        "year",
+        "eua_price_eur",
+        "eua_price_krw",
+        "exchange_rate_eur_krw",
+        "source"
+      ],
+      "provenance_col": "source",
+      "group_col": null,
+      "digest": "74f271f561cfe4046d61bc253f109abf45965fce7eb41255b11cb2651581534a"
+    },
+    "BAU배출전망": {
+      "rows": 90,
+      "columns": [
+        "sector_code",
+        "year",
+        "bau_emissions_MtCO2",
+        "bau_emissions_tCO2",
+        "source"
+      ],
+      "provenance_col": "source",
+      "group_col": null,
+      "digest": "6d35f7644e4aeae7ec66501179a5d76408058cce1cd2b13738c8b7f312405c84"
+    },
+    "배출허용총량": {
+      "rows": 270,
+      "columns": [
+        "scenario_id",
+        "sector_code",
+        "year",
+        "cap_MtCO2",
+        "cap_tCO2",
+        "cap_source",
+        "source"
+      ],
+      "provenance_col": "source",
+      "group_col": "scenario_id",
+      "digest": "728aed34d4851f7bc5059d75a92abbb93fa90a3625de69a24e29d3a1138eb4fe"
+    },
+    "CBAM무상폐지일정": {
+      "rows": 9,
+      "columns": [
+        "year",
+        "cbam_factor_pct",
+        "free_remaining_pct",
+        "source"
+      ],
+      "provenance_col": "source",
+      "group_col": null,
+      "digest": "ebe3cd56142aaec99f6d95e77a3d0fe7fbd831a7289fbf28d903d04ee0be25d2"
+    },
+    "CBAM내재배출": {
+      "rows": 7,
+      "columns": [
+        "product",
+        "cn_code",
+        "default_tCO2_per_tonne",
+        "scope",
+        "source"
+      ],
+      "provenance_col": "source",
+      "group_col": null,
+      "digest": "335ebe78d49ddb964794572a87035eb15aacb8b3f196f029f055fe6a1b4d7db5"
+    },
+    "한국-EU무역": {
+      "rows": 4,
+      "columns": [
+        "sector",
+        "eu_export_eur_billion",
+        "eu_export_volume_Mt",
+        "total_export_usd_billion",
+        "eu_share_pct",
+        "year",
+        "source"
+      ],
+      "provenance_col": "source",
+      "group_col": "sector",
+      "digest": "8c61443790068b510d4b4e67d6ae8a7564c957df84ec6f1b6366f04c0f80f72c"
+    },
+    "NDC부문별목표": {
+      "rows": 5,
+      "columns": [
+        "sector",
+        "emissions_2018_Mt",
+        "target_2030_Mt",
+        "reduction_2030_pct",
+        "target_2035_low_Mt",
+        "target_2035_high_Mt",
+        "reduction_2035_pct",
+        "source"
+      ],
+      "provenance_col": "source",
+      "group_col": "sector",
+      "digest": "b308c8321f64bfd2212125d4bee1bfcff46a20fbeb8a16e5e335a80f120fe6c7"
+    },
+    "MACC기술상세": {
+      "rows": 28,
+      "columns": [
+        "sector",
+        "technology",
+        "cost_usd_per_tCO2",
+        "cost_krw_per_tCO2",
+        "abatement_potential_pct",
+        "timeline",
+        "source",
+        "headline",
+        "h2_intensity_kg_per_tCO2",
+        "elec_intensity_MWh_per_tCO2",
+        "avail_start_year",
+        "avail_full_year"
+      ],
+      "provenance_col": "source",
+      "group_col": "sector",
+      "digest": "5def54157d117034ffb0458cbfdcdb90f28b766e8907b92cc8c672613dcb124f"
+    },
+    "데이터수집현황": {
+      "rows": 8,
+      "columns": [
+        "data_name",
+        "source",
+        "status",
+        "priority",
+        "description",
+        "workaround"
+      ],
+      "provenance_col": "source",
+      "group_col": null,
+      "digest": "90d096da82a0e195b496bda3d67258be382abd3a9125f7277475ade0d0a780c6"
+    },
+    "시장잉여추정": {
+      "rows": 28,
+      "columns": [
+        "year",
+        "cap_Mt",
+        "verified_emissions_Mt",
+        "kcu_offset_Mt",
+        "carryover_total_Mt",
+        "net_supply_demand_Mt",
+        "source"
+      ],
+      "provenance_col": "source",
+      "group_col": null,
+      "digest": "68837ed2326311770353427f111f2051f3b60966961cf8cf8532a69317b7d1ad"
+    },
+    "MSR설계": {
+      "rows": 15,
+      "columns": [
+        "level_id",
+        "name_kr",
+        "rho_intake",
+        "theta_plus_Mt",
+        "theta_minus_Mt",
+        "release_Mt",
+        "cancel_rate",
+        "source",
+        "carve_reserve",
+        "intake_basis",
+        "invalidate_above_Mt",
+        "theta_cap_frac",
+        "start_year"
+      ],
+      "provenance_col": "source",
+      "group_col": null,
+      "digest": "4944a2d352d9d14bd3082d167470f50dda6369586d2ed774f67f0523de25b799"
+    },
+    "학습곡선": {
+      "rows": 21,
+      "columns": [
+        "scenario_id",
+        "tech_keyword",
+        "annual_decline_rate",
+        "source"
+      ],
+      "provenance_col": "source",
+      "group_col": "scenario_id",
+      "digest": "19be9fc88a87d1b012ea3a69f01d14b6bd6c6aeb3a60e977f549c9bdd5731dd4"
+    },
+    "유상할당레버": {
+      "rows": 5,
+      "columns": [
+        "lever_id",
+        "auction_ratio",
+        "desc",
+        "source"
+      ],
+      "provenance_col": "source",
+      "group_col": null,
+      "digest": "c8ccf69cee19900236fc246a275963de9847b773ba53473664dd7cf281524555"
+    },
+    "MSR가격하한": {
+      "rows": 6,
+      "columns": [
+        "floor_id",
+        "floor_2026_krw",
+        "floor_2040_krw",
+        "cancel_rate",
+        "desc",
+        "source"
+      ],
+      "provenance_col": "source",
+      "group_col": null,
+      "digest": "8db30a6b12828be8133b9ef77894560d87f6b21908492ecb70e605b2355f969a"
+    },
+    "Taschini파라미터": {
+      "rows": 5,
+      "columns": [
+        "channel",
+        "symbol",
+        "param",
+        "base",
+        "low",
+        "high",
+        "equation",
+        "mechanism",
+        "paper_ref",
+        "report_section"
+      ],
+      "provenance_col": "paper_ref",
+      "group_col": "channel",
+      "digest": "3752cb1b73f0ebf5c7d2c07b6171c9859c8ac3489a3e18fc903cc666bc2db7f1"
+    },
+    "유동성모수": {
+      "rows": 10,
+      "columns": [
+        "category",
+        "parameter",
+        "value",
+        "unit",
+        "description",
+        "source"
+      ],
+      "provenance_col": "source",
+      "group_col": "category",
+      "digest": "b86bf5500d603fb449874dc1e1db98c039cd4d8556b5dfe573d316f9dd56d854"
+    },
+    "KAU2026시세": {
+      "rows": 7,
+      "columns": [
+        "date",
+        "kau_krw",
+        "source"
+      ],
+      "provenance_col": "source",
+      "group_col": null,
+      "digest": "342f26981584158a5359d6be5db45b2fa71305bc04ac9458970efefc62bfd0d5"
+    },
+    "정책패키지": {
+      "rows": 6,
+      "columns": [
+        "package_id",
+        "name_en",
+        "name_kr",
+        "msr_level",
+        "floor_id",
+        "auction_lever",
+        "cap_scenario",
+        "lambda_regime",
+        "source",
+        "corridor_target_year",
+        "corridor_tech2",
+        "corridor_target_year2"
+      ],
+      "provenance_col": "source",
+      "group_col": null,
+      "digest": "9a53e409fc6e84bf67fd604b7f1b3144a913955626b83052ee233e89441cc06d"
+    },
+    "수소가격시나리오": {
+      "rows": 30,
+      "columns": [
+        "scenario_id",
+        "year",
+        "h2_price_krw_per_kg",
+        "source"
+      ],
+      "provenance_col": "source",
+      "group_col": "scenario_id",
+      "digest": "aa00c3e5adae3c530a289818220fa7b475e1681dc73dbce9fdca5fd870382d27"
+    },
+    "전력가격시나리오": {
+      "rows": 30,
+      "columns": [
+        "scenario_id",
+        "year",
+        "elec_price_krw_per_kwh",
+        "source"
+      ],
+      "provenance_col": "source",
+      "group_col": "scenario_id",
+      "digest": "3d246b77fdaea61a96e966d8f6e44cf109bcbf23930d439709609902e1918857"
+    }
+  },
+  "raw_observations": {
+    "file": "data/ets_data.xlsx",
+    "sha256": "fd115d0099a2fd8d8c4a18c8518260aaf28ca2b78c29b4d3c68860a122448233",
+    "sheets": {
+      "market": {
+        "rows": 24506,
+        "columns": [
+          "일자",
+          "종목명",
+          "종가",
+          "대비",
+          "등락률",
+          "시가",
+          "고가",
+          "저가",
+          "거래량",
+          "거래대금",
+          "가중평균"
+        ]
+      },
+      "auction": {
+        "rows": 83,
+        "columns": [
+          "경매일별",
+          "종목명",
+          "입찰수량",
+          "응찰수량",
+          "응찰비율(응찰수량/입찰수량)",
+          "응찰자수",
+          "낙찰자수",
+          "최고응찰가격",
+          "최저응찰가격",
+          "낙찰수량",
+          "낙찰가격"
+        ]
+      },
+      "연도별할당량": {
+        "rows": 11,
+        "columns": [
+          "연도",
+          "배출권(톤)",
+          "계획기간"
+        ]
+      },
+      "인증배출량": {
+        "rows": 6415,
+        "columns": [
+          "번호",
+          "부문",
+          "업종",
+          "업체명",
+          "이행연도",
+          "인증 배출량(톤)"
+        ]
+      },
+      "배출권이월량": {
+        "rows": 4572,
+        "columns": [
+          "번호",
+          "부문",
+          "업종",
+          "업체명",
+          "연도",
+          "할당배출권",
+          "상쇄배출권"
+        ]
+      },
+      "배출권차입량": {
+        "rows": 800,
+        "columns": [
+          "번호",
+          "부문",
+          "업종",
+          "업체명",
+          "연도",
+          "차입배출권 수량"
+        ]
+      },
+      "상쇄배출권발행량": {
+        "rows": 341,
+        "columns": [
+          "번호",
+          "부문",
+          "업종",
+          "업체명",
+          "이행연도",
+          "상쇄배출권 발행수량"
+        ]
+      }
+    }
+  }
+}

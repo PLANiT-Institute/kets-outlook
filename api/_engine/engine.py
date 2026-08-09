@@ -114,6 +114,10 @@ class KETSModel:
                                  "maxshare": _num(sub["max_abatement_share"]),
                                  "baseline_tco2": _num(sub["baseline_emissions_MtCO2"]) * 1e6}
         # ── 학습곡선 ──
+        # tech_scenario는 기본적으로 cap 시나리오(sid)를 따르되, 명시하면 분리된다.
+        # cap을 조이는 것과 기술비용이 빨리 떨어지는 것은 서로 다른 사건이므로
+        # 둘을 독립으로 흔들 수 있어야 시나리오 분석이 성립한다.
+        self.tech_scenario = str(p["tech_scenario"]) if p.get("tech_scenario") else None
         self.lc = {}
         for r in sh["학습곡선"]:
             self.lc.setdefault(str(r["scenario_id"]), {})[str(r["tech_keyword"])] = _num(r["annual_decline_rate"])
@@ -121,6 +125,9 @@ class KETSModel:
         # ── 부문 baseline(모든 MACC_* + other 잔차) 및 bottom-up 기술 스텝 ──
         self.sector_baseline_Mt = {sc: m["baseline_tco2"] / 1e6 for sc, m in self.macc.items()}
         self.sector_baseline_Mt["other"] = self.total_kets_Mt - sum(self.sector_baseline_Mt.values())
+        # 기술비용 일괄 배율 — 감축기술비용 불확실성 레버 (1.0 = 시트값 그대로).
+        # 학습률·에너지가격 이전의 자본비용 수준 자체를 흔든다(±20% 민감도의 근거).
+        self.cost_multiplier = _num(p.get("cost_multiplier"), 1.0) or 1.0
         self.techs = []
         for r in sh["MACC기술상세"]:
             base_Mt = self.sector_baseline_Mt.get(r["sector"])
@@ -128,7 +135,7 @@ class KETSModel:
                 continue
             self.techs.append({
                 "sector": r["sector"], "tech": str(r["technology"]),
-                "cost_krw": _num(r["cost_krw_per_tCO2"]),
+                "cost_krw": _num(r["cost_krw_per_tCO2"]) * self.cost_multiplier,
                 "potential_tco2": _num(r["abatement_potential_pct"]) / 100.0 * base_Mt * 1e6,
                 "headline": bool(_num(r.get("headline"), 0.0)),
                 "h2_kg": _num(r.get("h2_intensity_kg_per_tCO2"), 0.0),
@@ -239,14 +246,19 @@ class KETSModel:
         return self.reserve0 * self.cap_total[sid][yr] / cap_window
 
     # ═══════════════ MACC / 감축 ═══════════════
+    def _lc_rates(self, sid):
+        """학습곡선 시나리오 선택. tech_scenario가 지정되면 cap 시나리오를 무시한다."""
+        key = self.tech_scenario or sid
+        return self.lc.get(key, self.lc.get("base", {}))
+
     def _sector_decline(self, sid, sec):
-        rates = self.lc.get(sid, self.lc.get("base", {}))
+        rates = self._lc_rates(sid)
         vals = [rates[k] for k in SECTOR_LC_KEYS.get(sec, []) if k in rates]
         return sum(vals) / len(vals) if vals else 0.0
 
     def _tech_decline(self, tech_name, sid):
         """기술명 부분일치로 학습곡선 시트의 연 비용하락률을 찾는다."""
-        rates = self.lc.get(sid, self.lc.get("base", {}))
+        rates = self._lc_rates(sid)
         for kw, rate in rates.items():
             if kw in tech_name:
                 return rate
