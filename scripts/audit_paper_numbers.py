@@ -68,11 +68,15 @@ def collect_output_values() -> set[float]:
 def traces(printed: float, decimals: int, pool: set[float]) -> bool:
     """인쇄 정밀도로 반올림하면 일치하는 산출값이 있는가.
 
-    반올림 오차 상한은 마지막 자리의 절반. 백분율 표기(7 → 0.07)도 함께 본다.
+    반올림 오차 상한은 마지막 자리의 절반. 단위 표기 차이도 함께 본다:
+      ×1/100  백분율 (7% → 0.07)
+      ×1e6    Mt로 인쇄, 산출은 tCO2 (212.4 Mt → 212,400,000 t)
+      ×1e-6   그 반대
+    허용오차도 같은 배율로 스케일해야 정밀도가 유지된다.
     """
     tol = 0.5 * 10 ** (-decimals)
-    for candidate in (printed, printed / 100.0):
-        ctol = tol if candidate == printed else tol / 100.0
+    for scale in (1.0, 0.01, 1e6, 1e-6):
+        candidate, ctol = printed * scale, tol * scale
         for v in pool:
             if abs(v - candidate) <= ctol + 1e-12:
                 return True

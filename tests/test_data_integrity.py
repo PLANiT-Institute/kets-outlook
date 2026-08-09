@@ -139,6 +139,46 @@ def test_load_bearing_scalars(sheets, category, parameter, expected, anchor):
 
 # ── 5. export 신선도 ──
 
+# ── 6. 원고 수치 감사기 (scripts/audit_paper_numbers.py) ──
+# 이 도구가 조용히 느슨해지면 "미추적 0건"이 무의미해진다.
+
+@pytest.mark.parametrize("printed,decimals,pool,expected", [
+    # 인쇄 정밀도로 반올림하면 맞는 값 → 추적됨
+    (92.140, 3, {92.140327}, True),
+    (360.1, 1, {360.14}, True),
+    # 마지막 자리가 다르면 → 미추적 (λ=0.55 잔재를 잡아낸 성질)
+    (360.2, 1, {360.14}, False),
+    # 백분율 표기 (7% ↔ 0.07)
+    (7.0, 0, {0.07}, True),
+    # Mt로 인쇄, 산출은 tCO2
+    (212.4, 1, {212_379_577.0}, True),
+    (37.93, 2, {37_928_200.0}, True),
+    # 단위 환산이 정밀도를 삼키면 안 된다 — 0.1 Mt 어긋난 값은 여전히 미추적
+    (212.5, 1, {212_379_577.0}, False),
+])
+def test_number_audit_unit_scaling(printed, decimals, pool, expected):
+    from scripts.audit_paper_numbers import traces
+    assert traces(printed, decimals, pool) is expected
+
+
+def test_number_audit_ignores_urls_and_dois():
+    """DOI·URL 안의 숫자를 수치 주장으로 세면 미추적 목록이 소음으로 덮인다."""
+    import tempfile
+    from pathlib import Path as _P
+    from scripts.audit_paper_numbers import audit
+
+    text = ("See https://doi.org/10.1016/j.jeem.2016.09.003 for details.\n"
+            "The cumulative requirement is 999.9 Mt through 2040.\n")
+    with tempfile.NamedTemporaryFile("w", suffix=".md", encoding="utf-8", delete=False) as f:
+        f.write(text)
+        path = _P(f.name)
+    try:
+        untraced = audit(path, pool=set(), min_value=100.0)
+    finally:
+        path.unlink(missing_ok=True)
+    assert [tok for tok, _ in untraced] == ["999.9"], untraced
+
+
 def test_exported_json_matches_current_excel(manifest):
     """kets_data.json이 현재 엑셀 세대인지 — 엑셀만 고치고 export를 잊는 사고 방지."""
     assert WEB_JSON.is_file(), "kets_data.json 없음 — scripts/export_web_data.py 실행 필요"
