@@ -110,6 +110,7 @@ workbook = openpyxl.load_workbook(XLSX, read_only=True, data_only=True)
 market = sheet_by_name(workbook, "market").iter_rows(values_only=True)
 next(market)
 daily, kau_quotes = {}, 0
+kau25_2026 = []          # (월, 종가, 거래량, 거래대금) — λ 앵커의 원자료
 for row in market:
     date, instrument, close, volume = str(row[0])[:10], row[1], row[2], row[8]
     if (
@@ -123,6 +124,9 @@ for row in market:
             float(close),
             float(volume or 0),
         )
+        # 열 순서: 일자·종목명·종가·대비·등락률·시가·고가·저가·거래량·거래대금·가중평균
+        if instrument == "KAU25" and date.startswith("2026"):
+            kau25_2026.append((date[:7], float(close), float(volume or 0), float(row[9] or 0)))
 
 pairs = []
 for date in sorted(daily):
@@ -580,6 +584,28 @@ assert stats["both_traded_pairs"]["n_pairs"] == 253
 assert stats["legacy_pm40pct_display_sample_n"] == 5444
 assert abs(stats["bank_2024_Mt"] - 92.140327) < 1e-6
 assert round(stats["banking_ratio"][2024], 3) == 0.168
+
+# ── 2026 KAU25 월별 시세 (λ 앵커의 원자료) ──
+# 보고서 §9 한계 4가 "어느 달·어느 날을 고르느냐로 λ가 갈린다"고 쓰는 근거를
+# 산출물에 남긴다. 종전에는 이 숫자들이 어디에도 저장되지 않아 추적이 끊겼다.
+# 마스터의 KAU2026시세 시트는 언론 인용 몇 점뿐이므로 여기(원자료)가 1차 출처다.
+monthly = {}
+for month, close, volume, turnover in kau25_2026:
+    bucket = monthly.setdefault(month, {"closes": [], "volume": 0.0, "value": 0.0})
+    bucket["closes"].append(close)
+    bucket["volume"] += volume
+    bucket["value"] += turnover      # 거래대금 합 ÷ 거래량 합 = 진짜 VWAP
+
+stats["kau25_2026_monthly"] = {
+    month: {
+        "n_days": len(b["closes"]),
+        "close_mean_krw": round(mean(b["closes"]), 1),
+        "close_min_krw": round(min(b["closes"])),
+        "close_max_krw": round(max(b["closes"])),
+        "vwap_krw": round(b["value"] / b["volume"], 1) if b["volume"] else None,
+    }
+    for month, b in sorted(monthly.items())
+}
 
 os.makedirs(os.path.dirname(OUT_PAIRS), exist_ok=True)
 with open(OUT_PAIRS, "w", newline="", encoding="utf-8") as file:

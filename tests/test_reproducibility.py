@@ -11,12 +11,15 @@
     python3 scripts/build_carry_analysis.py → carry_analysis_cce_v2.0.json
 """
 
+import csv
 import json
 from pathlib import Path
 
 import pytest
 
-RUNS = Path(__file__).resolve().parents[1] / "outputs" / "runs"
+_OUT = Path(__file__).resolve().parents[1] / "outputs"
+RUNS = _OUT / "runs"
+CSVS = _OUT / "csv"
 
 
 def _load(name):
@@ -24,6 +27,14 @@ def _load(name):
     if not path.exists():
         pytest.skip(f"{name} 없음 — scripts/ 러너를 먼저 실행")
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def _load_csv(name):
+    path = CSVS / name
+    if not path.exists():
+        pytest.skip(f"{name} 없음 — scripts/ 러너를 먼저 실행")
+    with path.open(encoding="utf-8-sig", newline="") as f:
+        return list(csv.DictReader(f))
 
 
 # ─── P0 무정책 반사실 균형가격 (docs/report.md §2) ───
@@ -225,6 +236,95 @@ def test_h2_elec_2x2(cell, expected):
     got = _load("msr_results_v1.0.json")["sensitivity_h2_elec"][cell]
     for pid, (steel, ncc) in expected.items():
         assert (got[pid]["h2_dri"], got[pid]["e_ncc"]) == (steel, ncc), pid
+
+
+# ─── λ 앵커의 원자료 (2026 KAU25 월별) ───
+
+def test_lambda_anchor_is_robust_to_price_definition():
+    """시트 앵커(22,750원 종가 인용)와 원자료 월별 VWAP이 같은 λ를 준다.
+
+    §9 한계 4의 '가격 정의에 강건하다'가 여기서 나온다. 어긋나면 시트의
+    언론 인용이 그 달을 대표하지 못한다는 뜻이다.
+    """
+    june = _load("carry_analysis_cce_v2.0.json")["kau25_2026_monthly"]["2026-06"]
+    assert june["n_days"] == 21
+    assert june["vwap_krw"] == pytest.approx(22805.8, abs=0.1)
+    assert (june["close_min_krw"], june["close_max_krw"]) == (19600, 28800)
+
+
+def test_lambda_spread_within_one_month_is_wide():
+    """같은 달 안에서도 λ가 0.435–0.845로 벌어진다 — 앵커 선택이 곧 λ다.
+
+    §9 한계 4가 인쇄하는 범위. 좁아지면 한계 서술을 완화할 수 있고,
+    넓어지면 앵커 규칙(월 VWAP)을 더 강하게 정당화해야 한다.
+    """
+    rows = _load_csv("lambda_implied.csv")
+    june = {r["source"]: float(r["lambda_implied"])
+            for r in rows if r["observation"] == "2026-06"}
+    assert june["원자료 VWAP"] == pytest.approx(0.578, abs=0.001)
+    assert june["원자료 종가최저"] == pytest.approx(0.435, abs=0.001)
+    assert june["원자료 종가최고"] == pytest.approx(0.845, abs=0.001)
+
+
+def test_press_derived_january_understates_lambda():
+    """마스터 시트의 2026-01 값은 언론 비율 역산이라 원자료보다 10% 낮다.
+
+    모형 앵커(마지막 행=6월)에는 안 들어가므로 결과에 영향이 없지만,
+    이 시트를 시세 출처로 쓰면 안 된다는 근거다 (data/README.md 참조).
+    """
+    rows = _load_csv("lambda_implied.csv")
+    by = {(r["source"], r["observation"]): float(r["lambda_implied"]) for r in rows}
+    assert by[("KAU2026시세", "2026-01")] == pytest.approx(0.020, abs=0.001)
+    assert by[("원자료 VWAP", "2026-01")] == pytest.approx(0.071, abs=0.001)
+
+
+# ─── 시나리오 매트릭스 (수소 2 × 전력 2 × 자본비용 3 = 12개 세계) ───
+
+EXPECTED_MATRIX = {
+    # pid: (H₂-DRI 활성 셀 수, e-NCC 활성 셀 수, 둘 다, 하한방어)
+    "P0": (0, 2, 0, 12),
+    "P1": (0, 2, 0, 12),
+    "A":  (12, 5, 5, 12),
+    "B":  (2, 4, 1, 12),
+}
+
+
+@pytest.mark.parametrize("pid,expected", EXPECTED_MATRIX.items())
+def test_scenario_matrix_summary(pid, expected):
+    """12개 세계 전수 결과. §6 강건성 표가 인쇄하는 값 그대로.
+
+    핵심은 **0/12 대 12/12**다 — 총량만으로는(P0·P1) 어떤 에너지가격·자본비용
+    조합에서도 H₂-DRI 문턱에 닿지 않고, 가격약속형(A)은 전부에서 닿는다.
+    수량약속형(B)은 2/12뿐이다. 이 대비가 §7 결론의 근거이므로,
+    깨지면 결론 문장을 먼저 다시 읽어라.
+    """
+    s = _load("msr_results_v1.0.json")["sensitivity_grid"]["summary"][pid]
+    assert s["n_cells"] == 12
+    got = (s["h2_dri_activates"], s["e_ncc_activates"],
+           s["both_activate"], s["defended_all_cells"])
+    assert got == expected
+
+
+def test_scenario_matrix_axes_come_from_sheets():
+    """축 값이 시트에서 온다 — 시나리오를 시트에 추가하면 격자가 자동으로 넓어진다."""
+    axes = _load("msr_results_v1.0.json")["sensitivity_grid"]["axes"]
+    assert axes["h2_scenario"] == ["gov", "conservative"]
+    assert axes["elec_scenario"] == ["gov_invest", "conservative"]
+    assert axes["cost_multiplier"] == [0.8, 1.0, 1.2]
+    assert axes["package_id"] == ["P0", "P1", "A", "B"]
+
+
+def test_cap_alone_never_reaches_the_steel_threshold():
+    """총량만으로는(P0) 12개 세계 중 단 하나에서도 H₂-DRI가 켜지지 않는다.
+
+    보고서 헤드라인 '현행 총량만으로는 문턱에 닿지 않는다'를 한 시나리오가 아니라
+    전 격자에서 잠근다.
+    """
+    cells = _load("msr_results_v1.0.json")["sensitivity_grid"]["cells"]
+    p0 = [c for c in cells if c["package_id"] == "P0"]
+    assert len(p0) == 12
+    assert all(c["h2_dri"] is None for c in p0), \
+        [c for c in p0 if c["h2_dri"] is not None]
 
 
 def test_conservative_h2_splits_a_from_b():

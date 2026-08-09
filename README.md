@@ -117,10 +117,10 @@ python3 api/solve.py     # http://localhost:8531 (라이브 solve API, 별도 �
 
 ```
 kets/           모형 엔진 (정본) — numpy + stdlib만
-data/           마스터 엑셀(SSOT) + KRX 시장 원자료
+data/           마스터 엑셀(SSOT) + KRX 시장 원자료 + MANIFEST.json(계약 지문)
 scripts/        재현 파이프라인
 outputs/        실행 결과 JSON·CSV
-tests/          단위 + 골든 회귀 + MCP 계약 (40 tests)
+tests/          데이터 계약 + 단위 + 골든 회귀 + 시나리오 레버 + MCP 계약
 docs/           보고서·방법론·구조 + 그림
 mcp/            MCP 서버
 api/            Vercel 서버리스 함수 (+ vendored 엔진)
@@ -131,15 +131,46 @@ src/, public/   Next.js 대시보드
 
 ## 설계 원칙
 
-1. **SSOT는 엑셀 하나.** 모든 모형 입력은 `data/K-ETS_마스터데이터.xlsx`에서 온다.
-   엔진에 데이터 상수가 없다(유일한 예외: 이분법 탐색 상한).
-2. **계산은 한 곳에만.** CLI · MCP · 웹 API가 같은 `kets/` 엔진을 탄다.
+1. **모형 파라미터의 SSOT는 엑셀 하나.** 모든 모형 입력은
+   `data/K-ETS_마스터데이터.xlsx`에서 온다. 엔진에 데이터 상수가 없다(유일한 예외:
+   이분법 탐색 상한). 시장 관측 원자료 `data/ets_data.xlsx`는 역할이 다르며
+   `build_carry_analysis.py`만 읽는다 — [data/README.md](data/README.md).
+2. **데이터가 소리 없이 바뀌지 않는다.** `data/MANIFEST.json`이 시트별 셀값
+   다이제스트를 들고 있고, 엑셀을 고치면 `scripts/build_manifest.py`로 지문을
+   갱신해야 테스트가 통과한다. 변경이 커밋 디프에 남는다.
+3. **계산은 한 곳에만.** CLI · MCP · 웹 API가 같은 `kets/` 엔진을 탄다.
    `api/_engine/`은 Vercel 번들용 생성물이며 직접 고치지 않는다.
-3. **보고서 수치는 테스트가 잠근다.** `tests/test_reproducibility.py`가
+   시나리오 레버도 마찬가지 — 세 표면이 같은 `model_params` 경로를 탄다.
+4. **보고서 수치는 테스트가 잠근다.** `tests/test_reproducibility.py`가
    `docs/report.md`에 인쇄된 값을 그대로 검증한다. 숫자는 엔진 → 결과 → 보고서
-   방향으로만 흐른다.
+   방향으로만 흐른다. 저장소 밖 원고는
+   `scripts/audit_paper_numbers.py --paper <경로> --strict`로 대조한다.
 
 작업 규칙은 [AGENTS.md](AGENTS.md).
+
+---
+
+## 시나리오 레버
+
+정책(무엇을 약속하는가)과 세계(어떤 여건에서 그러는가)를 따로 흔든다.
+값 목록은 코드가 아니라 엑셀 시트에서 온다 — 시트에 시나리오를 추가하면
+API·MCP·웹에 자동으로 나타난다.
+
+| 레버 | 값 | 무엇을 바꾸나 |
+|---|---|---|
+| `cap_scenario` | base · middle · ideal | 배출허용총량 경로 |
+| `lambda_regime` | relapse · hold · consolidate | 유동성 전달 λ의 향후 레짐 |
+| `h2_scenario` | gov · conservative | 수소 도입가격 → H₂-DRI 비용 |
+| `elec_scenario` | gov_invest · conservative | 전력가격 → e-NCC·전기가열로 비용 |
+| `tech_scenario` | base · middle · ideal | 학습곡선 (미지정 시 cap 추종) |
+| `cost_multiplier` | 0.1–5.0 | MACC 자본비용 배율 |
+
+비용 채널이 겹치지 않는 이유와 경계는 [docs/methodology.md](docs/methodology.md) §2.1,
+MCP에서 쓰는 법은 [mcp/README.md](mcp/README.md).
+
+수소 2 × 전력 2 × 자본비용 3 = **12개 세계** 전수 결과는
+`outputs/csv/scenario_matrix.csv`이며, 요약은 보고서 §7.1에 있다 —
+총량만으로는(P0·P1) H₂-DRI가 **0/12**, 가격약속형(A)은 **12/12**.
 
 ---
 
@@ -147,10 +178,11 @@ src/, public/   Next.js 대시보드
 
 | 항목 | 상태 |
 |---|---|
-| 테스트 | 41 passed |
-| 엔진 커버리지 | 89% (`kets/engine.py`) · 전체 83% |
-| 재현성 | `bash scripts/reproduce_all.sh` 로 마스터 엑셀에서 전 산출물 재생성 |
+| 테스트 | 109 passed ([CI](../../actions): python 3.11 · 3.12 · 3.13) |
+| 재현성 | `bash scripts/reproduce_all.sh` 8단계로 마스터 엑셀에서 전 산출물 재생성 |
+| 데이터 계약 | `data/MANIFEST.json` 지문 + 출처 커버리지 + export 신선도를 테스트가 강제 |
 | 기준선 정합 | 모형 B0 = 등록부 실측 이월잔고 92.140 Mt — 러너 간 일치를 테스트가 강제 |
+| 문서 수치 | `docs/report.md` 미추적 0건 (`scripts/audit_paper_numbers.py`) |
 
 ---
 

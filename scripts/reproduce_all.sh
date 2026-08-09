@@ -4,25 +4,28 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
-echo "[1/7] 데이터 계약 export (엑셀 → public/model/*.json)"
+echo "[1/8] 데이터 계약 export (엑셀 → public/model/*.json)"
 python3 scripts/export_web_data.py
 
-echo "[2/7] 엔진 vendoring (api/_engine — Vercel 함수용)"
+echo "[2/8] 엔진 vendoring (api/_engine — Vercel 함수용)"
 python3 scripts/sync_engine.py
 
-echo "[3/7] 모형 v1.0 — 운영규칙 P0/P1/A/B + 정책그리드 (수 분 소요)"
+echo "[3/8] 모형 v1.0 — 운영규칙 P0/P1/A/B + 정책그리드 (수 분 소요)"
 python3 -u scripts/run_model.py
 
-echo "[4/7] 경매 최저가격 격자 + 기술비용 ±20% 민감도"
+echo "[4/8] 경매 최저가격 격자 + 기술비용 ±20% 민감도"
 python3 scripts/run_escalator_floor.py
 
-echo "[5/7] 인접 빈티지 캐리 실증 (KRX 원자료)"
+echo "[5/8] 인접 빈티지 캐리 실증 (KRX 원자료)"
 python3 scripts/build_carry_analysis.py
 
-echo "[6/7] 보고서 그림 5종 (docs/figures/)"
+echo "[6/8] 유동성 λ 캘리브레이션 (관측 역산 ↔ 유동성모수 시트 정합 검증)"
+python3 scripts/calibrate_liquidity.py
+
+echo "[7/8] 보고서 그림 5종 (docs/figures/)"
 python3 scripts/build_figures.py
 
-echo "[7/7] 검증 — 단위 + 골든 회귀 + MCP 계약"
+echo "[8/8] 검증 — 단위 + 골든 회귀 + MCP 계약"
 python3 -m pytest tests/ -q
 
 echo

@@ -625,5 +625,56 @@
   },
   "banking_ratio_2015_21_mean": 0.042784,
   "bank_2024_Mt": 92.140327,
-  "verified_emissions_2024_Mt": 549.879405
+  "verified_emissions_2024_Mt": 549.879405,
+  "kau25_2026_monthly": {
+    "2026-01": {
+      "n_days": 21,
+      "close_mean_krw": 11154.8,
+      "close_min_krw": 10250,
+      "close_max_krw": 12850,
+      "vwap_krw": 11453.0
+    },
+    "2026-02": {
+      "n_days": 17,
+      "close_mean_krw": 12655.9,
+      "close_min_krw": 11950,
+      "close_max_krw": 13750,
+      "vwap_krw": 12722.8
+    },
+    "2026-03": {
+      "n_days": 21,
+      "close_mean_krw": 15064.3,
+      "close_min_krw": 13450,
+      "close_max_krw": 16400,
+      "vwap_krw": 15187.0
+    },
+    "2026-04": {
+      "n_days": 22,
+      "close_mean_krw": 16668.2,
+      "close_min_krw": 15900,
+      "close_max_krw": 17400,
+      "vwap_krw": 16631.7
+    },
+    "2026-05": {
+      "n_days": 18,
+      "close_mean_krw": 19186.1,
+      "close_min_krw": 16900,
+      "close_max_krw": 24550,
+      "vwap_krw": 19367.9
+    },
+    "2026-06": {
+      "n_days": 21,
+      "close_mean_krw": 23242.9,
+      "close_min_krw": 19600,
+      "close_max_krw": 28800,
+      "vwap_krw": 22805.8
+    },
+    "2026-07": {
+      "n_days": 6,
+      "close_mean_krw": 23625.0,
+      "close_min_krw": 23100,
+      "close_max_krw": 23900,
+      "vwap_krw": 23426.2
+    }
+  }
 }
