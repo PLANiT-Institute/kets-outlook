@@ -17,14 +17,18 @@
 방법 2 — λ 회전율 교차검증 (보조):
     turnover = 연간 거래량 / 유통물량(전년 carryover).  거래량은 3개 연도만 존재.
 
-ψ — Yoo 이벤트스터디에서 범위 (연간데이터 재추정 불가 → 발표결과 인용):
-    Yoo & Lee (2020): 이월제한 → '잠깐 dip 후 회귀', 지속 가격효과 미미 → ψ ≈ 0
-    Yoo & Seo  (2023): 이월제한 → 잉여보유자 dumping, 기간 내 가격 하락 → ψ < 0
+ψ — 이월제한 선행연구 2편에서 범위 (연간데이터로 재추정 불가 → 발표결과 인용).
+    2026-08-09 KCI 서지 대조 완료 — 두 편 모두 제1저자는 유종민(Jongmin Yu)이다:
+    Yu & Lee (2020, 한국기후변화학회지 11(3):177–186, 이벤트스터디):
+        2019-06 이월제한 발표 직후 KAU18 일시 하락 후 추세 복귀 → ψ ≈ 0
+    Yu & Lee (2023, 자원환경경제연구 32(3):149–166, 동태 비선형최적화):
+        규제기간 중 매물출하 효과로 가격 하락 → ψ < 0
     → ψ ∈ [−0.5, 0]. 점추정은 두 논문의 원자료로 프런티어 재추정 필요(미착수).
 
 실행:  python scripts/calibrate_liquidity.py
 """
 
+import csv
 import sys
 from pathlib import Path
 
@@ -98,10 +102,38 @@ def main():
     print("  주의: 거래량이 2015·2020·2024 3개년만 존재 → 시계열 λ 산출 불가(데이터 공백).")
 
     # ── ψ: 문헌 범위 ──
-    print("\n═══ ψ (행태승수) — Yoo 이벤트스터디 범위 ═══")
-    print("  Yoo & Lee (2020): 잠깐 dip 후 회귀, 지속효과 미미  → ψ ≈ 0")
-    print("  Yoo & Seo  (2023): dumping, 기간 내 가격 하락       → ψ < 0")
+    print("\n═══ ψ (행태승수) — 이월제한 선행연구 범위 ═══")
+    print("  Yu & Lee (2020, 한국기후변화학회지 11(3)): 일시 하락 후 추세 복귀 → ψ ≈ 0")
+    print("  Yu & Lee (2023, 자원환경경제연구 32(3)): 규제기간 중 매물출하    → ψ < 0")
     print("  → 채택 범위 ψ ∈ [−0.5, 0]. 점추정은 원자료 프런티어 재추정 필요(미착수).")
+
+    # ── 산출물: 관측점별 implied λ ──
+    # 보고서 §9 한계 4가 "어느 관측을 고르느냐로 λ가 갈린다"고 쓰는 근거.
+    # 원자료 월별 VWAP은 build_carry_analysis가 남긴 산출물에서 읽는다
+    # (ets_data.xlsx는 그 스크립트만 읽는다 — AGENTS.md 절대규칙 1).
+    rows = [("KAU과거가격", str(y), p) for y, p in sorted(recent.items())]
+    rows += [("KAU2026시세", d, p) for d, p in quotes]
+    carry_json = _ROOT / "outputs" / "runs" / "carry_analysis_cce_v2.0.json"
+    if carry_json.is_file():
+        import json
+        monthly = json.loads(carry_json.read_text(encoding="utf-8")).get("kau25_2026_monthly", {})
+        for month, rec in sorted(monthly.items()):
+            if rec.get("vwap_krw"):
+                rows.append(("원자료 VWAP", month, rec["vwap_krw"]))
+                rows.append(("원자료 종가최저", month, rec["close_min_krw"]))
+                rows.append(("원자료 종가최고", month, rec["close_max_krw"]))
+
+    out_csv = _ROOT / "outputs" / "csv" / "lambda_implied.csv"
+    out_csv.parent.mkdir(parents=True, exist_ok=True)
+    with out_csv.open("w", newline="", encoding="utf-8") as f:
+        w = csv.writer(f)
+        w.writerow(["source", "observation", "kau_krw", "p_static_krw", "p_hotelling_krw",
+                    "lambda_implied"])
+        for src, label, px in rows:
+            lam = (px - p_static_2026) / (p_hotel_2026 - p_static_2026)
+            w.writerow([src, label, round(px, 1), round(p_static_2026, 1),
+                        round(p_hotel_2026, 1), round(lam, 4)])
+    print(f"\nsaved: {out_csv.relative_to(_ROOT)} ({len(rows)}행)")
 
     print("\n═══ 1차 캘리브레이션 결론 ═══")
     print(f"  λ₀ ≈ {avg_lam:.2f}  (현 K-ETS ≈ 정태; 유동성 개혁으로 λ↑ 시나리오)")

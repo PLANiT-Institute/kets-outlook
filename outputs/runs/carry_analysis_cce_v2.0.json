@@ -7,6 +7,467 @@
     "interpretation": "The adjacent-vintage premium is descriptive. It is not a pure annualized financing return because convenience yield, transaction costs, compliance timing, risk, and stale closes are not separately identified."
   },
   "kau_vintage_day_quotes": 8513,
+  "forward_horizon": {
+    "definition": "h = vintage year minus calendar year. h <= 0 is a vintage whose compliance obligation is already fixed; h >= 1 is a claim on a future vintage, which is what intertemporal arbitrage requires.",
+    "by_horizon": {
+      "-1": {
+        "quote_days": 1677,
+        "traded_days": 1458,
+        "traded_day_share": 0.86941,
+        "volume_tco2": 212379577
+      },
+      "0": {
+        "quote_days": 2820,
+        "traded_days": 974,
+        "traded_day_share": 0.34539,
+        "volume_tco2": 95586267
+      },
+      "1": {
+        "quote_days": 1879,
+        "traded_days": 3,
+        "traded_day_share": 0.001597,
+        "volume_tco2": 33139
+      },
+      "2": {
+        "quote_days": 1143,
+        "traded_days": 0,
+        "traded_day_share": 0.0,
+        "volume_tco2": 0
+      },
+      "3": {
+        "quote_days": 620,
+        "traded_days": 0,
+        "traded_day_share": 0.0,
+        "volume_tco2": 0
+      },
+      "4": {
+        "quote_days": 374,
+        "traded_days": 0,
+        "traded_day_share": 0.0,
+        "volume_tco2": 0
+      }
+    },
+    "forward_totals": {
+      "quote_days": 4016,
+      "traded_days": 3,
+      "volume_tco2": 33139,
+      "share_of_all_kau_volume": 0.00010759
+    },
+    "forward_traded_days": [
+      {
+        "date": "2019-09-24",
+        "vintage": 2020,
+        "horizon": 1,
+        "volume_tco2": 1139.0
+      },
+      {
+        "date": "2019-11-11",
+        "vintage": 2020,
+        "horizon": 1,
+        "volume_tco2": 30000.0
+      },
+      {
+        "date": "2019-11-22",
+        "vintage": 2020,
+        "horizon": 1,
+        "volume_tco2": 2000.0
+      }
+    ],
+    "forward_quote_days_with_multiple_vintages": 1143,
+    "forward_days_with_identical_close_across_vintages": 1130
+  },
+  "degenerate_pairs": {
+    "n_pairs_total": 5693,
+    "n_exactly_zero_premium": 2841,
+    "share_exactly_zero_premium": 0.499034,
+    "n_pairs_with_forward_leg": 4016,
+    "n_both_traded": 253
+  },
+  "intertemporal_channel": {
+    "note": "Banking and borrowing move allowances across vintages inside a firm's own registry account. They change quantities but generate no cross-vintage price. Hotelling equalisation requires price-forming market transactions, which the forward_horizon block shows are absent.",
+    "banking_firm_year_obs": 4572,
+    "banking_distinct_firms": 823,
+    "borrowing_firm_year_obs": 800,
+    "borrowing_distinct_firms": 411,
+    "borrowing_total_tco2": 40965299,
+    "by_year": {
+      "2015": {
+        "banked_tco2": 17436778,
+        "borrowed_tco2": 9822890,
+        "bank_to_borrow_ratio": 1.8
+      },
+      "2016": {
+        "banked_tco2": 30465656,
+        "borrowed_tco2": 14848783,
+        "bank_to_borrow_ratio": 2.1
+      },
+      "2017": {
+        "banked_tco2": 37018101,
+        "borrowed_tco2": 0,
+        "bank_to_borrow_ratio": null
+      },
+      "2018": {
+        "banked_tco2": 35553257,
+        "borrowed_tco2": 5150195,
+        "bank_to_borrow_ratio": 6.9
+      },
+      "2019": {
+        "banked_tco2": 17252613,
+        "borrowed_tco2": 8940555,
+        "bank_to_borrow_ratio": 1.9
+      },
+      "2020": {
+        "banked_tco2": 16479226,
+        "borrowed_tco2": 0,
+        "bank_to_borrow_ratio": null
+      },
+      "2021": {
+        "banked_tco2": 17392939,
+        "borrowed_tco2": 839046,
+        "bank_to_borrow_ratio": 20.7
+      },
+      "2022": {
+        "banked_tco2": 30957932,
+        "borrowed_tco2": 656362,
+        "bank_to_borrow_ratio": 47.2
+      },
+      "2023": {
+        "banked_tco2": 63133682,
+        "borrowed_tco2": 508125,
+        "bank_to_borrow_ratio": 124.2
+      },
+      "2024": {
+        "banked_tco2": 92140327,
+        "borrowed_tco2": 199343,
+        "bank_to_borrow_ratio": 462.2
+      }
+    },
+    "borrowing_cap": {
+      "share_of_surrender_obligation": 0.1,
+      "legal_basis": "Enforcement Decree Art. 36(2); Act Art. 27(1)",
+      "by_year": {
+        "2015": {
+          "ceiling_tco2": 54200945,
+          "borrowed_tco2": 9822890,
+          "utilisation": 0.181231
+        },
+        "2016": {
+          "ceiling_tco2": 55426278,
+          "borrowed_tco2": 14848783,
+          "utilisation": 0.267901
+        },
+        "2017": {
+          "ceiling_tco2": 57187121,
+          "borrowed_tco2": 0,
+          "utilisation": 0.0
+        },
+        "2018": {
+          "ceiling_tco2": 60144667,
+          "borrowed_tco2": 5150195,
+          "utilisation": 0.08563
+        },
+        "2019": {
+          "ceiling_tco2": 58782049,
+          "borrowed_tco2": 8940555,
+          "utilisation": 0.152097
+        },
+        "2020": {
+          "ceiling_tco2": 55431538,
+          "borrowed_tco2": 0,
+          "utilisation": 0.0
+        },
+        "2021": {
+          "ceiling_tco2": 59097570,
+          "borrowed_tco2": 839046,
+          "utilisation": 0.014198
+        },
+        "2022": {
+          "ceiling_tco2": 57197866,
+          "borrowed_tco2": 656362,
+          "utilisation": 0.011475
+        },
+        "2023": {
+          "ceiling_tco2": 54986210,
+          "borrowed_tco2": 508125,
+          "utilisation": 0.009241
+        },
+        "2024": {
+          "ceiling_tco2": 54987940,
+          "borrowed_tco2": 199343,
+          "utilisation": 0.003625
+        }
+      }
+    },
+    "borrowing_to_forward_market_volume_ratio": 1236.2
+  },
+  "pair_composition_by_trading_status": {
+    "both_traded": {
+      "n_pairs": 253,
+      "n_exactly_zero": 28,
+      "share_exactly_zero": 0.1107,
+      "n_nonzero": 225,
+      "nonzero_median_pct": 0.837,
+      "nonzero_sd_pct": 16.408,
+      "nonzero_p10_pct": -3.65,
+      "nonzero_p90_pct": 28.193
+    },
+    "one_traded": {
+      "n_pairs": 1828,
+      "n_exactly_zero": 98,
+      "share_exactly_zero": 0.0536,
+      "n_nonzero": 1730,
+      "nonzero_median_pct": -0.676,
+      "nonzero_sd_pct": 15.136,
+      "nonzero_p10_pct": -11.423,
+      "nonzero_p90_pct": 11.121
+    },
+    "neither_traded": {
+      "n_pairs": 3612,
+      "n_exactly_zero": 2715,
+      "share_exactly_zero": 0.7517,
+      "n_nonzero": 897,
+      "nonzero_median_pct": -14.489,
+      "nonzero_sd_pct": 21.12,
+      "nonzero_p10_pct": -56.222,
+      "nonzero_p90_pct": 1.58
+    }
+  },
+  "compliance_distance_test": {
+    "note": "Negative result, retained for reproducibility. Pooled statistics split by months to the front vintage's surrender deadline suggest a proximity effect, but it does not survive calendar-year fixed effects.",
+    "deadline_rule": "31 August of the year following the front vintage",
+    "by_months_to_deadline": {
+      "-1": {
+        "n_pairs": 26,
+        "median_pct": -1.065,
+        "mean_pct": -3.363,
+        "calendar_years": [
+          2019,
+          2020
+        ]
+      },
+      "0": {
+        "n_pairs": 77,
+        "median_pct": 0.837,
+        "mean_pct": 9.406,
+        "calendar_years": [
+          2019,
+          2020,
+          2021,
+          2022,
+          2023,
+          2024,
+          2025
+        ]
+      },
+      "1": {
+        "n_pairs": 63,
+        "median_pct": 0.357,
+        "mean_pct": 10.304,
+        "calendar_years": [
+          2019,
+          2020,
+          2021,
+          2022,
+          2023,
+          2024,
+          2025
+        ]
+      },
+      "2": {
+        "n_pairs": 37,
+        "median_pct": 1.423,
+        "mean_pct": 4.501,
+        "calendar_years": [
+          2017,
+          2018,
+          2019,
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ]
+      },
+      "3": {
+        "n_pairs": 15,
+        "median_pct": 0.0,
+        "mean_pct": 1.791,
+        "calendar_years": [
+          2017,
+          2018,
+          2019,
+          2020,
+          2021
+        ]
+      },
+      "4": {
+        "n_pairs": 13,
+        "median_pct": 0.0,
+        "mean_pct": 1.107,
+        "calendar_years": [
+          2017,
+          2020
+        ]
+      },
+      "5": {
+        "n_pairs": 7,
+        "median_pct": -0.617,
+        "mean_pct": 1.708,
+        "calendar_years": [
+          2017,
+          2020,
+          2021
+        ]
+      },
+      "6": {
+        "n_pairs": 5,
+        "median_pct": 0.0,
+        "mean_pct": 2.994,
+        "calendar_years": [
+          2017,
+          2018,
+          2019,
+          2020,
+          2021
+        ]
+      },
+      "7": {
+        "n_pairs": 7,
+        "median_pct": 1.469,
+        "mean_pct": 0.392,
+        "calendar_years": [
+          2018,
+          2019,
+          2020,
+          2021
+        ]
+      },
+      "9": {
+        "n_pairs": 2,
+        "median_pct": -11.722,
+        "mean_pct": -11.722,
+        "calendar_years": [
+          2019
+        ]
+      },
+      "11": {
+        "n_pairs": 1,
+        "median_pct": 10.618,
+        "mean_pct": 10.618,
+        "calendar_years": [
+          2019
+        ]
+      }
+    },
+    "year_fe_proximity_regression": {
+      "spec": "premium_pct ~ calendar-year FE + 1[months_to_deadline <= 1]",
+      "coefficient_pp": 2.543,
+      "cluster_robust_se_pp": 2.155,
+      "t_stat": 1.18,
+      "ci95_pp": [
+        -1.681,
+        6.767
+      ],
+      "n_pairs": 253,
+      "n_date_clusters": 252,
+      "identifying_years": [
+        2019,
+        2020,
+        2021,
+        2022,
+        2023,
+        2024
+      ],
+      "verdict": "not distinguishable from zero"
+    }
+  },
+  "auction_outcomes": {
+    "note": "Undersubscription is decomposed into insufficient bids and bids that were sufficient but not fully allocated. Only the second channel is comparable to a reserve-price-driven non-sale, and it is small.",
+    "n_auctions": 83,
+    "first_date": "2019-01-23",
+    "last_date": "2026-07-08",
+    "n_fully_sold": 36,
+    "n_undersold": 47,
+    "n_zero_sold": 2,
+    "offered_tco2": 130562800,
+    "sold_tco2": 92634600,
+    "unsold_tco2": 37928200,
+    "unsold_share": 0.290498,
+    "bid_to_cover": {
+      "median": 0.9816,
+      "mean": 1.014,
+      "min": 0.0,
+      "max": 2.1853,
+      "n": 83
+    },
+    "undersold_decomposition": {
+      "insufficient_bids": {
+        "n_auctions": 42,
+        "unsold_tco2": 37270300
+      },
+      "bids_sufficient_but_unsold": {
+        "n_auctions": 5,
+        "unsold_tco2": 657900,
+        "cases": [
+          {
+            "date": "2019-03-13",
+            "instrument": "KAU18",
+            "offered_tco2": 550000,
+            "bid_tco2": 740200,
+            "bidders": 9,
+            "winners": 5,
+            "lowest_bid_krw": 25000,
+            "sold_tco2": 409500,
+            "clearing_krw": 26450
+          },
+          {
+            "date": "2022-08-10",
+            "instrument": "KAU22",
+            "offered_tco2": 2300000,
+            "bid_tco2": 2775000,
+            "bidders": 11,
+            "winners": 9,
+            "lowest_bid_krw": 26850,
+            "sold_tco2": 2225000,
+            "clearing_krw": 27300
+          },
+          {
+            "date": "2024-05-08",
+            "instrument": "KAU23",
+            "offered_tco2": 100000,
+            "bid_tco2": 120000,
+            "bidders": 4,
+            "winners": 0,
+            "lowest_bid_krw": 8650,
+            "sold_tco2": 0,
+            "clearing_krw": 0
+          },
+          {
+            "date": "2025-07-09",
+            "instrument": "KAU25",
+            "offered_tco2": 2000000,
+            "bid_tco2": 2400000,
+            "bidders": 4,
+            "winners": 3,
+            "lowest_bid_krw": 8130,
+            "sold_tco2": 1800000,
+            "clearing_krw": 9070
+          },
+          {
+            "date": "2026-06-10",
+            "instrument": "KAU25",
+            "offered_tco2": 1200000,
+            "bid_tco2": 2212800,
+            "bidders": 16,
+            "winners": 5,
+            "lowest_bid_krw": 19400,
+            "sold_tco2": 1057600,
+            "clearing_krw": 26450
+          }
+        ]
+      }
+    }
+  },
   "all_quote_pairs": {
     "n_pairs": 5693,
     "n_dates": 2488,
@@ -164,5 +625,56 @@
   },
   "banking_ratio_2015_21_mean": 0.042784,
   "bank_2024_Mt": 92.140327,
-  "verified_emissions_2024_Mt": 549.879405
+  "verified_emissions_2024_Mt": 549.879405,
+  "kau25_2026_monthly": {
+    "2026-01": {
+      "n_days": 21,
+      "close_mean_krw": 11154.8,
+      "close_min_krw": 10250,
+      "close_max_krw": 12850,
+      "vwap_krw": 11453.0
+    },
+    "2026-02": {
+      "n_days": 17,
+      "close_mean_krw": 12655.9,
+      "close_min_krw": 11950,
+      "close_max_krw": 13750,
+      "vwap_krw": 12722.8
+    },
+    "2026-03": {
+      "n_days": 21,
+      "close_mean_krw": 15064.3,
+      "close_min_krw": 13450,
+      "close_max_krw": 16400,
+      "vwap_krw": 15187.0
+    },
+    "2026-04": {
+      "n_days": 22,
+      "close_mean_krw": 16668.2,
+      "close_min_krw": 15900,
+      "close_max_krw": 17400,
+      "vwap_krw": 16631.7
+    },
+    "2026-05": {
+      "n_days": 18,
+      "close_mean_krw": 19186.1,
+      "close_min_krw": 16900,
+      "close_max_krw": 24550,
+      "vwap_krw": 19367.9
+    },
+    "2026-06": {
+      "n_days": 21,
+      "close_mean_krw": 23242.9,
+      "close_min_krw": 19600,
+      "close_max_krw": 28800,
+      "vwap_krw": 22805.8
+    },
+    "2026-07": {
+      "n_days": 6,
+      "close_mean_krw": 23625.0,
+      "close_min_krw": 23100,
+      "close_max_krw": 23900,
+      "vwap_krw": 23426.2
+    }
+  }
 }

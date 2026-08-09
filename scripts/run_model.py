@@ -18,6 +18,7 @@ v4 프레임(2026-07-03 확정): K-MSR은 법제화된 제도이고, 패키지�
   4. quantity_frontier— B 변형 그리드(ρ×θ×개시연도, EU-literal 무효화 변형 포함)
   5. sensitivity_h2_elec — 수소×전력 2×2에서 A·B 도입연도(보수수소 하 B의 H2-DRI 미도입이 핵심)
   6. modes            — MACC step/exponential × 3 cap × 전 MSR강도 하이퍼큐브(부록)
+  7. tech_thresholds  — 헤드라인 전환기술(H₂-DRI·e-cracker)의 연도별 문턱비용(보고서 §1)
 
 모든 입력은 마스터 엑셀에서 로드(코드 하드코딩 없음). 유동성 모수는 유동성모수 시트.
 산출: outputs/runs/msr_results_v1.0.json + outputs/csv/*.csv
@@ -328,6 +329,62 @@ for h2_sc in ("gov", "conservative"):
             cell[pid] = entry
         sens_2x2[f"h2_{h2_sc}|elec_{el_sc}"] = cell
 
+# ═══════════════════════════════════════════════════════════════
+# 2e. 시나리오 매트릭스: 수소 × 전력 × 자본비용 × 운영규칙 4종
+#   2×2가 답하지 못하는 질문 — "에너지가격과 자본비용이 함께 나빠지면?" —
+#   에 답한다. 논문 §6 강건성 표의 원자료.
+#   축 값은 시트에서 읽는다(코드에 목록을 박지 않는다).
+# ═══════════════════════════════════════════════════════════════
+def _sheet_scenarios(sheet_name):
+    seen = []
+    for r in DATA["sheets"].get(sheet_name, []):
+        sid = r.get("scenario_id")
+        if isinstance(sid, str) and sid not in seen:
+            seen.append(sid)
+    return seen
+
+
+H2_AXIS = _sheet_scenarios("수소가격시나리오")
+ELEC_AXIS = _sheet_scenarios("전력가격시나리오")
+COST_AXIS = (0.8, 1.0, 1.2)          # 논문 ±20% 민감도와 같은 격자
+PACKAGE_IDS = list(PKG_CFG)
+
+sens_grid = []
+for h2_sc in H2_AXIS:
+    for el_sc in ELEC_AXIS:
+        for mult in COST_AXIS:
+            d3 = {**DATA, "model_params": {**DATA["model_params"],
+                                           "h2_scenario": h2_sc, "elec_scenario": el_sc,
+                                           "cost_multiplier": mult}}
+            m3 = KETSModel(d3, "step")
+            cfg3 = {p["package_id"]: p for p in m3.packages}
+            for pid in PACKAGE_IDS:
+                rec = pkg_record(m3, cfg3[pid])
+                h2y, eny = _headline_acts(rec["activation_headline"])
+                sens_grid.append({
+                    "package_id": pid, "h2_scenario": h2_sc, "elec_scenario": el_sc,
+                    "cost_multiplier": mult,
+                    "kau_2040": rec["path"][-1]["kau"],
+                    "h2_dri": h2y, "e_ncc": eny,
+                    "both_activate": h2y is not None and eny is not None,
+                    "defended_all": rec["defended_all"],
+                    "min_headroom": rec["min_headroom"],
+                    "cum_intake_Mt": rec["cum_intake_Mt"],
+                })
+
+# 운영규칙별 요약 — 몇 개 세계에서 헤드라인 기술을 살리는가
+sens_summary = {}
+for pid in PACKAGE_IDS:
+    cells = [c for c in sens_grid if c["package_id"] == pid]
+    sens_summary[pid] = {
+        "n_cells": len(cells),
+        "h2_dri_activates": sum(c["h2_dri"] is not None for c in cells),
+        "e_ncc_activates": sum(c["e_ncc"] is not None for c in cells),
+        "both_activate": sum(c["both_activate"] for c in cells),
+        "defended_all_cells": sum(c["defended_all"] for c in cells),
+        "h2_dri_worst_year": max((c["h2_dri"] for c in cells if c["h2_dri"]), default=None),
+    }
+
 # ═══ 콘솔 요약: 패키지·워터폴·프런티어·민감도 ═══
 print("\n" + "=" * 78)
 print("정책 패키지 v4 (step MACC): K-MSR 운영규칙 P0/P1/A/B — 유상=A_gov 공통")
@@ -362,6 +419,16 @@ for key, cell in sens_2x2.items():
     a_act = f"{a['h2_dri'] or '—'}/{a['e_ncc'] or '—'}"
     b_act = f"{b['h2_dri'] or '—'}/{b['e_ncc'] or '—'}"
     print(f"  {key:<34}{a_act:>16}{a_def:>12}{b_act:>16}")
+
+print(f"\n시나리오 매트릭스 — 수소 {len(H2_AXIS)} × 전력 {len(ELEC_AXIS)} × "
+      f"자본비용 {len(COST_AXIS)} = {len(sens_grid) // len(PACKAGE_IDS)}개 세계:")
+print(f"  {'규칙':<5}{'H2-DRI 활성':>12}{'e-NCC 활성':>12}{'둘 다':>8}{'하한방어':>9}{'최악 H2 연도':>13}")
+for pid, s in sens_summary.items():
+    n = s["n_cells"]
+    frac = lambda key: f"{s[key]}/{n}"          # noqa: E731 — 표 정렬용 한 줄 포맷
+    print(f"  {pid:<5}{frac('h2_dri_activates'):>12}{frac('e_ncc_activates'):>12}"
+          f"{frac('both_activate'):>8}{frac('defended_all_cells'):>9}"
+          f"{str(s['h2_dri_worst_year'] or '—'):>13}")
 
 # ═══════════════════════════════════════════════════════════════
 # 3. 무차익 불변식 게이트 + v0.7 대조 (참고용)
@@ -489,6 +556,15 @@ for sid in ["base", "ideal"]:
 # ═══════════════════════════════════════════════════════════════
 # 5. 저장: JSON + CSV
 # ═══════════════════════════════════════════════════════════════
+# 전환기술 문턱 비용경로 — docs/report.md §1이 인쇄하는 값(H₂-DRI 2035·2037,
+# e-cracker 2035). 엔진은 계산했지만 어디에도 남지 않아 골든 테스트가 잠글 수
+# 없었다. 회랑 하한(패키지 A)의 기술앵커도 같은 경로다.
+tech_thresholds = {
+    t["tech"]: {"sector": t["sector"],
+                "cost_krw_by_year": {yr: round(m_step._tech_cost(t, yr, POLICY_CAP))
+                                     for yr in m_step.years}}
+    for t in m_step.techs if t.get("headline")}
+
 out = {"model_version": "1.0",
        "description": "정책패키지 v4: K-MSR=법제화 제도, 패키지=운영규칙(P0/P1/A 가격약속형/B 수량약속형); "
                       "유상=A_gov(정부공표경로) 일원화; 수량프런티어(ρ×θ×개시연도); 수소×전력 2×2 민감도; "
@@ -499,11 +575,16 @@ out = {"model_version": "1.0",
        "msr_levels": [{**{k: (v / 1e6 if k in ("theta_plus", "theta_minus", "release") else v)
                           for k, v in p.items()}} for p in presets_ref.values()],
        "parity_v07": parity,
+       "tech_thresholds": tech_thresholds,
        "packages": packages,
        "gate_waterfall": waterfall,
        "a_lambda_regimes": a_regime_sens,
        "quantity_frontier": qfrontier,
        "sensitivity_h2_elec": sens_2x2,
+       "sensitivity_grid": {"axes": {"h2_scenario": H2_AXIS, "elec_scenario": ELEC_AXIS,
+                                     "cost_multiplier": list(COST_AXIS),
+                                     "package_id": PACKAGE_IDS},
+                            "summary": sens_summary, "cells": sens_grid},
        "modes": modes}
 OUT_JSON.parent.mkdir(parents=True, exist_ok=True)
 OUT_JSON.write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8")
@@ -582,3 +663,11 @@ for mode in MACC_MODES:
 write_csv("cancel_vs_deferral.csv",
           ["macc_mode", "cap_scenario", "msr_level", "year", "kau_krw",
            "reserve_Mt", "cum_cancel_Mt"], rows)
+
+write_csv("scenario_matrix.csv",
+          ["package_id", "h2_scenario", "elec_scenario", "cost_multiplier", "kau_2040_krw",
+           "h2_dri_year", "e_ncc_year", "both_activate", "defended_all", "min_headroom",
+           "cum_intake_Mt"],
+          [[c["package_id"], c["h2_scenario"], c["elec_scenario"], c["cost_multiplier"],
+            c["kau_2040"], c["h2_dri"], c["e_ncc"], c["both_activate"], c["defended_all"],
+            c["min_headroom"], c["cum_intake_Mt"]] for c in sens_grid])

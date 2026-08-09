@@ -63,11 +63,11 @@ OBSERVED_BANK_2024_MT = observed_bank_2024_Mt()
 
 def geo_pkg(f0, g, cost_scale=1.0):
     floor_path = {y: f0 * (1 + g) ** (y - 2026) for y in YEARS}
-    model = KETSModel(DATA, "step")
+    # 기술비용 배율은 엔진의 cost_multiplier 레버로 준다 — 웹·MCP가 쓰는 것과 같은 경로.
+    data = ({**DATA, "model_params": {**DATA["model_params"], "cost_multiplier": cost_scale}}
+            if cost_scale != 1.0 else DATA)
+    model = KETSModel(data, "step")
     model.B0 = OBSERVED_BANK_2024_MT * 1e6
-    if cost_scale != 1.0:
-        for technology in model.techs:
-            technology["cost_krw"] *= cost_scale
     model.corridor_floor_path = lambda *args, **kwargs: [floor_path[y] for y in YEARS]
 
     # P0 is the no-policy counterfactual used for the paper's equilibrium path.

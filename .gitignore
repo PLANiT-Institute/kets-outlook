@@ -52,3 +52,8 @@ venv/
 # 엑셀 임시/잠금 파일
 ~$*.xlsx
 .~lock.*
+
+# 심사 전 비공개 — 공개 리포에 올리면 사전공개(prior disclosure)가 된다.
+# 심사 통과 후 되돌려라.
+WORKLOG.md
+docs/_drafts/

@@ -46,6 +46,50 @@ with open(_DATA, encoding="utf-8") as _f:
 _PKG_OVERRIDE_KEYS = {"corridor_target_year", "corridor_tech2", "corridor_target_year2",
                       "lambda_regime", "cap_scenario"}
 
+# 모형 생성 시점에 적용되는 레버 — 비용·에너지가격 세계를 바꾼다.
+# 패키지 레버(위)가 "정부가 무엇을 약속하는가"라면, 이쪽은 "어떤 세계에서 그러는가"다.
+#   h2_scenario   수소가격시나리오 시트의 scenario_id  (gov | conservative)
+#   elec_scenario 전력가격시나리오 시트의 scenario_id  (gov_invest | conservative)
+#   tech_scenario 학습곡선 시트의 scenario_id         (base | middle | ideal)
+#                 미지정이면 cap 시나리오를 따른다(기존 동작).
+#   cost_multiplier  MACC기술상세 자본비용 일괄 배율 (1.0 = 시트값)
+_MODEL_LEVER_KEYS = {"h2_scenario", "elec_scenario", "tech_scenario", "cost_multiplier"}
+
+
+def _scenario_ids(sheet: str) -> list[str]:
+    """시트에 실제로 존재하는 scenario_id (하드코딩 금지 — 데이터가 목록의 출처)."""
+    seen = []
+    for r in _RAW["sheets"].get(sheet, []):
+        sid = r.get("scenario_id")
+        if isinstance(sid, str) and sid not in seen:
+            seen.append(sid)
+    return seen
+
+
+def _build_model(body: dict, macc_mode: str) -> tuple[KETSModel, dict]:
+    """모형 레버를 model_params에 얹어 엔진을 만든다. 반환: (모형, 적용된 레버)."""
+    levers = {k: v for k, v in (body.get("overrides") or {}).items()
+              if k in _MODEL_LEVER_KEYS}
+    levers.update({k: v for k, v in body.items() if k in _MODEL_LEVER_KEYS})
+    if not levers:
+        return KETSModel(_RAW, macc_mode=macc_mode), {}
+
+    for key, sheet in (("h2_scenario", "수소가격시나리오"),
+                       ("elec_scenario", "전력가격시나리오"),
+                       ("tech_scenario", "학습곡선")):
+        if key in levers:
+            allowed = _scenario_ids(sheet)
+            if str(levers[key]) not in allowed:
+                raise ValueError(f"unknown {key}: {levers[key]} (available: {allowed})")
+    if "cost_multiplier" in levers:
+        mult = float(levers["cost_multiplier"])
+        if not 0.1 <= mult <= 5.0:
+            raise ValueError(f"cost_multiplier out of range: {mult} (expected 0.1–5.0)")
+        levers["cost_multiplier"] = mult
+
+    data = {**_RAW, "model_params": {**_RAW["model_params"], **levers}}
+    return KETSModel(data, macc_mode=macc_mode), levers
+
 # 패키지 경로 응답 필드 (solve_package 레코드에서 추출)
 _PKG_PATH_FIELDS = ("year", "kau", "kau_prefloor", "floor", "defended", "headroom",
                     "static", "hotelling", "lambda", "intake_Mt", "release_Mt", "bank_Mt")
@@ -76,7 +120,7 @@ def run_package(body: dict) -> dict:
     """{"package_id": ...} → 정책패키지 시트 운영규칙으로 solve_package 실행."""
     pid = str(body["package_id"])
     macc_mode = body.get("macc_mode", "step")
-    model = KETSModel(_RAW, macc_mode=macc_mode)
+    model, levers = _build_model(body, macc_mode)
     pkg = next((p for p in model.packages if p.get("package_id") == pid), None)
     if pkg is None:
         ids = [p.get("package_id") for p in model.packages]
@@ -95,6 +139,11 @@ def run_package(body: dict) -> dict:
         "meta": {
             "package": _package_headline(pkg),
             "overrides_applied": applied,
+            "model_levers": {"h2_scenario": model.h2_scenario,
+                             "elec_scenario": model.elec_scenario,
+                             "tech_scenario": model.tech_scenario or pkg["cap_scenario"],
+                             "cost_multiplier": model.cost_multiplier,
+                             "explicit": levers},
             "macc_mode": macc_mode,
             "years": model.years,
         },
@@ -113,7 +162,7 @@ def run(body: dict) -> dict:
         return run_package(body)
     scenario = body.get("scenario", "base")
     macc_mode = body.get("macc_mode", "step")
-    model = KETSModel(_RAW, macc_mode=macc_mode)
+    model, levers = _build_model(body, macc_mode)
 
     presets = model.msr_presets()
     m = body.get("msr") or {}
@@ -143,6 +192,11 @@ def run(body: dict) -> dict:
     return {
         "meta": {
             "scenario": scenario, "macc_mode": macc_mode,
+            "model_levers": {"h2_scenario": model.h2_scenario,
+                             "elec_scenario": model.elec_scenario,
+                             "tech_scenario": model.tech_scenario or scenario,
+                             "cost_multiplier": model.cost_multiplier,
+                             "explicit": levers},
             "years": model.years,
             "eua": {str(y): model.eua[y] for y in model.years},
             "presets": {k: {"name": v["name"], "rho": v["rho"],
@@ -165,6 +219,20 @@ def meta() -> dict:
         "macc_modes": ["step", "exponential"],
         "years": model.years,
         "packages": [_package_headline(p) for p in model.packages],
+        # 시나리오 레버 — 값은 시트에서 읽는다(코드에 목록을 박지 않는다).
+        "model_levers": {
+            "h2_scenario": {"values": _scenario_ids("수소가격시나리오"),
+                            "default": model.h2_scenario,
+                            "desc": "수소 도입가격 경로 (H₂-DRI 비용을 구동)"},
+            "elec_scenario": {"values": _scenario_ids("전력가격시나리오"),
+                              "default": model.elec_scenario,
+                              "desc": "전력가격 경로 (e-NCC·전기가열로 비용을 구동)"},
+            "tech_scenario": {"values": _scenario_ids("학습곡선"),
+                              "default": None,
+                              "desc": "감축기술 학습곡선. 미지정이면 cap 시나리오를 따른다"},
+            "cost_multiplier": {"range": [0.1, 5.0], "default": 1.0,
+                                "desc": "MACC 자본비용 일괄 배율 (논문 민감도 = 0.8/1.0/1.2)"},
+        },
         "liquidity_defaults": _RAW.get("liquidity_defaults", {}),
         "presets": {k: {"name": v["name"], "rho": v["rho"],
                         "theta_plus_Mt": v["theta_plus"] / 1e6,

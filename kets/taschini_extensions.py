@@ -92,6 +92,11 @@ def price_floor_put_value(fundamental_price: float, floor_price: float,
 
     하한 P̄ 보장 = 시장참여자가 행사가 P̄ 풋을 보유. 선도가격 F=펀더멘털가.
     옵션가치가 클수록 하한 방어에 내재된 정부 부담(=거둬들일 물량의 가치)이 크다.
+
+    ponytail: 유럽형 풋 하나로 근사. 경매마다 하한을 거는 규칙은 엄밀히는 경매 횟수만큼의
+    유럽형 풋 다발이며 다발 가치 ≠ 단일 옵션 가치(만기별 분산이 다르고 행사가가 에스컬레이션
+    경로를 따른다). 따라서 방어비용의 수준이 아니라 하한 간 상대 비교에만 쓴다. 수준이
+    필요해지면 경매 일정에 맞춘 만기 사다리로 재구현하라 — docs/methodology.md §7.1.
     """
     return _black76_put(fundamental_price, floor_price, vol, T, rf)
 

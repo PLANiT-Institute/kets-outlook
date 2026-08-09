@@ -34,12 +34,13 @@ RUNS_DIR = _ROOT / "outputs" / "runs"
 # ─── 도구 구현 ────────────────────────────────────────────────
 
 def _list_packages() -> dict:
-    """운영규칙(정책패키지) 목록 + 시뮬레이터 기본값."""
+    """운영규칙(정책패키지) 목록 + 시뮬레이터 기본값 + 시나리오 레버 선택지."""
     m = solve.meta()
     return {"packages": m["packages"], "scenarios": m["scenarios"],
             "macc_modes": m["macc_modes"], "years": m["years"],
             "liquidity_defaults": m["liquidity_defaults"],
-            "msr_presets": m["presets"]}
+            "msr_presets": m["presets"],
+            "model_levers": m["model_levers"]}
 
 
 def _solve_package(package_id: str, overrides: dict | None = None,
@@ -49,9 +50,94 @@ def _solve_package(package_id: str, overrides: dict | None = None,
 
 
 def _solve_custom(scenario: str = "base", macc_mode: str = "step",
-                  msr: dict | None = None, liquidity: dict | None = None) -> dict:
+                  msr: dict | None = None, liquidity: dict | None = None,
+                  overrides: dict | None = None) -> dict:
     return solve.run({"scenario": scenario, "macc_mode": macc_mode,
-                      "msr": msr or {}, "liquidity": liquidity or {}})
+                      "msr": msr or {}, "liquidity": liquidity or {},
+                      "overrides": overrides or {}})
+
+
+# 시나리오 레버 스키마 — 두 solve 도구가 공유한다.
+# 값 목록은 시트에서 읽어 채운다(코드에 박지 않는다 — 엑셀이 SSOT).
+def _lever_schema(extra: dict) -> dict:
+    lv = solve.meta()["model_levers"]
+    props = {
+        "h2_scenario": {"type": "string", "enum": lv["h2_scenario"]["values"],
+                        "description": "수소 도입가격 경로. H₂-DRI 비용을 구동한다."},
+        "elec_scenario": {"type": "string", "enum": lv["elec_scenario"]["values"],
+                          "description": "전력가격 경로. e-NCC·전기가열로 비용을 구동한다."},
+        "tech_scenario": {"type": "string", "enum": lv["tech_scenario"]["values"],
+                          "description": ("감축기술 학습곡선. 미지정이면 cap 시나리오를 따른다. "
+                                          "에너지집약도가 없는 기술에만 작용한다.")},
+        "cost_multiplier": {"type": "number", "minimum": 0.1, "maximum": 5.0,
+                            "description": "MACC 자본비용 일괄 배율. 논문 민감도는 0.8/1.0/1.2."},
+    }
+    props.update(extra)
+    return {"type": "object", "properties": props, "additionalProperties": False,
+            "description": "선언되지 않은 키는 무시된다 — 엑셀 SSOT를 보호하기 위해서다."}
+
+
+_PKG_OVERRIDES = _lever_schema({
+    "cap_scenario": {"type": "string", "enum": ["base", "middle", "ideal"],
+                     "description": "배출허용총량(cap) 경로"},
+    "lambda_regime": {"type": "string", "enum": ["relapse", "hold", "consolidate"],
+                      "description": "유동성 전달 λ의 향후 레짐"},
+    "corridor_target_year": {"type": "integer",
+                             "description": "회랑이 1순위 기술 문턱에 닿아야 하는 연도"},
+    "corridor_tech2": {"type": "string", "description": "2순위 추종 기술명"},
+    "corridor_target_year2": {"type": "integer", "description": "2순위 기술 목표연도"},
+})
+
+_CUSTOM_OVERRIDES = _lever_schema({})
+
+
+_GRID_MAX = 64      # 조합 상한 — 한 호출이 수십 초를 넘지 않게 한다
+
+
+def _scenario_grid(packages: list | None = None, h2_scenarios: list | None = None,
+                   elec_scenarios: list | None = None, tech_scenarios: list | None = None,
+                   cost_multipliers: list | None = None, macc_mode: str = "step") -> dict:
+    """레버 조합의 데카르트 곱을 전부 풀어 한 표로 돌려준다.
+
+    한 시나리오씩 물어보는 대신 "수소가 늦고 전력이 안 떨어지고 비용이 20% 높으면
+    어느 운영규칙이 살아남나"를 한 번에 본다. 시나리오 분석의 기본 단위다.
+    """
+    import itertools
+
+    lv = solve.meta()["model_levers"]
+    grid = {
+        "package_id": packages or ["P0", "P1", "A", "B"],
+        "h2_scenario": h2_scenarios or lv["h2_scenario"]["values"],
+        "elec_scenario": elec_scenarios or lv["elec_scenario"]["values"],
+        "tech_scenario": tech_scenarios or [None],
+        "cost_multiplier": cost_multipliers or [1.0],
+    }
+    combos = list(itertools.product(*grid.values()))
+    if len(combos) > _GRID_MAX:
+        raise ValueError(f"{len(combos)} 조합은 상한 {_GRID_MAX}을 넘는다 — "
+                         f"레버 목록을 좁혀라. 축 크기: "
+                         f"{ {k: len(v) for k, v in grid.items()} }")
+
+    rows = []
+    for pid, h2, elec, tech, mult in combos:
+        overrides = {"h2_scenario": h2, "elec_scenario": elec, "cost_multiplier": mult}
+        if tech is not None:
+            overrides["tech_scenario"] = tech
+        r = solve.run_package({"package_id": pid, "macc_mode": macc_mode,
+                               "overrides": overrides})
+        acts = r["activation_headline"]
+        rows.append({
+            "package_id": pid, "h2_scenario": h2, "elec_scenario": elec,
+            "tech_scenario": tech or r["meta"]["model_levers"]["tech_scenario"],
+            "cost_multiplier": mult,
+            "kau_2040": r["path"][-1]["kau"],
+            "activation": acts,
+            "all_headline_techs_activate": all(v is not None for v in acts.values()),
+            "defended_all": r["defended_all"],
+            "max_drawdown": r["max_drawdown"],
+        })
+    return {"axes": {k: list(v) for k, v in grid.items()},
+            "n_runs": len(rows), "rows": rows}
 
 
 def _list_data_sheets() -> dict:
@@ -91,8 +177,8 @@ TOOLS = [
     {
         "name": "list_packages",
         "description": ("K-MSR 운영규칙 4종(P0 무정책 · P1 시행령초안 · A 가격약속형 · "
-                        "B 수량약속형)과 시뮬레이터 기본값·MSR 프리셋을 반환한다. "
-                        "다른 도구를 쓰기 전에 먼저 호출해 선택지를 확인하라."),
+                        "B 수량약속형)과 시뮬레이터 기본값·MSR 프리셋·시나리오 레버 "
+                        "선택지를 반환한다. 다른 도구를 쓰기 전에 먼저 호출해 선택지를 확인하라."),
         "inputSchema": {"type": "object", "properties": {}},
     },
     {
@@ -108,13 +194,7 @@ TOOLS = [
                 "macc_mode": {"type": "string", "enum": ["step", "exponential"],
                               "default": "step",
                               "description": "MACC 함수형태. step=기술 단위 계단형(기본)"},
-                "overrides": {
-                    "type": "object",
-                    "description": ("선택 오버라이드. 허용 키: corridor_target_year(회랑 목표연도), "
-                                    "corridor_tech2, corridor_target_year2, "
-                                    "lambda_regime(relapse|hold|consolidate), "
-                                    "cap_scenario(base|middle|ideal). 그 외 키는 무시된다."),
-                },
+                "overrides": _PKG_OVERRIDES,
             },
             "required": ["package_id"],
         },
@@ -140,8 +220,34 @@ TOOLS = [
                     "type": "object",
                     "description": ("유동성 전달. lam_0(초기 λ, 0=정태·1=완전차익거래), "
                                     "lam_terminal(종착 λ), ramp_years(수렴 연수). "
-                                    "2026 관측가 기준 implied λ ≈ 0.55."),
+                                    "2026 관측가 기준 implied λ ≈ 0.575."),
                 },
+                "overrides": _CUSTOM_OVERRIDES,
+            },
+        },
+    },
+    {
+        "name": "scenario_grid",
+        "description": ("레버 조합을 전부 풀어 한 표로 비교한다. 축을 비워두면 기본 전체 "
+                        "(운영규칙 4종 × 수소 2종 × 전력 2종). 각 행은 2040 KAU·헤드라인 "
+                        "기술 활성화 연도·하한 방어 여부·최대낙폭을 담는다. "
+                        f"조합 상한 {_GRID_MAX}개."),
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "packages": {"type": "array", "items": {"type": "string",
+                                                        "enum": ["P0", "P1", "A", "B"]},
+                             "description": "비교할 운영규칙 (기본 전체)"},
+                "h2_scenarios": {"type": "array", "items": {"type": "string"},
+                                 "description": "수소가격 경로 (기본 전체)"},
+                "elec_scenarios": {"type": "array", "items": {"type": "string"},
+                                   "description": "전력가격 경로 (기본 전체)"},
+                "tech_scenarios": {"type": "array", "items": {"type": "string"},
+                                   "description": "학습곡선 (기본: cap 시나리오 추종)"},
+                "cost_multipliers": {"type": "array", "items": {"type": "number"},
+                                     "description": "자본비용 배율 (기본 [1.0]. 민감도 예: [0.8,1.0,1.2])"},
+                "macc_mode": {"type": "string", "enum": ["step", "exponential"],
+                              "default": "step"},
             },
         },
     },
@@ -186,6 +292,7 @@ HANDLERS = {
     "list_packages": _list_packages,
     "solve_package": _solve_package,
     "solve_custom": _solve_custom,
+    "scenario_grid": _scenario_grid,
     "list_data_sheets": _list_data_sheets,
     "get_data_sheet": _get_data_sheet,
     "list_runs": _list_runs,
