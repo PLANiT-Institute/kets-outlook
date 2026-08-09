@@ -70,17 +70,31 @@ type MsrPreset = {
   release_Mt: number; cancel: number;
 };
 
+// 시나리오 레버 — 값 목록은 엔진이 엑셀 시트에서 읽어 내려준다(프런트에 박지 않는다).
+type LeverSpec = { values?: string[]; range?: [number, number]; default: string | number | null; desc: string };
+
 type SolveMeta = {
   scenarios: string[];
   macc_modes: string[];
   years: number[];
   packages: { id: string; name_kr: string; name_en: string }[];
+  model_levers: Record<'h2_scenario' | 'elec_scenario' | 'tech_scenario' | 'cost_multiplier', LeverSpec>;
   liquidity_defaults: {
     lambda_0: number;
     lambda_terminal_default: number;
     ramp_years_default: number;
   };
   presets: Record<string, MsrPreset>;
+};
+
+// 레버 값의 한국어 라벨 (엔진은 id만 준다 — 표시 문구는 프런트 몫)
+const LEVER_LABELS: Record<string, string> = {
+  gov: '정부 기본계획',
+  conservative: '보수 (목표 지연)',
+  gov_invest: '재생투자 가속',
+  base: '기준',
+  middle: '중간',
+  ideal: '이상',
 };
 
 // 패키지 설명 (v4 명명 규율: A·B는 신규 제도가 아니라 법제화된 K-MSR의 운영규칙)
@@ -127,6 +141,12 @@ export function SimulatorPanel() {
   const [lamTerminal, setLamTerminal] = useState(0);
   const [rampYears, setRampYears] = useState(0);
 
+  // 세계 가정(모형 레버) — 정책과 무관하게 비용·에너지가격 세계를 바꾼다. 두 모드 공통.
+  const [h2Sc, setH2Sc] = useState('');
+  const [elecSc, setElecSc] = useState('');
+  const [techSc, setTechSc] = useState('');     // '' = cap 시나리오 추종
+  const [costMult, setCostMult] = useState(1);
+
   // 초기 메타 로드: 커스텀 슬라이더를 엔진 SSOT 기본값으로 시드
   useEffect(() => {
     fetch(`${API}/api/solve`)
@@ -136,6 +156,12 @@ export function SimulatorPanel() {
       })
       .then((mt: SolveMeta) => {
         setMeta(mt);
+        const lv = mt.model_levers;
+        if (lv) {
+          setH2Sc(String(lv.h2_scenario.default ?? ''));
+          setElecSc(String(lv.elec_scenario.default ?? ''));
+          setCostMult(Number(lv.cost_multiplier.default ?? 1));
+        }
         const ld = mt.liquidity_defaults;
         if (ld) {
           setLam0(ld.lambda_0 ?? 0);
@@ -164,14 +190,22 @@ export function SimulatorPanel() {
     setLoading(true);
     setErr(null);
     try {
+      // 세계 가정은 두 모드 공통. 빈 문자열(tech_scenario 미지정)은 보내지 않는다 —
+      // 엔진이 cap 시나리오를 따르게 두는 것이 기본 동작이다.
+      const overrides: Record<string, string | number> = { cost_multiplier: costMult };
+      if (h2Sc) overrides.h2_scenario = h2Sc;
+      if (elecSc) overrides.elec_scenario = elecSc;
+      if (techSc) overrides.tech_scenario = techSc;
+
       const body = mode === 'custom'
         ? {
             scenario,
             macc_mode: maccMode,
             msr: { rho, theta_plus_Mt: thetaPlus, theta_minus_Mt: thetaMinus, release_Mt: release, cancel },
             liquidity: { lam_0: lam0, lam_terminal: lamTerminal, ramp_years: rampYears },
+            overrides,
           }
-        : { package_id: mode };
+        : { package_id: mode, overrides };
       const res = await fetch(`${API}/api/solve`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -194,7 +228,8 @@ export function SimulatorPanel() {
     } finally {
       if (seq === seqRef.current) setLoading(false);
     }
-  }, [mode, scenario, maccMode, rho, thetaPlus, thetaMinus, release, cancel, lam0, lamTerminal, rampYears]);
+  }, [mode, scenario, maccMode, rho, thetaPlus, thetaMinus, release, cancel, lam0, lamTerminal, rampYears,
+      h2Sc, elecSc, techSc, costMult]);
 
   // 레버 변경 시 디바운스 후 재계산 (메타 로드 후에만)
   useEffect(() => {
@@ -253,6 +288,36 @@ export function SimulatorPanel() {
             <strong style={{ color: pkgInfo?.color }}>{mode} {pkgInfo?.ko}</strong> — {PKG_DESC[mode]}
           </p>
         )}
+      </div>
+
+      {/* ── 세계 가정 (모형 레버) ── 정책과 독립. 두 모드 공통 ── */}
+      <div className="bg-white border border-[#E5E7EB] rounded-[10px] p-4">
+        <div className="text-[12px] font-semibold text-[#111827] mb-0.5">세계 가정 — 감축기술비용·에너지비용</div>
+        <div className="text-[10.5px] text-[#9CA3AF] mb-2.5">
+          위 운영규칙이 <strong>정부가 무엇을 약속하는가</strong>라면, 아래는 <strong>어떤 세계에서 그러는가</strong>다.
+          값 목록은 엔진이 마스터 엑셀에서 읽어온다.
+        </div>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+          <LeverSelect label="수소가격 경로" hint="H₂-DRI 비용을 구동"
+                       value={h2Sc} onChange={setH2Sc}
+                       options={meta?.model_levers?.h2_scenario?.values ?? []} />
+          <LeverSelect label="전력가격 경로" hint="e-NCC·전기가열로 비용을 구동"
+                       value={elecSc} onChange={setElecSc}
+                       options={meta?.model_levers?.elec_scenario?.values ?? []} />
+          <LeverSelect label="학습곡선" hint="미지정이면 Cap 시나리오를 따른다"
+                       value={techSc} onChange={setTechSc} allowEmpty emptyLabel="Cap 시나리오 추종"
+                       options={meta?.model_levers?.tech_scenario?.values ?? []} />
+          <div>
+            <div className="text-[11px] font-medium text-[#374151] mb-1">감축기술 자본비용</div>
+            <Slider label="배율" display={`×${costMult.toFixed(2)}`} min={0.6} max={1.4} step={0.05}
+                    value={costMult} onChange={setCostMult} accent="#B45309" />
+            <div className="text-[10px] text-[#9CA3AF] mt-0.5 leading-[1.5]">논문 민감도 = ×0.8 / ×1.0 / ×1.2</div>
+          </div>
+        </div>
+        <p className="text-[10.5px] text-[#6B7280] leading-[1.6] mt-2.5 mb-0">
+          헤드라인 2기술(H₂-DRI · e-NCC)은 에너지가격 채널을 타므로 <strong>학습곡선에 반응하지 않는다</strong> —
+          같은 학습을 두 번 세지 않기 위한 설계다. 이 기술들의 문턱 연도를 흔들려면 에너지가격 경로나 자본비용 배율을 쓴다.
+        </p>
       </div>
 
       <div className={`grid gap-5 ${isPkg ? 'grid-cols-1' : 'grid-cols-[1fr_320px]'}`}>
@@ -555,6 +620,26 @@ function Kpi({ label, value, sub, feature }: { label: string; value: string; sub
       </div>
       <div className={`text-[10px] ${feature ? 'text-[#AEB9CC]' : 'text-[#6B7280]'}`} style={{ fontFamily: 'Inter' }}>{sub}</div>
     </div>
+  );
+}
+
+/** 시나리오 레버 선택 — 옵션은 엔진이 시트에서 읽어 내려준 값 그대로. */
+function LeverSelect({ label, hint, value, onChange, options, allowEmpty, emptyLabel }: {
+  label: string; hint: string;
+  value: string; onChange: (v: string) => void;
+  options: string[];
+  allowEmpty?: boolean; emptyLabel?: string;
+}) {
+  return (
+    <label className="block">
+      <span className="block text-[11px] font-medium text-[#374151] mb-1">{label}</span>
+      <select value={value} onChange={e => onChange(e.target.value)}
+        className="w-full rounded-md border border-[#E5E7EB] bg-white px-2 py-1.5 text-[11.5px] text-[#111827]">
+        {allowEmpty && <option value="">{emptyLabel ?? '기본'}</option>}
+        {options.map(o => <option key={o} value={o}>{LEVER_LABELS[o] ?? o}</option>)}
+      </select>
+      <span className="block text-[10px] text-[#9CA3AF] mt-0.5 leading-[1.5]">{hint}</span>
+    </label>
   );
 }
 
